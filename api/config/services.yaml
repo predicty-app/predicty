@@ -20,9 +20,38 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    GraphQL\Type\Definition\:
+        resource: '../vendor/webonyx/graphql-php/src/Type/Definition'
+        exclude:
+            - '../vendor/webonyx/graphql-php/src/Type/Definition/CustomScalarType.php'
+            - '../vendor/webonyx/graphql-php/src/Type/Definition/EnumType.php'
+            - '../vendor/webonyx/graphql-php/src/Type/Definition/InputObjectType.php'
+            - '../vendor/webonyx/graphql-php/src/Type/Definition/InterfaceType.php'
+            - '../vendor/webonyx/graphql-php/src/Type/Definition/ListOfType.php'
+            - '../vendor/webonyx/graphql-php/src/Type/Definition/NonNull.php'
+            - '../vendor/webonyx/graphql-php/src/Type/Definition/ObjectType.php'
+            - '../vendor/webonyx/graphql-php/src/Type/Definition/PhpEnumType.php'
+            - '../vendor/webonyx/graphql-php/src/Type/Definition/UnionType.php'
+
+    _instanceof:
+        GraphQL\Type\Definition\Type:
+            tags: [ graphql_type ]
+#            lazy: true
+#
+#    graphql_queries:
+#        namespace: App\GraphQL\Query
+#        resource: '../src/GraphQL/Query'
+#        tags: [ graphql_expose ]
+#
+#    graphql_mutations:
+#        namespace: App\Domain\Mutation
+#        resource: '../src/GraphQL/Mutation'
+#        tags: [ graphql_expose ]
+
+    App\GraphQL\TypeLoader:
+        arguments: [ !tagged_locator { tag: graphql_type } ]
+
     Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory: ~
     Symfony\Bridge\PsrHttpMessage\HttpMessageFactoryInterface: '@Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory'
     Symfony\Bridge\PsrHttpMessage\ArgumentValueResolver\PsrServerRequestResolver: ~
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones

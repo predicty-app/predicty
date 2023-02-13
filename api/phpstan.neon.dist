@@ -1,0 +1,12 @@
+parameters:
+    level: 8
+    checkMissingIterableValueType: false
+    editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
+    editorUrlTitle: '%%relFile%%:%%line%%'
+    parallel:
+        jobSize: 20
+        maximumNumberOfProcesses: 32
+        minimumNumberOfJobsPerProcess: 2
+    paths:
+        - src
+        - tests

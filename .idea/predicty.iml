@@ -5,13 +5,12 @@
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/api/src" isTestSource="false" packagePrefix="App\" />
-      <sourceFolder url="file://$MODULE_DIR$/api/tests" isTestSource="true" packagePrefix="App\Tests\" />
+      <sourceFolder url="file://$MODULE_DIR$/api/tests/unit" isTestSource="true" packagePrefix="App\Tests\Unit\" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpdocumentor/type-resolver" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpdocumentor/reflection-common" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpdocumentor/reflection-docblock" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/justinrainbow/json-schema" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/friendsofphp/proxy-manager-lts" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/friendsofphp/php-cs-fixer" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/api-platform/core" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/api-platform/schema-generator" />
@@ -49,7 +48,6 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/flex" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/twig-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/config" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/expression-language" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/dotenv" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/debug-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/security-http" />
@@ -86,7 +84,6 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/framework-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/http-foundation" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/monolog/monolog" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/laminas/laminas-code" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/nelmio/cors-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/phpunit-bridge" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/security-core" />
@@ -108,7 +105,6 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/cebe/php-openapi" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/psr/link" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/psr/log" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/webonyx/graphql-php" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/psr-http-message-bridge" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/psr/http-message" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/sebastian/global-state" />
@@ -160,6 +156,13 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/messenger" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/uid" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/polyfill-uuid" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpstan/phpstan" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/rector/rector" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpstan/phpstan-symfony" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpstan/phpstan-phpunit" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/webonyx/graphql-php" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpstan" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/rector" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

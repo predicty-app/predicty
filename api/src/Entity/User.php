@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use App\Repository\UserRepository;
@@ -8,6 +10,7 @@ use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
+use Webmozart\Assert\Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -24,20 +27,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?Uuid $uuid = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    private ?string $email = null;
+    private string $email;
 
     #[ORM\Column]
     private array $roles = [];
 
     #[ORM\Column]
-    private ?string $password = null;
+    private string $password = '';
 
-    public function getId(): ?int
+    public function __construct(string $email)
     {
+        $this->email = $email;
+    }
+
+    public function getId(): int
+    {
+        Assert::notNull($this->id);
+
         return $this->id;
     }
 
-    public function getEmail(): ?string
+    public function getUuid(): Uuid
+    {
+        Assert::notNull($this->uuid);
+
+        return $this->uuid;
+    }
+
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -51,14 +68,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string) $this->id;
     }
 
     public function getRoles(): array
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = Role::ROLE_USER->value;
 
         return array_unique($roles);
     }
@@ -82,7 +99,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
