@@ -16,10 +16,10 @@ log
             '*.json*', '*.html', '*.csv', '*.yml', '*.yaml', '*.xml'
         )
     )
-    || path('/favicon.ico', '/manifest.json', '/robots.txt', '/_next*', '/sitemap*')`
+    || path('/favicon.ico', '/manifest.json', '/robots.txt', '/_next*', '/__next*', '/sitemap*')`
 
 route {
-    root * /srv/app/public
+    root * /app/public
     mercure {
         # Transport to use (default to Bolt)
         transport_url {$MERCURE_TRANSPORT_URL:bolt:///data/mercure.db}

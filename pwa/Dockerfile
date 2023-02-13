@@ -5,7 +5,7 @@ FROM node:18-alpine as builder_base
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
 RUN apk add --no-cache libc6-compat
 
-WORKDIR /srv/app
+WORKDIR /app
 
 RUN corepack enable && \
 	corepack prepare --activate pnpm@latest && \
@@ -38,14 +38,14 @@ CMD ["sh", "-c", "pnpm install -r --offline; pnpm dev"]
 
 FROM builder_base AS builder
 COPY --link . .
-COPY --from=deps --link /srv/app/node_modules ./node_modules
+COPY --from=deps --link /app/node_modules ./node_modules
 
 RUN pnpm run build
 
 
 # Production image, copy all the files and run next
 FROM node:18-alpine AS prod
-WORKDIR /srv/app
+WORKDIR /app
 
 ENV NODE_ENV production
 # Uncomment the following line in case you want to disable telemetry during runtime.
@@ -54,12 +54,12 @@ ENV NODE_ENV production
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-COPY --from=builder --link /srv/app/public ./public
+COPY --from=builder --link /app/public ./public
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --link --chown=nextjs:nodejs /srv/app/.next/standalone ./
-COPY --from=builder --link --chown=nextjs:nodejs /srv/app/.next/static ./.next/static
+COPY --from=builder --link --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --link --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 
