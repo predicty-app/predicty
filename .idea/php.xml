@@ -142,7 +142,6 @@
       <path value="$PROJECT_DIR$/api/vendor/phpunit/php-timer" />
       <path value="$PROJECT_DIR$/api/vendor/phpunit/php-code-coverage" />
       <path value="$PROJECT_DIR$/api/vendor/phpunit/phpunit" />
-      <path value="$PROJECT_DIR$/api/vendor/sensio/framework-extra-bundle" />
       <path value="$PROJECT_DIR$/api/vendor/myclabs/deep-copy" />
       <path value="$PROJECT_DIR$/api/vendor/phar-io/version" />
       <path value="$PROJECT_DIR$/api/vendor/twig/extra-bundle" />
@@ -161,6 +160,8 @@
       <path value="$PROJECT_DIR$/api/vendor/ralouphie/getallheaders" />
       <path value="$PROJECT_DIR$/api/vendor/grpc/grpc" />
       <path value="$PROJECT_DIR$/api/vendor/symfony/messenger" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/uid" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/polyfill-uuid" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

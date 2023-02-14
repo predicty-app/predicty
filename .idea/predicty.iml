@@ -140,7 +140,6 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpunit/php-timer" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpunit/php-code-coverage" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpunit/phpunit" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/sensio/framework-extra-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/myclabs/deep-copy" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phar-io/version" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/twig/extra-bundle" />
@@ -159,6 +158,8 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/ralouphie/getallheaders" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/grpc/grpc" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/messenger" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/uid" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/polyfill-uuid" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
