@@ -144,6 +144,20 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/myclabs/deep-copy" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phar-io/version" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/twig/extra-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/firebase/php-jwt" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/psr/http-client" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/google/protobuf" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/google/grpc-gcp" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/google/auth" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/google/common-protos" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/google/gax" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/google/longrunning" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/googleads/google-ads-php" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/guzzlehttp/psr7" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/guzzlehttp/guzzle" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/guzzlehttp/promises" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/ralouphie/getallheaders" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/grpc/grpc" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
