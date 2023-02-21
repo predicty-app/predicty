@@ -15,13 +15,13 @@ class Schema extends GraphQLSchema
         $config = SchemaConfig::create()
             ->setQuery(new ObjectType([
                 'name' => 'Query',
-                'fields' => [...$queries]
+                'fields' => [...$queries],
             ]))
             ->setMutation(new ObjectType([
                 'name' => 'Mutation',
-                'fields' => [...$mutations]
+                'fields' => [...$mutations],
             ]))
-            ->setTypeLoader(fn(string $name) => $typeResolver->get($name))
+            ->setTypeLoader(fn (string $name) => $typeResolver->get($name))
         ;
 
         parent::__construct($config);

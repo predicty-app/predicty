@@ -24,6 +24,7 @@ class LogoutMutation extends FieldDefinition
     private function resolve(array $args): string
     {
         $this->commandBus->dispatch(new Logout());
+
         return 'OK';
     }
 }

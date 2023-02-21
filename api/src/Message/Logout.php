@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Message;
+declare(strict_types=1);
 
-use Symfony\Bundle\SecurityBundle\Security;
+namespace App\Message;
 
 class Logout implements Command
 {
-
 }

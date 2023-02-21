@@ -6,7 +6,6 @@ namespace App\Controller;
 
 use App\GraphQL\Schema;
 use GraphQL\Error\DebugFlag;
-use GraphQL\Server\Helper;
 use GraphQL\Server\ServerConfig;
 use GraphQL\Server\StandardServer;
 use Psr\Http\Message\ServerRequestInterface;
@@ -41,7 +40,7 @@ class GraphQlController extends AbstractController
     {
         $debug = DebugFlag::NONE;
 
-        if($this->getParameter('kernel.environment') === 'dev') {
+        if ($this->getParameter('kernel.environment') === 'dev') {
             $debug = DebugFlag::INCLUDE_DEBUG_MESSAGE;
         }
 

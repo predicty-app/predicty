@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Service\User;
 
 use App\Entity\User;
@@ -15,7 +17,7 @@ class CurrentUserService
     {
         $user = $this->security->getUser();
 
-        if($user instanceof User) {
+        if ($user instanceof User) {
             return $user;
         }
 

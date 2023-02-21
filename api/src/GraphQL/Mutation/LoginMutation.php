@@ -6,10 +6,8 @@ namespace App\GraphQL\Mutation;
 
 use App\Entity\User;
 use App\GraphQL\Mapper\UserMapper;
-use App\GraphQL\Resolver\UserResolver;
 use App\GraphQL\TypeResolver;
 use App\Message\Login;
-use App\Message\Register;
 use GraphQL\Type\Definition\FieldDefinition;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\HandledStamp;

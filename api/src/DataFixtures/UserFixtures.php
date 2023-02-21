@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\User;
@@ -10,7 +12,6 @@ use Symfony\Component\Uid\Factory\UuidFactory;
 
 class UserFixtures extends Fixture
 {
-
     public function __construct(private UserPasswordHasherInterface $passwordHasher, private UuidFactory $uuidFactory)
     {
     }

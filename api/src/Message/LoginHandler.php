@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Message;
 
 use App\Entity\User;
@@ -24,8 +26,7 @@ class LoginHandler
         private EventDispatcherInterface $eventDispatcher,
         private RequestStack $requestStack,
         private Security $security
-    )
-    {
+    ) {
     }
 
     /**
@@ -34,7 +35,7 @@ class LoginHandler
     public function __invoke(Login $message): User
     {
         $user = $this->security->getUser();
-        if($user === null) {
+        if ($user === null) {
             try {
                 $user = $this->userProvider->loadUserByIdentifier($message->username);
             } catch (UserNotFoundException $e) {
@@ -42,7 +43,7 @@ class LoginHandler
             }
 
             if (!$user instanceof PasswordAuthenticatedUserInterface) {
-                throw new UnsupportedUserException('$user has to implements ' . PasswordAuthenticatedUserInterface::class);
+                throw new UnsupportedUserException('$user has to implements '.PasswordAuthenticatedUserInterface::class);
             }
 
             if (!$this->passwordEncoder->isPasswordValid($user, $message->password)) {
