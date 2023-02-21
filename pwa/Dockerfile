@@ -1,70 +1,70 @@
-#syntax=docker/dockerfile:1.4
-# Base stage for dev and build
-FROM node:18-alpine as builder_base
+# #syntax=docker/dockerfile:1.4
+# # Base stage for dev and build
+# FROM node:18-alpine as builder_base
 
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk add --no-cache libc6-compat
+# # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+# RUN apk add --no-cache libc6-compat
 
-WORKDIR /app
+# WORKDIR /app
 
-RUN corepack enable && \
-	corepack prepare --activate pnpm@latest && \
-	pnpm config -g set store-dir /.pnpm-store
+# RUN corepack enable && \
+# 	corepack prepare --activate pnpm@latest && \
+# 	pnpm config -g set store-dir /.pnpm-store
 
-# Next.js collects completely anonymous telemetry data about general usage.
-# Learn more here: https://nextjs.org/telemetry
-# Uncomment the following line in case you want to disable telemetry during dev and build.
-# ENV NEXT_TELEMETRY_DISABLED 1
-
-
-# Deps stage, preserve dependencies in cache as long as the lockfile isn't changed
-FROM builder_base AS deps
-
-COPY --link pnpm-lock.yaml ./
-RUN pnpm fetch
-
-COPY --link . .
-RUN pnpm install -r --offline
+# # Next.js collects completely anonymous telemetry data about general usage.
+# # Learn more here: https://nextjs.org/telemetry
+# # Uncomment the following line in case you want to disable telemetry during dev and build.
+# # ENV NEXT_TELEMETRY_DISABLED 1
 
 
-# Development image
-FROM deps as dev
+# # Deps stage, preserve dependencies in cache as long as the lockfile isn't changed
+# FROM builder_base AS deps
 
-EXPOSE 3000
-ENV PORT 3000
+# COPY --link pnpm-lock.yaml ./
+# RUN pnpm fetch
 
-CMD ["sh", "-c", "pnpm install -r --offline; pnpm dev"]
-
-
-FROM builder_base AS builder
-COPY --link . .
-COPY --from=deps --link /app/node_modules ./node_modules
-
-RUN pnpm run build
+# COPY --link . .
+# RUN pnpm install -r --offline
 
 
-# Production image, copy all the files and run next
-FROM node:18-alpine AS prod
-WORKDIR /app
+# # Development image
+# FROM deps as dev
 
-ENV NODE_ENV production
-# Uncomment the following line in case you want to disable telemetry during runtime.
-# ENV NEXT_TELEMETRY_DISABLED 1
+# EXPOSE 3000
+# ENV PORT 3000
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+# CMD ["sh", "-c", "pnpm install -r --offline; pnpm dev"]
 
-COPY --from=builder --link /app/public ./public
 
-# Automatically leverage output traces to reduce image size
-# https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --link --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --link --chown=nextjs:nodejs /app/.next/static ./.next/static
+# FROM builder_base AS builder
+# COPY --link . .
+# COPY --from=deps --link /app/node_modules ./node_modules
 
-USER nextjs
+# RUN pnpm run build
 
-EXPOSE 3000
 
-ENV PORT 3000
+# # Production image, copy all the files and run next
+# FROM node:18-alpine AS prod
+# WORKDIR /app
 
-CMD ["node", "server.js"]
+# ENV NODE_ENV production
+# # Uncomment the following line in case you want to disable telemetry during runtime.
+# # ENV NEXT_TELEMETRY_DISABLED 1
+
+# RUN addgroup --system --gid 1001 nodejs
+# RUN adduser --system --uid 1001 nextjs
+
+# COPY --from=builder --link /app/public ./public
+
+# # Automatically leverage output traces to reduce image size
+# # https://nextjs.org/docs/advanced-features/output-file-tracing
+# COPY --from=builder --link --chown=nextjs:nodejs /app/.next/standalone ./
+# COPY --from=builder --link --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+# USER nextjs
+
+# EXPOSE 3000
+
+# ENV PORT 3000
+
+# CMD ["node", "server.js"]
