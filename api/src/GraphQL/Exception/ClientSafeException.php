@@ -6,7 +6,7 @@ namespace App\GraphQL\Exception;
 
 use GraphQL\Error\ClientAware;
 
-class ValidationException extends \RuntimeException implements ClientAware
+class ClientSafeException extends \RuntimeException implements ClientAware
 {
     public function isClientSafe(): bool
     {

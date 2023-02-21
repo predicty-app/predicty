@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Messenger;
 
-use App\GraphQL\Exception\ValidationException;
+use App\GraphQL\Exception\ClientSafeException;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Exception\ValidationFailedException;
 use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
 use Symfony\Component\Messenger\Middleware\StackInterface;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
 class GraphQLMiddleware implements MiddlewareInterface
 {
@@ -18,8 +19,7 @@ class GraphQLMiddleware implements MiddlewareInterface
             return $stack->next()->handle($envelope, $stack);
         } catch (ValidationFailedException $exception) {
             $message = (string) $exception->getViolations()->get(0)->getMessage();
-
-            throw new ValidationException($message, 0, $exception);
+            throw new ClientSafeException($message, 0, $exception);
         }
     }
 }
