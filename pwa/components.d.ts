@@ -7,32 +7,6 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    AccountCreation: typeof import('./src/components/OnBoarding/AccountCreation.vue')['default']
-    BasicMediaIntegration: typeof import('./src/components/OnBoarding/BasicMediaIntegration.vue')['default']
-    BasicMediaIntegrationForm: typeof import('./src/components/OnBoarding/BasicMediaIntegrationForm.vue')['default']
-    ButtonForm: typeof import('./src/components/Common/ButtonForm.vue')['default']
-    CreateAccountForm: typeof import('./src/components/OnBoarding/CreateAccountForm.vue')['default']
-    HeaderDashboard: typeof import('./src/components/UserDashboard/HeaderDashboard.vue')['default']
-    HeaderText: typeof import('./src/components/Common/HeaderText.vue')['default']
-    IconSvg: typeof import('./src/components/Common/IconSvg.vue')['default']
-    InputForm: typeof import('./src/components/Common/InputForm.vue')['default']
-    MoreMediaIntegration: typeof import('./src/components/OnBoarding/MoreMediaIntegration.vue')['default']
-    MoreMediaIntegrationForm: typeof import('./src/components/OnBoarding/MoreMediaIntegrationForm.vue')['default']
-    OnBoardingLayout: typeof import('./src/components/Layouts/OnBoardingLayout.vue')['default']
-    PreparingScreen: typeof import('./src/components/OnBoarding/PreparingScreen.vue')['default']
-    ProgressBar: typeof import('./src/components/Common/ProgressBar.vue')['default']
-    RouterLink: typeof import('vue-router')['RouterLink']
-    RouterView: typeof import('vue-router')['RouterView']
-    SpinnerBar: typeof import('./src/components/Common/SpinnerBar.vue')['default']
-    StartScreen: typeof import('./src/components/OnBoarding/StartScreen.vue')['default']
-    StatisticLegend: typeof import('./src/components/UserDashboard/StatisticLegend.vue')['default']
-    StepTimeline: typeof import('./src/components/Common/StepTimeline.vue')['default']
-    TagElement: typeof import('./src/components/Common/TagElement.vue')['default']
-    TimelineContent: typeof import('./src/components/UserDashboard/Timeline/TimelineContent.vue')['default']
-    TimelineGrid: typeof import('./src/components/UserDashboard/Timeline/TimelineGrid.vue')['default']
-    TimelineItem: typeof import('./src/components/UserDashboard/Timeline/TimelineItem.vue')['default']
-    TimelineWrapper: typeof import('./src/components/UserDashboard/Timeline/TimelineWrapper.vue')['default']
-    UploadFile: typeof import('./src/components/Common/UploadFile.vue')['default']
-    UserDashboardLayout: typeof import('./src/components/Layouts/UserDashboardLayout.vue')['default']
+
   }
 }
