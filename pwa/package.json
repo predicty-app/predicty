@@ -11,7 +11,10 @@
     "preview": "vite preview",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "test-preview": "yarn build && npx http-server dist",
-    "prepare": "cd .. && husky install pwa/.husky"
+    "prepare": "cd .. && husky install pwa/.husky",
+    "storybook": "SET NODE_ENV=test & start-storybook -p 6006 --disable-telemetry",
+    "build-storybook": "build-storybook",
+    "test-storybook": "test-storybook"
   },
   "dependencies": {
     "pinia": "^2.0.28",
@@ -48,6 +51,18 @@
     "vite-plugin-pwa": "^0.14.3",
     "vitest": "^0.25.6",
     "vue-tsc": "^1.0.12",
-    "workbox-precaching": "^6.5.4"
+    "vite-tsconfig-paths": "^3.5.0",
+    "workbox-precaching": "^6.5.4",
+    "eslint-plugin-storybook": "^0.6.1",
+    "@storybook/addon-actions": "^6.5.9",
+    "@storybook/addon-essentials": "^6.5.9",
+    "@storybook/addon-interactions": "^6.5.9",
+    "@storybook/addon-links": "^6.5.9",
+    "@storybook/builder-vite": "0.1.39",
+    "@storybook/jest": "^0.0.10",
+    "@storybook/test-runner": "^0.9.3",
+    "@storybook/testing-library": "^0.0.13",
+    "@storybook/vue3": "^6.5.9",
+    "@etchteam/storybook-addon-status": "^4.2.2"
   }
 }
