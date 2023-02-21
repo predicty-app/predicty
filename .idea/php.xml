@@ -167,6 +167,9 @@
       <path value="$PROJECT_DIR$/api/vendor/phpstan/phpstan-phpunit" />
       <path value="" />
       <path value="$PROJECT_DIR$/api/vendor/webonyx/graphql-php" />
+      <path value="$PROJECT_DIR$/api/vendor/doctrine/data-fixtures" />
+      <path value="$PROJECT_DIR$/api/vendor/doctrine/doctrine-fixtures-bundle" />
+      <path value="$PROJECT_DIR$/api/vendor/nelmio/cors-bundle" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

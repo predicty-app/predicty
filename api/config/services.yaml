@@ -36,20 +36,24 @@ services:
     _instanceof:
         GraphQL\Type\Definition\Type:
             tags: [ graphql_type ]
-#            lazy: true
-#
-#    graphql_queries:
-#        namespace: App\GraphQL\Query
-#        resource: '../src/GraphQL/Query'
-#        tags: [ graphql_expose ]
-#
-#    graphql_mutations:
-#        namespace: App\Domain\Mutation
-#        resource: '../src/GraphQL/Mutation'
-#        tags: [ graphql_expose ]
 
-    App\GraphQL\TypeLoader:
+    graphql_queries:
+        namespace: App\GraphQL\Query\
+        resource: '../src/GraphQL/Query'
+        tags: [ graphql_query ]
+
+    graphql_mutations:
+        namespace: App\GraphQL\Mutation\
+        resource: '../src/GraphQL/Mutation'
+        tags: [ graphql_mutation ]
+
+    App\GraphQL\TypeResolver:
         arguments: [ !tagged_locator { tag: graphql_type } ]
+
+    App\GraphQL\Schema:
+        arguments:
+            - !tagged_iterator { tag: graphql_query }
+            - !tagged_iterator { tag: graphql_mutation }
 
     Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory: ~
     Symfony\Bridge\PsrHttpMessage\HttpMessageFactoryInterface: '@Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory'

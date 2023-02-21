@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\GraphQL\Schema;
 use GraphQL\Error\DebugFlag;
+use GraphQL\Server\Helper;
 use GraphQL\Server\ServerConfig;
 use GraphQL\Server\StandardServer;
 use Psr\Http\Message\ServerRequestInterface;
@@ -17,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class GraphQlController extends AbstractController
 {
     #[Route('/graphql', name: 'app_graphql')]
-    public function __invoke(ServerRequestInterface $request, Schema $schema): Response
+    public function __invoke(Request $sfr, ServerRequestInterface $request, Schema $schema): Response
     {
         if (Request::METHOD_GET === $request->getMethod()) {
             return $this->render('graphql/index.html.twig');
@@ -30,14 +31,20 @@ class GraphQlController extends AbstractController
         $config = ServerConfig::create()
             ->setRootValue($rootValue)
             ->setSchema($schema)
-            ->setDebugFlag(
-                DebugFlag::INCLUDE_DEBUG_MESSAGE |
-                DebugFlag::INCLUDE_TRACE |
-                DebugFlag::RETHROW_UNSAFE_EXCEPTIONS |
-                DebugFlag::RETHROW_INTERNAL_EXCEPTIONS
-            )
+            ->setDebugFlag($this->getDebugFlag())
         ;
 
         return $this->json((new StandardServer($config))->executePsrRequest($request));
+    }
+
+    private function getDebugFlag(): int
+    {
+        $debug = DebugFlag::NONE;
+
+        if($this->getParameter('kernel.environment') === 'dev') {
+            $debug = DebugFlag::INCLUDE_DEBUG_MESSAGE;
+        }
+
+        return $debug;
     }
 }

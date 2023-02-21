@@ -14,7 +14,7 @@ class UserType extends ObjectType
         parent::__construct([
             'name' => 'User',
             'fields' => [
-                'uuid' => [
+                'uid' => [
                     'type' => Type::id(),
                 ],
                 'email' => [

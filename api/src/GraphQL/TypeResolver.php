@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
 /**
  * @method UserType user()
  */
-class TypeLoader
+class TypeResolver
 {
     private static array $guessingNamespaces = [
         'GraphQL\Type\Definition',
@@ -62,6 +62,9 @@ class TypeLoader
         return Type::string();
     }
 
+    /**
+     * @return ListOfType<Type>
+     */
     public function listOf(callable|Type $type): ListOfType
     {
         return new ListOfType($type);
@@ -69,6 +72,7 @@ class TypeLoader
 
     public function nonNull(Type|callable $type): NonNull
     {
+        /** @phpstan-ignore-next-line */
         return new NonNull($type);
     }
 
@@ -87,7 +91,6 @@ class TypeLoader
 
         foreach (self::$guessingNamespaces as $namespace) {
             $guessedClassName = $namespace.'\\'.$typeName.'Type';
-            dump($guessedClassName);
             if (is_a($guessedClassName, Type::class, true)) {
                 return $guessedClassName;
             }

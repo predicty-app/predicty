@@ -163,6 +163,8 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/webonyx/graphql-php" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpstan" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/rector" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/doctrine/data-fixtures" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/doctrine/doctrine-fixtures-bundle" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
