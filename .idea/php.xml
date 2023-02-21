@@ -170,6 +170,15 @@
       <path value="$PROJECT_DIR$/api/vendor/doctrine/data-fixtures" />
       <path value="$PROJECT_DIR$/api/vendor/doctrine/doctrine-fixtures-bundle" />
       <path value="$PROJECT_DIR$/api/vendor/nelmio/cors-bundle" />
+      <path value="$PROJECT_DIR$/api/vendor/dama/doctrine-test-bundle" />
+      <path value="$PROJECT_DIR$/api/vendor/coduo/php-matcher" />
+      <path value="$PROJECT_DIR$/api/vendor/coduo/php-to-string" />
+      <path value="$PROJECT_DIR$/api/vendor/aeon-php/calendar" />
+      <path value="$PROJECT_DIR$/api/vendor/liip/test-fixtures-bundle" />
+      <path value="$PROJECT_DIR$/api/vendor/fidry/cpu-core-counter" />
+      <path value="$PROJECT_DIR$/api/vendor/brianium/paratest" />
+      <path value="$PROJECT_DIR$/api/vendor/jean85/pretty-package-versions" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/clock" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
@@ -183,6 +192,7 @@
           </dockerComposeConfigurationPaths>
           <envs>
             <env name="PHP_CS_FIXER_IGNORE_ENV" value="1" />
+            <env name="XDEBUG_MODE" value="debug,coverage" />
           </envs>
         </remote_data>
       </interpreter>
@@ -261,7 +271,7 @@
   </component>
   <component name="PhpUnit">
     <phpunit_settings>
-      <PhpUnitSettings custom_loader_path="$PROJECT_DIR$/api/vendor/autoload.php" />
+      <phpunit_by_interpreter interpreter_id="23fb3da4-6b93-4e83-b324-a17288f6414f" load_method="PHPUNIT_PHAR" bootstrap_file_path="tests/bootstrap.php" configuration_file_path="phpunit.xml.dist" custom_loader_path="/app/vendor/autoload.php" phpunit_phar_path="bin/phpunit" use_bootstrap_file="true" use_configuration_file="true" />
     </phpunit_settings>
   </component>
   <component name="PsalmOptionsConfiguration">

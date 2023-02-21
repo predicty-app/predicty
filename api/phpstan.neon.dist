@@ -1,3 +1,6 @@
+includes:
+    - vendor/phpstan/phpstan-symfony/extension.neon
+    - vendor/phpstan/phpstan-symfony/rules.neon
 parameters:
     level: 8
     checkMissingIterableValueType: false
@@ -10,3 +13,7 @@ parameters:
     paths:
         - src
         - tests
+    symfony:
+        containerXmlPath: var/cache/dev/App_KernelDevDebugContainer.xml
+    scanDirectories:
+        - var/cache/dev/Symfony/Config

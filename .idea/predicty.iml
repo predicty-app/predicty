@@ -6,6 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/api/src" isTestSource="false" packagePrefix="App\" />
       <sourceFolder url="file://$MODULE_DIR$/api/tests/unit" isTestSource="true" packagePrefix="App\Tests\Unit\" />
+      <sourceFolder url="file://$MODULE_DIR$/api/tests/functional" isTestSource="true" packagePrefix="App\Tests\Functional\" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpdocumentor/type-resolver" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpdocumentor/reflection-common" />
@@ -165,6 +166,15 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/rector" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/doctrine/data-fixtures" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/doctrine/doctrine-fixtures-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/dama/doctrine-test-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/coduo/php-matcher" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/coduo/php-to-string" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/aeon-php/calendar" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/liip/test-fixtures-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/fidry/cpu-core-counter" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/brianium/paratest" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/jean85/pretty-package-versions" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/clock" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

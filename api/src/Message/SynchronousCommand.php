@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace App\Message;
 
-class Logout implements Command
+interface SynchronousCommand extends Command
 {
 }

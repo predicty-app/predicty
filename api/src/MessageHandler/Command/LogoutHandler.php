@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Message;
+namespace App\MessageHandler\Command;
 
+use App\Message\Command\Logout;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -16,6 +17,8 @@ class LogoutHandler
 
     public function __invoke(Logout $message): void
     {
-        $this->security->logout(false);
+        if ($this->security->getUser() !== null) {
+            $this->security->logout(false);
+        }
     }
 }

@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Message;
+namespace App\MessageHandler\Command;
 
 use App\Entity\User;
+use App\Message\Command\Login;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RequestStack;

@@ -8,6 +8,7 @@ parameters:
 services:
     # default configuration for services in *this* file
     _defaults:
+        public: true
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
@@ -18,20 +19,8 @@ services:
         exclude:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
+            - '../src/Message/'
             - '../src/Kernel.php'
-
-    GraphQL\Type\Definition\:
-        resource: '../vendor/webonyx/graphql-php/src/Type/Definition'
-        exclude:
-            - '../vendor/webonyx/graphql-php/src/Type/Definition/CustomScalarType.php'
-            - '../vendor/webonyx/graphql-php/src/Type/Definition/EnumType.php'
-            - '../vendor/webonyx/graphql-php/src/Type/Definition/InputObjectType.php'
-            - '../vendor/webonyx/graphql-php/src/Type/Definition/InterfaceType.php'
-            - '../vendor/webonyx/graphql-php/src/Type/Definition/ListOfType.php'
-            - '../vendor/webonyx/graphql-php/src/Type/Definition/NonNull.php'
-            - '../vendor/webonyx/graphql-php/src/Type/Definition/ObjectType.php'
-            - '../vendor/webonyx/graphql-php/src/Type/Definition/PhpEnumType.php'
-            - '../vendor/webonyx/graphql-php/src/Type/Definition/UnionType.php'
 
     _instanceof:
         GraphQL\Type\Definition\Type:

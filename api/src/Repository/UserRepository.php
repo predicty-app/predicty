@@ -28,13 +28,20 @@ class UserRepository implements PasswordUpgraderInterface
         return $this->repository->findOneBy(['email' => $username]);
     }
 
-    public function save(User $entity, bool $flush = false): void
+    public function findByEmail(string $email): ?User
+    {
+        return $this->repository->findOneBy(['email' => $email]);
+    }
+
+    public function save(User $entity): void
     {
         $this->em->persist($entity);
+    }
 
-        if ($flush) {
-            $this->em->flush();
-        }
+    public function saveAndFlush(User $entity): void
+    {
+        $this->save($entity);
+        $this->em->flush();
     }
 
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\GraphQL\Mutation;
 
 use App\GraphQL\TypeResolver;
-use App\Message\Logout;
+use App\Message\Command\Logout;
 use GraphQL\Type\Definition\FieldDefinition;
 use Symfony\Component\Messenger\MessageBusInterface;
 

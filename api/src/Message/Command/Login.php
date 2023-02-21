@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Message;
+namespace App\Message\Command;
 
-class Login implements Command
+use App\Message\SynchronousCommand;
+
+class Login implements SynchronousCommand
 {
     public readonly string $username;
     public readonly string $password;

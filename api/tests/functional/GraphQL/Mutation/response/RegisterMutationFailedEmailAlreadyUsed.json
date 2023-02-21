@@ -1,0 +1,19 @@
+{
+  "errors": [
+    {
+      "message": "The email \u0022john.doe@example.com\u0022 cannot be used anymore. Use different email.",
+      "locations": [
+        {
+          "line": 2,
+          "column": 7
+        }
+      ],
+      "path": [
+        "register"
+      ]
+    }
+  ],
+  "data": {
+    "register": null
+  }
+}
