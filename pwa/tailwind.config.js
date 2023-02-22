@@ -9,8 +9,14 @@ module.exports = {
         default: '#2E0C63'
       },
       text: {
+        input: '#82848A',
+        error: '#da2f2f',
         primary: '#2E0C63',
         secondary: '#272727',
+      },
+      default: {
+        border: '#b3b6ba',
+        outline: '#b3b6ba'
       },
       logo: {
         green: {
