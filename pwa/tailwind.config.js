@@ -5,6 +5,12 @@ module.exports = {
   darkMode: false,
   theme: {
     colors: {
+      layout: {
+        onboarding: {
+          background: '#F5F6FD',
+          border: '#E0E3FA'
+        },
+      },
       fill: {
         default: '#2E0C63'
       },

@@ -14,6 +14,7 @@ declare module '@vue/runtime-core' {
     HeaderText: typeof import('./src/components/Common/HeaderText.vue')['default']
     IconSvg: typeof import('./src/components/Common/IconSvg.vue')['default']
     InputForm: typeof import('./src/components/Common/InputForm.vue')['default']
+    OnBoardingLayout: typeof import('./src/components/Layouts/OnBoardingLayout.vue')['default']
     ProgressBar: typeof import('./src/components/Common/ProgressBar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
