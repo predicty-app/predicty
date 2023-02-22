@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
+use App\GraphQL\Schema;
 use GraphQL\Error\DebugFlag;
+use GraphQL\Error\Error;
 use GraphQL\Server\ServerConfig;
 use GraphQL\Server\StandardServer;
-use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
-use GraphQL\Type\Schema;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,42 +18,47 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class GraphQlController extends AbstractController
 {
-    #[Route('/graphql', name: 'app_graphql')]
-    public function __invoke(ServerRequestInterface $request): Response
+    public function __construct(private LoggerInterface $logger)
     {
-        if ($request->getMethod() === Request::METHOD_GET) {
-            return $this->render('graphql/index.html.twig', [
-                'controller_name' => 'GraphQlController',
-            ]);
+    }
+
+    #[Route('/graphql', name: 'app_graphql')]
+    public function __invoke(Request $sfr, ServerRequestInterface $request, Schema $schema): Response
+    {
+        if (Request::METHOD_GET === $request->getMethod()) {
+            return $this->render('graphql/index.html.twig');
         }
 
         $data = json_decode($request->getBody()->getContents(), true);
         $request = $request->withParsedBody($data);
-        $rootValue = ['prefix' => 'You said: '];
-        $queryType = new ObjectType([
-            'name' => 'Query',
-            'fields' => [
-                'echo' => [
-                    'type' => Type::string(),
-                    'args' => [
-                        'message' => Type::nonNull(Type::string()),
-                    ],
-                    'resolve' => fn ($rootValue, array $args): string => $rootValue['prefix'] . $args['message'],
-                ],
-            ],
-        ]);
-
-        $schema = new Schema(['query' => $queryType]);
+        $rootValue = [];
 
         $config = ServerConfig::create()
             ->setRootValue($rootValue)
             ->setSchema($schema)
-            ->setDebugFlag(DebugFlag::INCLUDE_DEBUG_MESSAGE | DebugFlag::INCLUDE_TRACE | DebugFlag::RETHROW_UNSAFE_EXCEPTIONS | DebugFlag::RETHROW_INTERNAL_EXCEPTIONS)
-        ;
+            ->setDebugFlag($this->getDebugFlag())
+            ->setErrorsHandler(function (array $errors, callable $formatter) {
+                /** @var Error[] $errors */
+                foreach ($errors as $error) {
+                    $this->logger->error($error->getMessage(), [
+                        'exception' => $error,
+                    ]);
+                }
 
-        $server = new StandardServer($config);
-        $result = $server->executePsrRequest($request);
+                return array_map($formatter, $errors);
+            });
 
-        return $this->json($result);
+        return $this->json((new StandardServer($config))->executePsrRequest($request));
+    }
+
+    private function getDebugFlag(): int
+    {
+        $debug = DebugFlag::NONE;
+
+        if (in_array($this->getParameter('kernel.environment'), ['dev', 'test'], true)) {
+            $debug = DebugFlag::INCLUDE_DEBUG_MESSAGE;
+        }
+
+        return $debug;
     }
 }

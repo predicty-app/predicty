@@ -51,6 +51,13 @@
 <script>window.addEventListener('load', function (event) {
         GraphQLPlayground.init(document.getElementById('root'), {
             // options as 'endpoint' belong here
+            settings: {
+                // see https://github.com/graphql/graphql-playground#settings
+                'request.credentials': 'include',
+                'schema.polling.interval': 30000,
+                'tracing.tracingSupported': false
+            }
+
         })
     })</script>
 </body>
