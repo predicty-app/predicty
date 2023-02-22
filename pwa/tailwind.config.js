@@ -5,6 +5,9 @@ module.exports = {
   darkMode: false,
   theme: {
     colors: {
+      fill: {
+        default: '#2E0C63'
+      },
       text: {
         primary: '#2E0C63',
         secondary: '#272727',
