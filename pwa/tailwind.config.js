@@ -8,7 +8,24 @@ module.exports = {
       fill: {
         default: '#2E0C63'
       },
-      progress: {
+      tag: {
+        border: {
+          default: '#E0E3FA',
+          success: '#19BE34',
+          primary: '#E0E3FA',
+        },
+        background: {
+          default: '#E0E3FA',
+          success: '#E9FFF0',
+          primary: '#F5F6FD',
+        },
+        text: {
+          default: '#2E0C63',
+          success: '#19BE34',
+          primary: '#2432A1',
+        }
+      },
+      progress: { 
         default: '#E0E3FA',
         active: '#2E0C63'
       },
