@@ -31,13 +31,6 @@ module.exports = {
           'vue-i18n': 'vue-i18n/dist/vue-i18n.cjs.js'
         }
       },
-      css: {
-        preprocessorOptions: {
-          scss: {
-            additionalData: `@import '../src/assets/scss/index.scss';`,
-          },
-        },
-      },
       plugins: [...config.plugins, tsconfigPaths()],
     };
   },
