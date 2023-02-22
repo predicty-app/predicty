@@ -8,7 +8,20 @@ module.exports = {
       fill: {
         default: '#2E0C63'
       },
+      button: {
+        default: '#F5F6FD',
+        success: '#60D073',
+        hover: {
+          default: '#e4e7f7',
+          success: '#41cb59',
+        },
+        active: {
+          default: '#e2e4ec',
+          success: '#4cb25d',
+        }
+      },
       text: {
+        white: '#FFFFFF',
         input: '#82848A',
         error: '#da2f2f',
         primary: '#2E0C63',

@@ -13,7 +13,6 @@ export default {
       defaultValue: 'primary',
       name: 'type',
       type: { name: 'string', required: false },
-
     },
     placeholder: {
       name: 'placeholder',

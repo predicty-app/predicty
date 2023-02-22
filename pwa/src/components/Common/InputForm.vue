@@ -32,9 +32,8 @@ function changeValue(event: Event) {
       <span class="text-text-error text-xl" v-if="required">*</span>
       {{ label }}
     </label>
-    <input type="text" :value="modelValue" @input="changeValue" :disabled="type === 'disabled'"
+    <input type="text" :value="modelValue" @input="changeValue"
       :class="['w-full p-4 font-normal text-text-input text-base border border-slate-200 rounded transition-all', {
-        'cursor-not-allowed': type === 'disabled',
         'border-default-border outline-default-outline': type === 'default'
       }]" :placeholder="placeholder" />
     <span v-if="errorMessage" class="text-text-error text-xs block mt-1 ml-1">
