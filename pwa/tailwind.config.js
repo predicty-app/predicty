@@ -8,6 +8,9 @@ module.exports = {
       fill: {
         default: '#2E0C63'
       },
+      divider: {
+        default: '#D9D9D9',
+      },
       tag: {
         border: {
           default: '#E0E3FA',
