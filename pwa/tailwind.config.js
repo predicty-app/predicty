@@ -8,6 +8,10 @@ module.exports = {
       fill: {
         default: '#2E0C63'
       },
+      progress: {
+        default: '#E0E3FA',
+        active: '#2E0C63'
+      },
       button: {
         default: '#F5F6FD',
         success: '#60D073',
