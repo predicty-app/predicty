@@ -20,8 +20,7 @@ class LoginMutation extends FieldDefinition
         TypeResolver $type,
         private MessageBusInterface $messageBus,
         private UserMapper $userMapper
-    )
-    {
+    ) {
         parent::__construct([
             'name' => 'login',
             'type' => $type->user(),

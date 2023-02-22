@@ -3,3 +3,6 @@ fix:
 
 phpstan:
 	docker compose exec php ./vendor/bin/phpstan analyze
+
+fixtures:
+	docker compose exec php ./bin/console doctrine:fixtures:load --no-interaction

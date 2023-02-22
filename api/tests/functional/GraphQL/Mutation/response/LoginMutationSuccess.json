@@ -2,7 +2,7 @@
   "data": {
     "login": {
       "uid": "@uuid@",
-      "email": "john.doe@example.com"
+      "@*@": "@*@"
     }
   }
 }
