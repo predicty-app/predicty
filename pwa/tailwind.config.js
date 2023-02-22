@@ -5,6 +5,10 @@ module.exports = {
   darkMode: false,
   theme: {
     colors: {
+      text: {
+        primary: '#2E0C63',
+        secondary: '#272727',
+      },
       logo: {
         green: {
           dark: '#19BE34B2',
