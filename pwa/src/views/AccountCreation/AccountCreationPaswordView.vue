@@ -3,5 +3,5 @@
 </script>
 
 <template>
-
+  account password
 </template>

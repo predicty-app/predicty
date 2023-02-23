@@ -5,6 +5,12 @@
         "header": "Upload data file",
         "content": "Select a file or drag here"
       }
+    },
+    "on-boarding": {
+      "account-creation-email-form": {
+        "input-label": "E-mail:",
+        "input-placeholder": "Please enter your email..."
+      }
     }
   },
   "views": {
@@ -12,6 +18,11 @@
       "header-title": "Welcome",
       "header-description": "We are platform that collects data from your websites and apps to create reports that provide insights into your business. Measuring a website To measure a website, you first...",
       "button": "Start for free"
+    },
+    "account-creation-email": {
+      "header-title": "Welcome",
+      "header-description": "We are platform that collects data from your websites and apps to create.",
+      "button": "Next"
     }
   }
 }

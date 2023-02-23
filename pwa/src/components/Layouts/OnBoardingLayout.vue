@@ -12,7 +12,7 @@ const slots = useSlots()
     <div class="flex-auto flex-col gap-y-6 h-0 overflow-y-auto flex justify-center max-w-xl w-full px-3">
       <slot name="content" />
     </div>
-    <div v-if="slots.footer" class="w-full  bg-text-white py-4 px-8 border-t border-t-layout-onboarding-border">
+    <div v-if="slots.footer" class="w-full  bg-text-white py-4 px-8 border-t border-t-layout-onboarding-border flex gap-x-10">
       <slot name="footer" />
     </div>
   </div>
