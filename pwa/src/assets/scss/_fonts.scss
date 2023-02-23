@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@100;200;300;400;500;600;700&family=IBM+Plex+Sans:wght@100;200;300;400;500;600;700&family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+@layer components {
+  .font-ibm-sans {
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+
+  .font-ibm-mono {
+    font-family: 'IBM Plex Mono', monospace;
+  }
+}

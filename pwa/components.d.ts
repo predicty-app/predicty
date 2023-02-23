@@ -7,7 +7,19 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    AppLogo: typeof import('./src/components/Common/AppLogo.vue')['default']
+    ButtonForm: typeof import('./src/components/Common/ButtonForm.vue')['default']
+    CardPanel: typeof import('./src/components/Common/CardPanel.vue')['default']
+    DividerLine: typeof import('./src/components/Common/DividerLine.vue')['default']
+    HeaderText: typeof import('./src/components/Common/HeaderText.vue')['default']
+    IconSvg: typeof import('./src/components/Common/IconSvg.vue')['default']
+    InputForm: typeof import('./src/components/Common/InputForm.vue')['default']
+    OnBoardingLayout: typeof import('./src/components/Layouts/OnBoardingLayout.vue')['default']
+    ProgressBar: typeof import('./src/components/Common/ProgressBar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SpinnerBar: typeof import('./src/components/Common/SpinnerBar.vue')['default']
+    TagPin: typeof import('./src/components/Common/TagPin.vue')['default']
+    UploadFile: typeof import('./src/components/Common/UploadFile.vue')['default']
   }
 }

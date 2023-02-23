@@ -1,5 +1,8 @@
 const path = require("path");
 const url = require("url");
+const AutoImport = require('unplugin-auto-import/vite')
+const Components = require('unplugin-vue-components/vite')
+
 const tsconfigPaths = require("vite-tsconfig-paths").default;
 
 module.exports = {
@@ -31,14 +34,7 @@ module.exports = {
           'vue-i18n': 'vue-i18n/dist/vue-i18n.cjs.js'
         }
       },
-      css: {
-        preprocessorOptions: {
-          scss: {
-            additionalData: `@import '../src/assets/scss/index.scss';`,
-          },
-        },
-      },
-      plugins: [...config.plugins, tsconfigPaths()],
+      plugins: [...config.plugins, tsconfigPaths(), AutoImport(), Components()],
     };
   },
 }
