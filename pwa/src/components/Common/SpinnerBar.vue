@@ -44,7 +44,7 @@ withDefaults(defineProps<PropsType>(), {
   &::before {
     width: 50%;
     height: 50%;
-    background: #ffffff;
+    background: transparent;
     border-radius: 100% 0 0 0;
     position: absolute;
     top: 0;
@@ -53,7 +53,7 @@ withDefaults(defineProps<PropsType>(), {
   }
 
   &::after {
-    background: #ffffff;
+    background: #F5F6FD;
     width: 75%;
     height: 75%;
     border-radius: 50%;

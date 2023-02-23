@@ -10,8 +10,11 @@ const { t } = useI18n()
       <AppLogo />
     </template>
     <template #content>
-      <HeaderText :header-title="t('views.start-screen.header-title')"
-        :header-description="t('views.start-screen.header-description')" />
+      <div class="text-center">
+        <HeaderText :header-title="t('views.preparing-screen.header-title')"
+          :header-description="t('views.preparing-screen.header-description')" />
+        <SpinnerBar :is-visible="true"/>
+      </div>
     </template>
   </OnBoardingLayout>
 </template>
