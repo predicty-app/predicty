@@ -15,6 +15,12 @@
         "input-label": "Password:",
         "input-placeholder": "000 000",
         "button": "Continue"
+      },
+      "connect-account-form": {
+        "pin": {
+          "connected": "Connected",
+          "click-to-connect": "Click to connect"
+        }
       }
     }
   },
@@ -36,6 +42,11 @@
         "next": "Next",
         "back": "Back"
       }
+    },
+    "basic-media-integration": {
+      "header-title": "Connect your accounts",
+      "header-description": "We are platform that collects data from your websites and apps to create ",
+      "button": "Next"
     }
   }
 }

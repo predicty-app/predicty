@@ -16,7 +16,7 @@ withDefaults(defineProps<PropsType>(), {
     'bg-tag-background-success border-tag-border-success text-tag-text-success': type === 'success',
     'bg-tag-background-primary border-tag-border-primary text-tag-text-primary': type === 'primary',
   }]">
-    <IconSvg v-if="type === 'success'" class="w-3 h-3" name="check"/>
+    <IconSvg v-if="type === 'success'" class-name="w-3 h-3" name="check"/>
     <slot />
   </div>
 </template>
