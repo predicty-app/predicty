@@ -7,7 +7,7 @@ const router = useRouter()
 const nextStepPath = '/onboarding/account-creation'
 </script>
 
-<template>
+<template> 
   <OnBoardingLayout>
     <template #header>
       <AppLogo />
