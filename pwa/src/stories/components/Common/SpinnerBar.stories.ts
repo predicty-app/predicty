@@ -4,7 +4,7 @@ type ComponentPropsType = {}
 
 export default {
   component: SpinnerBarComponent,
-  title: 'Common/SpinnerBar',
+  title: 'Components/Common/SpinnerBar',
   argTypes: {
     isVisible: {
       name: 'isVisible',

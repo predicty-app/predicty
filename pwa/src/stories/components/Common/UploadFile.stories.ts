@@ -4,7 +4,7 @@ type ComponentPropsType = {}
 
 export default {
   component: UploadFileComponent,
-  title: 'Common/UploadFile',
+  title: 'Components/Common/UploadFile',
   parameters: {
     status: {
       type: 'todo',

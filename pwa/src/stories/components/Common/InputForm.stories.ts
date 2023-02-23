@@ -4,7 +4,7 @@ type ComponentPropsType = {}
 
 export default {
   component: InputFormComponent,
-  title: 'Common/InputForm',
+  title: 'Components/Common/InputForm',
   argTypes: {
     type: {
       options: ['default'],

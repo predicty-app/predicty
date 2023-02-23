@@ -10,6 +10,11 @@
       "account-creation-email-form": {
         "input-label": "E-mail:",
         "input-placeholder": "Please enter your email..."
+      },
+      "account-creation-password-form": {
+        "input-label": "Password:",
+        "input-placeholder": "000 000",
+        "button": "Continue"
       }
     }
   },
@@ -23,6 +28,14 @@
       "header-title": "Welcome",
       "header-description": "We are platform that collects data from your websites and apps to create.",
       "button": "Next"
+    },
+    "account-creation-pasword": {
+      "header-title": "We’ve sent you a passcode",
+      "header-description": "Check your email address: %s",
+      "buttons": {
+        "next": "Next",
+        "back": "Back"
+      }
     }
   }
 }

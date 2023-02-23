@@ -4,7 +4,7 @@ type ComponentPropsType = {}
 
 export default {
   component: OnBoardingLayoutComponent,
-  title: 'Layouts/OnBoardingLayout',
+  title: 'Components/Layouts/OnBoardingLayout',
   parameters: {
     status: {
       type: 'stable',

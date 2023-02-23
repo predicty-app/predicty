@@ -4,7 +4,7 @@ type ComponentPropsType = {}
 
 export default {
   component: ButtonFormComponent,
-  title: 'Common/ButtonForm',
+  title: 'Components/Common/ButtonForm',
   argTypes: {
     type: {
       options: ['default', 'success'],
