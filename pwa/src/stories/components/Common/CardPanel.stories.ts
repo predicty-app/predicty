@@ -4,7 +4,7 @@ type ComponentPropsType = {}
 
 export default {
   component: CardPanelComponent,
-  title: 'Common/CardPanel',
+  title: 'Components/Common/CardPanel',
   parameters: {
     status: {
       type: 'stable',

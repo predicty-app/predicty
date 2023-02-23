@@ -4,7 +4,7 @@ type ComponentPropsType = {}
 
 export default {
   component: ProgressBarComponent,
-  title: 'Common/ProgressBar',
+  title: 'Components/Common/ProgressBar',
   argTypes: {
     countSteps: {
       name: 'countSteps',

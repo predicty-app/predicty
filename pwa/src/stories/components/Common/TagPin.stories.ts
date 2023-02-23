@@ -4,7 +4,7 @@ type ComponentPropsType = {}
 
 export default {
   component: TagPinComponent,
-  title: 'Common/TagPin',
+  title: 'Components/Common/TagPin',
   argTypes: {
     type: {
       options: ['default', 'success', 'primary'],

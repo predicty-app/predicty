@@ -4,7 +4,7 @@ type ComponentPropsType = {}
 
 export default {
   component: DividerLineComponent,
-  title: 'Common/DividerLine',
+  title: 'Components/Common/DividerLine',
   parameters: {
     status: {
       type: 'stable',

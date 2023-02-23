@@ -4,7 +4,7 @@ type ComponentPropsType = {}
 
 export default {
   component: AppLogoComponent,
-  title: 'Common/AppLogo',
+  title: 'Components/Common/AppLogo',
   parameters: {
     status: {
       type: 'stable',

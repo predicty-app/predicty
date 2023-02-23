@@ -4,7 +4,7 @@ type ComponentPropsType = {}
 
 export default {
   component: HeaderTextComponent,
-  title: 'Common/HeaderText',
+  title: 'Components/Common/HeaderText',
   argTypes: {
     headerTitle: {
       description: 'Props for show title header.',

@@ -4,7 +4,7 @@ type ComponentPropsType = {}
 
 export default {
   component: IconSvgComponent,
-  title: 'Common/IconSvg',
+  title: 'Components/Common/IconSvg',
   argTypes: {
     name: {
       name: 'name',
