@@ -7,7 +7,7 @@ export default {
   title: 'Common/UploadFile',
   parameters: {
     status: {
-      type: 'stable',
+      type: 'todo',
     },
     docs: {
       description: {
