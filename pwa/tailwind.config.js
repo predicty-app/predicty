@@ -6,8 +6,9 @@ module.exports = {
   theme: {
     colors: {
       upload: {
-        background: '#F5F6FD',
-        border: '#E0E3FA'
+        background: '#FFFFFF',
+        border: '#E0E3FA',
+        text: '#2E0C63'
       },
       layout: {
         onboarding: {

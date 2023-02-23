@@ -11,7 +11,7 @@ withDefaults(defineProps<PropsType>(), {
 </script>
 
 <template>
-  <div :class="['px-2 py-1 rounded text-[10px] border justify-center flex  gap-x-1 items-center', {
+  <div :class="['px-2 rounded text-[10px] border justify-center flex  gap-x-1 items-center', {
     'bg-tag-background-default border-tag-border-default text-tag-text-default': type === 'default',
     'bg-tag-background-success border-tag-border-success text-tag-text-success': type === 'success',
     'bg-tag-background-primary border-tag-border-primary text-tag-text-primary': type === 'primary',

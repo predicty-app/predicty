@@ -1,8 +1,10 @@
 import { app } from '@storybook/vue3';
 import { createPinia } from 'pinia';
 import router from '../src/router'
+import i18n from '../src/translations'
 
 const pinia = createPinia();
+app.use(i18n)
 app.use(pinia);
 app.use(router)
 
