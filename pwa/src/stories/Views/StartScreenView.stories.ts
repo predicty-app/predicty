@@ -7,7 +7,7 @@ export default {
   title: 'Views/StartScreenView',
   parameters: {
     status: {
-      type: 'todo',
+      type: 'stable',
     },
     docs: {
       description: {
