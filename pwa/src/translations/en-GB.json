@@ -47,6 +47,10 @@
       "header-title": "Connect your accounts",
       "header-description": "We are platform that collects data from your websites and apps to create ",
       "button": "Next"
+    },
+    "preparing-screen": {
+      "header-title": "Good job!",
+      "header-description": "We are setting up your account"
     }
   }
 }
