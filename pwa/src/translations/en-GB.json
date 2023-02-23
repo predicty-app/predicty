@@ -6,5 +6,12 @@
         "content": "Select a file or drag here"
       }
     }
+  },
+  "views": {
+    "start-screen": {
+      "header-title": "Welcome",
+      "header-description": "We are platform that collects data from your websites and apps to create reports that provide insights into your business. Measuring a website To measure a website, you first...",
+      "button": "Start for free"
+    }
   }
 }

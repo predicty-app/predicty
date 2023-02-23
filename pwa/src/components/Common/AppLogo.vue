@@ -5,6 +5,6 @@
       <div class="w-[5px] h-[24px] bg-gradient-to-t from-logo-blue-light to-logo-blue-dark rounded-t-[2px]"></div>
       <div class="w-[5px] h-[22px] bg-gradient-to-t from-logo-purple-light to-logo-purple-dark rounded-t-[2px]"></div>
     </div>
-    <div class="font-ibm-mono text-xl">Predicty</div>
+    <div class="font-ibm-mono text-xl font-semibold">Predicty</div>
   </div>
 </template>

@@ -5,11 +5,11 @@ const slots = useSlots()
 </script>
 
 <template>
-  <div class="h-full flex flex-col min-h-full animate-fade-in bg-layout-onboarding-background">
-    <div v-if="slots.header" class="mt-12 flex justify-center">
+  <div class="h-full flex flex-col items-center min-h-full animate-fade-in bg-layout-onboarding-background">
+    <div v-if="slots.header" class="pt-12 flex justify-center pb-6">
       <slot name="header" />
     </div>
-    <div class="flex-auto h-0 overflow-y-auto flex justify-center items-center">
+    <div class="flex-auto flex-col gap-y-6 h-0 overflow-y-auto flex justify-center max-w-xl w-full px-3">
       <slot name="content" />
     </div>
     <div v-if="slots.footer" class="w-full  bg-text-white py-4 px-8 border-t border-t-layout-onboarding-border">
