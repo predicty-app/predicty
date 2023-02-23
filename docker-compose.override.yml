@@ -27,8 +27,7 @@ services:
     environment:
       API_PLATFORM_CREATE_CLIENT_ENTRYPOINT: http://caddy
       API_PLATFORM_CREATE_CLIENT_OUTPUT: .
-      # On Linux, you may want to comment the following line for improved performance
-      WATCHPACK_POLLING: 1
+      WATCHPACK_POLLING: ${PWA_WATCHPACK_POLLING:-0}
 
   caddy:
     volumes:
@@ -36,7 +35,7 @@ services:
       - ./api/docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
     environment:
       MERCURE_EXTRA_DIRECTIVES: demo
-      # PWA_UPSTREAM: host.docker.internal:3000
+      PWA_UPSTREAM: ${PWA_UPSTREAM:-pwa:5173}
 
 ###> doctrine/doctrine-bundle ###
   database:
