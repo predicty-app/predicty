@@ -1,4 +1,6 @@
 {
+    "name": "divante/predicty",
+    "description": "",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",

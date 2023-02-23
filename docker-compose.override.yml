@@ -12,11 +12,11 @@ services:
       #  from the bind-mount for better performance by enabling the next line:
       # - /app/vendor
     environment:
-      XDEBUG_MODE: "${XDEBUG_MODE:-off}"
+      XDEBUG_MODE: ${XDEBUG_MODE:-off}
       MAILER_DSN: ${MAILER_DSN:-smtp://mailhog:1025}
     extra_hosts:
       - host.docker.internal:host-gateway
-    user: "${DOCKER_USER_ID:-1000}:${DOCKER_GROUP_ID:-1000}"
+    user: ${DOCKER_USER_ID:-1000}:${DOCKER_GROUP_ID:-1000}
 
   pwa:
     build:
@@ -27,7 +27,7 @@ services:
     environment:
       WATCHPACK_POLLING: ${PWA_WATCHPACK_POLLING:-0}
       NODE_ENV: ${NODE_ENV:-development}
-    user: "${DOCKER_USER_ID:-1000}:${DOCKER_GROUP_ID:-1000}"
+    user: ${DOCKER_USER_ID:-1000}:${DOCKER_GROUP_ID:-1000}
 
   caddy:
     volumes:

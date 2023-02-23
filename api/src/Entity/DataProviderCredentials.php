@@ -18,9 +18,11 @@ class DataProviderCredentials
     private int $userId;
 
     #[ORM\Column]
+    /** @phpstan-ignore-next-line */
     private DataProvider $dataProvider;
 
     #[ORM\Column(nullable: true)]
+    /** @phpstan-ignore-next-line */
     private array $credentials = [];
 
     public function __construct(int $userId, DataProvider $dataProvider, array $credentials = [])
@@ -40,16 +42,6 @@ class DataProviderCredentials
     public function getUserId(): int
     {
         return $this->userId;
-    }
-
-    public function getDataProvider(): DataProvider
-    {
-        return $this->dataProvider;
-    }
-
-    public function getCredentials(): array
-    {
-        return $this->credentials;
     }
 
     public function setCredentials(array $credentials): self

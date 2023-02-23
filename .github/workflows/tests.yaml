@@ -1,0 +1,57 @@
+name: "Tests"
+on:
+  pull_request:
+    branches:
+      - develop
+env:
+  DOCKER_BUILDKIT: 1
+jobs:
+  build-backend:
+    name: "QA Pipeline"
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Get Composer Vendor Directory
+        id: composer-cache
+        run: |
+          echo "dir=${{ github.workspace }}/api/vendor" >> $GITHUB_OUTPUT
+      - uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Start containers
+        run: DOCKER_USER_ID=$(id -u) DOCKER_GROUP_ID=$(id -g) docker compose -f "docker-compose.yml" -f "docker-compose.override.yml" up php -d --wait
+
+      - name: Print container logs
+        run: docker compose logs php
+
+      - name: Validate Composer lock
+        run: docker compose exec php composer validate --strict
+
+      - name: Validate configs
+        run: docker compose exec php bin/console lint:yaml ./config --parse-tags
+
+      - name: PHPUnit
+        run: docker compose exec -e RESET_TEST_DATABASE=1 -e SYMFONY_DEPRECATIONS_HELPER=disabled php bin/phpunit --configuration /app/phpunit.xml.dist
+
+      - name: PHPStan
+        run: docker compose exec php ./vendor/bin/phpstan analyse --configuration ./phpstan.neon.dist --no-progress --memory-limit 1G
+
+      - name: PHP-CS-Fixer
+        run: docker compose exec -e PHP_CS_FIXER_IGNORE_ENV=1 php ./vendor/bin/php-cs-fixer fix --config=./.php-cs-fixer.dist.php --allow-risky=yes --dry-run --diff
+
+      - name: PHP Code Sniffer
+        run: docker compose exec php vendor/bin/phpcs
+
+#      - name: Build PWA
+#        run: docker compose exec pwa yarn build
+
+      - name: Stop containers
+        if: always()
+        run: docker compose -f "docker-compose.yml" -f "docker-compose.override.yml" down --volumes

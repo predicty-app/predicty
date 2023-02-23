@@ -122,7 +122,6 @@
       <path value="$PROJECT_DIR$/api/vendor/qandidate/symfony-json-request-transformer" />
       <path value="$PROJECT_DIR$/api/vendor/ralouphie/getallheaders" />
       <path value="$PROJECT_DIR$/api/vendor/firebase/php-jwt" />
-      <path value="$PROJECT_DIR$/api/vendor/lcobucci/clock" />
       <path value="$PROJECT_DIR$/api/vendor/lcobucci/jwt" />
       <path value="$PROJECT_DIR$/api/vendor/php-http/message-factory" />
       <path value="$PROJECT_DIR$/api/vendor/sebastian/object-reflector" />
