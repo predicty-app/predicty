@@ -7,6 +7,7 @@
         "php": ">=8.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "ext-openssl": "*",
         "doctrine/doctrine-bundle": "^2.8",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "doctrine/doctrine-migrations-bundle": "^3.2",
@@ -15,6 +16,7 @@
         "nelmio/cors-bundle": "^2.3",
         "nyholm/psr7": "^1.5",
         "phpdocumentor/reflection-docblock": "^5.3",
+        "psr/simple-cache": "^3.0",
         "symfony/cache": "6.2.*",
         "symfony/clock": "6.2.*",
         "symfony/console": "6.2.*",
@@ -54,7 +56,8 @@
     "autoload-dev": {
         "psr-4": {
             "App\\Tests\\Unit\\": "tests/unit/",
-            "App\\Tests\\Functional\\": "tests/functional/"
+            "App\\Tests\\Functional\\": "tests/functional/",
+            "App\\Tests\\Integration\\": "tests/integration/"
         }
     },
     "replace": {
@@ -105,5 +108,7 @@
         "symfony/phpunit-bridge": "^6.2",
         "symfony/stopwatch": "6.2.*",
         "symfony/web-profiler-bundle": "6.2.*"
+    },
+    "repositories": {
     }
 }

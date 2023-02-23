@@ -165,7 +165,6 @@
       <path value="$PROJECT_DIR$/api/vendor/rector/rector" />
       <path value="$PROJECT_DIR$/api/vendor/phpstan/phpstan-symfony" />
       <path value="$PROJECT_DIR$/api/vendor/phpstan/phpstan-phpunit" />
-      <path value="" />
       <path value="$PROJECT_DIR$/api/vendor/webonyx/graphql-php" />
       <path value="$PROJECT_DIR$/api/vendor/doctrine/data-fixtures" />
       <path value="$PROJECT_DIR$/api/vendor/doctrine/doctrine-fixtures-bundle" />
@@ -179,6 +178,7 @@
       <path value="$PROJECT_DIR$/api/vendor/brianium/paratest" />
       <path value="$PROJECT_DIR$/api/vendor/jean85/pretty-package-versions" />
       <path value="$PROJECT_DIR$/api/vendor/symfony/clock" />
+      <path value="$PROJECT_DIR$/api/vendor/psr/simple-cache" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
