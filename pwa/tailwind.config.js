@@ -5,6 +5,10 @@ module.exports = {
   darkMode: false,
   theme: {
     colors: {
+      upload: {
+        background: '#F5F6FD',
+        border: '#E0E3FA'
+      },
       layout: {
         onboarding: {
           background: '#F5F6FD',
