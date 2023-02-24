@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { vMaska } from "maska"
+
 type PropsType = {
   label?: string
   modelValue: string
@@ -6,6 +8,7 @@ type PropsType = {
   placeholder?: string
   errorMessage?: string
   required?: boolean
+  mask?: string
 }
 
 const props = withDefaults(defineProps<PropsType>(), {
@@ -32,7 +35,7 @@ function changeValue(event: Event) {
       <span class="text-text-error" v-if="required">*</span>
       {{ label }}
     </label>
-    <input type="text" :value="modelValue" @input="changeValue"
+    <input type="text" v-maska v-bind="mask? { 'data-maska': mask } : ''" :value="modelValue" @input="changeValue"
       :class="['w-full p-4 font-normal text-text-input text-base border border-slate-200 rounded-[10px] transition-all', {
         'border-default-border outline-default-outline': type === 'default'
       }]" :placeholder="placeholder" />

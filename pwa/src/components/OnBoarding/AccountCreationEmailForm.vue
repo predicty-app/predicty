@@ -11,16 +11,19 @@ const router = useRouter()
 const globalStore = useGlobalStore()
 const onBoardingStore = useOnBoardingStore()
 
-const modelValue = ref<string>('')
+const modelValue = ref<string | null>(onBoardingStore.email)
 const errorMessage = ref<string | null>(null)
 
+/**
+ * Function to handle submit form.
+ */
 async function handleSubmitForm() {
-  errorMessage.value = isRequiredValidation(modelValue.value)
-  errorMessage.value = !errorMessage.value ? isEmailValidation(modelValue.value) : errorMessage.value
+  errorMessage.value = isRequiredValidation(modelValue.value as string, t)
+  errorMessage.value = !errorMessage.value ? isEmailValidation(modelValue.value as string,t ) : errorMessage.value
 
   if (!errorMessage.value) {
     globalStore.toogleSpinnerState()
-    await onBoardingStore.handleSaveEmail(modelValue.value)
+    await onBoardingStore.handleSaveEmail(modelValue.value as string)
     globalStore.toogleSpinnerState()
     router.push('/onboarding/account-creation/password')
   }

@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
+import { useOnBoardingStore } from '@/stores/onboarding'
 
 const { t } = useI18n()
+const onBoardingStore = useOnBoardingStore()
 </script>
 
 <template>
@@ -11,8 +13,8 @@ const { t } = useI18n()
     </template>
     <template #content>
       <HeaderText :header-title="t('views.account-creation-pasword.header-title')"
-        :header-description="t('views.account-creation-pasword.header-description')" />
-      <AccountCreationPassword />
+        :header-description="t('views.account-creation-pasword.header-description', { email: onBoardingStore.email })" />
+      <AccountCreationPasswordForm />
     </template>
     <template #footer>
       <div class="w-full max-w-[267px]">
@@ -24,7 +26,7 @@ const { t } = useI18n()
         </ButtonForm>
       </div>
       <div class="flex items-center flex-auto">
-        <ProgressBar :count-steps="3" :active-step="1" />
+        <ProgressBar :count-steps="3" :active-step="2" />
       </div>
       <div class="w-full max-w-[267px]">
         <ButtonForm type="success" class="w-full">
