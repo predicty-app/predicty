@@ -13,7 +13,7 @@ const routes = [
         name: 'on-boarding-start-screen',
         component: () => import('@/views/StartScreenView.vue'),
       },
-      {
+      { 
         path: '/onboarding/account-creation',
         name: 'on-boarding-account-creation',
         redirect: () => '/onboarding/account-creation/email',
