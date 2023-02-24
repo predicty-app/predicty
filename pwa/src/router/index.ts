@@ -25,8 +25,8 @@ const routes = [
             component: () => import('@/views/AccountCreation/AccountCreationEmailView.vue'),
           },
           {
-            path: '/onboarding/account-creation/emial',
-            name: 'on-boarding-account-creation-email',
+            path: '/onboarding/account-creation/password',
+            name: 'on-boarding-account-creation-password',
             component: () => import('@/views/AccountCreation/AccountCreationPasswordView.vue'),
           }
         ]

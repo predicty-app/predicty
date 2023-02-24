@@ -5,6 +5,7 @@
   "compilerOptions": {
     "composite": true,
     "baseUrl": ".",
+    "types": ["facebook-js-sdk", "gapi"],
     "paths": {
       "@/*": ["./src/*"]
     },

@@ -17,8 +17,11 @@
     "test-storybook": "test-storybook"
   },
   "dependencies": {
+    "@types/facebook-js-sdk": "^3.3.6",
+    "@types/gapi": "^0.0.44",
     "pinia": "^2.0.28",
     "register-service-worker": "^1.7.2",
+    "remove": "^0.1.5",
     "sass": "^1.58.3",
     "vue": "^3.2.45",
     "vue-i18n": "^9.2.2",
@@ -50,6 +53,7 @@
     "eslint": "^8.22.0",
     "eslint-plugin-storybook": "^0.6.1",
     "eslint-plugin-vue": "^9.3.0",
+    "fetch-inject": "^3.2.0",
     "husky": "^8.0.3",
     "jsdom": "^20.0.3",
     "npm-run-all": "^4.1.5",
