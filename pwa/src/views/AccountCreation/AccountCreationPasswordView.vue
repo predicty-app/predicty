@@ -12,7 +12,7 @@ const { t } = useI18n()
     <template #content>
       <HeaderText :header-title="t('views.account-creation-pasword.header-title')"
         :header-description="t('views.account-creation-pasword.header-description')" />
-      <AccountCreationPasword />
+      <AccountCreationPassword />
     </template>
     <template #footer>
       <div class="w-full max-w-[267px]">

@@ -1,4 +1,4 @@
-import AccountCreationPaswordViewComponent from '@/views/AccountCreation/AccountCreationPaswordView.vue'
+import AccountCreationPaswordViewComponent from '@/views/AccountCreation/AccountCreationPasswordView.vue'
 
 type ComponentPropsType = {}
 
