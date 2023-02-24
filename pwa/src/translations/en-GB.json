@@ -9,19 +9,24 @@
     "on-boarding": {
       "account-creation-email-form": {
         "input-label": "E-mail:",
-        "input-placeholder": "Please enter your email..."
+        "input-placeholder": "Please enter your email...",
+        "button": "Next"
       },
       "account-creation-password-form": {
         "input-label": "Password:",
         "input-placeholder": "000 000",
-        "button": "Continue",
+        "buttons": {
+          "continue": "Continue",
+          "next": "Next"
+        },
         "is-correct-code": "Incorrect code. Please try again."
       },
       "connect-account-form": {
         "pin": {
           "connected": "Connected",
           "click-to-connect": "Click to connect"
-        }
+        },
+        "button": "Next"
       }
     }
   },
@@ -33,14 +38,12 @@
     },
     "account-creation-email": {
       "header-title": "Welcome",
-      "header-description": "We are platform that collects data from your websites and apps to create.",
-      "button": "Next"
+      "header-description": "We are platform that collects data from your websites and apps to create."
     },
     "account-creation-pasword": {
       "header-title": "We’ve sent you a passcode",
       "header-description": "Check your email address: {email}",
       "buttons": {
-        "next": "Next",
         "back": "Back"
       }
     },
