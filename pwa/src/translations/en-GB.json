@@ -14,7 +14,8 @@
       "account-creation-password-form": {
         "input-label": "Password:",
         "input-placeholder": "000 000",
-        "button": "Continue"
+        "button": "Continue",
+        "is-correct-code": "Incorrect code. Please try again."
       },
       "connect-account-form": {
         "pin": {
@@ -37,7 +38,7 @@
     },
     "account-creation-pasword": {
       "header-title": "We’ve sent you a passcode",
-      "header-description": "Check your email address: %s",
+      "header-description": "Check your email address: {email}",
       "buttons": {
         "next": "Next",
         "back": "Back"
@@ -57,5 +58,9 @@
       "header-title": "Good job!",
       "header-description": "We are setting up your account"
     }
+  },
+  "validation": {
+    "is-required": "This field is a required field.",
+    "is-email": "The field has an incorrect e-mail format."
   }
 }

@@ -16,11 +16,11 @@ const routes = [
       {
         path: '/onboarding/account-creation',
         name: 'on-boarding-account-creation',
-        redirect: () => '/onboarding/account-creation/emial',
+        redirect: () => '/onboarding/account-creation/email',
         component: () => import('@/views/AccountCreation/AccountCreationView.vue'),
         children: [
           {
-            path: '/onboarding/account-creation/emial',
+            path: '/onboarding/account-creation/email',
             name: 'on-boarding-account-creation-email',
             component: () => import('@/views/AccountCreation/AccountCreationEmailView.vue'),
           },
