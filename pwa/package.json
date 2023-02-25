@@ -2,7 +2,7 @@
   "name": "predicty-frontend",
   "version": "0.0.0",
   "private": true,
-  "license": "",
+  "license": "MIT",
   "scripts": {
     "build": "run-p type-check build-only",
     "test:unit": "vitest --environment jsdom --root src/",
