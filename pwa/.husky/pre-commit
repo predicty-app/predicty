@@ -2,6 +2,6 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 cd pwa && yarn lint
-cd pwa && yarn type-check
-cd pwa && yarn test:unit
+yarn type-check
+yarn test:unit --run
 
