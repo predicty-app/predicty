@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
+import { useI18n } from "vue-i18n";
 
-const { t } = useI18n()
+const { t } = useI18n();
 </script>
 
 <template>
@@ -11,9 +11,11 @@ const { t } = useI18n()
     </template>
     <template #content>
       <div class="text-center">
-        <HeaderText :header-title="t('views.preparing-screen.header-title')"
-          :header-description="t('views.preparing-screen.header-description')" />
-        <SpinnerBar :is-visible="true"/>
+        <HeaderText
+          :header-title="t('views.preparing-screen.header-title')"
+          :header-description="t('views.preparing-screen.header-description')"
+        />
+        <SpinnerBar :is-visible="true" />
       </div>
     </template>
   </OnBoardingLayout>

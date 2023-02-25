@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
-import { useRouter } from 'vue-router';
+import { useI18n } from "vue-i18n";
 
-const { t } = useI18n()
-const router = useRouter()
-const nextStepPath = '/onboarding/account-creation/password'
+const { t } = useI18n();
 </script>
 
 <template>
@@ -13,8 +10,12 @@ const nextStepPath = '/onboarding/account-creation/password'
       <AppLogo />
     </template>
     <template #content>
-      <HeaderText :header-title="t('views.account-creation-email.header-title')"
-        :header-description="t('views.account-creation-email.header-description')" />
+      <HeaderText
+        :header-title="t('views.account-creation-email.header-title')"
+        :header-description="
+          t('views.account-creation-email.header-description')
+        "
+      />
       <AccountCreationEmailForm />
     </template>
     <template #footer>

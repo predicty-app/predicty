@@ -1,42 +1,42 @@
-import ButtonFormComponent from '@/components/Common/ButtonForm.vue'
+import ButtonFormComponent from "@/components/Common/ButtonForm.vue";
 
-type ComponentPropsType = {}
+type ComponentPropsType = {};
 
 export default {
   component: ButtonFormComponent,
-  title: 'Components/Common/ButtonForm',
+  title: "Components/Common/ButtonForm",
   argTypes: {
     type: {
-      options: ['default', 'success'],
-      control: { type: 'select' },
-      description: 'Button type.',
-      defaultValue: 'primary',
-      name: 'type',
-      type: { name: 'string', required: false },
-    }
+      options: ["default", "success"],
+      control: { type: "select" },
+      description: "Button type.",
+      defaultValue: "primary",
+      name: "type",
+      type: { name: "string", required: false },
+    },
   },
   parameters: {
     status: {
-      type: 'stable',
+      type: "stable",
     },
     docs: {
       description: {
-        component: 'Component for button form',
+        component: "Component for button form",
       },
     },
   },
-}
+};
 
 export const ButtonForm = (args: ComponentPropsType) => ({
   components: { ButtonFormComponent },
   setup() {
-    return { args }
+    return { args };
   },
   template: `
     <ButtonFormComponent v-bind="args" >Lorem ipsum</ButtonFormComponent>
   `,
-})
+});
 
 ButtonForm.args = {
-  type: 'default'
-}
+  type: "default",
+};

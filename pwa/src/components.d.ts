@@ -4,11 +4,11 @@
 import '@vue/runtime-core'
 
 export {}
- 
+
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    IconSvg: typeof import("./src/components/Common/IconSvg.vue")["default"]
     RouterLink: typeof import('vue-router')['RouterLink']
-    RouterView: typeof import('vue-router')['RouterView'],
-    IconSvg: typeof import('./src/components/Common/IconSvg.vue')['default']
+    RouterView: typeof import('vue-router')['RouterView']
   }
 }

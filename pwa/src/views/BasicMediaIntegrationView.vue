@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
-import { useRouter } from 'vue-router';
+import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
 
-const { t } = useI18n()
-const router = useRouter()
-const previousStepPath = '/onboarding/account-creation/email'
+const { t } = useI18n();
+const router = useRouter();
+const previousStepPath = "/onboarding/account-creation/email";
 </script>
 
 <template>
@@ -13,19 +13,24 @@ const previousStepPath = '/onboarding/account-creation/email'
       <AppLogo />
     </template>
     <template #content>
-      <HeaderText :header-title="t('views.basic-media-integration.header-title')"
-        :header-description="t('views.basic-media-integration.header-description')" />
+      <HeaderText
+        :header-title="t('views.basic-media-integration.header-title')"
+        :header-description="
+          t('views.basic-media-integration.header-description')
+        "
+      />
       <ConnectAccountForm />
     </template>
     <template #footer>
       <div class="w-full max-w-[48px]">
-        <ButtonForm class="w-full flex justify-center" @click="router.push(previousStepPath)">
+        <ButtonForm
+          class="w-full flex justify-center"
+          @click="router.push(previousStepPath)"
+        >
           <IconSvg name="arrowback" class-name="h-3 w-3" />
         </ButtonForm>
       </div>
-      <div class="flex items-center flex-auto">
-        &nbsp;
-      </div>
+      <div class="flex items-center flex-auto">&nbsp;</div>
       <div class="w-full max-w-[267px]" id="next-button"></div>
     </template>
   </OnBoardingLayout>

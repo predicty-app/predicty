@@ -1,28 +1,28 @@
-import AccountCreationPaswordViewComponent from '@/views/AccountCreation/AccountCreationPasswordView.vue'
+import AccountCreationPaswordViewComponent from "@/views/AccountCreation/AccountCreationPasswordView.vue";
 
-type ComponentPropsType = {}
+type ComponentPropsType = {};
 
 export default {
   component: AccountCreationPaswordViewComponent,
-  title: 'Views/AccountCreation/AccountCreationPaswordView',
+  title: "Views/AccountCreation/AccountCreationPaswordView",
   parameters: {
     status: {
-      type: 'todo',
+      type: "todo",
     },
     docs: {
       description: {
-        component: 'Component account creation view',
+        component: "Component account creation view",
       },
     },
   },
-}
+};
 
 export const AccountCreationPaswordView = (args: ComponentPropsType) => ({
   components: { AccountCreationPaswordViewComponent },
   setup() {
-    return { args }
+    return { args };
   },
   template: `
     <AccountCreationPaswordViewComponent v-bind="args" />
   `,
-})
+});

@@ -1,29 +1,29 @@
-import DividerLineComponent from '@/components/Common/DividerLine.vue'
+import DividerLineComponent from "@/components/Common/DividerLine.vue";
 
-type ComponentPropsType = {}
+type ComponentPropsType = {};
 
 export default {
   component: DividerLineComponent,
-  title: 'Components/Common/DividerLine',
+  title: "Components/Common/DividerLine",
   parameters: {
     status: {
-      type: 'stable',
+      type: "stable",
     },
     docs: {
       description: {
-        component: 'Component for divider line',
+        component: "Component for divider line",
       },
     },
   },
-}
+};
 
 export const DividerLine = (args: ComponentPropsType) => ({
   components: { DividerLineComponent },
   setup() {
-    return { args }
+    return { args };
   },
   template: `
     <br/>
     <DividerLineComponent v-bind="args" />
   `,
-})
+});

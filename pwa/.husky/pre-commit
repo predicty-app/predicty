@@ -1,4 +1,7 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-# cd pwa && yarn test:unit
+cd pwa && yarn lint
+cd pwa && yarn type-check
+cd pwa && yarn test:unit
+
