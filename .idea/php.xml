@@ -179,6 +179,16 @@
       <path value="$PROJECT_DIR$/api/vendor/jean85/pretty-package-versions" />
       <path value="$PROJECT_DIR$/api/vendor/symfony/clock" />
       <path value="$PROJECT_DIR$/api/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/api/vendor/egulias/email-validator" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/mime" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/mailer" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/polyfill-intl-idn" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/notifier" />
+      <path value="$PROJECT_DIR$/api/vendor/twig/cssinliner-extra" />
+      <path value="$PROJECT_DIR$/api/vendor/twig/inky-extra" />
+      <path value="$PROJECT_DIR$/api/vendor/lorenzo/pinky" />
+      <path value="$PROJECT_DIR$/api/vendor/tijsverkoyen/css-to-inline-styles" />
+      <path value="$PROJECT_DIR$/api/vendor/simpod/doctrine-utcdatetime" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

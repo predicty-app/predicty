@@ -177,6 +177,16 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/jean85/pretty-package-versions" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/clock" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/psr/simple-cache" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/egulias/email-validator" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/mime" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/mailer" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/polyfill-intl-idn" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/notifier" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/twig/cssinliner-extra" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/twig/inky-extra" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/lorenzo/pinky" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/tijsverkoyen/css-to-inline-styles" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/simpod/doctrine-utcdatetime" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

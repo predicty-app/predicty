@@ -1,0 +1,7 @@
+framework:
+    mailer:
+        dsn: '%env(MAILER_DSN)%'
+        envelope:
+            sender: 'no-reply@predicty.io'
+        headers:
+            From: 'Predicty App <no-reply@predicty.io>'

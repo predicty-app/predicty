@@ -20,6 +20,7 @@ RUN apk add --no-cache \
 RUN set -eux; \
     install-php-extensions \
     	intl \
+    	xsl \
     	zip \
     	apcu \
 		opcache \

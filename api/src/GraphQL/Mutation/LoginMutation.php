@@ -26,16 +26,16 @@ class LoginMutation extends FieldDefinition
             'type' => $type->user(),
             'args' => [
                 'username' => $type->nonNull($type->string()),
-                'password' => $type->nonNull($type->string()),
+                'passcode' => $type->nonNull($type->string()),
             ],
             'resolve' => fn (mixed $root, array $args) => $this->resolve($args),
-            'description' => 'Log into an account',
+            'description' => 'Log into an account using one-time passcode',
         ]);
     }
 
     private function resolve(array $args): array
     {
-        $user = $this->handle(new Login($args['username'], $args['password']));
+        $user = $this->handle(new Login($args['username'], $args['passcode']));
         assert($user instanceof User);
 
         return $this->userMapper->toArray($user);

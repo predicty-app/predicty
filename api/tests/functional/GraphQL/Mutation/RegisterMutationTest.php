@@ -16,33 +16,53 @@ class RegisterMutationTest extends GraphQLTestCase
     {
         $mutation = <<<'EOF'
                 mutation {
-                  register(email: "john.doe2@example.com", password:"123456")
+                  register(email: "john.doe2@example.com")
                 }
             EOF;
 
         $this->executeMutation($mutation);
         $this->assertResponseIsSuccessful();
         $this->assertResponseMatchesJsonFile(__DIR__.'/response/RegisterMutationSuccess.json');
+        $this->assertEmailCount(1);
     }
 
-    public function test_register_returns_error_if_email_is_already_used(): void
+    public function test_email_is_sent_after_registration(): void
     {
         $mutation = <<<'EOF'
                 mutation {
-                  register(email: "john.doe@example.com", password:"123456")
+                  register(email: "john.doe2@example.com")
                 }
             EOF;
 
         $this->executeMutation($mutation);
         $this->assertResponseIsSuccessful();
-        $this->assertResponseMatchesJsonFile(__DIR__.'/response/RegisterMutationFailedEmailAlreadyUsed.json');
+        $this->assertEmailCount(1);
+
+        $email = $this->getMailerMessage();
+        $this->assertEmailHeaderSame($email, 'subject', 'Predicty Account Login');
+        $this->assertEmailAddressContains($email, 'to', 'john.doe2@example.com');
+        $this->assertEmailTextBodyContains($email, 'Your passcode is');
+    }
+
+    public function test_register_sends_passcode_again_if_email_is_already_used(): void
+    {
+        $mutation = <<<'EOF'
+                mutation {
+                  register(email: "john.doe@example.com")
+                }
+            EOF;
+
+        $this->executeMutation($mutation);
+        $this->assertResponseIsSuccessful();
+        $this->assertResponseMatchesJsonFile(__DIR__.'/response/RegisterMutationSuccess.json');
+        $this->assertEmailCount(1);
     }
 
     public function test_register_returns_error_if_invalid_email_is_used(): void
     {
         $mutation = <<<'EOF'
                 mutation {
-                  register(email: "asdf", password:"123456")
+                  register(email: "asdf")
                 }
             EOF;
 
@@ -55,7 +75,7 @@ class RegisterMutationTest extends GraphQLTestCase
     {
         $mutation = <<<'EOF'
                 mutation {
-                  register(email: "", password:"123456")
+                  register(email: "")
                 }
             EOF;
 

@@ -9,3 +9,11 @@ docker compose up -d
 ## Customizing development environment
 
 You can create your own `.env` file with custom configuration. See `.env.dist` fot a list of available settings.
+
+## Available services
+
+| Name     | Address                 |
+|----------|-------------------------|
+| Mailhog  | http://localhost:8025/# |
+| Caddy    | https://localhost       |
+| Postgres | localhost:5432          |

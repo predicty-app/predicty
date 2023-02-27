@@ -6,6 +6,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
+use Symfony\Component\Notifier\Recipient\EmailRecipientInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
@@ -13,7 +14,7 @@ use Webmozart\Assert\Assert;
 
 #[ORM\Entity]
 #[ORM\Table(name: '`user`')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, EmailRecipientInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -31,6 +32,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private string $password = '';
+
+    #[ORM\Column]
+    private bool $isEmailVerified = false;
 
     public function __construct(string $email)
     {
@@ -104,6 +108,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->password = $password;
 
         return $this;
+    }
+
+    public function isEmailVerified(): bool
+    {
+        return $this->isEmailVerified;
+    }
+
+    public function markEmailAsVerified(): void
+    {
+        $this->isEmailVerified = true;
     }
 
     public function eraseCredentials(): void

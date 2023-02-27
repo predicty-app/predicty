@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e83b8b77da3d93a86d8e5adc6bfe93b8",
+    "content-hash": "576f7aada1dd4560e337c2bf7512b911",
     "packages": [
         {
             "name": "doctrine/cache",
@@ -1480,6 +1480,73 @@
             "time": "2022-05-23T21:33:49+00:00"
         },
         {
+            "name": "egulias/email-validator",
+            "version": "4.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/egulias/EmailValidator.git",
+                "reference": "3a85486b709bc384dae8eb78fb2eec649bdb64ff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/3a85486b709bc384dae8eb78fb2eec649bdb64ff",
+                "reference": "3a85486b709bc384dae8eb78fb2eec649bdb64ff",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/lexer": "^2.0 || ^3.0",
+                "php": ">=8.1",
+                "symfony/polyfill-intl-idn": "^1.26"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5.27",
+                "vimeo/psalm": "^4.30"
+            },
+            "suggest": {
+                "ext-intl": "PHP Internationalization Libraries are required to use the SpoofChecking validation"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Egulias\\EmailValidator\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eduardo Gulias Davis"
+                }
+            ],
+            "description": "A library for validating emails against several RFCs",
+            "homepage": "https://github.com/egulias/EmailValidator",
+            "keywords": [
+                "email",
+                "emailvalidation",
+                "emailvalidator",
+                "validation",
+                "validator"
+            ],
+            "support": {
+                "issues": "https://github.com/egulias/EmailValidator/issues",
+                "source": "https://github.com/egulias/EmailValidator/tree/4.0.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/egulias",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-01-14T14:17:03+00:00"
+        },
+        {
             "name": "firebase/php-jwt",
             "version": "v6.4.0",
             "source": {
@@ -2416,6 +2483,59 @@
                 }
             ],
             "time": "2023-01-02T13:28:00+00:00"
+        },
+        {
+            "name": "lorenzo/pinky",
+            "version": "1.0.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lorenzo/pinky.git",
+                "reference": "f890472e4a25f89591f176aa03d9588a9d3332a7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lorenzo/pinky/zipball/f890472e4a25f89591f176aa03d9588a9d3332a7",
+                "reference": "f890472e4a25f89591f176aa03d9588a9d3332a7",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-libxml": "*",
+                "ext-xsl": "*",
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7.27 || ^6.5.14 || ^7.5.20 || ^8.5.21 || ^9.5.10"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/pinky.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jose Lorenzo Rodriguez",
+                    "email": "jose.zap@gmail.com"
+                }
+            ],
+            "description": "A Foundation for Emails (Inky) template transpiler",
+            "keywords": [
+                "email",
+                "foundation",
+                "inky",
+                "template",
+                "zurb"
+            ],
+            "support": {
+                "issues": "https://github.com/lorenzo/pinky/issues",
+                "source": "https://github.com/lorenzo/pinky/tree/1.0.9"
+            },
+            "time": "2023-01-12T16:15:52+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -3438,6 +3558,63 @@
             "time": "2019-03-08T08:55:37+00:00"
         },
         {
+            "name": "simpod/doctrine-utcdatetime",
+            "version": "0.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/simPod/doctrine-utcdatetime.git",
+                "reference": "9985985ad55b15e9eec35013f646ad43b0b9a86a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/simPod/doctrine-utcdatetime/zipball/9985985ad55b15e9eec35013f646ad43b0b9a86a",
+                "reference": "9985985ad55b15e9eec35013f646ad43b0b9a86a",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/dbal": "^2.6 || ^3",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "^11.0",
+                "phpstan/extension-installer": "^1.1",
+                "phpstan/phpstan": "^1.0.0",
+                "phpstan/phpstan-phpunit": "^1.0.0",
+                "phpstan/phpstan-strict-rules": "^1.0.0",
+                "phpunit/phpunit": "^10.0",
+                "psalm/plugin-phpunit": "^0.18.0",
+                "vimeo/psalm": "^5.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SimPod\\DoctrineUtcDateTime\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Simon Podlipsky",
+                    "email": "simon@podlipsky.net"
+                }
+            ],
+            "description": "Doctrine UTC DateTime",
+            "support": {
+                "issues": "https://github.com/simPod/doctrine-utcdatetime/issues",
+                "source": "https://github.com/simPod/doctrine-utcdatetime/tree/0.2.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/simPod",
+                    "type": "github"
+                }
+            ],
+            "time": "2023-02-03T10:16:57+00:00"
+        },
+        {
             "name": "symfony/cache",
             "version": "v6.2.5",
             "source": {
@@ -3838,6 +4015,71 @@
             ],
             "support": {
                 "source": "https://github.com/symfony/console/tree/v6.2.5"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-01-01T08:38:09+00:00"
+        },
+        {
+            "name": "symfony/css-selector",
+            "version": "v6.2.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/css-selector.git",
+                "reference": "bf1b9d4ad8b1cf0dbde8b08e0135a2f6259b9ba1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/bf1b9d4ad8b1cf0dbde8b08e0135a2f6259b9ba1",
+                "reference": "bf1b9d4ad8b1cf0dbde8b08e0135a2f6259b9ba1",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\CssSelector\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Jean-François Simon",
+                    "email": "jeanfrancois.simon@sensiolabs.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Converts CSS selectors to XPath expressions",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/css-selector/tree/v6.2.5"
             },
             "funding": [
                 {
@@ -5130,6 +5372,85 @@
             "time": "2023-02-01T08:32:25+00:00"
         },
         {
+            "name": "symfony/mailer",
+            "version": "v6.2.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/mailer.git",
+                "reference": "29729ac0b4e5113f24c39c46746bd6afb79e0aaa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/mailer/zipball/29729ac0b4e5113f24c39c46746bd6afb79e0aaa",
+                "reference": "29729ac0b4e5113f24c39c46746bd6afb79e0aaa",
+                "shasum": ""
+            },
+            "require": {
+                "egulias/email-validator": "^2.1.10|^3|^4",
+                "php": ">=8.1",
+                "psr/event-dispatcher": "^1",
+                "psr/log": "^1|^2|^3",
+                "symfony/event-dispatcher": "^5.4|^6.0",
+                "symfony/mime": "^6.2",
+                "symfony/service-contracts": "^1.1|^2|^3"
+            },
+            "conflict": {
+                "symfony/http-kernel": "<5.4",
+                "symfony/messenger": "<6.2",
+                "symfony/mime": "<6.2",
+                "symfony/twig-bridge": "<6.2.1"
+            },
+            "require-dev": {
+                "symfony/console": "^5.4|^6.0",
+                "symfony/http-client-contracts": "^1.1|^2|^3",
+                "symfony/messenger": "^6.2",
+                "symfony/twig-bridge": "^6.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Mailer\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Helps sending emails",
+            "homepage": "https://symfony.com",
+            "support": {
+                "source": "https://github.com/symfony/mailer/tree/v6.2.5"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-01-10T18:53:53+00:00"
+        },
+        {
             "name": "symfony/mercure",
             "version": "v0.6.2",
             "source": {
@@ -5384,6 +5705,89 @@
             "time": "2023-01-20T18:24:17+00:00"
         },
         {
+            "name": "symfony/mime",
+            "version": "v6.2.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/mime.git",
+                "reference": "4b7b349f67d15cd0639955c8179a76c89f6fd610"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/mime/zipball/4b7b349f67d15cd0639955c8179a76c89f6fd610",
+                "reference": "4b7b349f67d15cd0639955c8179a76c89f6fd610",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "symfony/polyfill-intl-idn": "^1.10",
+                "symfony/polyfill-mbstring": "^1.0"
+            },
+            "conflict": {
+                "egulias/email-validator": "~3.0.0",
+                "phpdocumentor/reflection-docblock": "<3.2.2",
+                "phpdocumentor/type-resolver": "<1.4.0",
+                "symfony/mailer": "<5.4",
+                "symfony/serializer": "<6.2"
+            },
+            "require-dev": {
+                "egulias/email-validator": "^2.1.10|^3.1|^4",
+                "league/html-to-markdown": "^5.0",
+                "phpdocumentor/reflection-docblock": "^3.0|^4.0|^5.0",
+                "symfony/dependency-injection": "^5.4|^6.0",
+                "symfony/property-access": "^5.4|^6.0",
+                "symfony/property-info": "^5.4|^6.0",
+                "symfony/serializer": "^6.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Mime\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Allows manipulating MIME messages",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "mime",
+                "mime-type"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/mime/tree/v6.2.5"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-01-10T18:53:53+00:00"
+        },
+        {
             "name": "symfony/monolog-bridge",
             "version": "v6.2.5",
             "source": {
@@ -5548,6 +5952,82 @@
             "time": "2022-05-10T14:24:36+00:00"
         },
         {
+            "name": "symfony/notifier",
+            "version": "v6.2.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/notifier.git",
+                "reference": "cbc55195e447bd9134d58e31a3b0ac44313032e4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/notifier/zipball/cbc55195e447bd9134d58e31a3b0ac44313032e4",
+                "reference": "cbc55195e447bd9134d58e31a3b0ac44313032e4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "psr/log": "^1|^2|^3"
+            },
+            "conflict": {
+                "symfony/event-dispatcher": "<5.4",
+                "symfony/http-kernel": "<5.4"
+            },
+            "require-dev": {
+                "symfony/event-dispatcher-contracts": "^2|^3",
+                "symfony/http-client-contracts": "^2|^3",
+                "symfony/http-foundation": "^5.4|^6.0",
+                "symfony/messenger": "^5.4|^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Notifier\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Sends notifications via one or more channels (email, SMS, ...)",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "notification",
+                "notifier"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/notifier/tree/v6.2.5"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-01-01T08:38:09+00:00"
+        },
+        {
             "name": "symfony/password-hasher",
             "version": "v6.2.5",
             "source": {
@@ -5683,6 +6163,93 @@
             ],
             "support": {
                 "source": "https://github.com/symfony/polyfill-intl-grapheme/tree/v1.27.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-11-03T14:55:06+00:00"
+        },
+        {
+            "name": "symfony/polyfill-intl-idn",
+            "version": "v1.27.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-intl-idn.git",
+                "reference": "639084e360537a19f9ee352433b84ce831f3d2da"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-intl-idn/zipball/639084e360537a19f9ee352433b84ce831f3d2da",
+                "reference": "639084e360537a19f9ee352433b84ce831f3d2da",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1",
+                "symfony/polyfill-intl-normalizer": "^1.10",
+                "symfony/polyfill-php72": "^1.10"
+            },
+            "suggest": {
+                "ext-intl": "For best performance"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.27-dev"
+                },
+                "thanks": {
+                    "name": "symfony/polyfill",
+                    "url": "https://github.com/symfony/polyfill"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ],
+                "psr-4": {
+                    "Symfony\\Polyfill\\Intl\\Idn\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Laurent Bassin",
+                    "email": "laurent@bassin.info"
+                },
+                {
+                    "name": "Trevor Rowbotham",
+                    "email": "trevor.rowbotham@pm.me"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill for intl's idn_to_ascii and idn_to_utf8 functions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "idn",
+                "intl",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-intl-idn/tree/v1.27.0"
             },
             "funding": [
                 {
@@ -7745,6 +8312,129 @@
             "time": "2023-01-10T18:53:53+00:00"
         },
         {
+            "name": "tijsverkoyen/css-to-inline-styles",
+            "version": "2.2.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tijsverkoyen/CssToInlineStyles.git",
+                "reference": "c42125b83a4fa63b187fdf29f9c93cb7733da30c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tijsverkoyen/CssToInlineStyles/zipball/c42125b83a4fa63b187fdf29f9c93cb7733da30c",
+                "reference": "c42125b83a4fa63b187fdf29f9c93cb7733da30c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-libxml": "*",
+                "php": "^5.5 || ^7.0 || ^8.0",
+                "symfony/css-selector": "^2.7 || ^3.0 || ^4.0 || ^5.0 || ^6.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.0 || ^7.5 || ^8.5.21 || ^9.5.10"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "TijsVerkoyen\\CssToInlineStyles\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Tijs Verkoyen",
+                    "email": "css_to_inline_styles@verkoyen.eu",
+                    "role": "Developer"
+                }
+            ],
+            "description": "CssToInlineStyles is a class that enables you to convert HTML-pages/files into HTML-pages/files with inline styles. This is very useful when you're sending emails.",
+            "homepage": "https://github.com/tijsverkoyen/CssToInlineStyles",
+            "support": {
+                "issues": "https://github.com/tijsverkoyen/CssToInlineStyles/issues",
+                "source": "https://github.com/tijsverkoyen/CssToInlineStyles/tree/2.2.6"
+            },
+            "time": "2023-01-03T09:29:04+00:00"
+        },
+        {
+            "name": "twig/cssinliner-extra",
+            "version": "v3.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/cssinliner-extra.git",
+                "reference": "381877765d17b0178322d68b818e0c67f9c93187"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/cssinliner-extra/zipball/381877765d17b0178322d68b818e0c67f9c93187",
+                "reference": "381877765d17b0178322d68b818e0c67f9c93187",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1.3",
+                "tijsverkoyen/css-to-inline-styles": "^2.0",
+                "twig/twig": "^2.7|^3.0"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^4.4.9|^5.0.9|^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Twig\\Extra\\CssInliner\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                }
+            ],
+            "description": "A Twig extension to allow inlining CSS",
+            "homepage": "https://twig.symfony.com",
+            "keywords": [
+                "css",
+                "inlining",
+                "twig"
+            ],
+            "support": {
+                "source": "https://github.com/twigphp/cssinliner-extra/tree/v3.5.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/twig/twig",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-02-08T07:44:55+00:00"
+        },
+        {
             "name": "twig/extra-bundle",
             "version": "v3.5.1",
             "source": {
@@ -7810,6 +8500,77 @@
             ],
             "support": {
                 "source": "https://github.com/twigphp/twig-extra-bundle/tree/v3.5.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/twig/twig",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2023-02-08T07:44:55+00:00"
+        },
+        {
+            "name": "twig/inky-extra",
+            "version": "v3.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/inky-extra.git",
+                "reference": "4efde499b99942a27e206898e55208a8692c16ca"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/inky-extra/zipball/4efde499b99942a27e206898e55208a8692c16ca",
+                "reference": "4efde499b99942a27e206898e55208a8692c16ca",
+                "shasum": ""
+            },
+            "require": {
+                "lorenzo/pinky": "^1.0.5",
+                "php": ">=7.1.3",
+                "twig/twig": "^2.7|^3.0"
+            },
+            "require-dev": {
+                "symfony/phpunit-bridge": "^4.4.9|^5.0.9|^6.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Twig\\Extra\\Inky\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com",
+                    "homepage": "http://fabien.potencier.org",
+                    "role": "Lead Developer"
+                }
+            ],
+            "description": "A Twig extension for the inky email templating engine",
+            "homepage": "https://twig.symfony.com",
+            "keywords": [
+                "email",
+                "emails",
+                "inky",
+                "twig"
+            ],
+            "support": {
+                "source": "https://github.com/twigphp/inky-extra/tree/v3.5.1"
             },
             "funding": [
                 {
@@ -10927,71 +11688,6 @@
             "homepage": "https://symfony.com",
             "support": {
                 "source": "https://github.com/symfony/browser-kit/tree/v6.2.5"
-            },
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2023-01-01T08:38:09+00:00"
-        },
-        {
-            "name": "symfony/css-selector",
-            "version": "v6.2.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/css-selector.git",
-                "reference": "bf1b9d4ad8b1cf0dbde8b08e0135a2f6259b9ba1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/css-selector/zipball/bf1b9d4ad8b1cf0dbde8b08e0135a2f6259b9ba1",
-                "reference": "bf1b9d4ad8b1cf0dbde8b08e0135a2f6259b9ba1",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.1"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\CssSelector\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Jean-François Simon",
-                    "email": "jeanfrancois.simon@sensiolabs.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Converts CSS selectors to XPath expressions",
-            "homepage": "https://symfony.com",
-            "support": {
-                "source": "https://github.com/symfony/css-selector/tree/v6.2.5"
             },
             "funding": [
                 {
