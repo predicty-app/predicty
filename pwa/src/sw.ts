@@ -1,9 +1,9 @@
-import { precacheAndRoute } from 'workbox-precaching'
+import { precacheAndRoute } from "workbox-precaching";
 
-declare let self: any
+declare let self: any;
 
-self.addEventListener('message', (event :any) => {
-  if (event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting()
-})
+self.addEventListener("message", (event: any) => {
+  if (event.data && event.data.type === "SKIP_WAITING") self.skipWaiting();
+});
 // self.__WB_MANIFEST is default injection point
-precacheAndRoute(self.__WB_MANIFEST)
+precacheAndRoute(self.__WB_MANIFEST);

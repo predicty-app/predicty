@@ -1,30 +1,30 @@
-import ConnectAccountFormComponent from '@/components/OnBoarding/ConnectAccountForm.vue'
+import ConnectAccountFormComponent from "@/components/OnBoarding/ConnectAccountForm.vue";
 
-type ComponentPropsType = {}
+type ComponentPropsType = {};
 
 export default {
   component: ConnectAccountFormComponent,
-  title: 'Components/OnBoarding/ConnectAccountForm',
+  title: "Components/OnBoarding/ConnectAccountForm",
   parameters: {
     status: {
-      type: 'stable',
+      type: "stable",
     },
     docs: {
       description: {
-        component: 'Component for providers list',
+        component: "Component for providers list",
       },
     },
   },
-}
+};
 
 export const ConnectAccountForm = (args: ComponentPropsType) => ({
   components: { ConnectAccountFormComponent },
   setup() {
-    return { args }
+    return { args };
   },
   template: `
     <div class="h-full bg-layout-onboarding-border">
       <ConnectAccountFormComponent v-bind="args" />
     </div>
   `,
-})
+});

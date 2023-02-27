@@ -1,28 +1,28 @@
-import PreparingScreenViewComponent from '@/views/PreparingScreenView.vue'
+import PreparingScreenViewComponent from "@/views/PreparingScreenView.vue";
 
-type ComponentPropsType = {}
+type ComponentPropsType = {};
 
 export default {
   component: PreparingScreenViewComponent,
-  title: 'Views/PreparingScreenView',
+  title: "Views/PreparingScreenView",
   parameters: {
     status: {
-      type: 'todo',
+      type: "todo",
     },
     docs: {
       description: {
-        component: 'Component preparing screen view',
+        component: "Component preparing screen view",
       },
     },
   },
-}
+};
 
 export const PreparingScreenView = (args: ComponentPropsType) => ({
   components: { PreparingScreenViewComponent },
   setup() {
-    return { args }
+    return { args };
   },
   template: `
     <PreparingScreenViewComponent v-bind="args" />
   `,
-})
+});

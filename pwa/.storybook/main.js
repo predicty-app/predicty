@@ -14,6 +14,7 @@ module.exports = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
+    "@storybook/addon-jest",
     "@etchteam/storybook-addon-status",
   ],
   "framework": "@storybook/vue3",
@@ -31,7 +32,9 @@ module.exports = {
         alias: {
           ...config.resolve.alias,
           '@': path.resolve(__dirname, '../src'),
-          'vue-i18n': 'vue-i18n/dist/vue-i18n.cjs.js'
+          'vue-i18n': 'vue-i18n/dist/vue-i18n.cjs.js',
+          'path': 'path-browserify',
+          //path: require.resolve('path-browserify'),
         }
       },
       plugins: [...config.plugins, tsconfigPaths(), AutoImport(), Components()],

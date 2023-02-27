@@ -1,26 +1,26 @@
-import OnBoardingLayoutComponent from '@/components/Layouts/OnBoardingLayout.vue'
+import OnBoardingLayoutComponent from "@/components/Layouts/OnBoardingLayout.vue";
 
-type ComponentPropsType = {}
+type ComponentPropsType = {};
 
 export default {
   component: OnBoardingLayoutComponent,
-  title: 'Components/Layouts/OnBoardingLayout',
+  title: "Components/Layouts/OnBoardingLayout",
   parameters: {
     status: {
-      type: 'stable',
+      type: "stable",
     },
     docs: {
       description: {
-        component: 'Component for on boarding layout',
+        component: "Component for on boarding layout",
       },
     },
   },
-}
+};
 
 export const OnBoardingLayout = (args: ComponentPropsType) => ({
   components: { OnBoardingLayoutComponent },
   setup() {
-    return { args }
+    return { args };
   },
   template: `
     <OnBoardingLayoutComponent v-bind="args">
@@ -35,4 +35,4 @@ export const OnBoardingLayout = (args: ComponentPropsType) => ({
       </template>
     </OnBoardingLayoutComponent>
   `,
-})
+});

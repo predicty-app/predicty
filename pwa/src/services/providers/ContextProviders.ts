@@ -1,5 +1,5 @@
 export interface StrategyProviders {
-  initProvider(): void
+  initProvider(): void;
 }
 
 /**
@@ -29,13 +29,11 @@ export default class ContextProviders {
     this.#strategy = strategy;
   }
 
-
   /**
    * The ContextProviders delegates some work to the StrategyProviders object instead of
    * implementing multiple versions of the algorithm on its own.
    */
   public loginClient(): void {
-
-    this.#strategy.initProvider()
+    this.#strategy.initProvider();
   }
 }

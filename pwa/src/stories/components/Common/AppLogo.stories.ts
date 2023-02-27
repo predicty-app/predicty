@@ -1,28 +1,28 @@
-import AppLogoComponent from '@/components/Common/AppLogo.vue'
+import AppLogoComponent from "@/components/Common/AppLogo.vue";
 
-type ComponentPropsType = {}
+type ComponentPropsType = {};
 
 export default {
   component: AppLogoComponent,
-  title: 'Components/Common/AppLogo',
+  title: "Components/Common/AppLogo",
   parameters: {
     status: {
-      type: 'stable',
+      type: "stable",
     },
     docs: {
       description: {
-        component: 'Component main logo application',
+        component: "Component main logo application",
       },
     },
   },
-}
+};
 
 export const AppLogo = (args: ComponentPropsType) => ({
   components: { AppLogoComponent },
   setup() {
-    return { args }
+    return { args };
   },
   template: `
     <AppLogoComponent v-bind="args" />
   `,
-})
+});
