@@ -23,6 +23,11 @@ class UserRepository implements PasswordUpgraderInterface
         $this->repository = $em->getRepository(User::class);
     }
 
+    public function findById(int $id): ?User
+    {
+        return $this->repository->find($id);
+    }
+
     public function findByUsername(string $username): ?User
     {
         return $this->repository->findOneBy(['email' => $username]);

@@ -7,6 +7,7 @@
       <sourceFolder url="file://$MODULE_DIR$/api/src" isTestSource="false" packagePrefix="App\" />
       <sourceFolder url="file://$MODULE_DIR$/api/tests/unit" isTestSource="true" packagePrefix="App\Tests\Unit\" />
       <sourceFolder url="file://$MODULE_DIR$/api/tests/functional" isTestSource="true" packagePrefix="App\Tests\Functional\" />
+      <sourceFolder url="file://$MODULE_DIR$/api/tests/integration" isTestSource="true" packagePrefix="App\Tests\Integration\" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpdocumentor/type-resolver" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpdocumentor/reflection-common" />
@@ -175,6 +176,7 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/brianium/paratest" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/jean85/pretty-package-versions" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/clock" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/psr/simple-cache" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

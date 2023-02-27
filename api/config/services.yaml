@@ -4,7 +4,9 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-
+    # see https://symfony.com/doc/4.1/console/request_context.html#configuring-the-request-context-globally
+    router.request_context.host: 'localhost'
+    router.request_context.scheme: 'https'
 services:
     # default configuration for services in *this* file
     _defaults:
@@ -44,6 +46,15 @@ services:
         arguments:
             - !tagged_iterator { tag: graphql_query }
             - !tagged_iterator { tag: graphql_mutation }
+
+    App\Service\Google\GoogleAdsClient:
+        factory: [App\Service\Google\GoogleAdsClientFactory, build]
+
+    App\Service\Google\GoogleOAuthClientCredentials:
+        arguments: ['%env(GOOGLE_ADS_OAUTH_CLIENT_ID)%', '%env(GOOGLE_ADS_OAUTH_CLIENT_SECRET)%']
+
+    Symfony\Component\Cache\Psr16Cache: ~
+    Psr\SimpleCache\CacheInterface: '@Symfony\Component\Cache\Psr16Cache'
 
     Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory: ~
     Symfony\Bridge\PsrHttpMessage\HttpMessageFactoryInterface: '@Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory'
