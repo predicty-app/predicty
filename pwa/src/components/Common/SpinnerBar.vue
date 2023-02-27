@@ -1,28 +1,45 @@
 <script setup lang="ts">
 type PropsType = {
-  isVisible: boolean
-  isGlobal: boolean
-}
+  isVisible?: boolean;
+  isGlobal?: boolean;
+};
 
 withDefaults(defineProps<PropsType>(), {
   isVisible: false,
-  isGlobal: false
-})
+  isGlobal: false,
+});
 </script>
 
 <template>
-  <div v-if="isVisible"  :class="['animate-fade-in', {
-    'relative': !isGlobal,
-    'absolute w-full h-full top-0 left-0 z-40': isGlobal
-  }]">
-    <div :class="['spinner', {
-      'absolute top-0 bottom-0 left-0 right-0 m-auto z-40': isGlobal
-    }]"></div>
-    <div :class="['w-full h-full z-20', {
-      'grayscale opacity-50': isVisible,
-      'absolute bg-upload-border top-0 left-0': isGlobal
-    }]">
-      <div  class="w-full h-full z-10 absolute top-0 left-0" />
+  <div
+    v-if="isVisible"
+    data-testid="spinner-bar"
+    :class="[
+      'animate-fade-in',
+      {
+        relative: !isGlobal,
+        'absolute w-full h-full top-0 left-0 z-40': isGlobal,
+      },
+    ]"
+  >
+    <div
+      :class="[
+        'spinner',
+        {
+          'absolute top-0 bottom-0 left-0 right-0 m-auto z-40': isGlobal,
+        },
+      ]"
+    ></div>
+    <div
+      :class="[
+        'w-full h-full z-20',
+        {
+          'grayscale opacity-50': isVisible,
+          'absolute bg-upload-border top-0 left-0': isGlobal,
+        },
+      ]"
+    >
+      <div class="w-full h-full z-10 absolute top-0 left-0" />
       <slot />
     </div>
   </div>
@@ -35,12 +52,28 @@ withDefaults(defineProps<PropsType>(), {
   width: 11em;
   height: 11em;
   border-radius: 50%;
-  background: #2E0C63;
-  background: -moz-linear-gradient(left, #2E0C63 10%, rgba(255, 255, 255, 0) 42%);
-  background: -webkit-linear-gradient(left, #2E0C63 10%, rgba(255, 255, 255, 0) 42%);
-  background: -o-linear-gradient(left, #2E0C63 10%, rgba(255, 255, 255, 0) 42%);
-  background: -ms-linear-gradient(left, #2E0C63 10%, rgba(255, 255, 255, 0) 42%);
-  background: linear-gradient(to right, #2E0C63 10%, rgba(255, 255, 255, 0) 42%);
+  background: #2e0c63;
+  background: -moz-linear-gradient(
+    left,
+    #2e0c63 10%,
+    rgba(255, 255, 255, 0) 42%
+  );
+  background: -webkit-linear-gradient(
+    left,
+    #2e0c63 10%,
+    rgba(255, 255, 255, 0) 42%
+  );
+  background: -o-linear-gradient(left, #2e0c63 10%, rgba(255, 255, 255, 0) 42%);
+  background: -ms-linear-gradient(
+    left,
+    #2e0c63 10%,
+    rgba(255, 255, 255, 0) 42%
+  );
+  background: linear-gradient(
+    to right,
+    #2e0c63 10%,
+    rgba(255, 255, 255, 0) 42%
+  );
   -webkit-animation: load3 1.4s infinite linear;
   animation: load3 1.4s infinite linear;
   -webkit-transform: translateZ(0);
@@ -55,15 +88,15 @@ withDefaults(defineProps<PropsType>(), {
     position: absolute;
     top: 0;
     left: 0;
-    content: '';
+    content: "";
   }
 
   &::after {
-    background: rgba(237,237,241, 1);
+    background: rgba(237, 237, 241, 1);
     width: 75%;
     height: 75%;
     border-radius: 50%;
-    content: '';
+    content: "";
     margin: auto;
     position: absolute;
     top: 0;
@@ -95,4 +128,5 @@ withDefaults(defineProps<PropsType>(), {
       transform: rotate(360deg);
     }
   }
-}</style>
+}
+</style>

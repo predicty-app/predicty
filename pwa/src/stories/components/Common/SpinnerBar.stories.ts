@@ -1,39 +1,40 @@
-import SpinnerBarComponent from '@/components/Common/SpinnerBar.vue'
+import SpinnerBarComponent from "@/components/Common/SpinnerBar.vue";
 
-type ComponentPropsType = {}
+type ComponentPropsType = {};
 
 export default {
   component: SpinnerBarComponent,
-  title: 'Components/Common/SpinnerBar',
+  title: "Components/Common/SpinnerBar",
   argTypes: {
     isVisible: {
-      name: 'isVisible',
-      description: 'Param for toogle visible spinner.',
-      type: { name: 'boolean', required: true },
+      name: "isVisible",
+      description: "Param for toogle visible spinner.",
+      type: { name: "boolean", required: true },
     },
   },
   parameters: {
+    jest: ["SpinnerBar.spec.ts"],
     status: {
-      type: 'stable',
+      type: "stable",
     },
     docs: {
       description: {
-        component: 'Component for spinner bar',
+        component: "Component for spinner bar",
       },
     },
   },
-}
+};
 
 export const SpinnerBar = (args: ComponentPropsType) => ({
   components: { SpinnerBarComponent },
   setup() {
-    return { args }
+    return { args };
   },
   template: `
     <SpinnerBarComponent v-bind="args" />
   `,
-})
+});
 
 SpinnerBar.args = {
-  isVisible: true
-}
+  isVisible: true,
+};

@@ -1,28 +1,28 @@
-import AccountCreationEmailFormComponent from '@/components/OnBoarding/AccountCreationEmailForm.vue'
+import AccountCreationEmailFormComponent from "@/components/OnBoarding/AccountCreationEmailForm.vue";
 
-type ComponentPropsType = {}
+type ComponentPropsType = {};
 
 export default {
   component: AccountCreationEmailFormComponent,
-  title: 'Components/OnBoarding/AccountCreationEmailForm',
+  title: "Components/OnBoarding/AccountCreationEmailForm",
   parameters: {
     status: {
-      type: 'stable',
+      type: "stable",
     },
     docs: {
       description: {
-        component: 'Component for account creation form',
+        component: "Component for account creation form",
       },
     },
   },
-}
+};
 
 export const AccountCreationEmailForm = (args: ComponentPropsType) => ({
   components: { AccountCreationEmailFormComponent },
   setup() {
-    return { args }
+    return { args };
   },
   template: `
     <AccountCreationEmailFormComponent v-bind="args" />
   `,
-})
+});

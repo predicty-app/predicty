@@ -1,32 +1,33 @@
-import UploadFileComponent from '@/components/Common/UploadFile.vue'
+import UploadFileComponent from "@/components/Common/UploadFile.vue";
 
-type ComponentPropsType = {}
+type ComponentPropsType = {};
 
 export default {
   component: UploadFileComponent,
-  title: 'Components/Common/UploadFile',
+  title: "Components/Common/UploadFile",
   parameters: {
+    jest: ["UploadFile.spec.ts"],
     status: {
-      type: 'todo',
+      type: "todo",
     },
     docs: {
       description: {
-        component: 'Component for upload file',
+        component: "Component for upload file",
       },
     },
   },
-}
+};
 
 export const UploadFile = (args: ComponentPropsType) => ({
   components: { UploadFileComponent },
   setup() {
-    return { args }
+    return { args };
   },
   template: `
     <UploadFileComponent v-bind="args" />
   `,
-})
+});
 
 UploadFile.args = {
-  filesType: ['.csv', '.xls']
-}
+  filesType: [".csv", ".xls"],
+};

@@ -1,9 +1,9 @@
-import { defineStore } from 'pinia'
+import { defineStore } from "pinia";
 
 export const useGlobalStore = defineStore({
-  id: 'global',
+  id: "global",
   state: () => ({
-    isSpinnerVisible: false
+    isSpinnerVisible: false,
   }),
 
   actions: {
@@ -11,7 +11,7 @@ export const useGlobalStore = defineStore({
      * Function to change spinner state.
      */
     toogleSpinnerState() {
-      this.isSpinnerVisible = !this.isSpinnerVisible
-    }
-  }
-})
+      this.isSpinnerVisible = !this.isSpinnerVisible;
+    },
+  },
+});

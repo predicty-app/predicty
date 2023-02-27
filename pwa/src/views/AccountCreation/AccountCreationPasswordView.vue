@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
-import { useRouter } from 'vue-router';
-import { useOnBoardingStore } from '@/stores/onboarding'
+import { useI18n } from "vue-i18n";
+import { useRouter } from "vue-router";
+import { useOnBoardingStore } from "@/stores/onboarding";
 
-const { t } = useI18n()
-const router = useRouter()
-const onBoardingStore = useOnBoardingStore()
-const previousStepPath = '/onboarding/account-creation/email'
+const { t } = useI18n();
+const router = useRouter();
+const onBoardingStore = useOnBoardingStore();
+const previousStepPath = "/onboarding/account-creation/email";
 </script>
 
 <template>
@@ -15,16 +15,25 @@ const previousStepPath = '/onboarding/account-creation/email'
       <AppLogo />
     </template>
     <template #content>
-      <HeaderText :header-title="t('views.account-creation-pasword.header-title')"
-        :header-description="t('views.account-creation-pasword.header-description', { email: onBoardingStore.email })" />
+      <HeaderText
+        :header-title="t('views.account-creation-pasword.header-title')"
+        :header-description="
+          t('views.account-creation-pasword.header-description', {
+            email: onBoardingStore.email,
+          })
+        "
+      />
       <AccountCreationPasswordForm />
     </template>
     <template #footer>
       <div class="w-full max-w-[267px]">
         <ButtonForm class="w-full" @click="router.push(previousStepPath)">
           <div class="relative">
-            <IconSvg name="arrowback" class-name="absolute left-5 top-0 bottom-0 m-auto h-3 w-3" />
-            {{ t('views.account-creation-pasword.buttons.back') }}
+            <IconSvg
+              name="arrowback"
+              class-name="absolute left-5 top-0 bottom-0 m-auto h-3 w-3"
+            />
+            {{ t("views.account-creation-pasword.buttons.back") }}
           </div>
         </ButtonForm>
       </div>

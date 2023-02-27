@@ -8,9 +8,9 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AccountCreationEmailForm: typeof import('./src/components/OnBoarding/AccountCreationEmailForm.vue')['default']
-    AccountCreationPassword: typeof import('./src/components/OnBoarding/AccountCreationPassword.vue')['default']
+    AccountCreationPassword: typeof import("./src/components/OnBoarding/AccountCreationPassword.vue")["default"]
     AccountCreationPasswordForm: typeof import('./src/components/OnBoarding/AccountCreationPasswordForm.vue')['default']
-    AccountCreationPasword: typeof import('./src/components/OnBoarding/AccountCreationPasword.vue')['default']
+    AccountCreationPasword: typeof import("./src/components/OnBoarding/AccountCreationPasword.vue")["default"]
     AppLogo: typeof import('./src/components/Common/AppLogo.vue')['default']
     ButtonForm: typeof import('./src/components/Common/ButtonForm.vue')['default']
     CardPanel: typeof import('./src/components/Common/CardPanel.vue')['default']

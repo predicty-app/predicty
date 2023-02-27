@@ -1,28 +1,28 @@
-import CardPanelComponent from '@/components/Common/CardPanel.vue'
+import CardPanelComponent from "@/components/Common/CardPanel.vue";
 
-type ComponentPropsType = {}
+type ComponentPropsType = {};
 
 export default {
   component: CardPanelComponent,
-  title: 'Components/Common/CardPanel',
+  title: "Components/Common/CardPanel",
   parameters: {
     status: {
-      type: 'stable',
+      type: "stable",
     },
     docs: {
       description: {
-        component: 'Component for card panel',
+        component: "Component for card panel",
       },
     },
   },
-}
+};
 
 export const CardPanel = (args: ComponentPropsType) => ({
   components: { CardPanelComponent },
   setup() {
-    return { args }
+    return { args };
   },
   template: `
     <CardPanelComponent v-bind="args">Lorem ipsum dolor sit amet</CardPanelComponent>
   `,
-})
+});

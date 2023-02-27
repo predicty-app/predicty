@@ -1,28 +1,28 @@
-import MoreMediaIntegrationViewComponent from '@/views/MoreMediaIntegrationView.vue'
+import MoreMediaIntegrationViewComponent from "@/views/MoreMediaIntegrationView.vue";
 
-type ComponentPropsType = {}
+type ComponentPropsType = {};
 
 export default {
   component: MoreMediaIntegrationViewComponent,
-  title: 'Views/MoreMediaIntegrationView',
+  title: "Views/MoreMediaIntegrationView",
   parameters: {
     status: {
-      type: 'todo',
+      type: "todo",
     },
     docs: {
       description: {
-        component: 'Component more media integration view',
+        component: "Component more media integration view",
       },
     },
   },
-}
+};
 
 export const MoreMediaIntegrationView = (args: ComponentPropsType) => ({
   components: { MoreMediaIntegrationViewComponent },
   setup() {
-    return { args }
+    return { args };
   },
   template: `
     <MoreMediaIntegrationViewComponent v-bind="args" />
   `,
-})
+});
