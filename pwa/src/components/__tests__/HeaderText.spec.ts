@@ -26,43 +26,43 @@ describe("Tests for HeaderText component", () => {
 
     return {
       title,
-      description
+      description,
     };
   }
 
-  it('should have no visible h3 tag when props headerTitle not set', () => {
+  it("should have no visible h3 tag when props headerTitle not set", () => {
     const { title } = prepareElementsToTests();
 
-    expect(title.exists()).toBeFalsy()
+    expect(title.exists()).toBeFalsy();
   });
 
-  it('should have no visible p tag when props headerDescrption not set', () => {
+  it("should have no visible p tag when props headerDescrption not set", () => {
     const { description } = prepareElementsToTests();
 
-    expect(description.exists()).toBeFalsy()
+    expect(description.exists()).toBeFalsy();
   });
 
   it('should have title = "test" when props headerTitle set', () => {
     type PropsType = {
-      headerTitle: string
-    }
+      headerTitle: string;
+    };
 
     const { title } = prepareElementsToTests<PropsType>({
-      headerTitle: 'test'
+      headerTitle: "test",
     });
 
-    expect(title.text()).toBe('test')
+    expect(title.text()).toBe("test");
   });
 
   it('should have description = "test" when props headerDescription set', () => {
     type PropsType = {
-      headerDescription: string
-    }
+      headerDescription: string;
+    };
 
     const { description } = prepareElementsToTests<PropsType>({
-      headerDescription: 'test'
+      headerDescription: "test",
     });
 
-    expect(description.text()).toBe('test')
+    expect(description.text()).toBe("test");
   });
-})
+});

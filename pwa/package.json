@@ -5,6 +5,7 @@
   "scripts": {
     "build": "run-p type-check build-only",
     "test:unit": "vitest --environment jsdom --root src/",
+    "test:unit:report": "vitest --environment jsdom --root src/ --reporter=json --outputFile=../.storybook/.jest-test-results.json",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "build-only": "vite build",
     "dev": "vite",

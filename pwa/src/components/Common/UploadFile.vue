@@ -2,11 +2,11 @@
 import { useI18n } from "vue-i18n";
 
 type PropsType = {
-  filesType?: string[]
-}
+  filesType?: string[];
+};
 
-defineProps<PropsType>()
-const { t } = useI18n()
+defineProps<PropsType>();
+const { t } = useI18n();
 </script>
 
 <template>
@@ -20,11 +20,16 @@ const { t } = useI18n()
       </TagPin>
     </div>
     <div
-      class="text-upload-text gap-x-3 text-base relative bg-upload-background border border-upload-border border-dashed flex items-center justify-center w-full py-6">
+      class="text-upload-text gap-x-3 text-base relative bg-upload-background border border-upload-border border-dashed flex items-center justify-center w-full py-6"
+    >
       <IconSvg name="download" class-name="w-4" />
       {{ t("components.common.upload-file.content") }}
-      <input ref="inputInstance" type="file" name="file"
-        class="opacity-0 absolute w-full h-full top-0 left-0 cursor-pointer" />
+      <input
+        ref="inputInstance"
+        type="file"
+        name="file"
+        class="opacity-0 absolute w-full h-full top-0 left-0 cursor-pointer"
+      />
     </div>
   </div>
 </template>

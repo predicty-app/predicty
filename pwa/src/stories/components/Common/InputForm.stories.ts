@@ -37,6 +37,7 @@ export default {
     },
   },
   parameters: {
+    jest: ["InputForm.spec.ts"],
     status: {
       type: "stable",
     },

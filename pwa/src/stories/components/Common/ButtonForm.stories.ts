@@ -16,7 +16,7 @@ export default {
     },
   },
   parameters: {
-    jest: ['ButtonForm.spec.ts'],
+    jest: ["ButtonForm.spec.ts"],
     status: {
       type: "stable",
     },

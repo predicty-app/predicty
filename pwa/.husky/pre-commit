@@ -3,5 +3,5 @@
 
 cd pwa && yarn lint
 yarn type-check
-yarn test:unit --run --reporter=json --outputFile=../.storybook/.jest-test-results.json
+yarn test:unit --run
 

@@ -12,14 +12,14 @@ describe("Tests for InputForm component", () => {
   function prepareElementsToTests<T>(props?: T) {
     const wrapper = mount(InputForm, {
       props: {
-        modelValue: '',
+        modelValue: "",
         ...props,
       },
       global: {
         plugins: plugins,
         stubs: {
           vMaska,
-        }
+        },
       },
     });
 
@@ -29,114 +29,113 @@ describe("Tests for InputForm component", () => {
 
     const input = wrapper.find<HTMLInputElement>(
       '[data-testid="input-form-input"]'
-    )
+    );
 
     const error = wrapper.find<HTMLSpanElement>(
       '[data-testid="input-form-error"]'
-    )
+    );
 
     const required = wrapper.find<HTMLSpanElement>(
       '[data-testid="input-form-required"]'
-    )
+    );
 
     return {
       label,
       input,
       error,
-      required
-    }
+      required,
+    };
   }
 
-  it('should have no visible label tag when props label not set', () => {
-    const { label } = prepareElementsToTests()
+  it("should have no visible label tag when props label not set", () => {
+    const { label } = prepareElementsToTests();
 
-    expect(label.exists()).toBeFalsy()
-  })
+    expect(label.exists()).toBeFalsy();
+  });
 
-  it('should have visible label tag when props label set', () => {
+  it("should have visible label tag when props label set", () => {
     type PropsType = {
-      label: string
-    }
+      label: string;
+    };
 
     const { label } = prepareElementsToTests<PropsType>({
-      label: 'test'
-    })
+      label: "test",
+    });
 
-    expect(label.text()).toBe('test')
-  })
+    expect(label.text()).toBe("test");
+  });
 
-  it('should have no set placeholder when props placeholder not set', () => {
-    const { input } = prepareElementsToTests()
+  it("should have no set placeholder when props placeholder not set", () => {
+    const { input } = prepareElementsToTests();
 
-    expect(input.attributes('placeholder')).toBeUndefined()
-  })
+    expect(input.attributes("placeholder")).toBeUndefined();
+  });
 
   it('should have set placeholder = "test" when props placeholder set', () => {
     type PropsType = {
-      placeholder: string
-    }
+      placeholder: string;
+    };
 
     const { input } = prepareElementsToTests<PropsType>({
-      placeholder: 'test'
-    })
+      placeholder: "test",
+    });
 
-    expect(input.attributes('placeholder')).toBe('test')
-  })
+    expect(input.attributes("placeholder")).toBe("test");
+  });
 
-  it('should have not set data-mask when props mask not set', () => {
-    const { input } = prepareElementsToTests()
+  it("should have not set data-mask when props mask not set", () => {
+    const { input } = prepareElementsToTests();
 
-    expect(input.attributes('data-mask')).toBeUndefined()
-  })
+    expect(input.attributes("data-mask")).toBeUndefined();
+  });
 
   it('should have set data-mask = "##" when props mask set', () => {
     type PropsType = {
-      mask: string
-    }
+      mask: string;
+    };
 
     const { input } = prepareElementsToTests<PropsType>({
-      mask: '##'
-    })
+      mask: "##",
+    });
 
-    expect(input.attributes('data-maska')).toBe('##')
-  })
+    expect(input.attributes("data-maska")).toBe("##");
+  });
 
-  it('should have no visible span error tag when props error-message not set', () => {
-    const { error } = prepareElementsToTests()
-    
-    expect(error.exists()).toBeFalsy()
-  })
+  it("should have no visible span error tag when props error-message not set", () => {
+    const { error } = prepareElementsToTests();
 
-  it('should have visible span error tag when props error-message set', () => {
+    expect(error.exists()).toBeFalsy();
+  });
+
+  it("should have visible span error tag when props error-message set", () => {
     type PropsType = {
-      errorMessage: string
-    }
+      errorMessage: string;
+    };
 
     const { error } = prepareElementsToTests<PropsType>({
-      errorMessage: 'test'
-    })
-    
-    expect(error.text()).toBe('test')
-  })
+      errorMessage: "test",
+    });
 
+    expect(error.text()).toBe("test");
+  });
 
-  it('should have no visible span required tag when props required not set', () => {
-    const { required } = prepareElementsToTests()
-    
-    expect(required.exists()).toBeFalsy()
-  })
+  it("should have no visible span required tag when props required not set", () => {
+    const { required } = prepareElementsToTests();
 
-  it('should have visible span required tag when props required set', () => {
+    expect(required.exists()).toBeFalsy();
+  });
+
+  it("should have visible span required tag when props required set", () => {
     type PropsType = {
-      required: boolean
-      label: string
-    }
+      required: boolean;
+      label: string;
+    };
 
     const { required } = prepareElementsToTests<PropsType>({
       required: true,
-      label: 'test'
-    })
-    
-    expect(required.exists()).toBeTruthy()
-  })
-})
+      label: "test",
+    });
+
+    expect(required.exists()).toBeTruthy();
+  });
+});

@@ -17,7 +17,7 @@ withDefaults(defineProps<PropsType>(), {
     :class="[
       'animate-fade-in',
       {
-        'relative': !isGlobal,
+        relative: !isGlobal,
         'absolute w-full h-full top-0 left-0 z-40': isGlobal,
       },
     ]"

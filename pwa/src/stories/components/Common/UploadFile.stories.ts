@@ -6,6 +6,7 @@ export default {
   component: UploadFileComponent,
   title: "Components/Common/UploadFile",
   parameters: {
+    jest: ["UploadFile.spec.ts"],
     status: {
       type: "todo",
     },

@@ -20,6 +20,7 @@ export default {
     },
   },
   parameters: {
+    jest: ["ProgressBar.spec.ts"],
     status: {
       type: "stable",
     },

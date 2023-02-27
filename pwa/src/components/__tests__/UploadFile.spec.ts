@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
 import plugins from "@/helpers/plugins";
 import { mount } from "@vue/test-utils";
-import IconSvg from '@/components/Common/IconSvg.vue'
-import TagPin from '@/components/Common/TagPin.vue'
+import IconSvg from "@/components/Common/IconSvg.vue";
+import TagPin from "@/components/Common/TagPin.vue";
 import UploadFile from "@/components/Common/UploadFile.vue";
 
 describe("Tests for UploadFile component", () => {
@@ -20,29 +20,27 @@ describe("Tests for UploadFile component", () => {
         plugins: plugins,
         stubs: {
           IconSvg,
-          TagPin
-        }
+          TagPin,
+        },
       },
     });
 
-    const upload = wrapper.find<HTMLDivElement>(
-      '[data-testid="upload-file"]'
-    );
+    const upload = wrapper.find<HTMLDivElement>('[data-testid="upload-file"]');
 
     return {
-      upload
-    }
+      upload,
+    };
   }
 
-  it('should have position absolute when not set props isGlobal', () => {
+  it("should have position absolute when not set props isGlobal", () => {
     type PropsType = {
-      filesType: string[]
-    }
+      filesType: string[];
+    };
 
     const { upload } = prepareElementsToTests<PropsType>({
-      filesType: ['.csv']
-    })
+      filesType: [".csv"],
+    });
 
-    expect(upload.text()).contains('.csv')
-  })
-})
+    expect(upload.text()).contains(".csv");
+  });
+});

@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import plugins from "@/helpers/plugins";
 import { mount } from "@vue/test-utils";
 import TagPin from "@/components/Common/TagPin.vue";
-import IconSvg from '@/components/Common/IconSvg.vue'
+import IconSvg from "@/components/Common/IconSvg.vue";
 
 describe("Tests for TagPin component", () => {
   /**
@@ -15,18 +15,16 @@ describe("Tests for TagPin component", () => {
       global: {
         plugins: plugins,
         stubs: {
-          IconSvg
-        }
+          IconSvg,
+        },
       },
     });
 
-    const tag = wrapper.find<HTMLDivElement>(
-      '[data-testid="tag-pin"]'
-    );
+    const tag = wrapper.find<HTMLDivElement>('[data-testid="tag-pin"]');
 
     return {
-      tag
-    }
+      tag,
+    };
   }
 
   it('should have type = "default" when props type not set', () => {
@@ -66,4 +64,4 @@ describe("Tests for TagPin component", () => {
     });
     expect(tag.attributes("data-type")).toBe("default");
   });
-})
+});
