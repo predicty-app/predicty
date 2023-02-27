@@ -18,6 +18,7 @@ export default {
     },
   },
   parameters: {
+    jest: ['HeaderText.spec.ts'],
     status: {
       type: "stable",
     },

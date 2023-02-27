@@ -11,6 +11,8 @@ withDefaults(defineProps<PropsType>(), {
 
 <template>
   <div
+    data-testid="tag-pin"
+    :data-type="type"
     :class="[
       'px-2 rounded text-[10px] border justify-center flex  gap-x-1 items-center',
       {

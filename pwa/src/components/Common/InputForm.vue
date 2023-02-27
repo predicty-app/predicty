@@ -13,7 +13,7 @@ type PropsType = {
 
 withDefaults(defineProps<PropsType>(), {
   type: "default",
-  required: false,
+  required: false
 });
 
 const emit = defineEmits<{
@@ -30,14 +30,15 @@ function changeValue(event: Event) {
 </script>
 
 <template>
-  <div class="input-atom">
-    <label v-if="label" class="text-xs mb-1 block ml-1">
-      <span class="text-text-error" v-if="required">*</span>
+  <div>
+    <label data-testid="input-form-label" v-if="label" class="text-xs mb-1 block ml-1">
+      <span data-testid="input-form-required" class="text-text-error" v-if="required">*</span>
       {{ label }}
     </label>
     <input
       type="text"
       v-maska
+      data-testid="input-form-input"
       v-bind="mask ? { 'data-maska': mask } : ''"
       :value="modelValue"
       @input="changeValue"
@@ -49,7 +50,7 @@ function changeValue(event: Event) {
       ]"
       :placeholder="placeholder"
     />
-    <span v-if="errorMessage" class="text-text-error text-xs block mt-1 ml-1">
+    <span v-if="errorMessage" data-testid="input-form-error" class="text-text-error text-xs block mt-1 ml-1">
       {{ errorMessage }}
     </span>
   </div>

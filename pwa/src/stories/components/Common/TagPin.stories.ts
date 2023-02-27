@@ -16,6 +16,7 @@ export default {
     },
   },
   parameters: {
+    jest: ['TagPin.spec.ts'],
     status: {
       type: "stable",
     },

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 type PropsType = {
-  isVisible: boolean;
-  isGlobal: boolean;
+  isVisible?: boolean;
+  isGlobal?: boolean;
 };
 
 withDefaults(defineProps<PropsType>(), {
@@ -13,10 +13,11 @@ withDefaults(defineProps<PropsType>(), {
 <template>
   <div
     v-if="isVisible"
+    data-testid="spinner-bar"
     :class="[
       'animate-fade-in',
       {
-        relative: !isGlobal,
+        'relative': !isGlobal,
         'absolute w-full h-full top-0 left-0 z-40': isGlobal,
       },
     ]"

@@ -13,6 +13,7 @@ export default {
     },
   },
   parameters: {
+    jest: ['SpinnerBar.spec.ts'],
     status: {
       type: "stable",
     },

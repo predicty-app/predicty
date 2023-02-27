@@ -1,0 +1,57 @@
+{
+  "numTotalTestSuites": 2,
+  "numPassedTestSuites": 2,
+  "numFailedTestSuites": 0,
+  "numPendingTestSuites": 0,
+  "numTotalTests": 3,
+  "numPassedTests": 3,
+  "numFailedTests": 0,
+  "numPendingTests": 0,
+  "numTodoTests": 0,
+  "startTime": 1677362936112,
+  "success": true,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "",
+            "Tests for ButtonForm component"
+          ],
+          "fullName": " Tests for ButtonForm component should have type = \"default\" when props type not set",
+          "status": "passed",
+          "title": "should have type = \"default\" when props type not set",
+          "duration": 24,
+          "failureMessages": []
+        },
+        {
+          "ancestorTitles": [
+            "",
+            "Tests for ButtonForm component"
+          ],
+          "fullName": " Tests for ButtonForm component should have type = \"success\" when props type set",
+          "status": "passed",
+          "title": "should have type = \"success\" when props type set",
+          "duration": 5,
+          "failureMessages": []
+        },
+        {
+          "ancestorTitles": [
+            "",
+            "Tests for ButtonForm component"
+          ],
+          "fullName": " Tests for ButtonForm component should have type = \"default\" when props type set",
+          "status": "passed",
+          "title": "should have type = \"default\" when props type set",
+          "duration": 3,
+          "failureMessages": []
+        }
+      ],
+      "startTime": 1677362938178,
+      "endTime": 1677362938210,
+      "status": "passed",
+      "message": "",
+      "name": "C:/Users/Przemyslaw/Desktop/projects/divante/predicty/app/pwa/src/components/__tests__/ButtonForm.spec.ts"
+    }
+  ]
+}

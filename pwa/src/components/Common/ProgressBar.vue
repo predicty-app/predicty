@@ -16,6 +16,8 @@ withDefaults(defineProps<PropsType>(), {
     ></div>
     <template :key="`step_${step}`" v-for="step in countSteps">
       <div
+        data-testid="progress-bar-dots"
+        :data-active="activeStep > step - 1"
         :class="[
           'w-[18px] h-[18px] rounded-full relative z-20',
           {
@@ -25,7 +27,9 @@ withDefaults(defineProps<PropsType>(), {
         ]"
       ></div>
       <div
+        data-testid="progress-bar-lines"
         v-if="step < countSteps"
+        :data-active="activeStep > step"
         :class="[
           'flex-auto h-2 z-20',
           {
