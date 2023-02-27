@@ -10,7 +10,7 @@ use Google\Ads\GoogleAds\Lib\V10\GoogleAdsClientBuilder;
 
 class GoogleAdsClientFactory
 {
-    public function __construct(private Credentials $credentials)
+    public function __construct()
     {
     }
 
@@ -18,13 +18,13 @@ class GoogleAdsClientFactory
     {
         $configuration = new Configuration([
             'GOOGLE_ADS' => [
-                'developerToken' => $this->credentials->getGoogleAdsDeveloperToken(),
+                'developerToken' => '',
                 'loginCustomerId' => '',
             ],
             'OAUTH' => [
-                'clientId' => $this->credentials->getGoogleAdsOauthClientId(),
-                'clientSecret' => $this->credentials->getGoogleAdsOauthClientSecret(),
-                'refreshToken' => $this->credentials->getGoogleAdsOauthRefreshToken(),
+                'clientId' => '',
+                'clientSecret' => '',
+                'refreshToken' => '',
             ],
         ]);
 

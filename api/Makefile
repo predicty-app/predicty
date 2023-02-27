@@ -6,3 +6,6 @@ phpstan:
 
 fixtures:
 	docker compose exec php ./bin/console doctrine:fixtures:load --no-interaction
+
+test:
+	docker compose exec php ./bin/phpunit
