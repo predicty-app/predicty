@@ -18,8 +18,7 @@
         "input-placeholder": "000 000",
         "buttons": {
           "next": "Next"
-        },
-        "is-correct-code": "Incorrect code. Please try again."
+        }
       },
       "connect-account-form": {
         "pin": {
@@ -61,6 +60,7 @@
   },
   "validation": {
     "is-required": "This field is a required field.",
-    "is-email": "The field has an incorrect e-mail format."
+    "is-email": "The field has an incorrect e-mail format.",
+    "is-passcode-correct": "Incorrect code. Please try again."
   }
 }

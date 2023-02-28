@@ -28,16 +28,15 @@ export const useOnBoardingStore = defineStore({
      * @param {string} payload
      */
     async handleSaveEmail(payload: string) {
-      this.email = payload; 
+      this.email = payload;
     },
 
     /**
      * Function to handle save code(password) user.
      * @param {string} payload
      */
-    async handleSavePassword(payload: string): Promise<boolean> {
+    async handleSavePassword(payload: string) {
       this.password = payload;
-      return true;
     },
 
     /**
