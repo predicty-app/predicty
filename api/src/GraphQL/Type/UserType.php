@@ -20,6 +20,9 @@ class UserType extends ObjectType
                 'email' => [
                     'type' => Type::string(),
                 ],
+                'is_email_verified' => [
+                    'type' => Type::boolean(),
+                ],
             ],
         ]);
     }

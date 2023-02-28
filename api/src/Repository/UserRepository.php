@@ -23,6 +23,17 @@ class UserRepository implements PasswordUpgraderInterface
         $this->repository = $em->getRepository(User::class);
     }
 
+    public function getByUsername(string $username): User
+    {
+        $user = $this->findByUsername($username);
+
+        if ($user === null) {
+            throw new \RuntimeException('User was not found');
+        }
+
+        return $user;
+    }
+
     public function findById(int $id): ?User
     {
         return $this->repository->find($id);
@@ -41,11 +52,6 @@ class UserRepository implements PasswordUpgraderInterface
     public function save(User $entity): void
     {
         $this->em->persist($entity);
-    }
-
-    public function saveAndFlush(User $entity): void
-    {
-        $this->save($entity);
         $this->em->flush();
     }
 
@@ -56,31 +62,6 @@ class UserRepository implements PasswordUpgraderInterface
         }
 
         $user->setPassword($newHashedPassword);
-        $this->save($user, true);
+        $this->save($user);
     }
-
-//    /**
-//     * @return User[] Returns an array of User objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('u.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?User
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

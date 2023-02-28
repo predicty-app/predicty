@@ -37,13 +37,15 @@ services:
       MERCURE_EXTRA_DIRECTIVES: demo
       PWA_UPSTREAM: ${PWA_UPSTREAM:-pwa:5173}
 
-###> doctrine/doctrine-bundle ###
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "8025:8025"
+      - "1025:1025"
+
   database:
     ports:
       - target: 5432
         published: 5432
         protocol: tcp
-###< doctrine/doctrine-bundle ###
 
-###> symfony/mercure-bundle ###
-###< symfony/mercure-bundle ###

@@ -13,13 +13,13 @@ class Login implements SynchronousCommand
     #[Assert\NotBlank(message: 'You must provide a username')]
     public readonly string $username;
 
-    #[Assert\NotBlank(message: 'Password cannot be empty')]
-    #[Assert\Length(max: 30)]
-    public readonly string $password;
+    #[Assert\NotBlank(message: 'Passcode cannot be empty')]
+    #[Assert\Length(min: 6)]
+    public readonly string $passcode;
 
-    public function __construct(string $username, string $password)
+    public function __construct(string $username, string $passcode)
     {
         $this->username = $username;
-        $this->password = $password;
+        $this->passcode = $passcode;
     }
 }
