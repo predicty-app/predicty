@@ -9,9 +9,9 @@ interface Window extends Window {
 }
 
 interface ImportMetaEnv {
-  readonly FB_ACCOUNT_APP: string;
-  readonly GOOGLE_ACCOUNT_APP: string;
-  readonly GOOGLE_ACCOUNT_CLIENT: string;
+  readonly VITE_FB_ACCOUNT_APP: string;
+  readonly VITE_GOOGLE_ACCOUNT_APP: string;
+  readonly VITE_GOOGLE_ACCOUNT_CLIENT: string;
 }
 
 interface ImportMeta {

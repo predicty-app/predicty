@@ -1,11 +1,16 @@
 import { defineStore } from "pinia";
 
-type ProviderStateType = {};
+type ProviderStateType = {
+  name: string;
+  logoPath: string;
+  status: boolean;
+  token?: string;
+};
 
 type StateType = {
   email: null | string;
   password: null | string;
-  providers: ProviderStateType[];
+  providers: {};
 };
 
 export const useOnBoardingStore = defineStore({
@@ -14,7 +19,7 @@ export const useOnBoardingStore = defineStore({
     ({
       email: null,
       password: null,
-      providers: [],
+      providers: {},
     } as StateType),
 
   actions: {
@@ -33,6 +38,20 @@ export const useOnBoardingStore = defineStore({
     async handleSavePassword(payload: string): Promise<boolean> {
       this.password = payload;
       return true;
+    },
+
+    /**
+     * Function to handle save code(password) user.
+     * @param {string} payload
+     */
+    async handleToogleAddProvider(payload: ProviderStateType) {
+      if (payload.name in this.providers) {
+        delete this.providers[payload.name];
+      } else {
+        this.providers[payload.name] = payload;
+      }
+
+      console.log(this.providers);
     },
   },
 });

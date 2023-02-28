@@ -3,7 +3,8 @@
     "common": {
       "upload-file" : {
         "header": "Upload data file",
-        "content": "Select a file or drag here"
+        "content": "Select a file or drag here",
+        "button": "Select a File"
       }
     },
     "on-boarding": {
@@ -16,7 +17,6 @@
         "input-label": "Password:",
         "input-placeholder": "000 000",
         "buttons": {
-          "continue": "Continue",
           "next": "Next"
         },
         "is-correct-code": "Incorrect code. Please try again."
@@ -42,10 +42,7 @@
     },
     "account-creation-pasword": {
       "header-title": "We’ve sent you a passcode",
-      "header-description": "Check your email address: {email}",
-      "buttons": {
-        "back": "Back"
-      }
+      "header-description": "Check your email address: {email}"
     },
     "basic-media-integration": {
       "header-title": "Connect your accounts",

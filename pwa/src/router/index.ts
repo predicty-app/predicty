@@ -58,7 +58,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/MoreMediaIntegrationView.vue"),
         beforeEnter: () => {
           const onboardingStore = useOnBoardingStore();
-          if (onboardingStore.providers.length === 0) {
+          if (Object.keys(onboardingStore.providers).length === 0) {
             return { path: "/onboarding/basic-media-integration" };
           }
         },
@@ -69,7 +69,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/PreparingScreenView.vue"),
         beforeEnter: () => {
           const onboardingStore = useOnBoardingStore();
-          if (onboardingStore.providers.length === 0) {
+          if (Object.keys(onboardingStore.providers).length === 0) {
             return { path: "/onboarding/basic-media-integration" };
           }
         },

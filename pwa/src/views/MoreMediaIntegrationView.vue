@@ -32,7 +32,7 @@ const previousStepPath = "/onboarding/basic-media-integration";
           <IconSvg name="arrowback" class-name="h-3 w-3" />
         </ButtonForm>
       </div>
-      <div class="flex items-center flex-auto">&nbsp;</div>
+      <div class="flex items-center flex-auto"></div>
       <div class="w-full max-w-[267px]">
         <ButtonForm
           type="success"
@@ -48,6 +48,9 @@ const previousStepPath = "/onboarding/basic-media-integration";
           </div>
         </ButtonForm>
       </div>
+    </template>
+    <template #progress>
+      <ProgressBar :count-steps="6" :active-step="5" />
     </template>
   </OnBoardingLayout>
 </template>

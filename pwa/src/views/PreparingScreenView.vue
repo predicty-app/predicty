@@ -14,6 +14,7 @@ const { t } = useI18n();
         <HeaderText
           :header-title="t('views.preparing-screen.header-title')"
           :header-description="t('views.preparing-screen.header-description')"
+          class="mb-9"
         />
         <SpinnerBar :is-visible="true" />
       </div>

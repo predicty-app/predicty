@@ -1,5 +1,7 @@
 export interface StrategyProviders {
   initProvider(): void;
+  sendRequestPermission(): Promise<void>;
+  getAccessToken(): string;
 }
 
 /**
@@ -33,7 +35,10 @@ export default class ContextProviders {
    * The ContextProviders delegates some work to the StrategyProviders object instead of
    * implementing multiple versions of the algorithm on its own.
    */
-  public loginClient(): void {
-    this.#strategy.initProvider();
+  public async getAccessToken(): Promise<string> {
+    await this.#strategy.initProvider();
+    await this.#strategy.sendRequestPermission();
+
+    return this.#strategy.getAccessToken();
   }
 }
