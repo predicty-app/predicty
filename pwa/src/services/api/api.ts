@@ -1,15 +1,15 @@
-import axios from 'axios'
+import axios from "axios";
 
 type HeadersType = {
-  'content-type': string
-}
+  "content-type": string;
+};
 
 type ParamsType<T> = {
-  readonly [K in keyof T]: T[K]
-}
+  readonly [K in keyof T]: T[K];
+};
 
 interface ApiService {
-  request<T, K>(query: string, params?: ParamsType<T>): Promise<K | undefined>
+  request<T, K>(query: string, params?: ParamsType<T>): Promise<K | undefined>;
 }
 
 /**
@@ -21,8 +21,8 @@ class ApiService implements ApiService {
    * @var {HeadersType}
    */
   #headers: HeadersType = {
-    'content-type': 'application/json',
-  }
+    "content-type": "application/json",
+  };
 
   /**
    * Main method to send reuqest for graphql.
@@ -34,20 +34,18 @@ class ApiService implements ApiService {
     query: string,
     params?: ParamsType<T>
   ): Promise<K | undefined> {
-
-
     return (
       await axios({
         url: import.meta.env.VITE_API_ENDPOINT,
-        method: 'post',
+        method: "post",
         headers: this.#headers,
         data: {
           query,
           variables: params,
         },
       })
-    ).data
+    ).data;
   }
 }
 
-export default new ApiService()
+export default new ApiService();
