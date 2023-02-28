@@ -4,6 +4,7 @@ import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { useGlobalStore } from "@/stores/global";
 import { useOnBoardingStore } from "@/stores/onboarding";
+import { handleRegisterUser } from '@/services/api/onboarding'
 import {
   isRequiredValidation,
   isEmailValidation,
@@ -34,6 +35,12 @@ async function handleSubmitForm() {
 
   if (!errorMessage.value) {
     globalStore.toogleSpinnerState();
+    const response = await handleRegisterUser({ email: modelValue.value })
+
+    if (response !== 'OK') {
+      setErrorFormResponse(response)
+      return
+    }
     await onBoardingStore.handleSaveEmail(modelValue.value as string);
     onBoardingStore.password = null;
     globalStore.toogleSpinnerState();
@@ -41,33 +48,34 @@ async function handleSubmitForm() {
   }
 }
 
+/**
+ * Function to set error from response.
+ * @param {string} response 
+ */
+function setErrorFormResponse(response: string) {
+  errorMessage.value = response
+  onBoardingStore.password = null;
+  globalStore.toogleSpinnerState();
+}
+
 onMounted(() => nextTick(() => (isComponentMounted.value = true)));
 </script>
 
 <template>
   <div v-if="isComponentMounted" class="flex flex-col gap-y-6">
-    <InputForm
-      v-model="modelValue"
-      :error-message="errorMessage"
-      v-on:keyup.enter="handleSubmitForm"
-      :required="true"
+    <InputForm v-model="modelValue" :error-message="errorMessage" v-on:keyup.enter="handleSubmitForm" :required="true"
       :placeholder="
         t(
           'components.on-boarding.account-creation-email-form.input-placeholder'
         )
-      "
-      :label="
-        t('components.on-boarding.account-creation-email-form.input-label')
-      "
-    />
+      " :label="
+  t('components.on-boarding.account-creation-email-form.input-label')
+" />
     <Teleport to="#next-button">
       <ButtonForm type="success" class="w-full" @click="handleSubmitForm">
         <div class="relative">
           {{ t("components.on-boarding.account-creation-email-form.button") }}
-          <IconSvg
-            name="arrownext"
-            class-name="absolute right-5 top-0 bottom-0 m-auto h-3 w-3"
-          />
+          <IconSvg name="arrownext" class-name="absolute right-5 top-0 bottom-0 m-auto h-3 w-3" />
         </div>
       </ButtonForm>
     </Teleport>

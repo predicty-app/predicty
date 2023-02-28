@@ -8,7 +8,7 @@
     "test:unit:report": "vitest --environment jsdom --root src/ --reporter=json --outputFile=../.storybook/.jest-test-results.json",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "build-only": "vite build",
-    "dev": "vite",
+    "dev": "vite --host 0.0.0.0",
     "preview": "vite preview",
     "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "test-preview": "yarn build && npx http-server dist",
