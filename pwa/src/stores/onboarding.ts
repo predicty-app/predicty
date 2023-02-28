@@ -28,7 +28,7 @@ export const useOnBoardingStore = defineStore({
      * @param {string} payload
      */
     async handleSaveEmail(payload: string) {
-      this.email = payload;
+      this.email = payload; 
     },
 
     /**
