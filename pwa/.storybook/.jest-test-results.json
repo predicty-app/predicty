@@ -1,69 +1,16 @@
 {
-  "numTotalTestSuites": 14,
-  "numPassedTestSuites": 14,
+  "numTotalTestSuites": 16,
+  "numPassedTestSuites": 16,
   "numFailedTestSuites": 0,
   "numPendingTestSuites": 0,
-  "numTotalTests": 30,
-  "numPassedTests": 30,
+  "numTotalTests": 31,
+  "numPassedTests": 31,
   "numFailedTests": 0,
   "numPendingTests": 0,
   "numTodoTests": 0,
-  "startTime": 1677495351073,
+  "startTime": 1677593086861,
   "success": true,
   "testResults": [
-    {
-      "assertionResults": [
-        {
-          "ancestorTitles": [
-            "",
-            "Tests for HeaderText component"
-          ],
-          "fullName": " Tests for HeaderText component should have no visible h3 tag when props headerTitle not set",
-          "status": "passed",
-          "title": "should have no visible h3 tag when props headerTitle not set",
-          "duration": 28,
-          "failureMessages": []
-        },
-        {
-          "ancestorTitles": [
-            "",
-            "Tests for HeaderText component"
-          ],
-          "fullName": " Tests for HeaderText component should have no visible p tag when props headerDescrption not set",
-          "status": "passed",
-          "title": "should have no visible p tag when props headerDescrption not set",
-          "duration": 5,
-          "failureMessages": []
-        },
-        {
-          "ancestorTitles": [
-            "",
-            "Tests for HeaderText component"
-          ],
-          "fullName": " Tests for HeaderText component should have title = \"test\" when props headerTitle set",
-          "status": "passed",
-          "title": "should have title = \"test\" when props headerTitle set",
-          "duration": 5,
-          "failureMessages": []
-        },
-        {
-          "ancestorTitles": [
-            "",
-            "Tests for HeaderText component"
-          ],
-          "fullName": " Tests for HeaderText component should have description = \"test\" when props headerDescription set",
-          "status": "passed",
-          "title": "should have description = \"test\" when props headerDescription set",
-          "duration": 6,
-          "failureMessages": []
-        }
-      ],
-      "startTime": 1677495353835,
-      "endTime": 1677495353879,
-      "status": "passed",
-      "message": "",
-      "name": "C:/Users/Przemyslaw/Desktop/projects/divante/predicty/app/pwa/src/components/__tests__/HeaderText.spec.ts"
-    },
     {
       "assertionResults": [
         {
@@ -74,7 +21,7 @@
           "fullName": " Tests for ButtonForm component should have type = \"default\" when props type not set",
           "status": "passed",
           "title": "should have type = \"default\" when props type not set",
-          "duration": 37,
+          "duration": 38,
           "failureMessages": []
         },
         {
@@ -85,7 +32,7 @@
           "fullName": " Tests for ButtonForm component should have type = \"success\" when props type set",
           "status": "passed",
           "title": "should have type = \"success\" when props type set",
-          "duration": 5,
+          "duration": 8,
           "failureMessages": []
         },
         {
@@ -96,12 +43,12 @@
           "fullName": " Tests for ButtonForm component should have type = \"default\" when props type set",
           "status": "passed",
           "title": "should have type = \"default\" when props type set",
-          "duration": 3,
+          "duration": 4,
           "failureMessages": []
         }
       ],
-      "startTime": 1677495353835,
-      "endTime": 1677495353880,
+      "startTime": 1677593089524,
+      "endTime": 1677593089574,
       "status": "passed",
       "message": "",
       "name": "C:/Users/Przemyslaw/Desktop/projects/divante/predicty/app/pwa/src/components/__tests__/ButtonForm.spec.ts"
@@ -116,7 +63,7 @@
           "fullName": " Tests for InputForm component should have no visible label tag when props label not set",
           "status": "passed",
           "title": "should have no visible label tag when props label not set",
-          "duration": 41,
+          "duration": 55,
           "failureMessages": []
         },
         {
@@ -127,7 +74,7 @@
           "fullName": " Tests for InputForm component should have visible label tag when props label set",
           "status": "passed",
           "title": "should have visible label tag when props label set",
-          "duration": 9,
+          "duration": 15,
           "failureMessages": []
         },
         {
@@ -138,7 +85,7 @@
           "fullName": " Tests for InputForm component should have no set placeholder when props placeholder not set",
           "status": "passed",
           "title": "should have no set placeholder when props placeholder not set",
-          "duration": 6,
+          "duration": 19,
           "failureMessages": []
         },
         {
@@ -149,7 +96,7 @@
           "fullName": " Tests for InputForm component should have set placeholder = \"test\" when props placeholder set",
           "status": "passed",
           "title": "should have set placeholder = \"test\" when props placeholder set",
-          "duration": 7,
+          "duration": 5,
           "failureMessages": []
         },
         {
@@ -171,7 +118,7 @@
           "fullName": " Tests for InputForm component should have set data-mask = \"##\" when props mask set",
           "status": "passed",
           "title": "should have set data-mask = \"##\" when props mask set",
-          "duration": 3,
+          "duration": 4,
           "failureMessages": []
         },
         {
@@ -182,7 +129,7 @@
           "fullName": " Tests for InputForm component should have no visible span error tag when props error-message not set",
           "status": "passed",
           "title": "should have no visible span error tag when props error-message not set",
-          "duration": 3,
+          "duration": 4,
           "failureMessages": []
         },
         {
@@ -204,7 +151,7 @@
           "fullName": " Tests for InputForm component should have no visible span required tag when props required not set",
           "status": "passed",
           "title": "should have no visible span required tag when props required not set",
-          "duration": 4,
+          "duration": 3,
           "failureMessages": []
         },
         {
@@ -215,12 +162,12 @@
           "fullName": " Tests for InputForm component should have visible span required tag when props required set",
           "status": "passed",
           "title": "should have visible span required tag when props required set",
-          "duration": 3,
+          "duration": 4,
           "failureMessages": []
         }
       ],
-      "startTime": 1677495353835,
-      "endTime": 1677495353919,
+      "startTime": 1677593089530,
+      "endTime": 1677593089647,
       "status": "passed",
       "message": "",
       "name": "C:/Users/Przemyslaw/Desktop/projects/divante/predicty/app/pwa/src/components/__tests__/InputForm.spec.ts"
@@ -230,14 +177,56 @@
         {
           "ancestorTitles": [
             "",
-            "Tests for ProgressBar component"
+            "Tests for HeaderText component"
           ],
-          "fullName": " Tests for ProgressBar component should have 3 dots when props count-steps is set",
+          "fullName": " Tests for HeaderText component should have no visible h3 tag when props headerTitle not set",
           "status": "passed",
-          "title": "should have 3 dots when props count-steps is set",
-          "duration": 36,
+          "title": "should have no visible h3 tag when props headerTitle not set",
+          "duration": 41,
           "failureMessages": []
         },
+        {
+          "ancestorTitles": [
+            "",
+            "Tests for HeaderText component"
+          ],
+          "fullName": " Tests for HeaderText component should have no visible p tag when props headerDescrption not set",
+          "status": "passed",
+          "title": "should have no visible p tag when props headerDescrption not set",
+          "duration": 5,
+          "failureMessages": []
+        },
+        {
+          "ancestorTitles": [
+            "",
+            "Tests for HeaderText component"
+          ],
+          "fullName": " Tests for HeaderText component should have title = \"test\" when props headerTitle set",
+          "status": "passed",
+          "title": "should have title = \"test\" when props headerTitle set",
+          "duration": 7,
+          "failureMessages": []
+        },
+        {
+          "ancestorTitles": [
+            "",
+            "Tests for HeaderText component"
+          ],
+          "fullName": " Tests for HeaderText component should have description = \"test\" when props headerDescription set",
+          "status": "passed",
+          "title": "should have description = \"test\" when props headerDescription set",
+          "duration": 6,
+          "failureMessages": []
+        }
+      ],
+      "startTime": 1677593089532,
+      "endTime": 1677593089591,
+      "status": "passed",
+      "message": "",
+      "name": "C:/Users/Przemyslaw/Desktop/projects/divante/predicty/app/pwa/src/components/__tests__/HeaderText.spec.ts"
+    },
+    {
+      "assertionResults": [
         {
           "ancestorTitles": [
             "",
@@ -246,18 +235,7 @@
           "fullName": " Tests for ProgressBar component should have 2 lines when props count-steps is set to 3",
           "status": "passed",
           "title": "should have 2 lines when props count-steps is set to 3",
-          "duration": 7,
-          "failureMessages": []
-        },
-        {
-          "ancestorTitles": [
-            "",
-            "Tests for ProgressBar component"
-          ],
-          "fullName": " Tests for ProgressBar component should have active 2 dots when props active-step set to 2",
-          "status": "passed",
-          "title": "should have active 2 dots when props active-step set to 2",
-          "duration": 4,
+          "duration": 49,
           "failureMessages": []
         },
         {
@@ -268,12 +246,12 @@
           "fullName": " Tests for ProgressBar component should have active 1 line when props active-step set to 2",
           "status": "passed",
           "title": "should have active 1 line when props active-step set to 2",
-          "duration": 7,
+          "duration": 9,
           "failureMessages": []
         }
       ],
-      "startTime": 1677495353842,
-      "endTime": 1677495353896,
+      "startTime": 1677593089532,
+      "endTime": 1677593089590,
       "status": "passed",
       "message": "",
       "name": "C:/Users/Przemyslaw/Desktop/projects/divante/predicty/app/pwa/src/components/__tests__/ProgressBar.spec.ts"
@@ -288,7 +266,7 @@
           "fullName": " Tests for TagPin component should have type = \"default\" when props type not set",
           "status": "passed",
           "title": "should have type = \"default\" when props type not set",
-          "duration": 38,
+          "duration": 55,
           "failureMessages": []
         },
         {
@@ -299,7 +277,7 @@
           "fullName": " Tests for TagPin component should have type = \"success\" when props type set",
           "status": "passed",
           "title": "should have type = \"success\" when props type set",
-          "duration": 12,
+          "duration": 13,
           "failureMessages": []
         },
         {
@@ -310,7 +288,7 @@
           "fullName": " Tests for TagPin component should have type = \"primary\" when props type set",
           "status": "passed",
           "title": "should have type = \"primary\" when props type set",
-          "duration": 5,
+          "duration": 4,
           "failureMessages": []
         },
         {
@@ -325,11 +303,73 @@
           "failureMessages": []
         }
       ],
-      "startTime": 1677495353851,
-      "endTime": 1677495353910,
+      "startTime": 1677593089548,
+      "endTime": 1677593089624,
       "status": "passed",
       "message": "",
       "name": "C:/Users/Przemyslaw/Desktop/projects/divante/predicty/app/pwa/src/components/__tests__/TagPin.spec.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "",
+            "Tests for UploadFile component"
+          ],
+          "fullName": " Tests for UploadFile component should have position absolute when not set props isGlobal",
+          "status": "passed",
+          "title": "should have position absolute when not set props isGlobal",
+          "duration": 56,
+          "failureMessages": []
+        }
+      ],
+      "startTime": 1677593089592,
+      "endTime": 1677593089648,
+      "status": "passed",
+      "message": "",
+      "name": "C:/Users/Przemyslaw/Desktop/projects/divante/predicty/app/pwa/src/components/__tests__/UploadFile.spec.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": [
+            "",
+            "Tests for CardPanel component"
+          ],
+          "fullName": " Tests for CardPanel component should have type = \"default\" when props type not set",
+          "status": "passed",
+          "title": "should have type = \"default\" when props type not set",
+          "duration": 23,
+          "failureMessages": []
+        },
+        {
+          "ancestorTitles": [
+            "",
+            "Tests for CardPanel component"
+          ],
+          "fullName": " Tests for CardPanel component should have type = \"success\" when props type set",
+          "status": "passed",
+          "title": "should have type = \"success\" when props type set",
+          "duration": 5,
+          "failureMessages": []
+        },
+        {
+          "ancestorTitles": [
+            "",
+            "Tests for CardPanel component"
+          ],
+          "fullName": " Tests for CardPanel component should have type = \"default\" when props type set",
+          "status": "passed",
+          "title": "should have type = \"default\" when props type set",
+          "duration": 2,
+          "failureMessages": []
+        }
+      ],
+      "startTime": 1677593090829,
+      "endTime": 1677593090859,
+      "status": "passed",
+      "message": "",
+      "name": "C:/Users/Przemyslaw/Desktop/projects/divante/predicty/app/pwa/src/components/__tests__/CardPanel.spec.ts"
     },
     {
       "assertionResults": [
@@ -341,7 +381,7 @@
           "fullName": " Tests for SpinnerBar component should have no visible spinner when props isVisible not set",
           "status": "passed",
           "title": "should have no visible spinner when props isVisible not set",
-          "duration": 19,
+          "duration": 17,
           "failureMessages": []
         },
         {
@@ -352,7 +392,7 @@
           "fullName": " Tests for SpinnerBar component should have  visible spinner when props isVisible set to true",
           "status": "passed",
           "title": "should have  visible spinner when props isVisible set to true",
-          "duration": 10,
+          "duration": 9,
           "failureMessages": []
         },
         {
@@ -374,35 +414,15 @@
           "fullName": " Tests for SpinnerBar component should have position absolute when not set props isGlobal",
           "status": "passed",
           "title": "should have position absolute when not set props isGlobal",
-          "duration": 4,
+          "duration": 3,
           "failureMessages": []
         }
       ],
-      "startTime": 1677495354826,
-      "endTime": 1677495354864,
+      "startTime": 1677593091733,
+      "endTime": 1677593091767,
       "status": "passed",
       "message": "",
       "name": "C:/Users/Przemyslaw/Desktop/projects/divante/predicty/app/pwa/src/components/__tests__/SpinnerBar.spec.ts"
-    },
-    {
-      "assertionResults": [
-        {
-          "ancestorTitles": [
-            "",
-            "Tests for UploadFile component"
-          ],
-          "fullName": " Tests for UploadFile component should have position absolute when not set props isGlobal",
-          "status": "passed",
-          "title": "should have position absolute when not set props isGlobal",
-          "duration": 38,
-          "failureMessages": []
-        }
-      ],
-      "startTime": 1677495354827,
-      "endTime": 1677495354865,
-      "status": "passed",
-      "message": "",
-      "name": "C:/Users/Przemyslaw/Desktop/projects/divante/predicty/app/pwa/src/components/__tests__/UploadFile.spec.ts"
     }
   ]
 }

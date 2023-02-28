@@ -6,6 +6,7 @@ export default {
   component: CardPanelComponent,
   title: "Components/Common/CardPanel",
   parameters: {
+    jest: ["Card.spec.ts"],
     status: {
       type: "stable",
     },
