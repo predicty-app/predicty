@@ -28,5 +28,8 @@ const nextStepPath = "/onboarding/account-creation";
         {{ t("views.start-screen.button") }}
       </ButtonForm>
     </template>
+    <template #progress>
+      <ProgressBar :count-steps="6" :active-step="1" />
+    </template>
   </OnBoardingLayout>
 </template>

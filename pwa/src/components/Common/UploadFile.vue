@@ -20,9 +20,8 @@ const { t } = useI18n();
       </TagPin>
     </div>
     <div
-      class="text-upload-text gap-x-3 text-base relative bg-upload-background border border-upload-border border-dashed flex items-center justify-center w-full py-6"
+      class="text-upload-text gap-y-3 text-base relative bg-upload-background border border-upload-border border-dashed flex flex-col items-center justify-center w-full py-6"
     >
-      <IconSvg name="download" class-name="w-4" />
       {{ t("components.common.upload-file.content") }}
       <input
         ref="inputInstance"
@@ -30,6 +29,12 @@ const { t } = useI18n();
         name="file"
         class="opacity-0 absolute w-full h-full top-0 left-0 cursor-pointer"
       />
+      <div
+        class="bg-upload-button-background rounded-[6px] px-4 py-[10px] text-base items-center justify-center text-upload-button-text flex gap-x-3"
+      >
+        <IconSvg name="upload" />
+        {{ t("components.common.upload-file.button") }}
+      </div>
     </div>
   </div>
 </template>

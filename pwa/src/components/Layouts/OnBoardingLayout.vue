@@ -15,15 +15,15 @@ const globalStore = useGlobalStore();
       <slot name="header" />
     </div>
     <div
-      class="flex-auto flex-col gap-y-6 h-0 overflow-y-auto flex justify-center max-w-xl w-full px-3"
+      class="flex-auto flex-col gap-y-6 h-0 overflow-y-auto flex justify-center max-w-[600px] w-full px-3"
     >
       <slot name="content" />
     </div>
-    <div
-      v-if="slots.footer"
-      class="w-full bg-text-white py-4 px-8 border-t border-t-layout-onboarding-border flex gap-x-10"
-    >
+    <div v-if="slots.footer" class="w-full py-4 px-8 flex gap-x-10">
       <slot name="footer" />
+    </div>
+    <div v-if="slots.progress" class="w-full">
+      <slot name="progress" />
     </div>
   </div>
 </template>

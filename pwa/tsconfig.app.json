@@ -6,6 +6,7 @@
     "composite": true,
     "strict": false,
     "baseUrl": ".",
+    "types": ["facebook-js-sdk", "gapi"],
     "paths": {
       "@/*": ["./src/*"]
     },

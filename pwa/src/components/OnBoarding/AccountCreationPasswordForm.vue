@@ -55,13 +55,6 @@ onMounted(() => nextTick(() => (isComponentMounted.value = true)));
         t('components.on-boarding.account-creation-password-form.input-label')
       "
     />
-    <ButtonForm type="success" @click="handleSubmitForm" class="w-full">
-      {{
-        t(
-          "components.on-boarding.account-creation-password-form.buttons.continue"
-        )
-      }}
-    </ButtonForm>
     <Teleport to="#next-button">
       <ButtonForm type="success" class="w-full" @click="handleSubmitForm">
         <div class="relative">

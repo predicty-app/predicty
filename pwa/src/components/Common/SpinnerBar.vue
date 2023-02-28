@@ -51,6 +51,7 @@ withDefaults(defineProps<PropsType>(), {
   text-indent: -9999em;
   width: 11em;
   height: 11em;
+  margin: auto;
   border-radius: 50%;
   background: #2e0c63;
   background: -moz-linear-gradient(
@@ -92,7 +93,7 @@ withDefaults(defineProps<PropsType>(), {
   }
 
   &::after {
-    background: rgba(237, 237, 241, 1);
+    background: #f5f6fd;
     width: 75%;
     height: 75%;
     border-radius: 50%;

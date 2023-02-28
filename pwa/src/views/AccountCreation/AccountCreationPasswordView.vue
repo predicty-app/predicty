@@ -26,21 +26,19 @@ const previousStepPath = "/onboarding/account-creation/email";
       <AccountCreationPasswordForm />
     </template>
     <template #footer>
-      <div class="w-full max-w-[267px]">
-        <ButtonForm class="w-full" @click="router.push(previousStepPath)">
-          <div class="relative">
-            <IconSvg
-              name="arrowback"
-              class-name="absolute left-5 top-0 bottom-0 m-auto h-3 w-3"
-            />
-            {{ t("views.account-creation-pasword.buttons.back") }}
-          </div>
+      <div class="w-full max-w-[48px]">
+        <ButtonForm
+          class="w-full flex justify-center"
+          @click="router.push(previousStepPath)"
+        >
+          <IconSvg name="arrowback" class-name="h-3 w-3" />
         </ButtonForm>
       </div>
-      <div class="flex items-center flex-auto">
-        <ProgressBar :count-steps="3" :active-step="2" />
-      </div>
+      <div class="flex items-center flex-auto"></div>
       <div class="w-full max-w-[267px]" id="next-button"></div>
+    </template>
+    <template #progress>
+      <ProgressBar :count-steps="6" :active-step="3" />
     </template>
   </OnBoardingLayout>
 </template>

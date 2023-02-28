@@ -30,8 +30,11 @@ const previousStepPath = "/onboarding/account-creation/email";
           <IconSvg name="arrowback" class-name="h-3 w-3" />
         </ButtonForm>
       </div>
-      <div class="flex items-center flex-auto">&nbsp;</div>
+      <div class="flex items-center flex-auto"></div>
       <div class="w-full max-w-[267px]" id="next-button"></div>
+    </template>
+    <template #progress>
+      <ProgressBar :count-steps="6" :active-step="4" />
     </template>
   </OnBoardingLayout>
 </template>

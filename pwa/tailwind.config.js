@@ -9,12 +9,30 @@ module.exports = {
         background: "#FFFFFF",
         border: "#E0E3FA",
         text: "#2E0C63",
+        button: {
+          background: "#2E0C63",
+          text: "#FFFFFF"
+        }
       },
       layout: {
         onboarding: {
           background: "#F5F6FD",
           border: "#E0E3FA",
         },
+      },
+      card: {
+        border: {
+          default: "#E0E3FA",
+          success: "#19BE34"
+        },
+        background: {
+          default: "#FFFFFF",
+          success: "#60D073",
+        },
+        text: {
+          default: "#000000",
+          success: "#FFFFFF",
+        }
       },
       fill: {
         default: "#2E0C63",
@@ -26,17 +44,17 @@ module.exports = {
         border: {
           default: "#E0E3FA",
           success: "#19BE34",
-          primary: "#E0E3FA",
+          primary: "#19BE34",
         },
         background: {
           default: "#E0E3FA",
           success: "#E9FFF0",
-          primary: "#F5F6FD",
+          primary: "#60D073",
         },
         text: {
           default: "#2E0C63",
           success: "#19BE34",
-          primary: "#2432A1",
+          primary: "#FFFFFF",
         },
       },
       progress: {
@@ -46,6 +64,8 @@ module.exports = {
       button: {
         default: "#F5F6FD",
         success: "#60D073",
+        border: "#E0E3FA",
+        disabled: "#D0D0D0",
         hover: {
           default: "#e4e7f7",
           success: "#41cb59",
