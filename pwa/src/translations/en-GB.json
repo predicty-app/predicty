@@ -1,5 +1,5 @@
 {
-  "components": {
+  "components": { 
     "common": {
       "upload-file" : {
         "header": "Upload data file",
