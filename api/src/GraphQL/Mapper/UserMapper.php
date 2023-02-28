@@ -13,6 +13,7 @@ class UserMapper
         return [
             'uid' => (string) $user->getUuid(),
             'email' => $user->getEmail(),
+            'is_email_verified' => $user->isEmailVerified(),
         ];
     }
 }

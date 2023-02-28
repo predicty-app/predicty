@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\GraphQL\Mutation;
 
+use App\Repository\UserRepository;
+use App\Service\Security\CacheBasedPasscodeService;
 use App\Test\GraphQLTestCase;
 
 /**
@@ -14,9 +16,14 @@ class LoginMutationTest extends GraphQLTestCase
 {
     public function test_login(): void
     {
-        $mutation = <<<'EOF'
+        $client = $this->createClient();
+        $repository = $client->getContainer()->get(UserRepository::class);
+        $passcodeService = $client->getContainer()->get(CacheBasedPasscodeService::class);
+        $code = $passcodeService->generate($repository->getByUsername('john.doe@example.com'));
+
+        $mutation = <<<"EOF"
                 mutation {
-                  login(username: "john.doe@example.com", password:"123456"){
+                  login(username: "john.doe@example.com", passcode:"$code"){
                     uid,
                     email
                   },
@@ -32,7 +39,7 @@ class LoginMutationTest extends GraphQLTestCase
     {
         $mutation = <<<'EOF'
                 mutation {
-                  login(username: "john.doe", password:"123456"){
+                  login(username: "john.doe", passcode:"123456"){
                     uid,
                     email
                   },
@@ -48,7 +55,7 @@ class LoginMutationTest extends GraphQLTestCase
     {
         $mutation = <<<'EOF'
                 mutation {
-                  login(username: "john.doe@example.com", password:""){
+                  login(username: "john.doe@example.com", passcode:""){
                     uid,
                     email
                   },

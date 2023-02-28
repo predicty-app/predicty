@@ -22,6 +22,7 @@ class UserMapperTest extends TestCase
         $expected = [
             'uid' => '01866f00-30a1-712b-9e61-968a07c2c004',
             'email' => 'john.doe@example.com',
+            'is_email_verified' => false,
         ];
 
         $this->assertSame($expected, (new UserMapper())->toArray($user));

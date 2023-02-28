@@ -17,7 +17,7 @@ class LogoutMutation extends FieldDefinition
             'name' => 'logout',
             'type' => $type->string(),
             'resolve' => fn (mixed $root, array $args) => $this->resolve($args),
-            'description' => 'Register a new account',
+            'description' => 'Logout',
         ]);
     }
 
