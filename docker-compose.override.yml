@@ -22,13 +22,14 @@ services:
   pwa:
     build:
       context: ./pwa
-      target: dev 
+      target: dev
     volumes:
       - ./pwa:/app
     environment:
       API_PLATFORM_CREATE_CLIENT_ENTRYPOINT: http://caddy
       API_PLATFORM_CREATE_CLIENT_OUTPUT: .
       WATCHPACK_POLLING: ${PWA_WATCHPACK_POLLING:-0}
+      NODE_ENV: ${NODE_ENV:-development}
     user: "${DOCKER_USER_ID:-1000}:${DOCKER_GROUP_ID:-1000}"
 
   caddy:
