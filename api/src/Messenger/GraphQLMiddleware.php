@@ -26,8 +26,11 @@ class GraphQLMiddleware implements MiddlewareInterface
 
             throw new ClientSafeException($message, 0, $exception);
         } catch (HandlerFailedException $exception) {
+            $originalException = $exception;
             while ($exception instanceof HandlerFailedException) {
-                $exception = $exception->getPrevious();
+                if ($exception->getPrevious() !== null) {
+                    $exception = $exception->getPrevious();
+                }
             }
 
             if ($this->isClientSafe($exception)) {
@@ -39,7 +42,7 @@ class GraphQLMiddleware implements MiddlewareInterface
                 throw new ClientSafeException($message, 0, $exception);
             }
 
-            throw $exception;
+            throw $originalException;
         }
     }
 
