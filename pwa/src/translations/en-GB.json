@@ -38,6 +38,10 @@
           "settings": "Settings",
           "logout": "Logout"
         } 
+      },
+      "sales-number": {
+        "sales": "sales",
+        "investment": "investment"
       }
     }
   },

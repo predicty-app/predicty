@@ -5,6 +5,17 @@ module.exports = {
   darkMode: false,
   theme: {
     colors: {
+      salesNumber: {
+        date: "#9A9A9A",
+        sale: {
+          header: "#4799FF",
+          text: "#333333"
+        },
+        investment: {
+          header: "#FFAE4F",
+          text: "#333333"
+        }
+      },
       popover: {
         background: "#FFFFFF"
       },

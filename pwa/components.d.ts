@@ -31,6 +31,7 @@ declare module '@vue/runtime-core' {
     ProgressBar: typeof import('./src/components/Common/ProgressBar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SalesNumber: typeof import('./src/components/UserDashboard/SalesNumber.vue')['default']
     SpinnerBar: typeof import('./src/components/Common/SpinnerBar.vue')['default']
     TagPin: typeof import('./src/components/Common/TagPin.vue')['default']
     UploadFile: typeof import('./src/components/Common/UploadFile.vue')['default']

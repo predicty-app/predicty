@@ -35,5 +35,5 @@ export const PopoverPanel = (args: ComponentPropsType) => ({
 });
 
 PopoverPanel.args = {
-  isVisible: true
-}
+  isVisible: true,
+};
