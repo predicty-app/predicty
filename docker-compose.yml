@@ -4,12 +4,10 @@ services:
   php:
     build:
       context: ./api
-      target: app_php
+      target: app_php_prod
     depends_on:
       - database
     restart: unless-stopped
-    volumes:
-      - php_socket:/var/run/php
     healthcheck:
       interval: 10s
       timeout: 3s
@@ -27,8 +25,6 @@ services:
     build:
       context: ./pwa
       target: prod
-    environment:
-      NEXT_PUBLIC_ENTRYPOINT: http://caddy
 
   caddy:
     build:
@@ -44,7 +40,6 @@ services:
       MERCURE_SUBSCRIBER_JWT_KEY: ${CADDY_MERCURE_JWT_SECRET:-!ChangeThisMercureHubJWTSecretKey!}
     restart: unless-stopped
     volumes:
-      - php_socket:/var/run/php
       - caddy_data:/data
       - caddy_config:/config
     ports:
@@ -61,30 +56,21 @@ services:
         published: ${HTTP3_PORT:-443}
         protocol: udp
 
-###> doctrine/doctrine-bundle ###
   database:
     image: postgres:${POSTGRES_VERSION:-14}-alpine
     environment:
       - POSTGRES_DB=${POSTGRES_DB:-app}
-      # You should definitely change the password in production
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
       - POSTGRES_USER=${POSTGRES_USER:-postgres}
     volumes:
       - db_data:/var/lib/postgresql/data
       # you may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
       # - ./api/docker/db/data:/var/lib/postgresql/data
-###< doctrine/doctrine-bundle ###
 
-# Mercure is installed as a Caddy module, prevent the Flex recipe from installing another service
-###> symfony/mercure-bundle ###
-###< symfony/mercure-bundle ###
 
 volumes:
   php_socket:
   caddy_data:
   caddy_config:
-###> doctrine/doctrine-bundle ###
   db_data:
-###< doctrine/doctrine-bundle ###
-###> symfony/mercure-bundle ###
-###< symfony/mercure-bundle ###
+
