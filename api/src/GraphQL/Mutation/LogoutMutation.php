@@ -16,12 +16,12 @@ class LogoutMutation extends FieldDefinition
         parent::__construct([
             'name' => 'logout',
             'type' => $type->string(),
-            'resolve' => fn (mixed $root, array $args) => $this->resolve($args),
+            'resolve' => fn () => $this->resolve(),
             'description' => 'Logout',
         ]);
     }
 
-    private function resolve(array $args): string
+    private function resolve(): string
     {
         $this->commandBus->dispatch(new Logout());
 

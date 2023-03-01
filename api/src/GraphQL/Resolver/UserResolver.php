@@ -15,8 +15,8 @@ class UserResolver
 
     public function findCurrentlyLoggedInUser(): array
     {
-        $user = $this->currentUserService->getCurrentUser();
+        $user = $this->currentUserService->getUser();
 
-        return $this->userMapper->toArray($user);
+        return $this->userMapper->map($user);
     }
 }

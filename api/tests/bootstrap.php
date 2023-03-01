@@ -15,10 +15,3 @@ if (file_exists(dirname(__DIR__).'/config/bootstrap.php')) {
 if ($_SERVER['APP_DEBUG']) {
     umask(0);
 }
-
-function prepareTestDatabase(): void
-{
-    passthru('php bin/console doctrine:database:drop --if-exists --force --env=test');
-    passthru('php bin/console doctrine:database:create --env=test');
-    passthru('php bin/console doctrine:schema:create --quiet --env=test');
-}

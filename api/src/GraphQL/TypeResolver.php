@@ -27,14 +27,16 @@ class TypeResolver
     {
     }
 
-    public function __invoke(string $typeName): Type
+    /**
+     * @template T of Type
+     *
+     * @param class-string<T> $typeName
+     *
+     * @return T
+     */
+    public function __call(string $typeName, array $arguments = []): Type
     {
         return $this->get($typeName);
-    }
-
-    public function __call(string $name, array $arguments = []): Type
-    {
-        return $this->get($name);
     }
 
     public function boolean(): ScalarType
@@ -76,6 +78,13 @@ class TypeResolver
         return new NonNull($type);
     }
 
+    /**
+     * @template T of Type
+     *
+     * @param class-string<T> $typeName
+     *
+     * @return T
+     */
     public function get(string $typeName): Type
     {
         return $this->serviceLocator->get($this->guessType($typeName));

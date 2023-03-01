@@ -25,6 +25,6 @@ class UserMapperTest extends TestCase
             'is_email_verified' => false,
         ];
 
-        $this->assertSame($expected, (new UserMapper())->toArray($user));
+        $this->assertSame($expected, (new UserMapper())->map($user));
     }
 }

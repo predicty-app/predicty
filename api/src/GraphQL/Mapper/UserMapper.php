@@ -8,7 +8,7 @@ use App\Entity\User;
 
 class UserMapper
 {
-    public function toArray(User $user): array
+    public function map(User $user): array
     {
         return [
             'uid' => (string) $user->getUuid(),
