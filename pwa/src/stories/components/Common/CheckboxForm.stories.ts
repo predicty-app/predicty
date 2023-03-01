@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref } from "vue";
 import CheckboxFormComponent from "@/components/Common/CheckboxForm.vue";
 
 type ComponentPropsType = {};
@@ -29,7 +29,7 @@ export default {
 export const CheckboxForm = (args: ComponentPropsType) => ({
   components: { CheckboxFormComponent },
   setup() {
-    const state = ref<boolean>(false)
+    const state = ref<boolean>(false);
 
     return { args, state };
   },
@@ -41,5 +41,5 @@ export const CheckboxForm = (args: ComponentPropsType) => ({
 });
 
 CheckboxForm.args = {
-  isChecked: false
-}
+  isChecked: false,
+};
