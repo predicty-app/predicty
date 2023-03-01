@@ -5,10 +5,17 @@ module.exports = {
   darkMode: false,
   theme: {
     colors: {
+      checkboxForm: {
+        border: "#FFFFFF",
+        active: {
+          background: "#FFFFFF",
+          color: "var(--color)"
+        }
+      },
       legendDescription: {
         header: "#B5B5B5",
         background: "#FFFFFF",
-        option:"var(--color)",
+        option: "var(--color)",
       },
       salesNumber: {
         date: "#9A9A9A",

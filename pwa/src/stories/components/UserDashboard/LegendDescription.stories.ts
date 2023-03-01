@@ -46,12 +46,12 @@ LegendDescription.args = {
   header: "week of the year",
   options: [
     {
-      label: 'Overall sales',
-      color: '#4184FF'
+      label: "Overall sales",
+      color: "#4184FF",
     },
     {
-      label: 'Overall investment',
-      color: '#FFAE4F'
-    }
+      label: "Overall investment",
+      color: "#FFAE4F",
+    },
   ],
 };

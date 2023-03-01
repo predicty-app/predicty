@@ -15,6 +15,7 @@ declare module '@vue/runtime-core' {
     AvatarUser: typeof import('./src/components/Common/AvatarUser.vue')['default']
     ButtonForm: typeof import('./src/components/Common/ButtonForm.vue')['default']
     CardPanel: typeof import('./src/components/Common/CardPanel.vue')['default']
+    CheckboxForm: typeof import('./src/components/Common/CheckboxForm.vue')['default']
     ConnectAccountForm: typeof import('./src/components/OnBoarding/ConnectAccountForm.vue')['default']
     ConnectMoreServicesForm: typeof import('./src/components/OnBoarding/ConnectMoreServicesForm.vue')['default']
     DividerLine: typeof import('./src/components/Common/DividerLine.vue')['default']
