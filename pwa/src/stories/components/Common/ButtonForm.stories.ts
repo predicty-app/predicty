@@ -7,10 +7,9 @@ export default {
   title: "Components/Common/ButtonForm",
   argTypes: {
     type: {
-      options: ["default", "success"],
+      options: ["default", "success", "disabled"],
       control: { type: "select" },
       description: "Button type.",
-      defaultValue: "primary",
       name: "type",
       type: { name: "string", required: false },
     },

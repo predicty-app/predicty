@@ -27,6 +27,18 @@
         },
         "button": "Next"
       }
+    },
+    "user-dashboard": {
+      "floating-switch-view-form": {
+        "option-ads": "Ad",
+        "option-ad-collection": "Ad Collection"
+      },
+      "header-dashboard": {
+        "menu-list": {
+          "settings": "Settings",
+          "logout": "Logout"
+        } 
+      }
     }
   },
   "views": {

@@ -5,6 +5,32 @@ module.exports = {
   darkMode: false,
   theme: {
     colors: {
+      menuList: {
+        color:"var(--color)",
+        text: "#333333",
+        hover: {
+          background: '#edecec'
+        }
+      },
+      dropdown: {
+        background: "#FFFFFF"
+      },
+      floatingPanel: {
+        background: "#FFFFFF",
+        text: "#545454",
+        button: {
+          active: {
+            background: "#000000",
+            text: "#FFFFFF"
+          },
+          hover: {
+            background: "#ededed"
+          }
+        }
+      },
+      header: {
+        text: "#646464"
+      },
       upload: {
         background: "#FFFFFF",
         border: "#E0E3FA",

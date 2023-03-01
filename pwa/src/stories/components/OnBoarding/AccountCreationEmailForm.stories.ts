@@ -24,5 +24,6 @@ export const AccountCreationEmailForm = (args: ComponentPropsType) => ({
   },
   template: `
     <AccountCreationEmailFormComponent v-bind="args" />
+    <div id="next-button"></div>
   `,
 });
