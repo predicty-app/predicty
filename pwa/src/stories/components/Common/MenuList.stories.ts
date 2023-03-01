@@ -15,7 +15,7 @@ export default {
   },
   parameters: {
     status: {
-      type: "stable",
+      type: "todo",
     },
     docs: {
       description: {

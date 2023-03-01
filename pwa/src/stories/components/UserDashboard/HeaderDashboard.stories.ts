@@ -7,7 +7,7 @@ export default {
   title: "Components/UserDashboard/HeaderDashboard",
   parameters: {
     status: {
-      type: "stable",
+      type: "todo",
     },
     docs: {
       description: {

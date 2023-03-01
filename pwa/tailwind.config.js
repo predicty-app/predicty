@@ -5,6 +5,9 @@ module.exports = {
   darkMode: false,
   theme: {
     colors: {
+      popover: {
+        background: "#FFFFFF"
+      },
       menuList: {
         color:"var(--color)",
         text: "#333333",
