@@ -7,10 +7,10 @@ export default {
   title: "Components/Common/MenuList",
   argTypes: {
     options: {
-      name: 'options',
-      description: 'Options for menu list.',
-      control: { type: 'array' },
-      type: { name: 'string', required: true },
+      name: "options",
+      description: "Options for menu list.",
+      control: { type: "array" },
+      type: { name: "string", required: true },
     },
   },
   parameters: {
@@ -38,15 +38,15 @@ export const MenuList = (args: ComponentPropsType) => ({
 MenuList.args = {
   options: [
     {
-      key: '1',
-      icon: 'cogs',
-      label: 'Settings 1'
+      key: "1",
+      icon: "cogs",
+      label: "Settings 1",
     },
     {
-      key: '2',
-      icon: 'logout',
-      label: 'Settings 2',
-      color: '#E24963'
+      key: "2",
+      icon: "logout",
+      label: "Settings 2",
+      color: "#E24963",
     },
-  ]
-}
+  ],
+};

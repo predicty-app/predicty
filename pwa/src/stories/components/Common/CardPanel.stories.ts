@@ -38,5 +38,5 @@ export const CardPanel = (args: ComponentPropsType) => ({
 });
 
 CardPanel.args = {
-  type: 'default'
-}
+  type: "default",
+};

@@ -31,4 +31,4 @@ export const DropdownMenu = (args: ComponentPropsType) => ({
       </DropdownMenuComponent>
     </div>
   `,
-})
+});

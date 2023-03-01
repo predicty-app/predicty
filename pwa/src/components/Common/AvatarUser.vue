@@ -1,25 +1,24 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted } from "vue";
 
 type PropsType = {
-  src?: string
-}
+  src?: string;
+};
 
-const props = defineProps<PropsType>()
-const avatarInstance = ref<HTMLImageElement | null>(null)
+const props = defineProps<PropsType>();
+const avatarInstance = ref<HTMLImageElement | null>(null);
 
 function dynamicalLoadingImage(image: HTMLImageElement) {
   image.onerror = () => {
-    image.src = '/assets/images/avatar.png'
-  }
-  image.src = props.src as string
+    image.src = "/assets/images/avatar.png";
+  };
+  image.src = props.src as string;
 }
 
 onMounted(() => {
-  const image = avatarInstance.value
-  dynamicalLoadingImage(image as HTMLImageElement)
-})
-
+  const image = avatarInstance.value;
+  dynamicalLoadingImage(image as HTMLImageElement);
+});
 </script>
 
 <template>

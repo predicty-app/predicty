@@ -1,15 +1,15 @@
 import { defineStore } from "pinia";
 
 type StateType = {
-  isSpinnerVisible: boolean
+  isSpinnerVisible: boolean;
 };
-
 
 export const useGlobalStore = defineStore({
   id: "global",
-  state: () => ({
-    isSpinnerVisible: false,
-  } as StateType),
+  state: () =>
+    ({
+      isSpinnerVisible: false,
+    } as StateType),
 
   actions: {
     /**
