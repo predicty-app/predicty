@@ -50,4 +50,4 @@ SalesNumber.args = {
   date: "2023.03.01",
   sales: "$5,345",
   investment: "$345",
-}
+};

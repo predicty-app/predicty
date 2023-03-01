@@ -25,6 +25,7 @@ declare module '@vue/runtime-core' {
     HeaderText: typeof import('./src/components/Common/HeaderText.vue')['default']
     IconSvg: typeof import('./src/components/Common/IconSvg.vue')['default']
     InputForm: typeof import('./src/components/Common/InputForm.vue')['default']
+    LegendDescription: typeof import('./src/components/UserDashboard/LegendDescription.vue')['default']
     MenuList: typeof import('./src/components/Common/MenuList.vue')['default']
     OnBoardingLayout: typeof import('./src/components/Layouts/OnBoardingLayout.vue')['default']
     PopoverPanel: typeof import('./src/components/Common/PopoverPanel.vue')['default']

@@ -5,6 +5,11 @@ module.exports = {
   darkMode: false,
   theme: {
     colors: {
+      legendDescription: {
+        header: "#B5B5B5",
+        background: "#FFFFFF",
+        option:"var(--color)",
+      },
       salesNumber: {
         date: "#9A9A9A",
         sale: {
