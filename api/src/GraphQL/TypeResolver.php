@@ -9,6 +9,7 @@ use GraphQL\Type\Definition\ListOfType;
 use GraphQL\Type\Definition\NonNull;
 use GraphQL\Type\Definition\ScalarType;
 use GraphQL\Type\Definition\Type;
+use GraphQL\Upload\UploadType;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 
 /**
@@ -21,6 +22,7 @@ class TypeResolver
         'App\GraphQL\Type',
         'App\GraphQL\Mutation',
         'App\GraphQL\Query',
+        'GraphQL\Upload',
     ];
 
     public function __construct(private readonly ServiceLocator $serviceLocator)
@@ -76,6 +78,11 @@ class TypeResolver
     {
         /** @phpstan-ignore-next-line */
         return new NonNull($type);
+    }
+
+    public function upload(): UploadType
+    {
+        return $this->get(UploadType::class);
     }
 
     /**

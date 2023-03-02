@@ -189,6 +189,14 @@
       <path value="$PROJECT_DIR$/api/vendor/symfony/mime" />
       <path value="$PROJECT_DIR$/api/vendor/symfony/mercure-bundle" />
       <path value="$PROJECT_DIR$/api/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/api/vendor/psr/http-server-middleware" />
+      <path value="$PROJECT_DIR$/api/vendor/psr/http-server-handler" />
+      <path value="$PROJECT_DIR$/api/vendor/ecodev/graphql-upload" />
+      <path value="$PROJECT_DIR$/api/vendor/league/flysystem-bundle" />
+      <path value="$PROJECT_DIR$/api/vendor/league/flysystem" />
+      <path value="$PROJECT_DIR$/api/vendor/league/mime-type-detection" />
+      <path value="$PROJECT_DIR$/api/vendor/qandidate/symfony-json-request-transformer" />
+      <path value="$PROJECT_DIR$/api/vendor/league/flysystem-memory" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
