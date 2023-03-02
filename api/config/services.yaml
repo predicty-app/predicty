@@ -50,6 +50,8 @@ services:
     App\GraphQL\Type\MutationType:
         arguments: [!tagged_iterator { tag: graphql_mutation}]
 
+    GraphQL\Upload\UploadType: ~
+
     App\Service\Google\GoogleAdsClient:
         factory: [App\Service\Google\GoogleAdsClientFactory, build]
 
@@ -59,7 +61,13 @@ services:
     Symfony\Component\Cache\Psr16Cache: ~
     Psr\SimpleCache\CacheInterface: '@Symfony\Component\Cache\Psr16Cache'
 
+    League\Flysystem\FilesystemOperator: '@default.storage'
+
     Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory: ~
     Symfony\Bridge\PsrHttpMessage\HttpMessageFactoryInterface: '@Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory'
     Symfony\Bridge\PsrHttpMessage\ArgumentValueResolver\PsrServerRequestResolver: ~
 
+    kernel.event_listener.json_request_transformer:
+        class: Qandidate\Common\Symfony\HttpKernel\EventListener\JsonRequestTransformerListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 100 }

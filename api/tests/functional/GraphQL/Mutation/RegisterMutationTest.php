@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Functional\GraphQL\Mutation;
 
 use App\Test\GraphQLTestCase;
+use Symfony\Component\Mime\RawMessage;
 
 /**
  * @covers \App\GraphQL\Mutation\RegisterMutation
@@ -39,6 +40,7 @@ class RegisterMutationTest extends GraphQLTestCase
         $this->assertEmailCount(1);
 
         $email = $this->getMailerMessage();
+        $this->assertInstanceOf(RawMessage::class, $email);
         $this->assertEmailHeaderSame($email, 'subject', 'Predicty Account Login');
         $this->assertEmailAddressContains($email, 'to', 'john.doe2@example.com');
         $this->assertEmailTextBodyContains($email, 'Your passcode is');
