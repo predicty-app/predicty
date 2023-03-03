@@ -197,6 +197,9 @@
       <path value="$PROJECT_DIR$/api/vendor/league/mime-type-detection" />
       <path value="$PROJECT_DIR$/api/vendor/qandidate/symfony-json-request-transformer" />
       <path value="$PROJECT_DIR$/api/vendor/league/flysystem-memory" />
+      <path value="$PROJECT_DIR$/api/vendor/league/csv" />
+      <path value="$PROJECT_DIR$/api/vendor/brick/money" />
+      <path value="$PROJECT_DIR$/api/vendor/brick/math" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
