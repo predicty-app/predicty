@@ -30,7 +30,7 @@ class UploadDataFileMutationTest extends GraphQLTestCase
                 'operations' => json_encode([
                     'query' => $mutation,
                     'variables' => ['file' => null],
-                    'operationName' => null
+                    'operationName' => null,
                 ]),
                 'map' => json_encode([0 => ['variables.file']]),
             ],

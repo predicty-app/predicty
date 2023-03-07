@@ -174,14 +174,17 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/mime" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/mercure-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/console" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/psr/http-server-middleware" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/psr/http-server-handler" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/ecodev/graphql-upload" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/league/flysystem-bundle" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/league/flysystem" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/league/mime-type-detection" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/qandidate/symfony-json-request-transformer" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/league/flysystem-memory" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/league/flysystem-bundle" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/psr/http-server-handler" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/qandidate/symfony-json-request-transformer" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/league/flysystem" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/psr/http-server-middleware" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/league/mime-type-detection" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/ecodev/graphql-upload" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/league/csv" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/brick/money" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/brick/math" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
