@@ -1,32 +1,45 @@
+DOCKER_COMPOSE=docker compose
+DOCKER_COMPOSE_EXEC=$(DOCKER_COMPOSE) exec
+PHP_EXEC=docker compose exec -e XDEBUG_MODE=off -e PHP_CS_FIXER_IGNORE_ENV=1 -e SYMFONY_DEPRECATIONS_HELPER=disabled php
+SYMFONY_CONSOLE_EXEC=$(PHP_EXEC) ./bin/console
+
 build: docker-build fixtures
 
+stop:
+	$(DOCKER_COMPOSE) stop
+
+start:
+	$(DOCKER_COMPOSE) up -d
+
+restart: stop start
+
 docker-build:
-	docker compose up --build
+	$(DOCKER_COMPOSE) up --build --remove-orphans
 
 composer-install:
-	docker compose exec -e XDEBUG_MODE=off php composer install
+	$(PHP_EXEC) composer install
 
 fix:
-	docker compose exec -e XDEBUG_MODE=off -e PHP_CS_FIXER_IGNORE_ENV=1 php ./vendor/bin/php-cs-fixer fix --allow-risky yes
+	$(PHP_EXEC) ./vendor/bin/php-cs-fixer fix --allow-risky yes
 
 phpstan:
-	docker compose exec -e XDEBUG_MODE=off php ./vendor/bin/phpstan analyze
+	$(PHP_EXEC) ./vendor/bin/phpstan analyze
 
 fixtures:
-	docker compose exec -e XDEBUG_MODE=off php ./bin/console doctrine:fixtures:load --no-interaction
+	$(PHP_EXEC) ./bin/console doctrine:fixtures:load --no-interaction
 
 test:
-	docker compose exec -e SYMFONY_DEPRECATIONS_HELPER=disabled php bin/phpunit
+	$(PHP_EXEC) bin/phpunit
 
 paratest:
-	docker compose exec -e SYMFONY_DEPRECATIONS_HELPER=disabled php vendor/bin/paratest --bootstrap=tests/paratest.php
+	$(PHP_EXEC) vendor/bin/paratest --bootstrap=tests/paratest.php
 
 reset-database:
-	docker compose exec -e XDEBUG_MODE=off php ./bin/console doctrine:query:sql "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'app' AND pid <> pg_backend_pid();" --quiet
-	docker compose exec -e XDEBUG_MODE=off php ./bin/console doctrine:database:drop --if-exists --force --no-interaction
-	docker compose exec -e XDEBUG_MODE=off php ./bin/console doctrine:database:create --no-interaction
-	docker compose exec -e XDEBUG_MODE=off php ./bin/console doctrine:migrations:migrate --no-interaction
-	docker compose exec -e XDEBUG_MODE=off php ./bin/console doctrine:fixtures:load --no-interaction
+	$(SYMFONY_CONSOLE_EXEC) doctrine:query:sql "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'app' AND pid <> pg_backend_pid();" --quiet
+	$(SYMFONY_CONSOLE_EXEC) doctrine:database:drop --if-exists --force --no-interaction
+	$(SYMFONY_CONSOLE_EXEC) doctrine:database:create --no-interaction
+	$(SYMFONY_CONSOLE_EXEC) doctrine:migrations:migrate --no-interaction
+	$(SYMFONY_CONSOLE_EXEC) doctrine:fixtures:load --no-interaction
 
 migration:
-	docker compose exec -e XDEBUG_MODE=off php ./bin/console doctrine:mig:diff
+	$(SYMFONY_CONSOLE_EXEC) doctrine:mig:diff --no-interaction
