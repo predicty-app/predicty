@@ -20,9 +20,13 @@ class AdSetRepository
         $this->repository = $em->getRepository(AdSet::class);
     }
 
-    public function findByCampaignIdAndName(int $campaignId, mixed $name): ?AdSet
+    public function findByCampaignIdAndExternalId(int $userId, int $campaignId, mixed $externalId): ?AdSet
     {
-        return $this->repository->findOneBy(['campaignId' => $campaignId, 'name' => $name]);
+        return $this->repository->findOneBy([
+            'userId' => $userId,
+            'campaignId' => $campaignId,
+            'externalId' => $externalId,
+        ]);
     }
 
     public function save(AdSet $adSet): void

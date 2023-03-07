@@ -4,16 +4,20 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
+#[ORM\Index(fields: ['userId'])]
+#[ORM\Index(fields: ['campaignId'])]
+#[ORM\Index(fields: ['externalId'])]
+#[ORM\UniqueConstraint(fields: ['userId', 'externalId'])]
 class AdSet
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
+    use IdTrait;
+    use TimestampableTrait;
+
     #[ORM\Column]
-    private ?int $id = null;
+    private string $externalId;
 
     #[ORM\Column]
     private int $userId;
@@ -24,24 +28,19 @@ class AdSet
     #[ORM\Column(length: 255)]
     private string $name;
 
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
-    private \DateTimeInterface $importedAt;
-
-    public function __construct(int $userId, int $campaignId, string $name, \DateTimeInterface $importedAt)
+    public function __construct(string $externalId, int $userId, int $campaignId, string $name, \DateTimeImmutable $createdAt, \DateTimeImmutable $changedAt)
     {
+        $this->externalId = $externalId;
         $this->userId = $userId;
         $this->campaignId = $campaignId;
         $this->name = $name;
-        $this->importedAt = $importedAt;
+        $this->createdAt = $createdAt;
+        $this->changedAt = $changedAt;
     }
 
-    public function getId(): int
+    public function getExternalId(): string
     {
-        if($this->id === null) {
-            throw new \RuntimeException('Entity was not saved yet, therefore it does not have its id');
-        }
-
-        return $this->id;
+        return $this->externalId;
     }
 
     public function getUserId(): int
@@ -54,13 +53,8 @@ class AdSet
         return $this->campaignId;
     }
 
-    public function getName(): ?string
+    public function getName(): string
     {
         return $this->name;
-    }
-
-    public function getImportedAt(): \DateTimeInterface
-    {
-        return $this->importedAt;
     }
 }

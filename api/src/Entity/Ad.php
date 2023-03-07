@@ -4,18 +4,21 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Repository\AdRepository;
-use Brick\Money\Currency;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: AdRepository::class)]
+#[ORM\Entity]
+#[ORM\Index(fields: ['userId'])]
+#[ORM\Index(fields: ['adSetId'])]
+#[ORM\Index(fields: ['campaignId'])]
+#[ORM\Index(fields: ['externalId'])]
+#[ORM\UniqueConstraint(fields: ['userId', 'externalId'])]
 class Ad
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
+    use IdTrait;
+    use TimestampableTrait;
+
     #[ORM\Column]
-    private ?int $id = null;
+    private string $externalId;
 
     #[ORM\Column]
     private int $userId;
@@ -27,58 +30,29 @@ class Ad
     private int $campaignId;
 
     #[ORM\Column]
-    private int $reach;
-
-    #[ORM\Column]
-    private int $results;
-
-    #[ORM\Column]
-    private int $impressions;
-
-    #[ORM\Column]
-    private int $costPerResult;
-
-    #[ORM\Column]
-    private int $cost;
-
-    #[ORM\Column]
-    private string $currency;
-
-    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    private \DateTimeInterface $date;
-
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
-    private \DateTimeInterface $importedAt;
+    private string $name;
 
     public function __construct(
         int $userId,
+        string $externalId,
         int $adSetId,
         int $campaignId,
-        int $reach,
-        int $results,
-        int $impressions,
-        int $costPerResult,
-        int $cost,
-        string $currency,
-        \DateTimeInterface $date,
-        \DateTimeInterface $importedAt
+        string $name,
+        \DateTimeInterface $createdAt,
+        \DateTimeInterface $changedAt,
     ) {
         $this->userId = $userId;
+        $this->externalId = $externalId;
         $this->adSetId = $adSetId;
         $this->campaignId = $campaignId;
-        $this->reach = $reach;
-        $this->results = $results;
-        $this->impressions = $impressions;
-        $this->costPerResult = $costPerResult;
-        $this->cost = $cost;
-        $this->currency = $currency;
-        $this->date = $date;
-        $this->importedAt = $importedAt;
+        $this->name = $name;
+        $this->createdAt = $createdAt;
+        $this->changedAt = $changedAt;
     }
 
-    public function getId(): ?int
+    public function getExternalId(): string
     {
-        return $this->id;
+        return $this->externalId;
     }
 
     public function getUserId(): int
@@ -96,43 +70,8 @@ class Ad
         return $this->campaignId;
     }
 
-    public function getReach(): int
+    public function getName(): string
     {
-        return $this->reach;
-    }
-
-    public function getImpressions(): int
-    {
-        return $this->impressions;
-    }
-
-    public function getResults(): int
-    {
-        return $this->results;
-    }
-
-    public function getCostPerResult(): int
-    {
-        return $this->costPerResult;
-    }
-
-    public function getCost(): int
-    {
-        return $this->cost;
-    }
-
-    public function getCurrency(): Currency
-    {
-        return Currency::of($this->currency);
-    }
-
-    public function getDate(): \DateTimeInterface
-    {
-        return $this->date;
-    }
-
-    public function getImportedAt(): \DateTimeInterface
-    {
-        return $this->importedAt;
+        return $this->name;
     }
 }

@@ -20,9 +20,14 @@ class AdRepository
         $this->repository = $em->getRepository(Ad::class);
     }
 
-    public function save(Ad $ad):void
+    public function save(Ad $ad): void
     {
         $this->em->persist($ad);
         $this->em->flush();
+    }
+
+    public function findByUserIdAndExternalId(int $userId, string $externalId): ?Ad
+    {
+        return $this->repository->findOneBy(['userId' => $userId, 'externalId' => $externalId]);
     }
 }

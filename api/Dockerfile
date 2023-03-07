@@ -75,6 +75,9 @@ RUN rm $PHP_INI_DIR/conf.d/app.prod.ini; \
 	mv "$PHP_INI_DIR/php.ini" "$PHP_INI_DIR/php.ini-production"; \
 	mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
+RUN mkdir -p "/opt/phpstorm-coverage" && \
+    chmod a+rw "/opt/phpstorm-coverage"
+
 COPY --link docker/php/conf.d/app.dev.ini $PHP_INI_DIR/conf.d/
 RUN rm -f .env.local.php
 RUN set -eux; \

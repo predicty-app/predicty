@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Repository\CampaignRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CampaignRepository::class)]
+#[ORM\Entity]
+#[ORM\Index(fields: ['userId'])]
+#[ORM\Index(fields: ['externalId'])]
+#[ORM\UniqueConstraint(fields: ['userId', 'externalId'])]
 class Campaign
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
+    use IdTrait;
+    use TimestampableTrait;
+
     #[ORM\Column]
-    private ?int $id = null;
+    private string $externalId;
 
     #[ORM\Column]
     private int $userId;
@@ -22,23 +24,13 @@ class Campaign
     #[ORM\Column(length: 255)]
     private string $name;
 
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
-    private \DateTimeInterface $importedAt;
-
-    public function __construct(int $userId, string $name, \DateTimeInterface $importedAt)
+    public function __construct(string $externalId, int $userId, string $name, \DateTimeInterface $createdAt, \DateTimeInterface $changedAt)
     {
+        $this->externalId = $externalId;
         $this->userId = $userId;
         $this->name = $name;
-        $this->importedAt = $importedAt;
-    }
-
-    public function getId(): int
-    {
-        if($this->id === null) {
-            throw new \RuntimeException('Entity was not saved yet, therefore it does not have its id');
-        }
-
-        return $this->id;
+        $this->createdAt = $createdAt;
+        $this->changedAt = $changedAt;
     }
 
     public function getUserId(): int
@@ -58,8 +50,8 @@ class Campaign
         return $this;
     }
 
-    public function getImportedAt(): \DateTimeInterface
+    public function getExternalId(): string
     {
-        return $this->importedAt;
+        return $this->externalId;
     }
 }

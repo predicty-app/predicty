@@ -25,7 +25,12 @@ class CampaignRepository
         return $this->repository->findOneBy(['userId' => $userId, 'name' => $name]);
     }
 
-    public function save(Campaign $campaign)
+    public function findByUserIdAndExternalId(int $userId, string $externalId): ?Campaign
+    {
+        return $this->repository->findOneBy(['userId' => $userId, 'externalId' => $externalId]);
+    }
+
+    public function save(Campaign $campaign): void
     {
         $this->em->persist($campaign);
         $this->em->flush();
