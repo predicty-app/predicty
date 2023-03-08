@@ -7,13 +7,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-#[ORM\InheritanceType('SINGLE_TABLE')]
-#[ORM\DiscriminatorColumn(name: 'type', enumType: DataProviderType::class)]
-#[ORM\DiscriminatorMap([
-    'GOOGLE_ADS' => GoogleAdsCredentials::class,
-    'FACEBOOK_ADS' => FacebookAdsCredentials::class,
-])]
-abstract class DataProviderCredentials
+class DataProviderCredentials
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -23,12 +17,13 @@ abstract class DataProviderCredentials
     #[ORM\Column]
     private int $userId;
 
+    #[ORM\Column(name: 'type', enumType: DataProviderType::class)]
     private DataProviderType $type;
 
     #[ORM\Column(nullable: true)]
     private array $credentials = [];
 
-    public function __construct(int $userId, DataProviderType $type, array $credentials)
+    public function __construct(int $userId, DataProviderType $type, array $credentials = [])
     {
         $this->userId = $userId;
         $this->type = $type;

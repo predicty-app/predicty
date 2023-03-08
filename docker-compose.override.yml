@@ -17,17 +17,20 @@ services:
     extra_hosts:
       # Ensure that host.docker.internal is correctly defined on Linux
       - host.docker.internal:host-gateway
+    user: "${DOCKER_USER_ID:-1000}:${DOCKER_GROUP_ID:-1000}"
 
   pwa:
     build:
       context: ./pwa
-      target: dev 
+      target: dev
     volumes:
       - ./pwa:/app
     environment:
       API_PLATFORM_CREATE_CLIENT_ENTRYPOINT: http://caddy
       API_PLATFORM_CREATE_CLIENT_OUTPUT: .
       WATCHPACK_POLLING: ${PWA_WATCHPACK_POLLING:-0}
+      NODE_ENV: ${NODE_ENV:-development}
+    user: "${DOCKER_USER_ID:-1000}:${DOCKER_GROUP_ID:-1000}"
 
   caddy:
     volumes:
@@ -36,6 +39,7 @@ services:
     environment:
       MERCURE_EXTRA_DIRECTIVES: demo
       PWA_UPSTREAM: ${PWA_UPSTREAM:-pwa:5173}
+      PHP_SOCKET: ${PHP_SOCKET:-php:9000}
 
   mailhog:
     image: mailhog/mailhog

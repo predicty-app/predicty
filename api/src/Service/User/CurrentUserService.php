@@ -6,6 +6,8 @@ namespace App\Service\User;
 
 use App\Entity\User;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class CurrentUserService
 {
@@ -13,7 +15,12 @@ class CurrentUserService
     {
     }
 
-    public function getCurrentUser(): User
+    public function isLoggedIn(): bool
+    {
+        return $this->security->getUser() !== null;
+    }
+
+    public function getUser(): User|UserInterface
     {
         $user = $this->security->getUser();
 
@@ -21,6 +28,6 @@ class CurrentUserService
             return $user;
         }
 
-        throw new \RuntimeException('There is no logged in user available');
+        throw new AuthenticationException('There is no logged in user available');
     }
 }

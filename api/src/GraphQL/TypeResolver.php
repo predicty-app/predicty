@@ -9,6 +9,7 @@ use GraphQL\Type\Definition\ListOfType;
 use GraphQL\Type\Definition\NonNull;
 use GraphQL\Type\Definition\ScalarType;
 use GraphQL\Type\Definition\Type;
+use GraphQL\Upload\UploadType;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 
 /**
@@ -21,20 +22,23 @@ class TypeResolver
         'App\GraphQL\Type',
         'App\GraphQL\Mutation',
         'App\GraphQL\Query',
+        'GraphQL\Upload',
     ];
 
     public function __construct(private readonly ServiceLocator $serviceLocator)
     {
     }
 
-    public function __invoke(string $typeName): Type
+    /**
+     * @template T of Type
+     *
+     * @param class-string<T> $typeName
+     *
+     * @return T
+     */
+    public function __call(string $typeName, array $arguments = []): Type
     {
         return $this->get($typeName);
-    }
-
-    public function __call(string $name, array $arguments = []): Type
-    {
-        return $this->get($name);
     }
 
     public function boolean(): ScalarType
@@ -76,6 +80,18 @@ class TypeResolver
         return new NonNull($type);
     }
 
+    public function upload(): UploadType
+    {
+        return $this->get(UploadType::class);
+    }
+
+    /**
+     * @template T of Type
+     *
+     * @param class-string<T> $typeName
+     *
+     * @return T
+     */
     public function get(string $typeName): Type
     {
         return $this->serviceLocator->get($this->guessType($typeName));

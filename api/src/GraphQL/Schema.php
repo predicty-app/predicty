@@ -4,23 +4,19 @@ declare(strict_types=1);
 
 namespace App\GraphQL;
 
-use GraphQL\Type\Definition\ObjectType;
+use App\GraphQL\Type\MutationType;
+use App\GraphQL\Type\QueryType;
 use GraphQL\Type\Schema as GraphQLSchema;
 use GraphQL\Type\SchemaConfig;
 
 class Schema extends GraphQLSchema
 {
-    public function __construct(iterable $queries, iterable $mutations, TypeResolver $typeResolver)
+    public function __construct(TypeResolver $typeResolver)
     {
         $config = SchemaConfig::create()
-            ->setQuery(new ObjectType([
-                'name' => 'Query',
-                'fields' => [...$queries],
-            ]))
-            ->setMutation(new ObjectType([
-                'name' => 'Mutation',
-                'fields' => [...$mutations],
-            ]))
+            ->setQuery($typeResolver->get(QueryType::class))
+            ->setMutation($typeResolver->get(MutationType::class))
+            /* @phpstan-ignore-next-line */
             ->setTypeLoader(fn (string $name) => $typeResolver->get($name))
         ;
 

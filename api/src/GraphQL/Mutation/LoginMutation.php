@@ -38,6 +38,6 @@ class LoginMutation extends FieldDefinition
         $user = $this->handle(new Login($args['username'], $args['passcode']));
         assert($user instanceof User);
 
-        return $this->userMapper->toArray($user);
+        return $this->userMapper->map($user);
     }
 }

@@ -13,7 +13,6 @@ use Psr\SimpleCache\CacheInterface;
 class CacheBasedPasscodeService implements PasscodeVerifier, PasscodeGenerator
 {
     private const ENV_DEV = 'dev';
-    private const ENV_TEST = 'test';
     private const CACHE_PREFIX = 'PasscodeService_';
 
     public function __construct(private CacheInterface $cache, private ?string $env = null)

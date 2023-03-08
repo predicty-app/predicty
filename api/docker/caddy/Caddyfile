@@ -7,16 +7,7 @@
 
 log
 
-# Matches requests for HTML documents, for static files and for Next.js files,
-# except for known API paths and paths with extensions handled by API Platform
-@pwa expression `(
-        header({'Accept': '*text/html*'})
-        && !path(
-            '/docs*', '/graphql*', '/internal*', '/bundles*', '/contexts*', '/_profiler*', '/_wdt*',
-            '*.json*', '*.html', '*.csv', '*.yml', '*.yaml', '*.xml'
-        )
-    )
-    || path('/favicon.ico', '/manifest.json', '/robots.txt', '/_next*', '/__next*', '/sitemap*')`
+@pwa expression `(!path('/graphql*', '/internal*', '/bundles*', '/contexts*', '/_profiler*', '/_wdt*'))`
 
 route {
     root * /app/public
@@ -41,11 +32,16 @@ route {
     # Disable Topics tracking if not enabled explicitly: https://github.com/jkarlin/topics
     header ?Permissions-Policy "browsing-topics=()"
 
-    # Comment the following line if you don't want Next.js to catch requests for HTML documents.
-    # In this case, they will be handled by the PHP app.
-    reverse_proxy @pwa http://{$PWA_UPSTREAM}
+    reverse_proxy @pwa {
+            to https://{$PWA_UPSTREAM}
+            transport http {
+                tls
+                tls_insecure_skip_verify
+                read_buffer 8192
+            }
+        }
 
-    php_fastcgi unix//var/run/php/php-fpm.sock
+    php_fastcgi {$PHP_SOCKET}
     encode zstd gzip
     file_server
 }

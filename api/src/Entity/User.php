@@ -33,7 +33,7 @@ class User implements UserInterface, EmailRecipientInterface, PasswordAuthentica
     #[ORM\Column]
     private string $password = '';
 
-    #[ORM\Column]
+    #[ORM\Column(options: ['default' => 0])]
     private bool $isEmailVerified = false;
 
     public function __construct(string $email)

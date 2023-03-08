@@ -9,6 +9,7 @@ use GraphQL\Error\DebugFlag;
 use GraphQL\Error\Error;
 use GraphQL\Server\ServerConfig;
 use GraphQL\Server\StandardServer;
+use GraphQL\Upload\UploadMiddleware;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,8 +30,9 @@ class GraphQlController extends AbstractController
             return $this->render('graphql/index.html.twig');
         }
 
-        $data = json_decode($request->getBody()->getContents(), true);
-        $request = $request->withParsedBody($data);
+        $uploadMiddleware = new UploadMiddleware();
+        $request = $uploadMiddleware->processRequest($request);
+
         $rootValue = [];
 
         $config = ServerConfig::create()

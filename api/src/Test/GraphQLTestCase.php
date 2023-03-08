@@ -30,19 +30,16 @@ abstract class GraphQLTestCase extends WebTestCase
 
     public static function executeQuery(string $query, array $variables = [], string $operationName = null): void
     {
-        $content = json_encode([
+        $parameters = [
             'operationName' => $operationName,
             'query' => $query,
             'variables' => $variables,
-        ], \JSON_THROW_ON_ERROR);
+        ];
 
-        self::getClient()->request(
+        self::getClient()->jsonRequest(
             method: 'POST',
             uri: '/graphql',
-            parameters: [
-                'HTTP_CONTENT_TYPE' => 'application/json',
-            ],
-            content: $content
+            parameters: $parameters
         );
     }
 
