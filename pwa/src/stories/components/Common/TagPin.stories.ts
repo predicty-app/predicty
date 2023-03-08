@@ -10,7 +10,6 @@ export default {
       options: ["default", "success", "primary"],
       control: { type: "select" },
       description: "Tag type.",
-      defaultValue: "primary",
       name: "type",
       type: { name: "string", required: false },
     },

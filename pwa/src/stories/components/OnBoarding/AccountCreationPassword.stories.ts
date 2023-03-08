@@ -24,5 +24,6 @@ export const AccountCreationPasword = (args: ComponentPropsType) => ({
   },
   template: `
     <AccountCreationPaswordComponent v-bind="args" />
+    <div id="next-button"></div>
   `,
 });

@@ -49,8 +49,6 @@ export const useOnBoardingStore = defineStore({
       } else {
         this.providers[payload.name] = payload;
       }
-
-      console.log(this.providers);
     },
   },
 });

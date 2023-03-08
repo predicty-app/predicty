@@ -76,6 +76,11 @@ const routes: Array<RouteRecordRaw> = [
       },
     ],
   },
+  {
+    path: "/",
+    name: "user-dashboard",
+    component: () => import("@/views/UserDashboardView.vue"),
+  },
 ];
 
 const router = createRouter({

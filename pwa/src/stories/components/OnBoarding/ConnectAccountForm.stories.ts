@@ -26,5 +26,6 @@ export const ConnectAccountForm = (args: ComponentPropsType) => ({
     <div class="h-full bg-layout-onboarding-border">
       <ConnectAccountFormComponent v-bind="args" />
     </div>
+    <div id="next-button"></div>
   `,
 });

@@ -10,7 +10,6 @@ export default {
       options: ["default"],
       control: { type: "select" },
       description: "Input type.",
-      defaultValue: "primary",
       name: "type",
       type: { name: "string", required: false },
     },

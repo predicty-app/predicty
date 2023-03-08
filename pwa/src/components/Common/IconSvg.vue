@@ -3,7 +3,7 @@ import { defineAsyncComponent, computed } from "vue";
 
 type PropsType = {
   name: string;
-  className?: string;
+  className?: any;
 };
 
 const props = withDefaults(defineProps<PropsType>(), {

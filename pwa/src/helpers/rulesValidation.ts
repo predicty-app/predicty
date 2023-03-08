@@ -34,7 +34,12 @@ export function isEmailValidation(value: string, t?: any): string | null {
  * @param {any} t
  * @returns {string | null }
  */
-export function isPasscodeCorrectValidation(value: string | number, t?: any): string | null {
+export function isPasscodeCorrectValidation(
+  value: string | number,
+  t?: any
+): string | null {
   const messageError = t("validation.is-passcode-correct");
-  return !Number.isInteger(value) ||  Number(value).toString().length != 6 ? messageError : null;
+  return !Number.isInteger(value) || Number(value).toString().length != 6
+    ? messageError
+    : null;
 }

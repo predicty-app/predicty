@@ -1,12 +1,12 @@
 import apiService from "@/services/api/api";
 
 export type RegisterUserPayloadType = {
-  email: string
+  email: string;
 };
 
 export type LoginUserPayloadType = {
-  username: string
-  passcode: string
+  username: string;
+  passcode: string;
 };
 
 /**
@@ -41,13 +41,11 @@ async function handleRegisterUser(payload: RegisterUserPayloadType) {
  */
 async function handleLoginUser(payload: LoginUserPayloadType) {
   type LoginParamsType = {
-    username: string
-    passcode: string
+    username: string;
+    passcode: string;
   };
 
-  const variables = [
-    'uid'
-  ]
+  const variables = ["uid"];
 
   const query = `mutation login($username: String!, $passcode: String!) {
     login(username: $username, passcode: $passcode) {
@@ -57,12 +55,10 @@ async function handleLoginUser(payload: LoginUserPayloadType) {
 
   try {
     const response = await apiService.request<LoginParamsType, any>(query, {
-      ...payload
+      ...payload,
     });
 
-    return response.errors
-      ? response.errors[0].message
-      : 'OK';
+    return response.errors ? response.errors[0].message : "OK";
   } catch (error) {
     return (error as Error).message;
   }
