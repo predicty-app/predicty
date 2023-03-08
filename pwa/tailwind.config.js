@@ -4,7 +4,96 @@ module.exports = {
   purge: ["./index.html", "./src/**/*.{js,ts,jsx,tsx,vue}"],
   darkMode: false,
   theme: {
+    extend: {
+      width: {
+        'calc': 'calc(100vw)',
+      },
+      height: {
+        'calc': 'calc(100vh - 60px)',
+        'dynamic': 'var(--height)'
+      },
+      gridColumnStart: {
+        'dynamic': 'var(--start)',
+      },
+      gridColumnEnd: {
+        'dynamic': 'var(--end)',
+      }
+    },
     colors: {
+      charBarPole: {
+        background: {
+          primary: "#89B3FF",
+          secondary: "#E3E7FF"
+        },
+        hover: {
+          background: "#4184FF",
+          shadow: "#4184FF"
+        }
+      },
+      chartBar: {
+        text: "#B5B5B5",
+        lines: "#ebebebdb",
+        weeks: {
+          text: "#9A9A9A",
+          sunday: "#EB7A7A"
+        }
+      },
+      select: {
+        input: {
+          text: '#4E5B72',
+          border: '#EDF0F3',
+          background: '#FFFFFF',
+          placeholder: '#B5B5B5 '
+        },
+        overlayer: {
+          border: '#EDF0F3'
+        },
+        options: {
+          default: {
+            text: '#4E5B72',
+            background: '#FFFFFF',
+            hover: '#19be3424'
+          },
+          active: {
+            text: '#FFFFFF',
+            background: '#19be3424',
+            hover: '#19be3424'
+          }
+        }
+      },
+      campaign: {
+        item: {
+          border: 'var(--color)',
+          header: {
+            color: 'var(--color)'
+          },
+          content: {
+            color: '#A6A6A6'
+          }
+        }
+      },
+      timeline: {
+        background: '#f9f9fb',
+        lines: '#dcdcdd',
+        shadow: "var(--color)",
+        collection: {
+          count: '#00000057'
+        },
+        days: {
+          text: '#9A9A9A',
+          sunday: '#EB7A7A'
+        },
+        lines: {
+          text: '#9A9A9A',
+          border: '#dcdcdd',
+          background_primary: '#f9f9fb',
+          background_secondary: '#f4f4f6'
+        },
+        item: {
+          border: 'var(--color)',
+          background: 'var(--color)'
+        }
+      },
       checkboxForm: {
         border: "#FFFFFF",
         active: {
@@ -14,6 +103,10 @@ module.exports = {
       },
       legendDescription: {
         header: "#B5B5B5",
+        scale: {
+          text: '#B5B5B5'
+        },
+        border: '#F1F3F6',
         background: "#FFFFFF",
         option: "var(--color)",
       },
@@ -42,8 +135,8 @@ module.exports = {
         background: "#FFFFFF"
       },
       floatingPanel: {
-        background: "#FFFFFF",
-        text: "#545454",
+        background: "#404040",
+        text: "#FFFFFF",
         button: {
           active: {
             background: "#000000",

@@ -1,42 +1,66 @@
 <script setup lang="ts">
+import { ref } from "vue";
+import { useI18n } from "vue-i18n";
+
 type OptionsType = {
-  key: string;
+  key: string | number;
   label: string;
 };
 
 type PropsType = {
+  selectedElements?: number;
   options: OptionsType[];
-  activeKey: string;
 };
 
-defineProps<PropsType>();
+const { t } = useI18n();
+const currentSelectedAction = ref<string>("");
 
-defineEmits<{
+withDefaults(defineProps<PropsType>(), {
+  selectedElements: 0,
+});
+
+const emit = defineEmits<{
   (e: "onClick", value: string): void;
 }>();
 </script>
 
 <template>
   <div
-    class="bg-floatingPanel-background rounded-full px-[5px] py-1 shadow-lg flex max-w-max gap-x-1"
+    class="bg-floatingPanel-background text- rounded-lg px-3 py-2 shadow-lg flex items-center max-w-max gap-x-[10px] floating-panel"
   >
-    <div
-      @click="
-        activeKey !== option.key ? $emit('onClick', option.key) : () => {}
-      "
-      :key="option.key"
-      v-for="option in options"
-      :class="[
-        'text-xs min-w-[130px] w-full py-2 text-center rounded-full px-5 transition-all',
-        {
-          'text-floatingPanel-text cursor-pointer hover:bg-floatingPanel-button-hover-background':
-            activeKey !== option.key,
-          'bg-floatingPanel-button-active-background hover:bg-floatingPanel-button-active-background text-floatingPanel-button-active-text font-semibold cursor-default':
-            activeKey === option.key,
-        },
-      ]"
-    >
-      {{ option.label }}
+    <div class="text-floatingPanel-text font-bold text-sm">
+      {{ selectedElements }}
+      {{
+        t("components.common.foating-panel.count-elements", {
+          s: selectedElements > 1 ? "s" : "",
+        })
+      }}
+    </div>
+    <div>
+      <SelectForm
+        class="w-44"
+        v-model="currentSelectedAction"
+        position="top"
+        :options="options"
+        :placeholder="t('components.common.foating-panel.select-placeholder')"
+      />
+    </div>
+    <div>
+      <ButtonForm
+        type="success"
+        class="text-xs px-3 py-2 rounded"
+        @click="emit('onClick', currentSelectedAction)"
+      >
+        {{ t("components.common.foating-panel.button") }}
+      </ButtonForm>
     </div>
   </div>
 </template>
+
+<style scoped lang="scss">
+.floating-panel {
+  :deep(button) {
+    @apply py-2 rounded;
+  }
+}
+</style>

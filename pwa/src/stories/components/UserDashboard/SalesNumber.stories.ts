@@ -11,6 +11,11 @@ export default {
       name: "date",
       type: { name: "string", required: false },
     },
+    day: {
+      description: "Day for tooltip",
+      name: "day",
+      type: { name: "string", required: false },
+    },
     sales: {
       description: "Sales for tooltip",
       name: "sales",

@@ -13,8 +13,16 @@ declare module "@vue/runtime-core" {
     AccountCreationPasword: typeof import("./src/components/OnBoarding/AccountCreationPasword.vue")["default"];
     AppLogo: typeof import("./src/components/Common/AppLogo.vue")["default"];
     AvatarUser: typeof import("./src/components/Common/AvatarUser.vue")["default"];
+    BarChart: typeof import("./src/components/UserDashboard/BarChart/BarChart.vue")["default"];
+    BarChartPole: typeof import("./src/components/UserDashboard/BarChart/BarChartPole.vue")["default"];
+    BarChartWrapper: typeof import("./src/components/UserDashboard/BarChart/BarChartWrapper.vue")["default"];
     ButtonForm: typeof import("./src/components/Common/ButtonForm.vue")["default"];
+    CampaningListForm: typeof import("./src/components/UserDashboard/CampaningListForm.vue")["default"];
+    CampaningListItem: typeof import("./src/components/UserDashboard/CampaningListItem.vue")["default"];
     CardPanel: typeof import("./src/components/Common/CardPanel.vue")["default"];
+    ChartTimelineContent: typeof import("./src/components/UserDashboard/ChartTimeline/ChartTimelineContent.vue")["default"];
+    ChartTimelineItem: typeof import("./src/components/UserDashboard/ChartTimeline/ChartTimelineItem.vue")["default"];
+    ChartTimelineWrapper: typeof import("./src/components/UserDashboard/ChartTimeline/ChartTimelineWrapper.vue")["default"];
     CheckboxForm: typeof import("./src/components/Common/CheckboxForm.vue")["default"];
     ConnectAccountForm: typeof import("./src/components/OnBoarding/ConnectAccountForm.vue")["default"];
     ConnectMoreServicesForm: typeof import("./src/components/OnBoarding/ConnectMoreServicesForm.vue")["default"];
@@ -31,11 +39,18 @@ declare module "@vue/runtime-core" {
     OnBoardingLayout: typeof import("./src/components/Layouts/OnBoardingLayout.vue")["default"];
     PopoverPanel: typeof import("./src/components/Common/PopoverPanel.vue")["default"];
     ProgressBar: typeof import("./src/components/Common/ProgressBar.vue")["default"];
+    ProvidersListForm: typeof import("./src/components/UserDashboard/ProvidersListForm.vue")["default"];
     RouterLink: typeof import("vue-router")["RouterLink"];
     RouterView: typeof import("vue-router")["RouterView"];
     SalesNumber: typeof import("./src/components/UserDashboard/SalesNumber.vue")["default"];
+    ScrollbarPanel: typeof import("./src/components/Common/ScrollbarPanel.vue")["default"];
+    SelectForm: typeof import("./src/components/Common/SelectForm.vue")["default"];
     SpinnerBar: typeof import("./src/components/Common/SpinnerBar.vue")["default"];
     TagPin: typeof import("./src/components/Common/TagPin.vue")["default"];
+    TimelineContent: typeof import("./src/components/UserDashboard/ChartTimeline/TimelineContent.vue")["default"];
+    TimelineItem: typeof import("./src/components/UserDashboard/ChartTimeline/TimelineItem.vue")["default"];
+    TimelineWrapper: typeof import("./src/components/UserDashboard/ChartTimeline/TimelineWrapper.vue")["default"];
     UploadFile: typeof import("./src/components/Common/UploadFile.vue")["default"];
+    UserDashboardLayout: typeof import("./src/components/Layouts/UserDashboardLayout.vue")["default"];
   }
 }

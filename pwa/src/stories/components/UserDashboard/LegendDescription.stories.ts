@@ -6,14 +6,21 @@ export default {
   component: LegendDescriptionComponent,
   title: "Components/UserDashboard/LegendDescription",
   argTypes: {
-    date: {
-      header: "Header for legend",
-      name: "header",
+    typeChartOptions: {
+      name: "typeChartOptions",
+      description: "Types option of chart.",
+      control: { type: "array" },
       type: { name: "string", required: false },
     },
     options: {
       name: "options",
       description: "Options for legend list.",
+      control: { type: "array" },
+      type: { name: "string", required: false },
+    },
+    amountScale: {
+      name: "amountScale",
+      description: "Amount scale for legend list.",
       control: { type: "array" },
       type: { name: "string", required: false },
     },

@@ -12,10 +12,10 @@ export default {
       control: { type: "array" },
       type: { name: "string", required: true },
     },
-    activeKey: {
-      name: "activeKey",
-      description: "Witch button actual is active.",
-      type: { name: "string", required: false },
+    selectedElements: {
+      name: "selectedElements",
+      description: "Count of selected elements.",
+      type: { name: "number", required: false },
     },
   },
   parameters: {
@@ -51,5 +51,5 @@ FloatingPanel.args = {
       label: "Lorem ipsum 2",
     },
   ],
-  activeKey: "2",
+  selectedElements: 5,
 };

@@ -8,6 +8,10 @@ type PropsType = {
 const props = defineProps<PropsType>();
 const avatarInstance = ref<HTMLImageElement | null>(null);
 
+/**
+ * Function to dynamic load image.
+ * @param {HTMLImageElement} image
+ */
 function dynamicalLoadingImage(image: HTMLImageElement) {
   image.onerror = () => {
     image.src = "/assets/images/avatar.png";

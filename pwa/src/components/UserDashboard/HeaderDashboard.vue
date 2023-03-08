@@ -29,14 +29,14 @@ const optionsMenu: OptionsType[] = [
  * Function to handle click on menu.
  * @param {MenuNames} menuName
  */
-function handleChangeView(menuName: MenuNames) {
+function handleFiredAction(menuName: MenuNames) {
   console.log(menuName);
 }
 </script>
 
 <template>
   <div
-    class="h-[60px] flex items-center bg-text-white shadow-md px-5 justify-between"
+    class="h-[60px] flex items-center bg-text-white shadow-md px-5 justify-between relative z-10"
   >
     <AppLogo class="ml-6" />
     <DropdownMenu>
@@ -45,7 +45,7 @@ function handleChangeView(menuName: MenuNames) {
       >
       <AvatarUser />
       <template #overlayer>
-        <MenuList :options="optionsMenu" @on-click="handleChangeView" />
+        <MenuList :options="optionsMenu" @on-click="handleFiredAction" />
       </template>
     </DropdownMenu>
   </div>

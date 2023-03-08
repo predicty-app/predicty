@@ -6,3 +6,4 @@ declare module '*.vue' {
 }
 
 declare module '@vueuse/components'
+declare module 'vue3-perfect-scrollbar'

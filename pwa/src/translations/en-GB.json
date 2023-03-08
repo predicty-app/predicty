@@ -5,6 +5,11 @@
         "header": "Upload data file",
         "content": "Select a file or drag here",
         "button": "Select a File"
+      },
+      "foating-panel": {
+        "count-elements": "Item{s} Selected",
+        "button": "Apply",
+        "select-placeholder": "Select one of option..."
       }
     },
     "on-boarding": {
@@ -30,8 +35,9 @@
     },
     "user-dashboard": {
       "floating-switch-view-form": {
-        "option-ads": "Ad",
-        "option-ad-collection": "Ad Collection"
+        "create-new-collection": "Create New Collection",
+        "add-to-collection": "Add to Collection",
+        "hide-element": "Hide element"
       },
       "header-dashboard": {
         "menu-list": {
@@ -42,6 +48,22 @@
       "sales-number": {
         "sales": "sales",
         "investment": "investment"
+      },
+      "campaning-list-form": {
+        "active_ad_collection": "{count} active Ad Collections",
+        "active_ad_sets": "{count} active Ad Sets",
+        "active_ads": "{count} active Ads"
+      },
+      "bar-chart": {
+        "weeks-days": {
+          "mon": "mon",
+          "tue": "tue",
+          "wed": "wed",
+          "thu": "thu",
+          "fri": "fri",
+          "sat": "sat",
+          "sun": "sun"
+        }
       }
     }
   },
@@ -72,6 +94,18 @@
     "preparing-screen": {
       "header-title": "Good job!",
       "header-description": "We are setting up your account"
+    },
+    "user-dashboard-view": {
+      "legend-description": {
+        "chart-types": {
+          "weeks": "Weeks",
+          "days": "Days"
+        },
+        "options": {
+          "sales": "Overall sales",
+          "investment": "Overall investment"
+        }
+      }
     }
   },
   "validation": {

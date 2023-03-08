@@ -1,6 +1,8 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
-import { useUserDashboardStore, ViewNames } from "@/stores/userDashboard";
+import { useUserDashboardStore, OptionsName } from "@/stores/userDashboard";
+import type { CampaignType } from "@/stores/userDashboard";
 
 type OptionsType = {
   key: string;
@@ -9,34 +11,54 @@ type OptionsType = {
 
 const { t } = useI18n();
 const userDashboardStore = useUserDashboardStore();
+const optionsButtons = computed<OptionsType[]>(() => {
+  const options: OptionsType[] = [
+    {
+      key: OptionsName.CREATE_NEW_COLLECTION,
+      label: t(
+        "components.user-dashboard.floating-switch-view-form.create-new-collection"
+      ),
+    },
+    {
+      key: OptionsName.HIDE_ELEMENT,
+      label: t(
+        "components.user-dashboard.floating-switch-view-form.hide-element"
+      ),
+    },
+  ];
 
-const optionsButtons: OptionsType[] = [
-  {
-    key: ViewNames.AD,
-    label: t("components.user-dashboard.floating-switch-view-form.option-ads"),
-  },
-  {
-    key: ViewNames.AD_COLLECTION,
-    label: t(
-      "components.user-dashboard.floating-switch-view-form.option-ad-collection"
-    ),
-  },
-];
+  const campaign = userDashboardStore.campaigns.find(
+    (campaing: CampaignType) =>
+      campaing.uid === userDashboardStore.selectedAdsList.campaignUid
+  );
+
+  if (campaign.collection.length > 0) {
+    options.push({
+      key: OptionsName.ADD_TO_COLLECTION,
+      label: t(
+        "components.user-dashboard.floating-switch-view-form.add-to-collection"
+      ),
+    });
+  }
+
+  return options;
+});
 
 /**
- * Function to change view.
- * @param {ViewNames} viewName
+ * Function to start action.
+ * @param {OptionsName} optionName
  */
-function handleChangeView(viewName: ViewNames) {
-  userDashboardStore.currentView = viewName;
+function handleFiredAction(actionName: OptionsName) {
+  console.log(actionName);
+  //selectedAds
 }
 </script>
 
 <template>
   <FloatingPanel
-    class="absolute bottom-5 left-0 right-0 m-auto"
+    class="absolute bottom-3 right-3 m-auto animate-fade-in z-20"
+    :selected-elements="userDashboardStore.selectedAdsList.ads.length"
     :options="optionsButtons"
-    @on-click="handleChangeView"
-    :active-key="userDashboardStore.currentView"
+    @on-click="handleFiredAction"
   />
 </template>

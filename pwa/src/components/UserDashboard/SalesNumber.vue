@@ -3,6 +3,7 @@ import { useI18n } from "vue-i18n";
 
 type PropsType = {
   date?: string;
+  day?: string;
   sales?: string | number;
   investment?: string | number;
 };
@@ -13,10 +14,14 @@ const { t } = useI18n();
 </script>
 
 <template>
-  <div class="flex flex-col gap-y-[6px] items-center">
-    <span v-if="date" class="text-[10px] text-salesNumber-date text-center">{{
-      date
-    }}</span>
+  <div class="flex flex-col gap-y-[5px] items-center">
+    <div
+      v-if="date"
+      class="text-[8px] text-salesNumber-date text-center leading-3"
+    >
+      <div>{{ date }}</div>
+      <div>{{ day }}</div>
+    </div>
     <div v-if="sales" class="flex flex-col text-center">
       <div
         class="text-[10px] font-medium text-salesNumber-sale-header uppercase font-ibm-mono mb-[-4px]"

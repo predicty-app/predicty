@@ -145,7 +145,7 @@ async function handleToogleConnecttoProvider(provider: ProviderType) {
     <Teleport to="#next-button">
       <ButtonForm
         @click="router.push(nextStepPath)"
-        :type="providersList.find((provider: ProviderType) => provider.status)? 'success' : 'disbaled'"
+        :type="providersList.find((provider: ProviderType) => provider.status) ? 'success' : 'disbaled'"
         class="w-full"
       >
         <div class="relative">
