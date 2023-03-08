@@ -182,9 +182,13 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/psr/http-server-middleware" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/league/mime-type-detection" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/ecodev/graphql-upload" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/league/csv" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/brick/money" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/brick/math" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/brick/money" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/league/csv" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/squizlabs/php_codesniffer" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpstan/phpdoc-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/dealerdirect/phpcodesniffer-composer-installer" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/slevomat/coding-standard" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -14,7 +14,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Psr\Clock\ClockInterface;
 
-class AdStatsFixtures extends Fixture implements DependentFixtureInterface
+class AdStatFixtures extends Fixture implements DependentFixtureInterface
 {
     public function __construct(private ClockInterface $clock)
     {
@@ -23,13 +23,13 @@ class AdStatsFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         /** @var Ad $ad1 */
-        $ad1 = $this->getReference(AdsFixtures::AD_1);
+        $ad1 = $this->getReference(AdFixtures::AD_1);
 
         /** @var Ad $ad2 */
-        $ad2 = $this->getReference(AdsFixtures::AD_2);
+        $ad2 = $this->getReference(AdFixtures::AD_2);
 
         /** @var Ad $ad4 */
-        $ad4 = $this->getReference(AdsFixtures::AD_4);
+        $ad4 = $this->getReference(AdFixtures::AD_4);
 
         $data = [
             // ad, day, results, cpr (as int, in the smallest currency unit)
@@ -122,7 +122,7 @@ class AdStatsFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            AdsFixtures::class,
+            AdFixtures::class,
         ];
     }
 }

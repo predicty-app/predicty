@@ -11,7 +11,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Psr\Clock\ClockInterface;
 
-class AdsFixtures extends Fixture implements DependentFixtureInterface
+class AdFixtures extends Fixture implements DependentFixtureInterface
 {
     public const AD_1 = 'AD1';
     public const AD_2 = 'AD2';
@@ -65,7 +65,7 @@ class AdsFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
     }
 
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             AdSetsFixtures::class,

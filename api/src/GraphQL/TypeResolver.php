@@ -4,6 +4,13 @@ declare(strict_types=1);
 
 namespace App\GraphQL;
 
+use App\GraphQL\Type\AdCollectionType;
+use App\GraphQL\Type\AdSetType;
+use App\GraphQL\Type\AdStatsType;
+use App\GraphQL\Type\AdType;
+use App\GraphQL\Type\CampaignType;
+use App\GraphQL\Type\DashboardType;
+use App\GraphQL\Type\MoneyType;
 use App\GraphQL\Type\UserType;
 use GraphQL\Type\Definition\ListOfType;
 use GraphQL\Type\Definition\NonNull;
@@ -13,7 +20,14 @@ use GraphQL\Upload\UploadType;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 
 /**
- * @method UserType user()
+ * @method UserType         user()
+ * @method DashboardType    dashboard()
+ * @method CampaignType     campaign()
+ * @method AdSetType        adSet()
+ * @method AdType           ad()
+ * @method AdStatsType      adStats()
+ * @method MoneyType        money()
+ * @method AdCollectionType adCollection()
  */
 class TypeResolver
 {

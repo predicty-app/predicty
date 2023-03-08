@@ -11,7 +11,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Psr\Clock\ClockInterface;
 
-class CampaignsFixtures extends Fixture implements DependentFixtureInterface
+class CampaignFixtures extends Fixture implements DependentFixtureInterface
 {
     public const CAMPAIGN_1 = 'CAMPAIGN1';
     public const CAMPAIGN_2 = 'CAMPAIGN2';
@@ -48,7 +48,7 @@ class CampaignsFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
     }
 
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
             UserFixtures::class,

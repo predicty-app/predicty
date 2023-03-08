@@ -25,13 +25,13 @@ class AdSetsFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         /** @var Campaign $campaign1 */
-        $campaign1 = $this->getReference(CampaignsFixtures::CAMPAIGN_1);
+        $campaign1 = $this->getReference(CampaignFixtures::CAMPAIGN_1);
 
         /** @var Campaign $campaign2 */
-        $campaign2 = $this->getReference(CampaignsFixtures::CAMPAIGN_2);
+        $campaign2 = $this->getReference(CampaignFixtures::CAMPAIGN_2);
 
         /** @var Campaign $campaign3 */
-        $campaign3 = $this->getReference(CampaignsFixtures::CAMPAIGN_3);
+        $campaign3 = $this->getReference(CampaignFixtures::CAMPAIGN_3);
 
         $data = [
             // string $externalId, int $userId, int $campaignId, string $name
@@ -58,10 +58,10 @@ class AdSetsFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
     }
 
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return [
-            CampaignsFixtures::class,
+            CampaignFixtures::class,
         ];
     }
 }

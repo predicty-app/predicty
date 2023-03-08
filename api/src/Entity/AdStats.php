@@ -65,9 +65,9 @@ class AdStats
         return $this->results;
     }
 
-    public function getCostPerResult(): int
+    public function getCostPerResult(): Money
     {
-        return $this->costPerResult;
+        return Money::of($this->costPerResult, $this->getCurrency());
     }
 
     public function getAmountSpent(): Money

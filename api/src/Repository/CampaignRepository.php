@@ -35,4 +35,12 @@ class CampaignRepository
         $this->em->persist($campaign);
         $this->em->flush();
     }
+
+    /**
+     * @return array<Campaign>
+     */
+    public function findAll(int $limit = 10): array
+    {
+        return $this->repository->findBy([], null, $limit);
+    }
 }
