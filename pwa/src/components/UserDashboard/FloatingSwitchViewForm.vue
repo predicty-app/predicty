@@ -3,7 +3,10 @@ import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import type { CampaignType, AdsCollection } from "@/stores/userDashboard";
 import { useUserDashboardStore, OptionsName } from "@/stores/userDashboard";
-import { handleCreateCollection, handleAssignAdToCollection } from '@/services/api/userDashboard'
+import {
+  handleCreateCollection,
+  handleAssignAdToCollection,
+} from "@/services/api/userDashboard";
 
 type OptionsType = {
   key: string;
@@ -11,12 +14,19 @@ type OptionsType = {
 };
 
 const { t } = useI18n();
-const campaignModelValue = ref<string>('')
+const campaignModelValue = ref<string>("");
 const userDashboardStore = useUserDashboardStore();
-const optionsCollectionList = computed<OptionsType[]>(() => userDashboardStore.campaigns.find((campaign: CampaignType) => campaign.uid === userDashboardStore.selectedAdsList.campaignUid).collection.map((collection: AdsCollection) => ({
-  key: collection.uid,
-  label: collection.name
-})))
+const optionsCollectionList = computed<OptionsType[]>(() =>
+  userDashboardStore.campaigns
+    .find(
+      (campaign: CampaignType) =>
+        campaign.uid === userDashboardStore.selectedAdsList.campaignUid
+    )
+    .collection.map((collection: AdsCollection) => ({
+      key: collection.uid,
+      label: collection.name,
+    }))
+);
 
 const optionsButtons = computed<OptionsType[]>(() => {
   const options: OptionsType[] = [
@@ -57,40 +67,59 @@ const optionsButtons = computed<OptionsType[]>(() => {
  */
 function handleFiredAction(actionName: OptionsName) {
   switch (actionName) {
-    case 'create_new_collection': {
-      handleCreateCollection({
-        campaignUid: userDashboardStore.selectedAdsList.campaignUid,
-        ads: userDashboardStore.selectedAdsList.ads
-      })
+    case "create_new_collection":
+      {
+        handleCreateCollection({
+          campaignUid: userDashboardStore.selectedAdsList.campaignUid,
+          ads: userDashboardStore.selectedAdsList.ads,
+        });
 
-      userDashboardStore.selectedAdsList.ads = []
-      userDashboardStore.selectedAdsList.campaignUid = null
-    } break;
-    case 'add_to_collection': {
-      handleAssignAdToCollection({
-        campaignUid: userDashboardStore.selectedAdsList.campaignUid,
-        collectionUid: campaignModelValue.value,
-        ads: userDashboardStore.selectedAdsList.ads
-      })
-    } break;
-    case 'hide_element': {
-      userDashboardStore.toogleVisibilityhideAds(userDashboardStore.selectedAdsList.ads)
-    } break;
+        userDashboardStore.selectedAdsList.ads = [];
+        userDashboardStore.selectedAdsList.campaignUid = null;
+      }
+      break;
+    case "add_to_collection":
+      {
+        handleAssignAdToCollection({
+          campaignUid: userDashboardStore.selectedAdsList.campaignUid,
+          collectionUid: campaignModelValue.value,
+          ads: userDashboardStore.selectedAdsList.ads,
+        });
+      }
+      break;
+    case "hide_element":
+      {
+        userDashboardStore.toogleVisibilityAds(
+          userDashboardStore.selectedAdsList.ads
+        );
+      }
+      break;
   }
 
-  userDashboardStore.selectedAdsList.ads = []
-  userDashboardStore.selectedAdsList.campaignUid = null
+  userDashboardStore.selectedAdsList.ads = [];
+  userDashboardStore.selectedAdsList.campaignUid = null;
 }
 </script>
 
 <template>
-  <FloatingPanel class="absolute bottom-3 right-3 m-auto animate-fade-in z-20"
-    :selected-elements="userDashboardStore.selectedAdsList.ads.length" :options="optionsButtons"
-    @on-click="handleFiredAction">
+  <FloatingPanel
+    class="absolute bottom-3 right-3 m-auto animate-fade-in z-20"
+    :selected-elements="userDashboardStore.selectedAdsList.ads.length"
+    :options="optionsButtons"
+    @on-click="handleFiredAction"
+  >
     <template #additional>
-      <SelectForm class="w-44 animate-fade-in" v-model="campaignModelValue" position="top"
+      <SelectForm
+        class="w-44 animate-fade-in"
+        v-model="campaignModelValue"
+        position="top"
         :options="optionsCollectionList"
-        :placeholder="t('components.user-dashboard.floating-switch-view-form.select-placeholder')" />
+        :placeholder="
+          t(
+            'components.user-dashboard.floating-switch-view-form.select-placeholder'
+          )
+        "
+      />
     </template>
   </FloatingPanel>
 </template>

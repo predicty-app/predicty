@@ -6,17 +6,21 @@ import {
   hNumberWeekFromDate,
   hNextDaysDictionary,
 } from "@/helpers/utils";
-import { ref } from 'vue'
+import { ref } from "vue";
 import { useGlobalStore } from "@/stores/global";
-import type { CampaignType, AdsType, AdsCollection } from '@/stores/userDashboard'
+import type {
+  CampaignType,
+  AdsType,
+  AdsCollection,
+} from "@/stores/userDashboard";
 
-const list = ref<any>([])
+const list = ref<any>([]);
 
 type ManagementCollectionPayloadType = {
-  campaignUid: string
-  ads: string[]
-  collectionUid: string
-}
+  campaignUid: string;
+  ads: string[];
+  collectionUid: string;
+};
 
 /**
  * Function to get all campaigns user.
@@ -154,13 +158,17 @@ async function handleGetCampaigns() {
 
 /**
  * Function to create new collection.
- * @param {ManagementCollectionPayloadType} payload 
+ * @param {ManagementCollectionPayloadType} payload
  */
-function handleCreateCollection(payload: Pick<ManagementCollectionPayloadType, "ads" | "campaignUid">) {
+function handleCreateCollection(
+  payload: Pick<ManagementCollectionPayloadType, "ads" | "campaignUid">
+) {
   list.value = list.value.map((campaign: CampaignType) => {
-    if(campaign.uid === payload.campaignUid) {
-      const ads = campaign.ads.filter((ad: AdsType) => payload.ads.includes(ad.uid))
-      
+    if (campaign.uid === payload.campaignUid) {
+      const ads = campaign.ads.filter((ad: AdsType) =>
+        payload.ads.includes(ad.uid)
+      );
+
       const { first, last } = hFirstAndLastDate([{ ads } as CampaignType]);
 
       campaign.collection.push({
@@ -168,39 +176,48 @@ function handleCreateCollection(payload: Pick<ManagementCollectionPayloadType, "
         name: `Collection ${campaign.collection.length + 1}`,
         ads: payload.ads,
         start: first,
-        end: last
-      })
+        end: last,
+      });
     }
 
     return campaign;
-  })
+  });
 }
 
 /**
  * Function to assign ad to existing collection.
- * @param {ManagementCollectionPayloadType} payload 
+ * @param {ManagementCollectionPayloadType} payload
  */
 function handleAssignAdToCollection(payload: ManagementCollectionPayloadType) {
   list.value = list.value.map((campaign: CampaignType) => {
-    if(campaign.uid === payload.campaignUid) {
-      campaign.collection = campaign.collection.map((collection: AdsCollection) => {
-        if(collection.uid === payload.collectionUid) {
-          collection.ads = collection.ads.concat(payload.ads)
+    if (campaign.uid === payload.campaignUid) {
+      campaign.collection = campaign.collection.map(
+        (collection: AdsCollection) => {
+          if (collection.uid === payload.collectionUid) {
+            collection.ads = collection.ads.concat(payload.ads);
 
-          const ads = campaign.ads.filter((ad: AdsType) => collection.ads.includes(ad.uid))
+            const ads = campaign.ads.filter((ad: AdsType) =>
+              collection.ads.includes(ad.uid)
+            );
 
+            const { first, last } = hFirstAndLastDate([
+              { ads } as CampaignType,
+            ]);
+            collection.start = first;
+            collection.end = last;
+          }
 
-          const { first, last } = hFirstAndLastDate([{ ads } as CampaignType]);
-          collection.start = first
-          collection.end = last
+          return collection;
         }
-
-        return collection
-      })
+      );
     }
 
     return campaign;
-  })
+  });
 }
 
-export { handleGetCampaigns, handleCreateCollection, handleAssignAdToCollection };
+export {
+  handleGetCampaigns,
+  handleCreateCollection,
+  handleAssignAdToCollection,
+};

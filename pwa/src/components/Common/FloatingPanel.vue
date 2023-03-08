@@ -44,7 +44,10 @@ const emit = defineEmits<{
         :options="options"
         :placeholder="t('components.common.foating-panel.select-placeholder')"
       />
-      <slot v-if="currentSelectedAction === 'add_to_collection'" name="additional" />
+      <slot
+        v-if="currentSelectedAction === 'add_to_collection'"
+        name="additional"
+      />
     </div>
     <div>
       <ButtonForm

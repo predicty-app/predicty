@@ -50,7 +50,7 @@ type CheckedAdsToCollectionType = {
 type StateType = {
   selectedAdsList: CheckedAdsToCollectionType;
   campaigns: CampaignType[];
-  hiddenAds: string[]
+  hiddenAds: string[];
 };
 
 export const useUserDashboardStore = defineStore({
@@ -88,26 +88,26 @@ export const useUserDashboardStore = defineStore({
       if (this.selectedAdsList.ads.includes(adUid)) {
         this.selectedAdsList.ads = this.selectedAdsList.ads.filter(
           (item: string) => item !== adUid
-        )
+        );
       } else {
-        this.selectedAdsList.ads.push(adUid)
+        this.selectedAdsList.ads.push(adUid);
       }
 
       if (this.selectedAdsList.ads.length === 0) {
-        this.selectedAdsList.campaignUid = null
+        this.selectedAdsList.campaignUid = null;
       } else {
-        this.selectedAdsList.campaignUid = campaignUid
+        this.selectedAdsList.campaignUid = campaignUid;
       }
     },
 
     /**
      * Function to change state of ads visibility
-     * @param {string[]} adsList 
+     * @param {string[]} adsList
      */
-    toogleVisibilityhideAds(adsList: string[]) {
+    toogleVisibilityAds(adsList: string[]) {
       this.hiddenAds = adsList
-        .filter(x => !this.hiddenAds.includes(x))
-        .concat(this.hiddenAds.filter(x => !adsList.includes(x)))
-    }
+        .filter((x) => !this.hiddenAds.includes(x))
+        .concat(this.hiddenAds.filter((x) => !adsList.includes(x)));
+    },
   },
 });

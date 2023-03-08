@@ -52,7 +52,6 @@ function checkIsAdInCollection(
   collections: AdsCollection[],
   adUid: string
 ): boolean {
-
   return collections.find((collection: AdsCollection) =>
     collection.ads.includes(adUid)
   )
