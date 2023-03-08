@@ -139,7 +139,7 @@ export function hNextDaysDictionary(
   for (let i = 2; i <= (range + 2) * 7; i++) {
     const tomorrowDay = new Date(firstDateParsed);
     tomorrowDay.setDate(tomorrowDay.getDate() + 1);
-
+ 
     const parsedDay = `${tomorrowDay.getFullYear()}-${
       tomorrowDay.getMonth() + 1 < 10
         ? `0${tomorrowDay.getMonth() + 1}`

@@ -25,6 +25,7 @@ const emit = defineEmits<{
     ]"
   >
     <IconSvg
+      v-if="isChecked"
       name="check"
       :class-name="`fill-checkboxForm-active-color w-2.5 h-2.5`"
       :style="{ '--color': color }"

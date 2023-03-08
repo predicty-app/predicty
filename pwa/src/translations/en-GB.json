@@ -37,7 +37,8 @@
       "floating-switch-view-form": {
         "create-new-collection": "Create New Collection",
         "add-to-collection": "Add to Collection",
-        "hide-element": "Hide element"
+        "hide-element": "Show/Hide element",
+        "select-placeholder": "Select campaning..."
       },
       "header-dashboard": {
         "menu-list": {

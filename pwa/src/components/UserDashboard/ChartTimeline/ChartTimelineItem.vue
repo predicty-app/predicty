@@ -36,7 +36,7 @@ const isElementAssignCheckedCollection = computed<boolean>(() => {
 
 const currentColor = computed<string>(() =>
   hLightenDarkenColor(
-    props.color,
+    userStore.hiddenAds.includes(props.element.uid)? '#d1d1d1' : props.color,
     userStore.selectedAdsList.ads.includes(props.element.uid) ? -30 : 0
   )
 );
@@ -66,12 +66,6 @@ watch(
   }
 );
 
-/**
- * Function to handle change state of element (checked/unchecked)
- */
-function handleChangeState() {
-  userStore.toogleAssignAdsAction(props.campaingUid, props.element.uid);
-}
 
 /**
  * Function to handle visible element.
@@ -85,13 +79,13 @@ function handleVisibleElement() {
 
   isElementVisible.value =
     (currentLeftPosition + widthElement) * (globalStore.currentScale * 0.01) >
-      globalStore.scrollParams.x &&
+    globalStore.scrollParams.x &&
     virtualizationParentBoxElement.value.width + globalStore.scrollParams.x >
-      currentLeftPosition * (globalStore.currentScale * 0.01);
+    currentLeftPosition * (globalStore.currentScale * 0.01);
 
-  // if(!props.isVisible) {
-  //   isElementVisible.value = false
-  // }
+  if (!props.isVisible) {
+    isElementVisible.value = false
+  }
   // TODO VIRTUALIZATION TOP
   // && ((currentTopPosition + heightElement) > globalStore.scrollParams.y
   // && virtualizationParentBoxElement.value.height + globalStore.scrollParams.y  > (currentTopPosition * (globalStore.currentScale * 0.01)))
@@ -117,49 +111,49 @@ function handleParentBySelector(
     return handleParentBySelector(element.parentElement, selector);
   }
 }
+
+/**
+ * Function to handle select ad.
+ */
+function handleToogleSelectAd() {
+  if(props.type !== 'ad') {
+    return
+  }
+
+  if (
+    !(
+      userStore.selectedAdsList.campaignUid !== props.campaingUid &&
+      userStore.selectedAdsList.ads.length > 0
+    )) {
+    userStore.toogleAssignAdsAction(props.campaingUid, props.element.uid);
+  } else {
+    userStore.selectedAdsList.ads = []
+    userStore.selectedAdsList.campaignUid = null
+
+    userStore.toogleAssignAdsAction(props.campaingUid, props.element.uid);
+  }
+}
 </script>
 
 <template>
-  <div
-    v-if="isElementVisible"
-    ref="timelineItemInstance"
-    :class="[
-      `col-start-dynamic col-end-dynamic p-[1.5px] rounded-[6px] h-fit`,
+  <div v-if="isElementVisible" ref="timelineItemInstance" :class="[
+    `col-start-dynamic col-end-dynamic p-[1.5px] rounded-[6px] h-fit`,
+    {
+      'border-[2px] border-timeline-item-border': type === 'collection',
+      'opacity-50': isElementAssignCheckedCollection,
+    },
+  ]" :style="{ '--start': start, '--end': end, '--color': currentColor }">
+    <div :class="[
+      'p-2 text-xs cursor-pointer rounded-[5px] shadow-sm flex gap-x-1 items-center text-text-white font-semibold bg-timeline-item-background',
       {
-        'border-[2px] border-timeline-item-border': type === 'collection',
-        'opacity-50': isElementAssignCheckedCollection,
+        'shadow-lg shadow-timeline-shadow':
+          userStore.selectedAdsList.ads.includes(element.uid),
       },
-    ]"
-    :style="{ '--start': start, '--end': end, '--color': currentColor }"
-  >
-    <div
-      :class="[
-        'p-2 text-xs rounded-[5px] shadow-sm flex gap-x-1 items-center text-text-white font-semibold bg-timeline-item-background',
-        {
-          'cursor-pointer': type === 'collection',
-          ' shadow-lg shadow-timeline-shadow':
-            userStore.selectedAdsList.ads.includes(element.uid),
-        },
-      ]"
-      :style="{ '--color': currentColor }"
-    >
-      <CheckboxForm
-        v-if="
-          type === 'ad' &&
-          !(
-            userStore.selectedAdsList.campaignUid !== campaingUid &&
-            userStore.selectedAdsList.ads.length > 0
-          )
-        "
-        :color="currentColor"
-        :is-checked="userStore.selectedAdsList.ads.includes(element.uid)"
-        @on-change="handleChangeState"
-      />
+    ]" @click="handleToogleSelectAd" :style="{ '--color': currentColor }">
+      <CheckboxForm v-if="type === 'ad'" :color="currentColor" :is-checked="userStore.selectedAdsList.ads.includes(element.uid)" />
       <IconSvg v-if="type === 'collection'" name="bars" class-name="w-4 h-4" />
-      <div
-        v-if="type === 'collection'"
-        class="rounded font-semibold text-xs w-[14px] py-[1px] bg-timeline-collection-count flex items-center justify-center"
-      >
+      <div v-if="type === 'collection'"
+        class="rounded font-semibold text-xs w-[14px] py-[1px] bg-timeline-collection-count flex items-center justify-center">
         {{ (element as AdsCollection).ads.length }}
       </div>
       {{ element.name }}
