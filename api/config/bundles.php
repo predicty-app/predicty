@@ -19,4 +19,5 @@ return [
     DAMA\DoctrineTestBundle\DAMADoctrineTestBundle::class => ['test' => true],
     Liip\TestFixturesBundle\LiipTestFixturesBundle::class => ['dev' => true, 'test' => true],
     League\FlysystemBundle\FlysystemBundle::class => ['all' => true],
+    Zenstruck\Messenger\Test\ZenstruckMessengerTestBundle::class => ['dev' => true, 'test' => true],
 ];

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -24,7 +25,7 @@ class Campaign
     #[ORM\Column(length: 255)]
     private string $name;
 
-    public function __construct(string $externalId, int $userId, string $name, \DateTimeInterface $createdAt, \DateTimeInterface $changedAt)
+    public function __construct(string $externalId, int $userId, string $name, DateTimeInterface $createdAt, DateTimeInterface $changedAt)
     {
         $this->externalId = $externalId;
         $this->userId = $userId;

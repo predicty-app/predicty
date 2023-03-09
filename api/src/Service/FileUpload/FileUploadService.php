@@ -4,15 +4,18 @@ declare(strict_types=1);
 
 namespace App\Service\FileUpload;
 
-use League\Flysystem\FilesystemOperator;
+use League\Flysystem\FilesystemWriter;
 use Psr\Http\Message\UploadedFileInterface;
 
 class FileUploadService
 {
-    public function __construct(private FilesystemOperator $storage)
+    public function __construct(private FilesystemWriter $storage)
     {
     }
 
+    /**
+     * @retrun string The filename of the uploaded file
+     */
     public function receive(UploadedFileInterface $file): string
     {
         $clientFilename = $file->getClientFilename();

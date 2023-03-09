@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -26,8 +27,8 @@ class AdCollection
         int $userId,
         string $name,
         array $adsIds,
-        \DateTimeImmutable $createdAt,
-        \DateTimeImmutable $changedAt
+        DateTimeImmutable $createdAt,
+        DateTimeImmutable $changedAt
     ) {
         $this->userId = $userId;
         $this->name = $name;

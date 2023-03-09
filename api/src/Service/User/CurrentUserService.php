@@ -14,6 +14,11 @@ class CurrentUserService
     {
     }
 
+    public function getId(): int
+    {
+        return $this->getUser()->getId();
+    }
+
     public function getUser(): User
     {
         $user = $this->security->getUser();

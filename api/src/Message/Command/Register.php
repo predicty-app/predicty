@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Message\Command;
 
-use App\Message\SynchronousCommand;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class Register implements SynchronousCommand
+class Register
 {
     #[Assert\Email(message: 'Invalid email')]
     #[Assert\NotBlank(message: 'You must provide an email')]

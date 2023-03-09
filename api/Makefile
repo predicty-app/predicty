@@ -43,6 +43,9 @@ test: reset-test-database # Run tests
 paratest:
 	$(PHP_EXEC) vendor/bin/paratest --bootstrap=tests/paratest.php
 
+run-worker: # Run worker that will consume async messages
+	@$(SYMFONY_CONSOLE_EXEC) --env=dev messenger:consume async
+
 reset-database:
 	@$(SYMFONY_CONSOLE_EXEC) --env=dev doctrine:query:sql "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'app' AND pid <> pg_backend_pid();" --quiet
 	@$(SYMFONY_CONSOLE_EXEC) --env=dev doctrine:database:drop --if-exists --force --no-interaction
@@ -63,5 +66,6 @@ reset-test-database:
 migration:
 	$(SYMFONY_CONSOLE_EXEC) doctrine:mig:diff --no-interaction
 
+migrate: do-migration
 do-migration:
 	$(SYMFONY_CONSOLE_EXEC) doctrine:mig:mig --no-interaction

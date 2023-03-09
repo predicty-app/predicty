@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\MessageHandler\Command;
+namespace App\Message\CommandHandler;
 
 use App\Message\Command\RegisterDataProvider;
 use App\Repository\DataProviderCredentialsRepository;

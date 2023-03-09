@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use RuntimeException;
 
 trait IdTrait
 {
@@ -16,7 +17,7 @@ trait IdTrait
     public function getId(): int
     {
         if ($this->id === null) {
-            throw new \RuntimeException(sprintf('Entity was not saved yet, therefore it does not have its id: %s', __CLASS__));
+            throw new RuntimeException(sprintf('Entity was not saved yet, therefore it does not have its id: %s', __CLASS__));
         }
 
         return $this->id;

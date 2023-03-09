@@ -11,6 +11,7 @@ use App\Factory\AdSetFactory;
 use App\Factory\AdStatsFactory;
 use App\Factory\CampaignFactory;
 use App\Service\Facebook\CsvImporter\FacebookCsvImporter;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -82,14 +83,14 @@ class FacebookCsvImporterTest extends TestCase
             ->withConsecutive(
                 [
                     $this->isInstanceOf(Ad::class),
-                    $this->isInstanceOf(\DateTimeImmutable::class),
+                    $this->isInstanceOf(DateTimeImmutable::class),
                     5,
                     $this->anything(),
                     $this->anything(),
                 ],
                 [
                     $this->isInstanceOf(Ad::class),
-                    $this->isInstanceOf(\DateTimeImmutable::class),
+                    $this->isInstanceOf(DateTimeImmutable::class),
                     3,
                     $this->anything(),
                     $this->anything(),

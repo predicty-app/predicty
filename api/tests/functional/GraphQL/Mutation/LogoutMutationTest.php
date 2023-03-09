@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @covers \App\GraphQL\Mutation\LogoutMutation
- * @covers \App\MessageHandler\Command\LogoutHandler
+ * @covers \App\Message\CommandHandler\LogoutHandler
  */
 class LogoutMutationTest extends GraphQLTestCase
 {

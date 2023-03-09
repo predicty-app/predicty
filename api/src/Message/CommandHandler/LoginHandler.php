@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\MessageHandler\Command;
+namespace App\Message\CommandHandler;
 
 use App\Entity\User;
 use App\Message\Command\Login;
