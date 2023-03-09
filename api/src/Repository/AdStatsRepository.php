@@ -30,4 +30,12 @@ class AdStatsRepository
     {
         return $this->repository->findOneBy(['adId' => $adId, 'date' => $day]);
     }
+
+    /**
+     * @return array<AdStats>
+     */
+    public function findAllByAdId(int $adId): array
+    {
+        return $this->repository->findBy(['adId' => $adId]);
+    }
 }

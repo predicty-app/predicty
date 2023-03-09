@@ -30,4 +30,20 @@ class AdRepository
     {
         return $this->repository->findOneBy(['userId' => $userId, 'externalId' => $externalId]);
     }
+
+    /**
+     * @return array<Ad>
+     */
+    public function findAllByAdSetId(int $adSetId): array
+    {
+        return $this->repository->findBy(['adSetId' => $adSetId]);
+    }
+
+    /**
+     * @return array<Ad>
+     */
+    public function findAllByIds(array $ids): array
+    {
+        return $this->repository->findBy(['id' => $ids]);
+    }
 }

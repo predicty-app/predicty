@@ -9,10 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait TimestampableTrait
 {
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, options: ['default' => 'CURRENT_TIMESTAMP'])]
     private \DateTimeInterface $createdAt;
 
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, options: ['default' => 'CURRENT_TIMESTAMP'])]
     private \DateTimeInterface $changedAt;
 
     public function getChangedAt(): \DateTimeInterface

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\GraphQL\DefaultFieldResolver;
 use App\GraphQL\Schema;
 use GraphQL\Error\DebugFlag;
 use GraphQL\Error\Error;
@@ -24,7 +25,7 @@ class GraphQlController extends AbstractController
     }
 
     #[Route('/graphql', name: 'app_graphql')]
-    public function __invoke(Request $sfr, ServerRequestInterface $request, Schema $schema): Response
+    public function __invoke(Request $sfr, ServerRequestInterface $request, Schema $schema, DefaultFieldResolver $fieldResolver): Response
     {
         if (Request::METHOD_GET === $request->getMethod()) {
             return $this->render('graphql/index.html.twig');
@@ -39,6 +40,7 @@ class GraphQlController extends AbstractController
             ->setRootValue($rootValue)
             ->setSchema($schema)
             ->setDebugFlag($this->getDebugFlag())
+            ->setFieldResolver($fieldResolver)
             ->setErrorsHandler(function (array $errors, callable $formatter) {
                 /** @var Error[] $errors */
                 foreach ($errors as $error) {

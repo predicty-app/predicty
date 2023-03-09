@@ -20,6 +20,14 @@ class AdSetRepository
         $this->repository = $em->getRepository(AdSet::class);
     }
 
+    /**
+     * @return array<AdSet>
+     */
+    public function findAllByCampaignId(int $campaignId): array
+    {
+        return $this->repository->findBy(['campaignId' => $campaignId]);
+    }
+
     public function findByCampaignIdAndExternalId(int $userId, int $campaignId, mixed $externalId): ?AdSet
     {
         return $this->repository->findOneBy([
