@@ -1,7 +1,7 @@
 {
   "components": {
     "common": {
-      "upload-file" : {
+      "upload-file": {
         "header": "Upload data file",
         "content": "Select a file or drag here",
         "button": "Select a File"
@@ -43,7 +43,7 @@
         "menu-list": {
           "settings": "Settings",
           "logout": "Logout"
-        } 
+        }
       },
       "sales-number": {
         "sales": "sales",
@@ -64,6 +64,9 @@
           "sat": "sat",
           "sun": "sun"
         }
+      },
+      "bottom-bar": {
+        "close": "Close"
       }
     }
   },

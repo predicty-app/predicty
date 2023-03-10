@@ -117,6 +117,10 @@ function handleParentBySelector(
     return handleParentBySelector(element.parentElement, selector);
   }
 }
+
+defineEmits<{
+  (e: "collectionSelected", value: AdsType | AdsCollection): void;
+}>();
 </script>
 
 <template>
@@ -126,10 +130,16 @@ function handleParentBySelector(
     :class="[
       `col-start-dynamic col-end-dynamic p-[1.5px] rounded-[6px] h-fit`,
       {
-        'border-[2px] border-timeline-item-border': type === 'collection',
+        'border-[2px] border-timeline-item-border cursor-pointer':
+          type === 'collection',
         'opacity-50': isElementAssignCheckedCollection,
       },
     ]"
+    v-on="
+      type === 'collection'
+        ? { click: () => $emit('collectionSelected', props.element) }
+        : {}
+    "
     :style="{ '--start': start, '--end': end, '--color': currentColor }"
   >
     <div

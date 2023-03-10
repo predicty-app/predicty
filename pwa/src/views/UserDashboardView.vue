@@ -2,8 +2,9 @@
 import { useI18n } from "vue-i18n";
 import { useGlobalStore } from "@/stores/global";
 import { TypeOptionsChart } from "@/stores/userDashboard";
-import type { AdsCollection } from "@/stores/userDashboard";
+import type { AdsCollection, AdsType } from "@/stores/userDashboard";
 import { useUserDashboardStore } from "@/stores/userDashboard";
+import { reactive } from "vue";
 
 const { t } = useI18n();
 
@@ -42,6 +43,11 @@ const chartTypeOptions: TypesOptionsChart[] = [
 const globalStore = useGlobalStore();
 const userDashboardStore = useUserDashboardStore();
 
+let state = reactive({
+  isCollectionSelected: false,
+  currentCollection: null,
+});
+
 /**
  * Function to check is ad in collection.
  * @param {AdsCollection[]} collections
@@ -57,6 +63,11 @@ function checkIsAdInCollection(
   )
     ? false
     : true;
+}
+
+function toggleCollection(value?: AdsType | AdsCollection) {
+  state.isCollectionSelected = value ? true : false;
+  state.currentCollection = value ? value : null;
 }
 </script>
 
@@ -113,9 +124,14 @@ function checkIsAdInCollection(
             v-for="collection in campaign.collection"
             :start="globalStore.dictionaryTimeline[collection.start]"
             :end="globalStore.dictionaryTimeline[collection.end]"
+            @collection-selected="(value) => toggleCollection(value)"
           />
         </ChartTimelineContent>
       </ChartTimelineWrapper>
+      <CollectionBottomBar
+        :collection="state.currentCollection"
+        @close="toggleCollection()"
+      />
     </template>
   </UserDashboardLayout>
 </template>
