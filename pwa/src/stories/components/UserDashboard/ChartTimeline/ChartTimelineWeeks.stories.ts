@@ -6,14 +6,14 @@ export default {
   title: "Components/UserDashboard/ChartTimeline/ChartTimelineWeeks",
   parameters: {
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for content weeks timeline",
-      },
-    },
-  },
+        component: "Component for content weeks timeline"
+      }
+    }
+  }
 };
 
 export const ChartTimelineWeeks = (args: ComponentPropsType) => ({
@@ -23,5 +23,5 @@ export const ChartTimelineWeeks = (args: ComponentPropsType) => ({
   },
   template: `
     <ChartTimelineWeeksComponent v-bind="args" />
-  `,
+  `
 });

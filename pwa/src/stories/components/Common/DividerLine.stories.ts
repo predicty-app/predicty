@@ -7,14 +7,14 @@ export default {
   title: "Components/Common/DividerLine",
   parameters: {
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for divider line",
-      },
-    },
-  },
+        component: "Component for divider line"
+      }
+    }
+  }
 };
 
 export const DividerLine = (args: ComponentPropsType) => ({
@@ -25,5 +25,5 @@ export const DividerLine = (args: ComponentPropsType) => ({
   template: `
     <br/>
     <DividerLineComponent v-bind="args" />
-  `,
+  `
 });

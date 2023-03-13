@@ -71,6 +71,16 @@ abstract class GraphQLTestCase extends WebTestCase
         static::assertMatchesPattern($pattern, $responseContent, $message);
     }
 
+    protected static function getClient(): KernelBrowser
+    {
+        if (self::$client === null) {
+            static::createClient();
+        }
+        assert(self::$client !== null);
+
+        return self::$client;
+    }
+
     protected static function setBacktrace(Backtrace $backtrace): void
     {
         self::$backtrace = $backtrace;
@@ -84,15 +94,5 @@ abstract class GraphQLTestCase extends WebTestCase
     protected static function matchesPattern(string $pattern, ?Backtrace $backtrace = null): PHPMatcherConstraint
     {
         return new PHPMatcherConstraint($pattern, $backtrace);
-    }
-
-    private static function getClient(): KernelBrowser
-    {
-        if (self::$client === null) {
-            static::createClient();
-        }
-        assert(self::$client !== null);
-
-        return self::$client;
     }
 }

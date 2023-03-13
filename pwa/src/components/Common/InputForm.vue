@@ -13,7 +13,7 @@ type PropsType = {
 
 withDefaults(defineProps<PropsType>(), {
   type: "default",
-  required: false,
+  required: false
 });
 
 const emit = defineEmits<{
@@ -54,8 +54,8 @@ function changeValue(event: Event) {
       :class="[
         'w-full p-4 font-normal text-text-input text-base border border-slate-200 rounded-[10px] transition-all',
         {
-          'border-default-border outline-default-outline': type === 'default',
-        },
+          'border-default-border outline-default-outline': type === 'default'
+        }
       ]"
       :placeholder="placeholder"
     />

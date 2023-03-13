@@ -7,14 +7,14 @@ export default {
   title: "Views/BasicMediaIntegrationView",
   parameters: {
     status: {
-      type: "todo",
+      type: "todo"
     },
     docs: {
       description: {
-        component: "Component basic media integration view",
-      },
-    },
-  },
+        component: "Component basic media integration view"
+      }
+    }
+  }
 };
 
 export const BasicMediaIntegrationView = (args: ComponentPropsType) => ({
@@ -24,5 +24,5 @@ export const BasicMediaIntegrationView = (args: ComponentPropsType) => ({
   },
   template: `
     <BasicMediaIntegrationViewComponent v-bind="args" />
-  `,
+  `
 });

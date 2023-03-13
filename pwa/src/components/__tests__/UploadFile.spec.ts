@@ -14,21 +14,21 @@ describe("Tests for UploadFile component", () => {
     const wrapper = mount(UploadFile, {
       props: {
         filesType: [],
-        ...props,
+        ...props
       },
       global: {
         plugins: plugins,
         stubs: {
           IconSvg,
-          TagPin,
-        },
-      },
+          TagPin
+        }
+      }
     });
 
     const upload = wrapper.find<HTMLDivElement>('[data-testid="upload-file"]');
 
     return {
-      upload,
+      upload
     };
   }
 
@@ -38,7 +38,7 @@ describe("Tests for UploadFile component", () => {
     };
 
     const { upload } = prepareElementsToTests<PropsType>({
-      filesType: [".csv"],
+      filesType: [".csv"]
     });
 
     expect(upload.text()).contains(".csv");

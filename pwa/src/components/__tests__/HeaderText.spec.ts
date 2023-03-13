@@ -12,8 +12,8 @@ describe("Tests for HeaderText component", () => {
     const wrapper = mount(HeaderText, {
       props,
       global: {
-        plugins: plugins,
-      },
+        plugins: plugins
+      }
     });
 
     const title = wrapper.find<HTMLHeadingElement>(
@@ -26,7 +26,7 @@ describe("Tests for HeaderText component", () => {
 
     return {
       title,
-      description,
+      description
     };
   }
 
@@ -48,7 +48,7 @@ describe("Tests for HeaderText component", () => {
     };
 
     const { title } = prepareElementsToTests<PropsType>({
-      headerTitle: "test",
+      headerTitle: "test"
     });
 
     expect(title.text()).toBe("test");
@@ -60,7 +60,7 @@ describe("Tests for HeaderText component", () => {
     };
 
     const { description } = prepareElementsToTests<PropsType>({
-      headerDescription: "test",
+      headerDescription: "test"
     });
 
     expect(description.text()).toBe("test");

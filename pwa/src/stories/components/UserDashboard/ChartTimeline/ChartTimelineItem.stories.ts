@@ -13,69 +13,69 @@ export default {
       control: { type: "select" },
       description: "Type timeline item.",
       name: "type",
-      type: { name: "string", required: false },
+      type: { name: "string", required: false }
     },
     start: {
       name: "start",
       control: { type: "number" },
       description: "Props for set start item.",
-      type: { name: "number", required: true },
+      type: { name: "number", required: true }
     },
     end: {
       name: "end",
       control: { type: "number" },
       description: "Props for set end item.",
-      type: { name: "number", required: true },
+      type: { name: "number", required: true }
     },
     color: {
       name: "color",
       control: { type: "string" },
       description: "Props for set color.",
-      type: { name: "string", required: false },
+      type: { name: "string", required: false }
     },
     isVisible: {
       name: "isVisible",
       control: { type: "boolean" },
       description: "Props for set is visible element.",
-      type: { name: "boolean", required: false },
+      type: { name: "boolean", required: false }
     },
     campaingUid: {
       name: "campaingUid",
       control: { type: "string" },
       description: "Props for set campaign uid",
-      type: { name: "string", required: false },
+      type: { name: "string", required: false }
     },
     element: {
       name: "element",
       control: { type: "object" },
       description: "Props for collection or ad",
-      type: { name: "object", required: true },
-    },
+      type: { name: "object", required: true }
+    }
   },
   parameters: {
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for item for timeline",
-      },
-    },
-  },
+        component: "Component for item for timeline"
+      }
+    }
+  }
 };
 
 export const ChartTimelineItem = (args: ComponentPropsType) => ({
   components: {
     ChartTimelineWrapper,
     ChartTimelineItemComponent,
-    ChartTimelineContent,
+    ChartTimelineContent
   },
   setup() {
     const campaign = {
       uid: "1",
       name: "Test",
       ads: [],
-      collection: [],
+      collection: []
     };
 
     return { args, campaign };
@@ -88,7 +88,7 @@ export const ChartTimelineItem = (args: ComponentPropsType) => ({
         </ChartTimelineItemComponent>
       </ChartTimelineContent>
     </ChartTimelineWrapper>
-  `,
+  `
 });
 
 ChartTimelineItem.args = {
@@ -102,6 +102,6 @@ ChartTimelineItem.args = {
     end: "2023-12-12",
     creation: "",
     cost_total: 1,
-    cost_per_day: 1,
-  },
+    cost_per_day: 1
+  }
 };

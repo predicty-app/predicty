@@ -7,14 +7,14 @@ export default {
   title: "Views/AccountCreation/AccountCreationPaswordView",
   parameters: {
     status: {
-      type: "todo",
+      type: "todo"
     },
     docs: {
       description: {
-        component: "Component account creation view",
-      },
-    },
-  },
+        component: "Component account creation view"
+      }
+    }
+  }
 };
 
 export const AccountCreationPaswordView = (args: ComponentPropsType) => ({
@@ -24,5 +24,5 @@ export const AccountCreationPaswordView = (args: ComponentPropsType) => ({
   },
   template: `
     <AccountCreationPaswordViewComponent v-bind="args" />
-  `,
+  `
 });

@@ -10,7 +10,7 @@ type PropsType = {
 };
 
 withDefaults(defineProps<PropsType>(), {
-  height: 0,
+  height: 0
 });
 
 const isHoverElement = ref<boolean>(false);
@@ -28,8 +28,8 @@ const isHoverElement = ref<boolean>(false);
           'w-full h-dynamic hover:shadow-md hover:shadow-charBarPole-hover-shadow transition-colors bg-charBarPole-background-primary hover:bg-charBarPole-hover-background rounded-3xl',
           {
             'bg-gradient-to-b from-charBarPole-background-primary to-charBarPole-background-secondary':
-              !isHoverElement,
-          },
+              !isHoverElement
+          }
         ]"
         :style="{ '--height': `${height}px` }"
       ></div>

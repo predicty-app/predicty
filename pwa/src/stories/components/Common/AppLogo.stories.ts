@@ -7,14 +7,14 @@ export default {
   title: "Components/Common/AppLogo",
   parameters: {
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component main logo application",
-      },
-    },
-  },
+        component: "Component main logo application"
+      }
+    }
+  }
 };
 
 export const AppLogo = (args: ComponentPropsType) => ({
@@ -24,5 +24,5 @@ export const AppLogo = (args: ComponentPropsType) => ({
   },
   template: `
     <AppLogoComponent v-bind="args" />
-  `,
+  `
 });

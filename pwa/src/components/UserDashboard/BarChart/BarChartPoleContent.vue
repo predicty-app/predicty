@@ -6,7 +6,7 @@ import {
   scaleGrid,
   scaleFirstGrid,
   gapGrid,
-  handleVirtualizationElement,
+  handleVirtualizationElement
 } from "@/helpers/timeline";
 
 const globalStore = useGlobalStore();
@@ -26,7 +26,7 @@ watch(
   () => [
     globalStore.scrollParams,
     globalStore.scrollTimeline,
-    globalStore.currentScale,
+    globalStore.currentScale
   ],
   () =>
     (isElementVisible.value = handleVirtualizationElement(

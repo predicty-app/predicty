@@ -9,19 +9,19 @@ export default {
     height: {
       name: "height",
       description: "Height for popover.",
-      type: { name: "number", required: false },
-    },
+      type: { name: "number", required: false }
+    }
   },
   parameters: {
     status: {
-      type: "todo",
+      type: "todo"
     },
     docs: {
       description: {
-        component: "Component for popover overlayer.",
-      },
-    },
-  },
+        component: "Component for popover overlayer."
+      }
+    }
+  }
 };
 
 export const PopoverPanel = (args: ComponentPropsType) => ({
@@ -38,9 +38,9 @@ export const PopoverPanel = (args: ComponentPropsType) => ({
         </template>
       </PopoverPanelComponent>
     </div>
-  `,
+  `
 });
 
 PopoverPanel.args = {
-  isVisible: true,
+  isVisible: true
 };

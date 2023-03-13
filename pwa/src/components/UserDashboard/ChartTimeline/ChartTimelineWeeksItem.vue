@@ -20,7 +20,7 @@ watch(
   () => [
     globalStore.scrollParams,
     globalStore.scrollTimeline,
-    globalStore.currentScale,
+    globalStore.currentScale
   ],
   () =>
     (isElementVisible.value = handleVirtualizationElement(

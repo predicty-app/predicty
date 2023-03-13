@@ -9,24 +9,24 @@ export default {
     date: {
       header: "Header for item",
       name: "header",
-      type: { name: "string", required: false },
+      type: { name: "string", required: false }
     },
     color: {
       name: "color",
       description: "Color for campaing.",
-      type: { name: "string", required: false },
-    },
+      type: { name: "string", required: false }
+    }
   },
   parameters: {
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for item campaining list",
-      },
-    },
-  },
+        component: "Component for item campaining list"
+      }
+    }
+  }
 };
 
 export const CampaningListItem = (args: ComponentPropsType) => ({
@@ -40,10 +40,10 @@ export const CampaningListItem = (args: ComponentPropsType) => ({
       Lorem ipsum <br/>
       Lorem ipsum <br/>
     </CampaningListItemComponent>
-  `,
+  `
 });
 
 CampaningListItem.args = {
   header: "Lorem ipsum",
-  color: "#4DC962",
+  color: "#4DC962"
 };

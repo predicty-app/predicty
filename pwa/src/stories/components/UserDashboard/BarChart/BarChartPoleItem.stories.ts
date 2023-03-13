@@ -10,43 +10,43 @@ export default {
       name: "height",
       description: "Height of bar.",
       control: { type: "number" },
-      type: { name: "number", required: false },
+      type: { name: "number", required: false }
     },
     date: {
       name: "date",
       description: "Date for element.",
       control: { type: "string" },
-      type: { name: "string", required: false },
+      type: { name: "string", required: false }
     },
     day: {
       name: "day",
       description: "Day for element.",
       control: { type: "string" },
-      type: { name: "string", required: false },
+      type: { name: "string", required: false }
     },
     sales: {
       name: "sales",
       description: "Sales for element.",
       control: { type: "number" },
-      type: { name: "number", required: false },
+      type: { name: "number", required: false }
     },
     investment: {
       name: "investment",
       description: "Investment for element.",
       control: { type: "number" },
-      type: { name: "number", required: false },
-    },
+      type: { name: "number", required: false }
+    }
   },
   parameters: {
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for bar pole chart item",
-      },
-    },
-  },
+        component: "Component for bar pole chart item"
+      }
+    }
+  }
 };
 
 export const BarChartPoleItem = (args: ComponentPropsType) => ({
@@ -56,5 +56,5 @@ export const BarChartPoleItem = (args: ComponentPropsType) => ({
   },
   template: `
     <BarChartPoleItemComponent v-bind="args" />
-  `,
+  `
 });

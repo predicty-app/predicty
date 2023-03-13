@@ -11,19 +11,19 @@ export default {
       control: { type: "boolean" },
       description: "State of checkbox.",
       name: "isChecked",
-      type: { name: "boolean", required: false },
-    },
+      type: { name: "boolean", required: false }
+    }
   },
   parameters: {
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component checkbox form.",
-      },
-    },
-  },
+        component: "Component checkbox form."
+      }
+    }
+  }
 };
 
 export const CheckboxForm = (args: ComponentPropsType) => ({
@@ -37,9 +37,9 @@ export const CheckboxForm = (args: ComponentPropsType) => ({
     <div class="h-full p-10" style="background:#56ce6b">
       <CheckboxFormComponent v-bind="args" :is-checked="state" @on-change="(value) => state = value"/>
     </div>
-  `,
+  `
 });
 
 CheckboxForm.args = {
-  isChecked: false,
+  isChecked: false
 };

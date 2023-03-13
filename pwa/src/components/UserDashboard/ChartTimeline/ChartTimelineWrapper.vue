@@ -8,7 +8,7 @@ import {
   gapGrid,
   scaleGrid,
   scaleFirstGrid,
-  heightContent,
+  heightContent
 } from "@/helpers/timeline";
 
 const globalStore = useGlobalStore();

@@ -16,10 +16,8 @@ use Webmozart\Assert\Assert;
 #[ORM\Table(name: '`user`')]
 class User implements UserInterface, EmailRecipientInterface, PasswordAuthenticatedUserInterface
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+    use IdTrait;
+    use TimestampableTrait;
 
     #[ORM\Column(type: UuidType::NAME, unique: true)]
     private ?Uuid $uuid = null;
@@ -36,9 +34,11 @@ class User implements UserInterface, EmailRecipientInterface, PasswordAuthentica
     #[ORM\Column(options: ['default' => 0])]
     private bool $isEmailVerified = false;
 
-    public function __construct(string $email)
+    public function __construct(string $email, \DateTimeImmutable $createdAt, \DateTimeImmutable $changedAt)
     {
         $this->email = $email;
+        $this->createdAt = $createdAt;
+        $this->changedAt = $changedAt;
     }
 
     public function setId(int $id): void

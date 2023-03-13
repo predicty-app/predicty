@@ -7,14 +7,14 @@ export default {
   title: "Components/UserDashboard/BarChart/BarChartPoleWrapper",
   parameters: {
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for bar pole chart wrapper",
-      },
-    },
-  },
+        component: "Component for bar pole chart wrapper"
+      }
+    }
+  }
 };
 
 export const BarChartPoleWrapper = (args: ComponentPropsType) => ({
@@ -24,5 +24,5 @@ export const BarChartPoleWrapper = (args: ComponentPropsType) => ({
   },
   template: `
     <BarChartPoleWrapperComponent v-bind="args" />
-  `,
+  `
 });

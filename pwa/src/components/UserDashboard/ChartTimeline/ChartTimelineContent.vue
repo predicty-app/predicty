@@ -14,7 +14,7 @@ defineProps<PropsType>();
     class="chart-timeline-content-main h-dynamic absolute"
     :style="{
       '--height': `${calculateItemHeight(campaign)}px`,
-      '--top': `${calculateItemPosition(campaign, 12)}px`,
+      '--top': `${calculateItemPosition(campaign, 12)}px`
     }"
   >
     <div class="chart-timeline-content animate-fade-in">

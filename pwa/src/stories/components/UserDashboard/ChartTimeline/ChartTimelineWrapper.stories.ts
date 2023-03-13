@@ -8,14 +8,14 @@ export default {
   title: "Components/UserDashboard/ChartTimeline/ChartTimelineWrapper",
   parameters: {
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for wrapper to timeline",
-      },
-    },
-  },
+        component: "Component for wrapper to timeline"
+      }
+    }
+  }
 };
 
 export const ChartTimelineWrapper = (args: ComponentPropsType) => ({
@@ -27,5 +27,5 @@ export const ChartTimelineWrapper = (args: ComponentPropsType) => ({
     <ScrollbarPanel class="h-full">
       <ChartTimelineWrapperComponent v-bind="args" />
     </ScrollbarPanel>
-  `,
+  `
 });

@@ -7,14 +7,14 @@ export default {
   title: "Components/UserDashboard/BarChart/BarChartWeeksItem",
   parameters: {
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for bar pole chart weeks item",
-      },
-    },
-  },
+        component: "Component for bar pole chart weeks item"
+      }
+    }
+  }
 };
 
 export const BarChartWeeksItem = (args: ComponentPropsType) => ({
@@ -24,5 +24,5 @@ export const BarChartWeeksItem = (args: ComponentPropsType) => ({
   },
   template: `
     <BarChartWeeksItemComponent v-bind="args" />
-  `,
+  `
 });

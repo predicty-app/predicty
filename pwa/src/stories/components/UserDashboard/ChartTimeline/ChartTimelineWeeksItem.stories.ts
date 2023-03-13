@@ -7,14 +7,14 @@ export default {
   title: "Components/UserDashboard/ChartTimeline/ChartTimelineWeeksItem",
   parameters: {
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for content weeks item timeline",
-      },
-    },
-  },
+        component: "Component for content weeks item timeline"
+      }
+    }
+  }
 };
 
 export const ChartTimelineWeeksItem = (args: ComponentPropsType) => ({
@@ -28,5 +28,5 @@ export const ChartTimelineWeeksItem = (args: ComponentPropsType) => ({
         test
       </ChartTimelineWeeksItemComponent>
     </ChartTimelineWeeks>
-  `,
+  `
 });

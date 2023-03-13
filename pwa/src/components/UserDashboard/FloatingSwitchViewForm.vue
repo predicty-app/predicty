@@ -5,7 +5,7 @@ import type { CampaignType, AdsCollection } from "@/stores/userDashboard";
 import { useUserDashboardStore, OptionsName } from "@/stores/userDashboard";
 import {
   handleCreateCollection,
-  handleAssignAdToCollection,
+  handleAssignAdToCollection
 } from "@/services/api/userDashboard";
 
 type OptionsType = {
@@ -26,7 +26,7 @@ const optionsCollectionList = computed<OptionsType[]>(() => {
   }
   return campaigns.collection.map((collection: AdsCollection) => ({
     key: collection.uid,
-    label: collection.name,
+    label: collection.name
   }));
 });
 
@@ -36,14 +36,14 @@ const optionsButtons = computed<OptionsType[]>(() => {
       key: OptionsName.CREATE_NEW_COLLECTION,
       label: t(
         "components.user-dashboard.floating-switch-view-form.create-new-collection"
-      ),
+      )
     },
     {
       key: OptionsName.HIDE_ELEMENT,
       label: t(
         "components.user-dashboard.floating-switch-view-form.hide-element"
-      ),
-    },
+      )
+    }
   ];
 
   const campaign = userDashboardStore.campaigns.find(
@@ -56,7 +56,7 @@ const optionsButtons = computed<OptionsType[]>(() => {
       key: OptionsName.ADD_TO_COLLECTION,
       label: t(
         "components.user-dashboard.floating-switch-view-form.add-to-collection"
-      ),
+      )
     });
   }
 
@@ -73,7 +73,7 @@ function handleFiredAction(actionName: OptionsName) {
       {
         handleCreateCollection({
           campaignUid: userDashboardStore.selectedAdsList.campaignUid,
-          ads: userDashboardStore.selectedAdsList.ads,
+          ads: userDashboardStore.selectedAdsList.ads
         });
 
         userDashboardStore.selectedAdsList.ads = [];
@@ -85,7 +85,7 @@ function handleFiredAction(actionName: OptionsName) {
         handleAssignAdToCollection({
           campaignUid: userDashboardStore.selectedAdsList.campaignUid,
           collectionUid: campaignModelValue.value,
-          ads: userDashboardStore.selectedAdsList.ads,
+          ads: userDashboardStore.selectedAdsList.ads
         });
       }
       break;

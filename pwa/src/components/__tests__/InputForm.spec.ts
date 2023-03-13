@@ -13,14 +13,14 @@ describe("Tests for InputForm component", () => {
     const wrapper = mount(InputForm, {
       props: {
         modelValue: "",
-        ...props,
+        ...props
       },
       global: {
         plugins: plugins,
         stubs: {
-          vMaska,
-        },
-      },
+          vMaska
+        }
+      }
     });
 
     const label = wrapper.find<HTMLLabelElement>(
@@ -43,7 +43,7 @@ describe("Tests for InputForm component", () => {
       label,
       input,
       error,
-      required,
+      required
     };
   }
 
@@ -59,7 +59,7 @@ describe("Tests for InputForm component", () => {
     };
 
     const { label } = prepareElementsToTests<PropsType>({
-      label: "test",
+      label: "test"
     });
 
     expect(label.text()).toBe("test");
@@ -77,7 +77,7 @@ describe("Tests for InputForm component", () => {
     };
 
     const { input } = prepareElementsToTests<PropsType>({
-      placeholder: "test",
+      placeholder: "test"
     });
 
     expect(input.attributes("placeholder")).toBe("test");
@@ -95,7 +95,7 @@ describe("Tests for InputForm component", () => {
     };
 
     const { input } = prepareElementsToTests<PropsType>({
-      mask: "##",
+      mask: "##"
     });
 
     expect(input.attributes("data-maska")).toBe("##");
@@ -113,7 +113,7 @@ describe("Tests for InputForm component", () => {
     };
 
     const { error } = prepareElementsToTests<PropsType>({
-      errorMessage: "test",
+      errorMessage: "test"
     });
 
     expect(error.text()).toBe("test");
@@ -133,7 +133,7 @@ describe("Tests for InputForm component", () => {
 
     const { required } = prepareElementsToTests<PropsType>({
       required: true,
-      label: "test",
+      label: "test"
     });
 
     expect(required.exists()).toBeTruthy();

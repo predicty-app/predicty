@@ -14,8 +14,8 @@ const isMenuVisible = ref<boolean>(false);
       :class="[
         'flex items-center gap-x-4 p-[12px] pr-[30px] rounded-t-lg transition-all cursor-pointer',
         {
-          'dropdown-shadow': isMenuVisible,
-        },
+          'dropdown-shadow': isMenuVisible
+        }
       ]"
       @click="isMenuVisible = !isMenuVisible"
     >
@@ -36,8 +36,8 @@ const isMenuVisible = ref<boolean>(false);
         'fill-select-input-text w-2 h-2 absolute top-0 bottom-0 right-[10px] m-auto transition-all',
         {
           'rotate-90': isMenuVisible,
-          'rotate-[-90deg]': !isMenuVisible,
-        },
+          'rotate-[-90deg]': !isMenuVisible
+        }
       ]"
     />
   </div>

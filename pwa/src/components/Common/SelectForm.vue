@@ -14,7 +14,7 @@ type PropsType = {
 };
 
 withDefaults(defineProps<PropsType>(), {
-  position: "bottom",
+  position: "bottom"
 });
 
 const emit = defineEmits<{
@@ -60,8 +60,8 @@ function handleSelectElement(item: string | number) {
               (!isSelectOpened && position === 'top'),
             'rotate-[-90deg]':
               (!isSelectOpened && position === 'bottom') ||
-              (isSelectOpened && position === 'top'),
-          },
+              (isSelectOpened && position === 'top')
+          }
         ]"
       />
     </div>
@@ -71,8 +71,8 @@ function handleSelectElement(item: string | number) {
         'absolute left-0 w-full animate-fade-in shadow-sm bg-select-input-background border-select-overlayer-border border rounded',
         {
           'bottom-[110%]': position === 'top',
-          'top-[110%]': position === 'bottom',
-        },
+          'top-[110%]': position === 'bottom'
+        }
       ]"
     >
       <div
@@ -82,8 +82,8 @@ function handleSelectElement(item: string | number) {
             ' text-select-options-default-text bg-select-options-default-background hover:bg-select-options-default-hover cursor-pointer':
               option.key !== modelValue,
             '  bg-select-options-active-background cursor-default':
-              option.key === modelValue,
-          },
+              option.key === modelValue
+          }
         ]"
         :key="option.key"
         v-for="option in options"

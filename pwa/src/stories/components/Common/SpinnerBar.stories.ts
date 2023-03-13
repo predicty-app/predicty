@@ -9,25 +9,25 @@ export default {
     isVisible: {
       name: "isVisible",
       description: "Param for toogle visible spinner.",
-      type: { name: "boolean", required: false },
+      type: { name: "boolean", required: false }
     },
     isGlobal: {
       name: "isGlobal",
       description: "Param for toogle global spinner.",
-      type: { name: "boolean", required: false },
-    },
+      type: { name: "boolean", required: false }
+    }
   },
   parameters: {
     jest: ["SpinnerBar.spec.ts"],
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for spinner bar",
-      },
-    },
-  },
+        component: "Component for spinner bar"
+      }
+    }
+  }
 };
 
 export const SpinnerBar = (args: ComponentPropsType) => ({
@@ -37,9 +37,9 @@ export const SpinnerBar = (args: ComponentPropsType) => ({
   },
   template: `
     <SpinnerBarComponent v-bind="args" />
-  `,
+  `
 });
 
 SpinnerBar.args = {
-  isVisible: true,
+  isVisible: true
 };

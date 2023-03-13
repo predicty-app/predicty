@@ -2,8 +2,9 @@
 import { useI18n } from "vue-i18n";
 import { useGlobalStore } from "@/stores/global";
 import { TypeOptionsChart } from "@/stores/userDashboard";
-import type { AdsCollection } from "@/stores/userDashboard";
+import type { AdsCollection, AdsType } from "@/stores/userDashboard";
 import { useUserDashboardStore } from "@/stores/userDashboard";
+import { reactive } from "vue";
 
 const { t } = useI18n();
 
@@ -20,27 +21,32 @@ type OptionsLegendType = {
 const legendOptions: OptionsLegendType[] = [
   {
     label: t("views.user-dashboard-view.legend-description.options.sales"),
-    color: "#4184FF",
+    color: "#4184FF"
   },
   {
     label: t("views.user-dashboard-view.legend-description.options.investment"),
-    color: "#FFAE4F",
-  },
+    color: "#FFAE4F"
+  }
 ];
 
 const chartTypeOptions: TypesOptionsChart[] = [
   {
     key: TypeOptionsChart.WEEKS,
-    label: t("views.user-dashboard-view.legend-description.chart-types.weeks"),
+    label: t("views.user-dashboard-view.legend-description.chart-types.weeks")
   },
   {
     key: TypeOptionsChart.DAYS,
-    label: t("views.user-dashboard-view.legend-description.chart-types.days"),
-  },
+    label: t("views.user-dashboard-view.legend-description.chart-types.days")
+  }
 ];
 
 const globalStore = useGlobalStore();
 const userDashboardStore = useUserDashboardStore();
+
+let state = reactive({
+  isCollectionSelected: false,
+  currentCollection: null
+});
 
 /**
  * Function to check is ad in collection.
@@ -57,6 +63,11 @@ function checkIsAdInCollection(
   )
     ? false
     : true;
+}
+
+function toggleCollection(value?: AdsType | AdsCollection) {
+  state.isCollectionSelected = value ? true : false;
+  state.currentCollection = value ? value : null;
 }
 </script>
 
@@ -121,9 +132,14 @@ function checkIsAdInCollection(
             v-for="collection in campaign.collection"
             :start="globalStore.dictionaryTimeline[collection.start]"
             :end="globalStore.dictionaryTimeline[collection.end]"
+            @collection-selected="(value) => toggleCollection(value)"
           />
         </ChartTimelineContent>
       </ChartTimelineWrapper>
+      <CollectionBottomBar
+        :collection="state.currentCollection"
+        @close="toggleCollection()"
+      />
     </template>
   </UserDashboardLayout>
 </template>

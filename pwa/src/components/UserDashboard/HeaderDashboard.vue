@@ -15,14 +15,14 @@ const optionsMenu: OptionsType[] = [
   {
     key: MenuNames.SETTINGS,
     icon: "cogs",
-    label: t("components.user-dashboard.header-dashboard.menu-list.settings"),
+    label: t("components.user-dashboard.header-dashboard.menu-list.settings")
   },
   {
     key: MenuNames.LOGOUT,
     icon: "logout",
     color: "#E24963",
-    label: t("components.user-dashboard.header-dashboard.menu-list.logout"),
-  },
+    label: t("components.user-dashboard.header-dashboard.menu-list.logout")
+  }
 ];
 
 /**

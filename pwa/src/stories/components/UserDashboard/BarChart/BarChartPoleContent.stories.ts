@@ -7,14 +7,14 @@ export default {
   title: "Components/UserDashboard/BarChart/BarChartPoleContent",
   parameters: {
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for bar pole chart content",
-      },
-    },
-  },
+        component: "Component for bar pole chart content"
+      }
+    }
+  }
 };
 
 export const BarChartPoleContent = (args: ComponentPropsType) => ({
@@ -24,5 +24,5 @@ export const BarChartPoleContent = (args: ComponentPropsType) => ({
   },
   template: `
     <BarChartPoleContentComponent v-bind="args" />
-  `,
+  `
 });

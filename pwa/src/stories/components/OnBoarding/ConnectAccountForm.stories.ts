@@ -7,14 +7,14 @@ export default {
   title: "Components/OnBoarding/ConnectAccountForm",
   parameters: {
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for providers list",
-      },
-    },
-  },
+        component: "Component for providers list"
+      }
+    }
+  }
 };
 
 export const ConnectAccountForm = (args: ComponentPropsType) => ({
@@ -27,5 +27,5 @@ export const ConnectAccountForm = (args: ComponentPropsType) => ({
       <ConnectAccountFormComponent v-bind="args" />
     </div>
     <div id="next-button"></div>
-  `,
+  `
 });

@@ -4,14 +4,14 @@ import {
   hFirstDaysWeeks,
   hFirstAndLastDate,
   hNumberWeekFromDate,
-  hNextDaysDictionary,
+  hNextDaysDictionary
 } from "@/helpers/utils";
 import { ref } from "vue";
 import { useGlobalStore } from "@/stores/global";
 import type {
   CampaignType,
   AdsType,
-  AdsCollection,
+  AdsCollection
 } from "@/stores/userDashboard";
 
 const list = ref<any>([]);
@@ -38,7 +38,7 @@ async function handleGetCampaigns() {
           end: "2023-08-14",
           creation: null,
           cost_total: 3496.68,
-          cost_per_day: 40.191724137931,
+          cost_per_day: 40.191724137931
         },
         {
           uid: "23852953378890495",
@@ -47,7 +47,7 @@ async function handleGetCampaigns() {
           end: "2023-03-03",
           creation: null,
           cost_total: 3496.68,
-          cost_per_day: 40.191724137931,
+          cost_per_day: 40.191724137931
         },
         {
           uid: "23852953378790497",
@@ -56,8 +56,8 @@ async function handleGetCampaigns() {
           end: "2023-05-03",
           creation: null,
           cost_total: 3496.68,
-          cost_per_day: 40.191724137931,
-        },
+          cost_per_day: 40.191724137931
+        }
       ],
       collection: [
         {
@@ -65,9 +65,9 @@ async function handleGetCampaigns() {
           name: "Collection 1",
           start: "2023-01-08",
           end: "2023-05-03",
-          ads: ["23852953378790497", "23852953378890495"],
-        },
-      ],
+          ads: ["23852953378790497", "23852953378890495"]
+        }
+      ]
     },
     {
       uid: "23852953378710495",
@@ -80,7 +80,7 @@ async function handleGetCampaigns() {
           end: "2023-03-03",
           creation: null,
           cost_total: 3496.68,
-          cost_per_day: 40.191724137931,
+          cost_per_day: 40.191724137931
         },
         {
           uid: "23852953373790495",
@@ -89,7 +89,7 @@ async function handleGetCampaigns() {
           end: "2023-03-03",
           creation: null,
           cost_total: 3496.68,
-          cost_per_day: 40.191724137931,
+          cost_per_day: 40.191724137931
         },
         {
           uid: "23852953378790498",
@@ -98,10 +98,10 @@ async function handleGetCampaigns() {
           end: "2023-05-03",
           creation: null,
           cost_total: 3496.68,
-          cost_per_day: 40.191724137931,
-        },
+          cost_per_day: 40.191724137931
+        }
       ],
-      collection: [],
+      collection: []
     },
     {
       uid: "23852953378710499",
@@ -114,7 +114,7 @@ async function handleGetCampaigns() {
           end: "2023-03-03",
           creation: null,
           cost_total: 3496.68,
-          cost_per_day: 40.191724137931,
+          cost_per_day: 40.191724137931
         },
         {
           uid: "23852953478790495",
@@ -123,7 +123,7 @@ async function handleGetCampaigns() {
           end: "2023-04-03",
           creation: null,
           cost_total: 3496.68,
-          cost_per_day: 40.191724137931,
+          cost_per_day: 40.191724137931
         },
         {
           uid: "23252953378790497",
@@ -132,10 +132,10 @@ async function handleGetCampaigns() {
           end: "2023-05-03",
           creation: null,
           cost_total: 3496.68,
-          cost_per_day: 40.191724137931,
-        },
+          cost_per_day: 40.191724137931
+        }
       ],
-      collection: [],
+      collection: []
     },
     {
       uid: "23852953378710493",
@@ -148,7 +148,7 @@ async function handleGetCampaigns() {
           end: "2023-03-03",
           creation: null,
           cost_total: 3496.68,
-          cost_per_day: 40.191724137931,
+          cost_per_day: 40.191724137931
         },
         {
           uid: "23852953478790495",
@@ -157,7 +157,7 @@ async function handleGetCampaigns() {
           end: "2023-04-03",
           creation: null,
           cost_total: 3496.68,
-          cost_per_day: 40.191724137931,
+          cost_per_day: 40.191724137931
         },
         {
           uid: "23252953378790497",
@@ -166,11 +166,11 @@ async function handleGetCampaigns() {
           end: "2023-05-03",
           creation: null,
           cost_total: 3496.68,
-          cost_per_day: 40.191724137931,
-        },
+          cost_per_day: 40.191724137931
+        }
       ],
-      collection: [],
-    },
+      collection: []
+    }
   ];
 
   const globalStore = useGlobalStore();
@@ -212,7 +212,7 @@ function handleCreateCollection(
         name: `Collection ${campaign.collection.length + 1}`,
         ads: payload.ads,
         start: first,
-        end: last,
+        end: last
       });
     }
 
@@ -237,7 +237,7 @@ function handleAssignAdToCollection(payload: ManagementCollectionPayloadType) {
             );
 
             const { first, last } = hFirstAndLastDate([
-              { ads } as CampaignType,
+              { ads } as CampaignType
             ]);
             collection.start = first;
             collection.end = last;
@@ -255,5 +255,5 @@ function handleAssignAdToCollection(payload: ManagementCollectionPayloadType) {
 export {
   handleGetCampaigns,
   handleCreateCollection,
-  handleAssignAdToCollection,
+  handleAssignAdToCollection
 };

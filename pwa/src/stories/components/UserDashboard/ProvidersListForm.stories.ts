@@ -7,14 +7,14 @@ export default {
   title: "Components/UserDashboard/ProvidersListForm",
   parameters: {
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for show providers list.",
-      },
-    },
-  },
+        component: "Component for show providers list."
+      }
+    }
+  }
 };
 
 export const ProvidersListForm = (args: ComponentPropsType) => ({
@@ -22,5 +22,5 @@ export const ProvidersListForm = (args: ComponentPropsType) => ({
   setup() {
     return { args };
   },
-  template: `<ProvidersListFormComponent v-bind="args" />`,
+  template: `<ProvidersListFormComponent v-bind="args" />`
 });

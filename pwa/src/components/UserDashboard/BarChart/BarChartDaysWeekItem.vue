@@ -6,7 +6,7 @@ import {
   scaleGrid,
   scaleFirstGrid,
   gapGrid,
-  handleVirtualizationElement,
+  handleVirtualizationElement
 } from "@/helpers/timeline";
 
 const globalStore = useGlobalStore();
@@ -29,7 +29,7 @@ const weeksDaysDictionary: string[] = [
   "thu",
   "fri",
   "sat",
-  "sun",
+  "sun"
 ];
 
 const { t } = useI18n();
@@ -38,7 +38,7 @@ watch(
   () => [
     globalStore.scrollParams,
     globalStore.scrollTimeline,
-    globalStore.currentScale,
+    globalStore.currentScale
   ],
   () =>
     (isElementVisible.value = handleVirtualizationElement(
@@ -58,8 +58,8 @@ watch(
         'rotate-[-90deg] text-[8px] font-medium flex justify-center',
         {
           ' text-chartBar-weeks-text': day !== 'sun',
-          ' text-chartBar-weeks-sunday': day === 'sun',
-        },
+          ' text-chartBar-weeks-sunday': day === 'sun'
+        }
       ]"
       :key="`${Math.random()}_${day}`"
       v-for="day in weeksDaysDictionary"

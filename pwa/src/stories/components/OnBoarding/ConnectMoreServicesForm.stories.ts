@@ -7,14 +7,14 @@ export default {
   title: "Components/OnBoarding/ConnectMoreServicesForm",
   parameters: {
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for connect more services form",
-      },
-    },
-  },
+        component: "Component for connect more services form"
+      }
+    }
+  }
 };
 
 export const ConnectMoreServicesForm = (args: ComponentPropsType) => ({
@@ -24,5 +24,5 @@ export const ConnectMoreServicesForm = (args: ComponentPropsType) => ({
   },
   template: `
     <ConnectMoreServicesFormComponent v-bind="args" />
-  `,
+  `
 });

@@ -5,7 +5,7 @@ type PropsType = {
 };
 
 withDefaults(defineProps<PropsType>(), {
-  color: "#d4d4d4",
+  color: "#d4d4d4"
 });
 </script>
 

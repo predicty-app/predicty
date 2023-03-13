@@ -4,7 +4,7 @@ import { useGlobalStore } from "@/stores/global";
 import {
   scaleLines,
   scaleLinesGradient,
-  mainWidthGrid,
+  mainWidthGrid
 } from "@/helpers/timeline";
 
 const globalStore = useGlobalStore();

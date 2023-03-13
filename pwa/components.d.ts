@@ -33,6 +33,7 @@ declare module "@vue/runtime-core" {
     ChartTimelineWeeksItem: typeof import("./src/components/UserDashboard/ChartTimeline/ChartTimelineWeeksItem.vue")["default"];
     ChartTimelineWrapper: typeof import("./src/components/UserDashboard/ChartTimeline/ChartTimelineWrapper.vue")["default"];
     CheckboxForm: typeof import("./src/components/Common/CheckboxForm.vue")["default"];
+    CollectionBottomBar: typeof import("./src/components/UserDashboard/Collection/CollectionBottomBar.vue")["default"];
     ConnectAccountForm: typeof import("./src/components/OnBoarding/ConnectAccountForm.vue")["default"];
     ConnectMoreServicesForm: typeof import("./src/components/OnBoarding/ConnectMoreServicesForm.vue")["default"];
     DividerLine: typeof import("./src/components/Common/DividerLine.vue")["default"];

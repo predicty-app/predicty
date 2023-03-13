@@ -19,7 +19,7 @@ type PropsType = {
 
 const props = withDefaults(defineProps<PropsType>(), {
   isHorizontalScrollVisible: false,
-  isVerticalScrollVisible: false,
+  isVerticalScrollVisible: false
 });
 
 const scrollInstance = ref<HTMLDivElement | null>(null);
@@ -66,7 +66,7 @@ function handleScroll(state: UseScrollReturn) {
   emit("onChange", {
     x: state.x.value,
     y: state.y.value,
-    direction,
+    direction
   });
 }
 </script>
@@ -83,8 +83,8 @@ function handleScroll(state: UseScrollReturn) {
           isScrollbarsVisible &&
           (isHorizontalScrollVisible || isVerticalScrollVisible),
         'overflow-y-scroll': isHorizontalScrollVisible,
-        'overflow-x-scroll': isVerticalScrollVisible,
-      },
+        'overflow-x-scroll': isVerticalScrollVisible
+      }
     ]"
     @mouseenter="isScrollbarsVisible = true"
     @mouseleave="isScrollbarsVisible = false"

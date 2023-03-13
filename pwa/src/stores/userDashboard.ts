@@ -4,17 +4,17 @@ import { useGlobalStore } from "@/stores/global";
 export enum OptionsName {
   "CREATE_NEW_COLLECTION" = "create_new_collection",
   "ADD_TO_COLLECTION" = "add_to_collection",
-  "HIDE_ELEMENT" = "hide_element",
+  "HIDE_ELEMENT" = "hide_element"
 }
 
 export enum TypeOptionsChart {
   "WEEKS" = "weeks",
-  "DAYS" = "days",
+  "DAYS" = "days"
 }
 
 export enum MenuNames {
   "SETTINGS" = "settings",
-  "LOGOUT" = "logout",
+  "LOGOUT" = "logout"
 }
 
 export type AdsType = {
@@ -64,8 +64,8 @@ export const useUserDashboardStore = defineStore({
       hiddenAds: [],
       selectedAdsList: {
         campaignUid: null,
-        ads: [],
-      },
+        ads: []
+      }
     } as StateType),
 
   actions: {
@@ -146,6 +146,6 @@ export const useUserDashboardStore = defineStore({
           );
         }
       );
-    },
-  },
+    }
+  }
 });

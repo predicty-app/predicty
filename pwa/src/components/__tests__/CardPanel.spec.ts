@@ -12,14 +12,14 @@ describe("Tests for CardPanel component", () => {
     const wrapper = mount(CardPanel, {
       props,
       global: {
-        plugins: plugins,
-      },
+        plugins: plugins
+      }
     });
 
     const card = wrapper.find<HTMLDivElement>('[data-testid="card-panel"]');
 
     return {
-      card,
+      card
     };
   }
 
@@ -34,7 +34,7 @@ describe("Tests for CardPanel component", () => {
     };
 
     const { card } = prepareElementsToTests<PropsType>({
-      type: "success",
+      type: "success"
     });
     expect(card.attributes("data-type")).toBe("success");
   });
@@ -45,7 +45,7 @@ describe("Tests for CardPanel component", () => {
     };
 
     const { card } = prepareElementsToTests<PropsType>({
-      type: "default",
+      type: "default"
     });
     expect(card.attributes("data-type")).toBe("default");
   });

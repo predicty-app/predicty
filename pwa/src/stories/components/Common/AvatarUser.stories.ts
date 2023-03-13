@@ -10,19 +10,19 @@ export default {
       control: { type: "string" },
       description: "Props for src.",
       name: "src",
-      type: { name: "string", required: false },
-    },
+      type: { name: "string", required: false }
+    }
   },
   parameters: {
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for avatar user",
-      },
-    },
-  },
+        component: "Component for avatar user"
+      }
+    }
+  }
 };
 
 export const AvatarUser = (args: ComponentPropsType) => ({
@@ -32,5 +32,5 @@ export const AvatarUser = (args: ComponentPropsType) => ({
   },
   template: `
     <AvatarUserComponent v-bind="args" />
-  `,
+  `
 });

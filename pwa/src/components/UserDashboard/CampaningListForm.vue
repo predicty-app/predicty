@@ -7,7 +7,7 @@ import type { CampaignType, AdsType } from "@/stores/userDashboard";
 import {
   heightContent,
   calculateItemHeight,
-  calculateItemPosition,
+  calculateItemPosition
 } from "@/helpers/timeline";
 
 const { t } = useI18n();
@@ -49,7 +49,7 @@ function calculateActiveCurrentAds(campaign: CampaignType): number {
       class="campaign-list-item h-dynamic absolute animate-fade-in"
       :style="{
         '--height': `${calculateItemHeight(campaign)}px`,
-        '--top': `${calculateItemPosition(campaign, 10)}px`,
+        '--top': `${calculateItemPosition(campaign, 10)}px`
       }"
       :header="campaign.name"
       :color="campaign.color"
@@ -61,7 +61,7 @@ function calculateActiveCurrentAds(campaign: CampaignType): number {
           t(
             "components.user-dashboard.campaning-list-form.active_ad_collection",
             {
-              count: campaign.collection.length,
+              count: campaign.collection.length
             }
           )
         }}
@@ -69,14 +69,14 @@ function calculateActiveCurrentAds(campaign: CampaignType): number {
       <div>
         {{
           t("components.user-dashboard.campaning-list-form.active_ad_sets", {
-            count: 0,
+            count: 0
           })
         }}
       </div>
       <div>
         {{
           t("components.user-dashboard.campaning-list-form.active_ads", {
-            count: calculateActiveCurrentAds(campaign),
+            count: calculateActiveCurrentAds(campaign)
           })
         }}
       </div>

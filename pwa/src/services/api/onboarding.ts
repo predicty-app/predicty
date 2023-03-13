@@ -24,7 +24,7 @@ async function handleRegisterUser(payload: RegisterUserPayloadType) {
 
   try {
     const response = await apiService.request<RegisterParamsType, any>(query, {
-      email: payload.email,
+      email: payload.email
     });
 
     return response.errors
@@ -55,7 +55,7 @@ async function handleLoginUser(payload: LoginUserPayloadType) {
 
   try {
     const response = await apiService.request<LoginParamsType, any>(query, {
-      ...payload,
+      ...payload
     });
 
     return response.errors ? response.errors[0].message : "OK";

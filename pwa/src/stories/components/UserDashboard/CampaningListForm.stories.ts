@@ -7,14 +7,14 @@ export default {
   title: "Components/UserDashboard/CampaningListForm",
   parameters: {
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for campaining list",
-      },
-    },
-  },
+        component: "Component for campaining list"
+      }
+    }
+  }
 };
 
 export const CampaningListForm = (args: ComponentPropsType) => ({
@@ -24,5 +24,5 @@ export const CampaningListForm = (args: ComponentPropsType) => ({
   },
   template: `
     <CampaningListFormComponent v-bind="args" />
-  `,
+  `
 });

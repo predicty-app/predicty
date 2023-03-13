@@ -11,20 +11,20 @@ export default {
       control: { type: "select" },
       description: "Tag type.",
       name: "type",
-      type: { name: "string", required: false },
-    },
+      type: { name: "string", required: false }
+    }
   },
   parameters: {
     jest: ["TagPin.spec.ts"],
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for tag pin",
-      },
-    },
-  },
+        component: "Component for tag pin"
+      }
+    }
+  }
 };
 
 export const TagPin = (args: ComponentPropsType) => ({
@@ -34,5 +34,5 @@ export const TagPin = (args: ComponentPropsType) => ({
   },
   template: `
     <TagPinComponent v-bind="args">Lorem ipsum</TagPinComponent>
-  `,
+  `
 });

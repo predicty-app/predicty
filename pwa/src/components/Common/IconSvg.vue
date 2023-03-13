@@ -7,7 +7,7 @@ type PropsType = {
 };
 
 const props = withDefaults(defineProps<PropsType>(), {
-  className: "w-7 h-7",
+  className: "w-7 h-7"
 });
 const iconComponent = computed(() => {
   const parsed = `${props.name.charAt(0).toUpperCase()}${props.name.slice(1)}`;

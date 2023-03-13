@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\MessageHandler\Command;
 
+use App\Factory\UserFactory;
 use App\Message\Command\Register;
 use App\Repository\UserRepository;
 use App\Service\Notifier\NotifierService;
 use App\Service\Security\PasscodeGenerator;
-use App\Service\User\UserFactory;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]

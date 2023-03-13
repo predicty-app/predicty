@@ -20,7 +20,7 @@ type PropsType = {
 const currentTypeChart = ref<string>("weeks");
 
 withDefaults(defineProps<PropsType>(), {
-  amountScale: () => ["$ 1,000", "$ 500", "$ 250"],
+  amountScale: () => ["$ 1,000", "$ 500", "$ 250"]
 });
 </script>
 

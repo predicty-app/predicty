@@ -16,7 +16,7 @@ const { t } = useI18n();
 const currentSelectedAction = ref<string>("");
 
 withDefaults(defineProps<PropsType>(), {
-  selectedElements: 0,
+  selectedElements: 0
 });
 
 const emit = defineEmits<{
@@ -32,7 +32,7 @@ const emit = defineEmits<{
       {{ selectedElements }}
       {{
         t("components.common.foating-panel.count-elements", {
-          s: selectedElements > 1 ? "s" : "",
+          s: selectedElements > 1 ? "s" : ""
         })
       }}
     </div>

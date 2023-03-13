@@ -28,8 +28,8 @@ defineEmits<{
         'flex gap-x-3 text-base px-5 py-3 items-center cursor-pointer hover:bg-menuList-hover-background',
         {
           'text-menuList-text': !option.color,
-          'text-menuList-color': option.color,
-        },
+          'text-menuList-color': option.color
+        }
       ]"
     >
       <IconSvg
@@ -39,8 +39,8 @@ defineEmits<{
           'w-[14px] h-[14px]',
           {
             'fill-menuList-text': !option.color,
-            'fill-menuList-color': option.color,
-          },
+            'fill-menuList-color': option.color
+          }
         ]"
       />
       {{ option.label }}

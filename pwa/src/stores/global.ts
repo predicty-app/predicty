@@ -35,8 +35,8 @@ export const useGlobalStore = defineStore({
       currentsCountWeeks: 52,
       scrollParams: {
         x: 0,
-        y: 0,
-      },
+        y: 0
+      }
     } as StateType),
 
   actions: {
@@ -109,6 +109,6 @@ export const useGlobalStore = defineStore({
      */
     handleChangeScale(scale: number) {
       this.currentScale = scale;
-    },
-  },
+    }
+  }
 });

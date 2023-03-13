@@ -18,7 +18,7 @@ type PropsType = {
 const props = withDefaults(defineProps<PropsType>(), {
   type: "ad",
   isVisible: true,
-  color: "#19BE34B2",
+  color: "#19BE34B2"
 });
 
 const globalStore = useGlobalStore();
@@ -105,6 +105,10 @@ function handleToogleSelectAd() {
     userStore.toogleAssignAdsAction(props.campaingUid, props.element.uid);
   }
 }
+
+defineEmits<{
+  (e: "collectionSelected", value: AdsType | AdsCollection): void;
+}>();
 </script>
 
 <template>
@@ -114,18 +118,24 @@ function handleToogleSelectAd() {
     :class="[
       `col-start-dynamic col-end-dynamic p-[1.5px] rounded-[6px] h-fit`,
       {
-        'border-[2px] border-timeline-item-border': type === 'collection',
-        'opacity-50': isElementAssignCheckedCollection,
-      },
+        'border-[2px] border-timeline-item-border cursor-pointer':
+          type === 'collection',
+        'opacity-50': isElementAssignCheckedCollection
+      }
     ]"
+    v-on="
+      type === 'collection'
+        ? { click: () => $emit('collectionSelected', props.element) }
+        : {}
+    "
     :style="{ '--start': start, '--end': end, '--color': currentColor }"
   >
     <div
       :class="[
         'p-2 text-xs cursor-pointer rounded-[5px] shadow-sm flex gap-x-1 items-center text-text-white font-semibold bg-timeline-item-background',
         {
-          'shadow-lg shadow-timeline-shadow': isSelectedElement,
-        },
+          'shadow-lg shadow-timeline-shadow': isSelectedElement
+        }
       ]"
       @click="handleToogleSelectAd"
       :style="{ '--color': currentColor }"

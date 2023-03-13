@@ -7,7 +7,7 @@ import { useOnBoardingStore } from "@/stores/onboarding";
 import { handleRegisterUser } from "@/services/api/onboarding";
 import {
   isRequiredValidation,
-  isEmailValidation,
+  isEmailValidation
 } from "@/helpers/rulesValidation";
 
 const { t } = useI18n();
