@@ -59,8 +59,8 @@ class FacebookCsvImporterTest extends TestCase
                 [1, 'Campaign 2', '23852953378710492'],
             );
 
-        $filename = __DIR__.'/data1.csv';
-        $this->importer->import(1, $filename);
+        $fileStream = fopen(__DIR__.'/data1.csv', 'r');
+        $this->importer->import(1, $fileStream);
     }
 
     public function test_import_creates_ad_set(): void
@@ -72,8 +72,8 @@ class FacebookCsvImporterTest extends TestCase
                 [$this->isInstanceOf(Campaign::class), '', '23853080679590492']
             );
 
-        $filename = __DIR__.'/data1.csv';
-        $this->importer->import(1, $filename);
+        $fileStream = fopen(__DIR__.'/data1.csv', 'r');
+        $this->importer->import(1, $fileStream);
     }
 
     public function test_import_creates_ad_stats(): void
@@ -97,15 +97,15 @@ class FacebookCsvImporterTest extends TestCase
                 ]
             );
 
-        $filename = __DIR__.'/data1.csv';
-        $this->importer->import(1, $filename);
+        $fileStream = fopen(__DIR__.'/data1.csv', 'r');
+        $this->importer->import(1, $fileStream);
     }
 
     public function test_import_clears_entity_manager_after_flush(): void
     {
         $this->em->expects($this->once())->method('clear');
 
-        $filename = __DIR__.'/data1.csv';
-        $this->importer->import(1, $filename);
+        $fileStream = fopen(__DIR__.'/data1.csv', 'r');
+        $this->importer->import(1, $fileStream);
     }
 }

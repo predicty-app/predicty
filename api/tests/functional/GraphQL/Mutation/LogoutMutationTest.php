@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\GraphQL\Mutation;
 
-use App\Repository\UserRepository;
 use App\Test\GraphQLTestCase;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @covers \App\GraphQL\Mutation\LogoutMutation
@@ -16,12 +14,7 @@ class LogoutMutationTest extends GraphQLTestCase
 {
     public function test_logout(): void
     {
-        $client = static::createClient();
-        $users = static::getContainer()->get(UserRepository::class);
-        $user = $users->findByUsername('john.doe@example.com');
-        assert($user instanceof UserInterface);
-
-        $client->loginUser($user);
+        $this->authenticate();
 
         $mutation = <<<'EOF'
                 mutation {
