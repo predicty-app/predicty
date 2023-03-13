@@ -17,18 +17,17 @@ const { t } = useI18n();
 const campaignModelValue = ref<string>("");
 const userDashboardStore = useUserDashboardStore();
 const optionsCollectionList = computed<OptionsType[]>(() => {
-  const campaigns = userDashboardStore.campaigns
-    .find(
-      (campaign: CampaignType) =>
-        campaign.uid === userDashboardStore.selectedAdsList.campaignUid
-    )
+  const campaigns = userDashboardStore.campaigns.find(
+    (campaign: CampaignType) =>
+      campaign.uid === userDashboardStore.selectedAdsList.campaignUid
+  );
   if (!campaigns) {
-    return []
+    return [];
   }
   return campaigns.collection.map((collection: AdsCollection) => ({
     key: collection.uid,
     label: collection.name,
-  }))
+  }));
 });
 
 const optionsButtons = computed<OptionsType[]>(() => {
@@ -105,16 +104,24 @@ function handleFiredAction(actionName: OptionsName) {
 </script>
 
 <template>
-  <FloatingPanel class="absolute bottom-3 right-3 m-auto animate-fade-in z-20"
-    :selected-elements="userDashboardStore.selectedAdsList.ads.length" :options="optionsButtons"
-    @on-click="handleFiredAction">
+  <FloatingPanel
+    class="absolute bottom-3 right-3 m-auto animate-fade-in z-20"
+    :selected-elements="userDashboardStore.selectedAdsList.ads.length"
+    :options="optionsButtons"
+    @on-click="handleFiredAction"
+  >
     <template #additional>
-      <SelectForm class="w-44 animate-fade-in" v-model="campaignModelValue" position="top"
-        :options="optionsCollectionList" :placeholder="
+      <SelectForm
+        class="w-44 animate-fade-in"
+        v-model="campaignModelValue"
+        position="top"
+        :options="optionsCollectionList"
+        :placeholder="
           t(
             'components.user-dashboard.floating-switch-view-form.select-placeholder'
           )
-        " />
+        "
+      />
     </template>
   </FloatingPanel>
 </template>

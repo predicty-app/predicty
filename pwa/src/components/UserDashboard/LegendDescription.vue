@@ -26,19 +26,31 @@ withDefaults(defineProps<PropsType>(), {
 
 <template>
   <div
-    class="h-full flex flex-col min-h-full items-end pr-7 pt-[15px] pb-[10px] bg-legendDescription-background border-b border-b-legendDescription-border">
+    class="h-full flex flex-col min-h-full items-end pr-7 pt-[15px] pb-[10px] bg-legendDescription-background border-b border-b-legendDescription-border"
+  >
     <div class="text-[10px] font-medium text-legendDescription-header pb-5">
-      <SelectForm class="w-20" :options="typeChartOptions" v-model="currentTypeChart" />
+      <SelectForm
+        class="w-20"
+        :options="typeChartOptions"
+        v-model="currentTypeChart"
+      />
     </div>
     <div class="h-full flex flex-col justify-between">
-      <div class="text-[10px] font-medium text-legendDescription-scale-text" :key="amount" v-for="amount in amountScale">
+      <div
+        class="text-[10px] font-medium text-legendDescription-scale-text"
+        :key="amount"
+        v-for="amount in amountScale"
+      >
         {{ amount }}
       </div>
     </div>
     <div class="justify-end pt-14">
-      <div :key="option.label" v-for="option in options"
+      <div
+        :key="option.label"
+        v-for="option in options"
         class="uppercase text-[10px] font-medium text-legendDescription-option text-right"
-        :style="{ '--color': option.color }">
+        :style="{ '--color': option.color }"
+      >
         {{ option.label }}
       </div>
     </div>

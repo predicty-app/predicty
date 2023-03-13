@@ -65,14 +65,18 @@ export default {
 };
 
 export const ChartTimelineItem = (args: ComponentPropsType) => ({
-  components: { ChartTimelineWrapper, ChartTimelineItemComponent, ChartTimelineContent },
+  components: {
+    ChartTimelineWrapper,
+    ChartTimelineItemComponent,
+    ChartTimelineContent,
+  },
   setup() {
-    const campaign = { 
-      uid: '1',
-      name: 'Test',
+    const campaign = {
+      uid: "1",
+      name: "Test",
       ads: [],
-      collection: []
-    }
+      collection: [],
+    };
 
     return { args, campaign };
   },
@@ -92,12 +96,12 @@ ChartTimelineItem.args = {
   end: 5,
   type: "ad",
   element: {
-    uid: '1',
-    name: 'test',
-    start: '2023-12-12',
-    end: '2023-12-12',
-    creation: '',
+    uid: "1",
+    name: "test",
+    start: "2023-12-12",
+    end: "2023-12-12",
+    creation: "",
     cost_total: 1,
-    cost_per_day: 1
-  }
+    cost_per_day: 1,
+  },
 };

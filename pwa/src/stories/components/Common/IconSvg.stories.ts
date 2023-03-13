@@ -8,7 +8,19 @@ export default {
   argTypes: {
     name: {
       name: "name",
-      options: ["arrowback", "arrownext", "bars", "check", "claim", "cogs", "download", "logout", "search", "triangle", "upload"],
+      options: [
+        "arrowback",
+        "arrownext",
+        "bars",
+        "check",
+        "claim",
+        "cogs",
+        "download",
+        "logout",
+        "search",
+        "triangle",
+        "upload",
+      ],
       control: { type: "select" },
       description: "Icon name.",
       type: { name: "string", required: true },

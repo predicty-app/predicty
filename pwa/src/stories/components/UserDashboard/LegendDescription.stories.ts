@@ -53,12 +53,12 @@ LegendDescription.args = {
   header: "week of the year",
   typeChartOptions: [
     {
-      key: 'weeks',
-      label: 'Weeks',
+      key: "weeks",
+      label: "Weeks",
     },
     {
-      key: 'days',
-      label: 'Days',
+      key: "days",
+      label: "Days",
     },
   ],
   options: [

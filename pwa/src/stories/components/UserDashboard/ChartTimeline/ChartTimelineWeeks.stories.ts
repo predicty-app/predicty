@@ -23,5 +23,5 @@ export const ChartTimelineWeeks = (args: ComponentPropsType) => ({
   },
   template: `
     <ChartTimelineWeeksComponent v-bind="args" />
-  `
+  `,
 });

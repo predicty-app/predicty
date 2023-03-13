@@ -1,5 +1,5 @@
 import ChartTimelineWeeksItemComponent from "@/components/UserDashboard/ChartTimeline/ChartTimelineWeeksItem.vue";
-import ChartTimelineWeeks from '@/components/UserDashboard/ChartTimeline/ChartTimelineWeeks.vue'
+import ChartTimelineWeeks from "@/components/UserDashboard/ChartTimeline/ChartTimelineWeeks.vue";
 type ComponentPropsType = {};
 
 export default {
@@ -28,5 +28,5 @@ export const ChartTimelineWeeksItem = (args: ComponentPropsType) => ({
         test
       </ChartTimelineWeeksItemComponent>
     </ChartTimelineWeeks>
-  `
+  `,
 });

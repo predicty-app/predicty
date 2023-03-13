@@ -30,14 +30,14 @@ export const ChartTimelineContent = (args: ComponentPropsType) => ({
   },
   template: `
     <ChartTimelineContentComponent v-bind="args" />
-  `
+  `,
 });
 
 ChartTimelineContent.args = {
   campaign: {
-    uid: '1',
-    name: 'Test',
+    uid: "1",
+    name: "Test",
     ads: [],
-    collection: []
-  }
-}
+    collection: [],
+  },
+};
