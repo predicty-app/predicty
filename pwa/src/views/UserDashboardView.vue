@@ -77,25 +77,34 @@ function checkIsAdInCollection(
     <template #providers-list>
       <ProvidersListForm />
     </template>
+    <template #chart-weeks>
+      <BarChartWeeks />
+    </template>
     <template #chart>
       <BarChartWrapper />
+    </template>
+    <template #chart-days>
+      <BarChartDaysWeek />
     </template>
     <template #ads-campaigns>
       <CampaningListForm />
     </template>
+    <template #ads-weeks>
+      <ChartTimelineWeeks />
+    </template>
     <template #ads-chart>
       <ChartTimelineWrapper>
         <ChartTimelineContent
-          :count-elements="campaign.ads.length + campaign.collection.length"
+          :campaign="campaign"
           :key="campaign.uid"
-          v-for="campaign in userDashboardStore.campaigns"
+          v-for="campaign in userDashboardStore.parsedCampaignsList"
         >
           <ChartTimelineItem
+            :element="adElement"
+            type="ad"
             :is-visible="
               checkIsAdInCollection(campaign.collection, adElement.uid)
             "
-            :element="adElement"
-            type="ad"
             :uid="adElement.uid"
             :color="campaign.color"
             :key="`${adElement.uid}_${Math.random()}`"
@@ -104,7 +113,6 @@ function checkIsAdInCollection(
             :campaing-uid="campaign.uid"
             :end="globalStore.dictionaryTimeline[adElement.end]"
           />
-
           <ChartTimelineItem
             :element="collection"
             type="collection"

@@ -3,13 +3,13 @@ import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 type OptionsType = {
-  key: string | number;
   label: string;
+  key: string | number;
 };
 
 type PropsType = {
-  selectedElements?: number;
   options: OptionsType[];
+  selectedElements?: number;
 };
 
 const { t } = useI18n();

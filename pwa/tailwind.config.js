@@ -4,8 +4,15 @@ module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx,vue}"],
   theme: {
     extend: {
+      top: {
+        dynamic: 'var(--top)'
+      },
       width: {
         'calc': 'calc(100vw)',
+        dynamic: "var(--height)"
+      },
+      content: {
+        dynamic: 'var(--content)'
       },
       height: {
         'calc': 'calc(100vh - 60px)',

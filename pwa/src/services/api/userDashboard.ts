@@ -29,12 +29,12 @@ async function handleGetCampaigns() {
   list.value = [
     {
       uid: "23852953378710492",
-      name: "9K | V3 | ATC",
+      name: "9K | V3 | A",
       ads: [
         {
           uid: "23852953378790492",
           name: "Static | REM | Certyfikat - Luty",
-          start: "2023-08-14",
+          start: "2023-01-01",
           end: "2023-08-14",
           creation: null,
           cost_total: 3496.68,
@@ -71,7 +71,7 @@ async function handleGetCampaigns() {
     },
     {
       uid: "23852953378710495",
-      name: "9K | V3 | ATC",
+      name: "9K | V3 | B",
       ads: [
         {
           uid: "23852953378290492",
@@ -105,7 +105,41 @@ async function handleGetCampaigns() {
     },
     {
       uid: "23852953378710499",
-      name: "9K | V3 | ATC",
+      name: "9K | V3 | C",
+      ads: [
+        {
+          uid: "22852953378790492",
+          name: "Static | REM | Certyfikat - Luty",
+          start: "2023-01-15",
+          end: "2023-03-03",
+          creation: null,
+          cost_total: 3496.68,
+          cost_per_day: 40.191724137931,
+        },
+        {
+          uid: "23852953478790495",
+          name: "Static | Kreatywnosc 1000",
+          start: "2023-01-08",
+          end: "2023-04-03",
+          creation: null,
+          cost_total: 3496.68,
+          cost_per_day: 40.191724137931,
+        },
+        {
+          uid: "23252953378790497",
+          name: "9K | Książka UX ręka 0zł",
+          start: "2023-02-08",
+          end: "2023-05-03",
+          creation: null,
+          cost_total: 3496.68,
+          cost_per_day: 40.191724137931,
+        },
+      ],
+      collection: [],
+    },
+    {
+      uid: "23852953378710493",
+      name: "9K | V3 | D",
       ads: [
         {
           uid: "22852953378790492",
@@ -142,15 +176,17 @@ async function handleGetCampaigns() {
   const globalStore = useGlobalStore();
 
   const { first, last } = hFirstAndLastDate(list.value);
+  const weekdBetween = hWeeksBetween(first, last) + 2;
 
-  globalStore.setCurrentWeeks(hWeeksBetween(first, last) + 2);
+  globalStore.setCurrentWeeks(weekdBetween);
   globalStore.setFirstWeeks(hNumberWeekFromDate(first));
 
   globalStore.setDictionaryTimeline(
-    hNextDaysDictionary(hFirstDayWeek(first), hWeeksBetween(first, last))
+    hNextDaysDictionary(hFirstDayWeek(first), weekdBetween)
   );
+
   globalStore.setDictionaryDaysWeeks(
-    hFirstDaysWeeks(hFirstDayWeek(first), hWeeksBetween(first, last))
+    hFirstDaysWeeks(hFirstDayWeek(first), weekdBetween)
   );
 
   return list.value;

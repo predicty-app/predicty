@@ -2,13 +2,13 @@
 import { vMaska } from "maska";
 
 type PropsType = {
+  mask?: string;
   label?: string;
-  modelValue: string;
   type?: "default";
+  required?: boolean;
+  modelValue: string;
   placeholder?: string;
   errorMessage?: string;
-  required?: boolean;
-  mask?: string;
 };
 
 withDefaults(defineProps<PropsType>(), {

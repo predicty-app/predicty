@@ -1,9 +1,14 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
 import { useI18n } from "vue-i18n";
-import type { CampaignType, AdsType } from "@/stores/userDashboard";
-import { handleGetCampaigns } from "@/services/api/userDashboard";
+import { onMounted, nextTick } from "vue";
 import { useUserDashboardStore } from "@/stores/userDashboard";
+import { handleGetCampaigns } from "@/services/api/userDashboard";
+import type { CampaignType, AdsType } from "@/stores/userDashboard";
+import {
+  heightContent,
+  calculateItemHeight,
+  calculateItemPosition,
+} from "@/helpers/timeline";
 
 const { t } = useI18n();
 const userDashboardStore = useUserDashboardStore();
@@ -11,19 +16,10 @@ const userDashboardStore = useUserDashboardStore();
 onMounted(async () => {
   const response = await handleGetCampaigns();
   userDashboardStore.setCampaignsList(response);
+  nextTick(() => {
+    userDashboardStore.handleVirtualizeCampaignsList();
+  });
 });
-
-/**
- * Function to calculate height of box item campain.
- * @param {CampaignType} campaign
- * @return {number}
- */
-function calculateItemHeight(campaign: CampaignType): number {
-  return (
-    (campaign.ads.length + campaign.collection.length) * 36 +
-    (campaign.ads.length + campaign.collection.length) * 5
-  );
-}
 
 /**
  * Function to calculate active ads.
@@ -48,14 +44,17 @@ function calculateActiveCurrentAds(campaign: CampaignType): number {
 </script>
 
 <template>
-  <div class="px-9 pb-8">
+  <div class="px-9 h-dynamic relative" :style="{ '--height': heightContent }">
     <CampaningListItem
-      class="h-dynamic mb-[7px] my-[7px]"
-      :style="{ '--height': `${calculateItemHeight(campaign)}px` }"
+      class="campaign-list-item h-dynamic absolute animate-fade-in"
+      :style="{
+        '--height': `${calculateItemHeight(campaign)}px`,
+        '--top': `${calculateItemPosition(campaign, 10)}px`,
+      }"
       :header="campaign.name"
       :color="campaign.color"
       :key="campaign.uid"
-      v-for="campaign in userDashboardStore.campaigns"
+      v-for="campaign in userDashboardStore.parsedCampaignsList"
     >
       <div>
         {{
@@ -84,3 +83,9 @@ function calculateActiveCurrentAds(campaign: CampaignType): number {
     </CampaningListItem>
   </div>
 </template>
+
+<style lang="scss">
+.campaign-list-item {
+  top: var(--top);
+}
+</style>

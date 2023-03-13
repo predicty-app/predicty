@@ -1,4 +1,4 @@
-import BarChartPoleComponent from "@/components/UserDashboard/BarChart/BarChartPole.vue";
+import BarChartPoleComponent from "@/components/UserDashboard/BarChart/BarChartPoleWrapper.vue";
 
 type ComponentPropsType = {};
 

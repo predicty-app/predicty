@@ -1,13 +1,12 @@
-unction to handle scale down.
 <script setup lang="ts">
 import { ref } from "vue";
 
 type PropsType = {
+  day?: string;
+  date?: string;
   height?: number;
   sales?: string | number;
   investment?: string | number;
-  date?: string;
-  day?: string;
 };
 
 withDefaults(defineProps<PropsType>(), {

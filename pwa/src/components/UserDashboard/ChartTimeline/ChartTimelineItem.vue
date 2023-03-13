@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { ref, onMounted, watch, computed } from "vue";
 import { useGlobalStore } from "@/stores/global";
+import { ref, onMounted, watch, computed } from "vue";
+import { hLightenDarkenColor } from "@/helpers/utils";
 import { useUserDashboardStore } from "@/stores/userDashboard";
 import type { AdsType, AdsCollection } from "@/stores/userDashboard";
-import { hLightenDarkenColor } from "@/helpers/utils";
 
 type PropsType = {
-  start: number;
   end: number;
-  type?: "ad" | "collection";
+  start: number;
   color?: string;
   isVisible?: boolean;
   campaingUid?: string;
+  type?: "ad" | "collection";
   element: AdsType | AdsCollection;
 };
 
@@ -25,8 +25,11 @@ const globalStore = useGlobalStore();
 const userStore = useUserDashboardStore();
 const isElementVisible = ref<boolean>(true);
 const boundingBoxElement = ref<DOMRect | null>(null);
-const virtualizationParentBoxElement = ref<DOMRect | null>(null);
 const timelineItemInstance = ref<HTMLDivElement | null>(null);
+const isSelectedElement = computed<boolean>(() =>
+  userStore.selectedAdsList.ads.includes(props.element.uid)
+);
+
 const isElementAssignCheckedCollection = computed<boolean>(() => {
   return (
     userStore.selectedAdsList.campaignUid !== props.campaingUid &&
@@ -37,30 +40,17 @@ const isElementAssignCheckedCollection = computed<boolean>(() => {
 const currentColor = computed<string>(() =>
   hLightenDarkenColor(
     userStore.hiddenAds.includes(props.element.uid) ? "#d1d1d1" : props.color,
-    userStore.selectedAdsList.ads.includes(props.element.uid) ? -30 : 0
+    isSelectedElement.value ? -30 : 0
   )
 );
 
 onMounted(() => {
-  const parent = handleParentBySelector(
-    timelineItemInstance.value,
-    "data-virtualization"
-  );
-  virtualizationParentBoxElement.value = parent.getBoundingClientRect();
   boundingBoxElement.value = timelineItemInstance.value.getBoundingClientRect();
-
   handleVisibleElement();
 });
 
 watch(
-  () => globalStore.scrollParams,
-  () => {
-    handleVisibleElement();
-  }
-);
-
-watch(
-  () => globalStore.currentScale,
+  () => [globalStore.scrollParams, globalStore.currentScale],
   () => {
     handleVisibleElement();
   }
@@ -70,44 +60,26 @@ watch(
  * Function to handle visible element.
  */
 function handleVisibleElement() {
-  const modifierValue = 300;
-
-  const currentLeftPosition =
-    boundingBoxElement.value.left - virtualizationParentBoxElement.value.left;
-  const widthElement = boundingBoxElement.value.width + modifierValue;
-
-  isElementVisible.value =
-    (currentLeftPosition + widthElement) * (globalStore.currentScale * 0.01) >
-      globalStore.scrollParams.x &&
-    virtualizationParentBoxElement.value.width + globalStore.scrollParams.x >
-      currentLeftPosition * (globalStore.currentScale * 0.01);
-
-  if (!props.isVisible) {
+  if (!globalStore.scrollTimeline || !props.isVisible) {
     isElementVisible.value = false;
-  }
-  // TODO VIRTUALIZATION TOP
-  // && ((currentTopPosition + heightElement) > globalStore.scrollParams.y
-  // && virtualizationParentBoxElement.value.height + globalStore.scrollParams.y  > (currentTopPosition * (globalStore.currentScale * 0.01)))
-}
-
-/**
- * Function to habdle parent by selector.
- * @param {HTMLElement} element
- * @param {string} selector
- * @reutnr {HTMLElement | null}
- */
-function handleParentBySelector(
-  element: HTMLElement,
-  selector: string
-): HTMLElement | null {
-  if (!element.parentElement) {
     return;
   }
 
-  if (element.parentElement.getAttribute(selector) === "true") {
-    return element.parentElement;
-  } else {
-    return handleParentBySelector(element.parentElement, selector);
+  const currentLeftPosition =
+    boundingBoxElement.value.left -
+    globalStore.scrollTimeline.getBoundingClientRect().left +
+    globalStore.scrollParams.x;
+  const currentRightPosition =
+    currentLeftPosition + boundingBoxElement.value.width;
+
+  isElementVisible.value =
+    currentLeftPosition <
+      globalStore.scrollParams.x +
+        globalStore.scrollTimeline.getBoundingClientRect().width &&
+    currentRightPosition > globalStore.scrollParams.x;
+
+  if (!props.isVisible) {
+    isElementVisible.value = false;
   }
 }
 
@@ -137,8 +109,8 @@ function handleToogleSelectAd() {
 
 <template>
   <div
-    v-if="isElementVisible"
     ref="timelineItemInstance"
+    v-if="isElementVisible"
     :class="[
       `col-start-dynamic col-end-dynamic p-[1.5px] rounded-[6px] h-fit`,
       {
@@ -152,8 +124,7 @@ function handleToogleSelectAd() {
       :class="[
         'p-2 text-xs cursor-pointer rounded-[5px] shadow-sm flex gap-x-1 items-center text-text-white font-semibold bg-timeline-item-background',
         {
-          'shadow-lg shadow-timeline-shadow':
-            userStore.selectedAdsList.ads.includes(element.uid),
+          'shadow-lg shadow-timeline-shadow': isSelectedElement,
         },
       ]"
       @click="handleToogleSelectAd"
@@ -162,7 +133,7 @@ function handleToogleSelectAd() {
       <CheckboxForm
         v-if="type === 'ad'"
         :color="currentColor"
-        :is-checked="userStore.selectedAdsList.ads.includes(element.uid)"
+        :is-checked="isSelectedElement"
       />
       <IconSvg v-if="type === 'collection'" name="bars" class-name="w-4 h-4" />
       <div

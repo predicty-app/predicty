@@ -2,8 +2,8 @@
 type OptionsType = {
   key: string;
   label: string;
-  color?: string;
   icon?: string;
+  color?: string;
 };
 
 type PropsType = {

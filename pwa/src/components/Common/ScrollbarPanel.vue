@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
 import { useScroll } from "@vueuse/core";
-import type { UseScrollReturn } from "@vueuse/core";
+import { ref, watch, onMounted } from "vue";
 import { vScroll } from "@vueuse/components";
+import type { UseScrollReturn } from "@vueuse/core";
 
 type ScrollType = {
   x: number;
   y: number;
+  direction?: "horizontal" | "vertical" | null | string;
 };
 
 type PropsType = {
@@ -27,7 +28,12 @@ const isScrollbarsVisible = ref<boolean>(false);
 
 const emit = defineEmits<{
   (e: "onChange", value: ScrollType): void;
+  (e: "onMounted", value: HTMLDivElement): void;
 }>();
+
+onMounted(() => {
+  emit("onMounted", scrollInstance.value);
+});
 
 watch(
   () => props.scrollX,
@@ -51,9 +57,16 @@ function handleScroll(state: UseScrollReturn) {
   if (props.scrollX || props.scrollY) {
     return;
   }
+
+  let direction =
+    state.directions.left || state.directions.right ? "horizontal" : null;
+  direction =
+    state.directions.top || state.directions.left ? "vertical" : direction;
+
   emit("onChange", {
     x: state.x.value,
     y: state.y.value,
+    direction,
   });
 }
 </script>

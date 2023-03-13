@@ -1,7 +1,7 @@
 <script setup lang="ts">
 type PropsType = {
-  header?: string;
   color?: string;
+  header?: string;
 };
 
 withDefaults(defineProps<PropsType>(), {

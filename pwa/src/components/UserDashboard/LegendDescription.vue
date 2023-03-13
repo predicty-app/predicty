@@ -7,14 +7,14 @@ type OptionsType = {
 };
 
 type ChartOptionsType = {
-  label: string;
   key: string;
+  label: string;
 };
 
 type PropsType = {
-  typeChartOptions: ChartOptionsType[];
   amountScale?: string[];
   options?: OptionsType[];
+  typeChartOptions: ChartOptionsType[];
 };
 
 const currentTypeChart = ref<string>("weeks");

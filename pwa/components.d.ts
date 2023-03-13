@@ -14,7 +14,14 @@ declare module "@vue/runtime-core" {
     AppLogo: typeof import("./src/components/Common/AppLogo.vue")["default"];
     AvatarUser: typeof import("./src/components/Common/AvatarUser.vue")["default"];
     BarChart: typeof import("./src/components/UserDashboard/BarChart/BarChart.vue")["default"];
+    BarChartDaysWeek: typeof import("./src/components/UserDashboard/BarChart/BarChartDaysWeek.vue")["default"];
+    BarChartDaysWeekItem: typeof import("./src/components/UserDashboard/BarChart/BarChartDaysWeekItem.vue")["default"];
     BarChartPole: typeof import("./src/components/UserDashboard/BarChart/BarChartPole.vue")["default"];
+    BarChartPoleContent: typeof import("./src/components/UserDashboard/BarChart/BarChartPoleContent.vue")["default"];
+    BarChartPoleItem: typeof import("./src/components/UserDashboard/BarChart/BarChartPoleItem.vue")["default"];
+    BarChartPoleWrapper: typeof import("./src/components/UserDashboard/BarChart/BarChartPoleWrapper.vue")["default"];
+    BarChartWeeks: typeof import("./src/components/UserDashboard/BarChart/BarChartWeeks.vue")["default"];
+    BarChartWeeksItem: typeof import("./src/components/UserDashboard/BarChart/BarChartWeeksItem.vue")["default"];
     BarChartWrapper: typeof import("./src/components/UserDashboard/BarChart/BarChartWrapper.vue")["default"];
     ButtonForm: typeof import("./src/components/Common/ButtonForm.vue")["default"];
     CampaningListForm: typeof import("./src/components/UserDashboard/CampaningListForm.vue")["default"];
@@ -22,6 +29,8 @@ declare module "@vue/runtime-core" {
     CardPanel: typeof import("./src/components/Common/CardPanel.vue")["default"];
     ChartTimelineContent: typeof import("./src/components/UserDashboard/ChartTimeline/ChartTimelineContent.vue")["default"];
     ChartTimelineItem: typeof import("./src/components/UserDashboard/ChartTimeline/ChartTimelineItem.vue")["default"];
+    ChartTimelineWeeks: typeof import("./src/components/UserDashboard/ChartTimeline/ChartTimelineWeeks.vue")["default"];
+    ChartTimelineWeeksItem: typeof import("./src/components/UserDashboard/ChartTimeline/ChartTimelineWeeksItem.vue")["default"];
     ChartTimelineWrapper: typeof import("./src/components/UserDashboard/ChartTimeline/ChartTimelineWrapper.vue")["default"];
     CheckboxForm: typeof import("./src/components/Common/CheckboxForm.vue")["default"];
     ConnectAccountForm: typeof import("./src/components/OnBoarding/ConnectAccountForm.vue")["default"];

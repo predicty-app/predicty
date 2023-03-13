@@ -2,8 +2,8 @@
 import { ref } from "vue";
 
 type OptionsType = {
-  key: string | number;
   label: string;
+  key: string | number;
 };
 
 type PropsType = {
