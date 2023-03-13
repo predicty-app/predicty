@@ -25,6 +25,7 @@ framework:
         routing:
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
+            App\Message\AsyncMessage: async
 
 when@test:
     framework:
