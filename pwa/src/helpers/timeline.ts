@@ -7,11 +7,11 @@ const globalStore = useGlobalStore();
 const userDashboardStore = useUserDashboardStore();
 
 enum timelineParams {
-  LINE_WIDTH = 150,
-  GRADIENT_WIDTH = 300,
   GAP_GRID = 5,
+  LINE_WIDTH = 150,
   COLUMN_WIDTH = 16.4,
-  FIREST_COLUMN_WIDTH = 16,
+  GRADIENT_WIDTH = 300,
+  FIREST_COLUMN_WIDTH = 16
 }
 
 export const scaleLines = computed<string>(
