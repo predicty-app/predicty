@@ -20,7 +20,7 @@ export default {
   },
   parameters: {
     status: {
-      type: "todo",
+      type: "stable",
     },
     docs: {
       description: {

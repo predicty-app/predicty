@@ -4,8 +4,7 @@ type PropsType = {
 };
 
 withDefaults(defineProps<PropsType>(), {
-  type: "default",
-  required: false,
+  type: "default"
 });
 </script>
 

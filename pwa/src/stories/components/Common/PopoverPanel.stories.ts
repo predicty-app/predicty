@@ -5,6 +5,13 @@ type ComponentPropsType = {};
 export default {
   component: PopoverPanelComponent,
   title: "Components/Common/PopoverPanel",
+  argTypes: {
+    height: {
+      name: "height",
+      description: "Height for popover.",
+      type: { name: "number", required: false },
+    },
+  },
   parameters: {
     status: {
       type: "todo",

@@ -16,17 +16,20 @@ type OptionsType = {
 const { t } = useI18n();
 const campaignModelValue = ref<string>("");
 const userDashboardStore = useUserDashboardStore();
-const optionsCollectionList = computed<OptionsType[]>(() =>
-  userDashboardStore.campaigns
+const optionsCollectionList = computed<OptionsType[]>(() => {
+  const campaigns = userDashboardStore.campaigns
     .find(
       (campaign: CampaignType) =>
         campaign.uid === userDashboardStore.selectedAdsList.campaignUid
     )
-    .collection.map((collection: AdsCollection) => ({
-      key: collection.uid,
-      label: collection.name,
-    }))
-);
+  if (!campaigns) {
+    return []
+  }
+  return campaigns.collection.map((collection: AdsCollection) => ({
+    key: collection.uid,
+    label: collection.name,
+  }))
+});
 
 const optionsButtons = computed<OptionsType[]>(() => {
   const options: OptionsType[] = [
@@ -49,7 +52,7 @@ const optionsButtons = computed<OptionsType[]>(() => {
       campaing.uid === userDashboardStore.selectedAdsList.campaignUid
   );
 
-  if (campaign.collection.length > 0) {
+  if (campaign && campaign.collection.length > 0) {
     options.push({
       key: OptionsName.ADD_TO_COLLECTION,
       label: t(
@@ -102,24 +105,16 @@ function handleFiredAction(actionName: OptionsName) {
 </script>
 
 <template>
-  <FloatingPanel
-    class="absolute bottom-3 right-3 m-auto animate-fade-in z-20"
-    :selected-elements="userDashboardStore.selectedAdsList.ads.length"
-    :options="optionsButtons"
-    @on-click="handleFiredAction"
-  >
+  <FloatingPanel class="absolute bottom-3 right-3 m-auto animate-fade-in z-20"
+    :selected-elements="userDashboardStore.selectedAdsList.ads.length" :options="optionsButtons"
+    @on-click="handleFiredAction">
     <template #additional>
-      <SelectForm
-        class="w-44 animate-fade-in"
-        v-model="campaignModelValue"
-        position="top"
-        :options="optionsCollectionList"
-        :placeholder="
+      <SelectForm class="w-44 animate-fade-in" v-model="campaignModelValue" position="top"
+        :options="optionsCollectionList" :placeholder="
           t(
             'components.user-dashboard.floating-switch-view-form.select-placeholder'
           )
-        "
-      />
+        " />
     </template>
   </FloatingPanel>
 </template>

@@ -9,7 +9,12 @@ export default {
     isVisible: {
       name: "isVisible",
       description: "Param for toogle visible spinner.",
-      type: { name: "boolean", required: true },
+      type: { name: "boolean", required: false },
+    },
+    isGlobal: {
+      name: "isGlobal",
+      description: "Param for toogle global spinner.",
+      type: { name: "boolean", required: false },
     },
   },
   parameters: {

@@ -8,10 +8,15 @@ export default {
   argTypes: {
     name: {
       name: "name",
-      options: ["search"],
+      options: ["arrowback", "arrownext", "bars", "check", "claim", "cogs", "download", "logout", "search", "triangle", "upload"],
       control: { type: "select" },
       description: "Icon name.",
       type: { name: "string", required: true },
+    },
+    className: {
+      name: "className",
+      description: "Additional class for icon.",
+      type: { name: "string", required: false },
     },
   },
   parameters: {

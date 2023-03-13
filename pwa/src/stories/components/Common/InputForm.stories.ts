@@ -28,6 +28,11 @@ export default {
       description: "Label for input element.",
       type: { name: "string", required: false },
     },
+    mask: {
+      name: "mask",
+      description: "Mask for input element.",
+      type: { name: "string", required: false },
+    },
     required: {
       name: "required",
       control: { type: "boolean" },

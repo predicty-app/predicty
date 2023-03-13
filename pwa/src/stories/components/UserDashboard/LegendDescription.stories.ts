@@ -51,6 +51,16 @@ export const LegendDescription = (args: ComponentPropsType) => ({
 
 LegendDescription.args = {
   header: "week of the year",
+  typeChartOptions: [
+    {
+      key: 'weeks',
+      label: 'Weeks',
+    },
+    {
+      key: 'days',
+      label: 'Days',
+    },
+  ],
   options: [
     {
       label: "Overall sales",
