@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\AdStats;
+use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 
@@ -26,7 +27,7 @@ class AdStatsRepository
         $this->em->flush();
     }
 
-    public function findByAdIdAndDay(int $adId, \DateTimeInterface $day): ?AdStats
+    public function findByAdIdAndDay(int $adId, DateTimeInterface $day): ?AdStats
     {
         return $this->repository->findOneBy(['adId' => $adId, 'date' => $day]);
     }

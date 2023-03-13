@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service\Facebook\CsvImporter;
 
+use RuntimeException;
+
 class CsvHeadersValidator
 {
     private static array $headers = [
@@ -26,7 +28,7 @@ class CsvHeadersValidator
         $headers = array_flip($headers);
         foreach (self::$headers as $name) {
             if (!isset($headers[$name])) {
-                throw new \RuntimeException(sprintf('Invalid CSV file: missing the required "%s" column', $name));
+                throw new RuntimeException(sprintf('Invalid CSV file: missing the required "%s" column', $name));
             }
         }
     }

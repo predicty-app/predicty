@@ -51,6 +51,7 @@ return (new PhpCsFixer\Config())
         'php_unit_method_casing' => ['case' => 'snake_case'],
         'php_unit_test_case_static_method_calls' => ['call_type' => 'this'],
         'void_return' => true,
+        'global_namespace_import' => ['import_classes' => true],
     ])
     ->setFinder($finder)
 ;

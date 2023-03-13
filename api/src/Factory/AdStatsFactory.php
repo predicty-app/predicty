@@ -8,6 +8,7 @@ use App\Entity\Ad;
 use App\Entity\AdStats;
 use App\Repository\AdStatsRepository;
 use Brick\Money\Money;
+use DateTimeImmutable;
 use Psr\Clock\ClockInterface;
 
 class AdStatsFactory
@@ -18,7 +19,7 @@ class AdStatsFactory
 
     public function make(
         Ad $ad,
-        \DateTimeImmutable $date,
+        DateTimeImmutable $date,
         int $results,
         Money $costPerResult,
         Money $amountSpent

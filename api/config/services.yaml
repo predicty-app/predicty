@@ -24,7 +24,7 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Test/'
-            - '../src/Message/'
+            - '../src/Message/Command'
             - '../src/Kernel.php'
 
     _instanceof:
@@ -62,6 +62,8 @@ services:
     Psr\SimpleCache\CacheInterface: '@Symfony\Component\Cache\Psr16Cache'
 
     League\Flysystem\FilesystemOperator: '@default.storage'
+    League\Flysystem\FilesystemReader: '@League\Flysystem\FilesystemOperator'
+    League\Flysystem\FilesystemWriter: '@League\Flysystem\FilesystemOperator'
 
     Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory: ~
     Symfony\Bridge\PsrHttpMessage\HttpMessageFactoryInterface: '@Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory'

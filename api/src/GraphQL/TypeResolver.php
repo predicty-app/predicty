@@ -17,6 +17,7 @@ use GraphQL\Type\Definition\NonNull;
 use GraphQL\Type\Definition\ScalarType;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Upload\UploadType;
+use RuntimeException;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 
 /**
@@ -126,6 +127,6 @@ class TypeResolver
             }
         }
 
-        throw new \RuntimeException(sprintf('Unable to guess type for: "%s"', $typeName));
+        throw new RuntimeException(sprintf('Unable to guess type for: "%s"', $typeName));
     }
 }

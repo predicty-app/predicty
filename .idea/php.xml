@@ -209,6 +209,9 @@
       <path value="$PROJECT_DIR$/api/vendor/phpstan/phpdoc-parser" />
       <path value="$PROJECT_DIR$/api/vendor/dealerdirect/phpcodesniffer-composer-installer" />
       <path value="$PROJECT_DIR$/api/vendor/slevomat/coding-standard" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/doctrine-messenger" />
+      <path value="$PROJECT_DIR$/api/vendor/zenstruck/assert" />
+      <path value="$PROJECT_DIR$/api/vendor/zenstruck/messenger-test" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

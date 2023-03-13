@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -28,7 +29,7 @@ class AdSet
     #[ORM\Column(length: 255)]
     private string $name;
 
-    public function __construct(string $externalId, int $userId, int $campaignId, string $name, \DateTimeImmutable $createdAt, \DateTimeImmutable $changedAt)
+    public function __construct(string $externalId, int $userId, int $campaignId, string $name, DateTimeImmutable $createdAt, DateTimeImmutable $changedAt)
     {
         $this->externalId = $externalId;
         $this->userId = $userId;

@@ -9,7 +9,7 @@ default: help
 help: # Show help for each of the Makefile recipes.
 	@grep -E '^[a-zA-Z0-9 -]+:.*#'  Makefile | sort | while read -r l; do printf "\033[1;32m$$(echo $$l | cut -f 1 -d':')\033[00m:$$(echo $$l | cut -f 2- -d'#')\n"; done
 
-build: docker-down docker-build fixtures # Build or rebuild whole environment (this will DESTROY your database)
+build: docker-down docker-build start fixtures # Build or rebuild whole environment (this will DESTROY your database)
 
 stop: # Stop all containers
 	$(DOCKER_COMPOSE) stop
@@ -43,13 +43,15 @@ test: reset-test-database # Run tests
 paratest:
 	$(PHP_EXEC) vendor/bin/paratest --bootstrap=tests/paratest.php
 
+run-worker: # Run worker that will consume async messages
+	@$(SYMFONY_CONSOLE_EXEC) --env=dev messenger:consume async -vv
+
 reset-database:
 	@$(SYMFONY_CONSOLE_EXEC) --env=dev doctrine:query:sql "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'app' AND pid <> pg_backend_pid();" --quiet
 	@$(SYMFONY_CONSOLE_EXEC) --env=dev doctrine:database:drop --if-exists --force --no-interaction
 	@$(SYMFONY_CONSOLE_EXEC) --env=dev doctrine:database:create --no-interaction
 	@$(SYMFONY_CONSOLE_EXEC) --env=dev doctrine:migrations:migrate --no-interaction
-	@$(SYMFONY_CONSOLE_EXEC) --env=dev doctrine:fixtures:load --no-interaction
-	@$(SYMFONY_CONSOLE_EXEC) --env=test doctrine:fixtures:load --no-interaction -q
+	@$(SYMFONY_CONSOLE_EXEC) --env=dev doctrine:fixtures:load --no-interaction -q
 	@echo "Database was restored to its initial state"
 
 reset-test-database:
@@ -63,5 +65,6 @@ reset-test-database:
 migration:
 	$(SYMFONY_CONSOLE_EXEC) doctrine:mig:diff --no-interaction
 
+migrate: do-migration
 do-migration:
 	$(SYMFONY_CONSOLE_EXEC) doctrine:mig:mig --no-interaction

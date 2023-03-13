@@ -6,6 +6,7 @@ namespace App\Entity;
 
 use Brick\Money\Currency;
 use Brick\Money\Money;
+use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -34,16 +35,16 @@ class AdStats
     private string $currency;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    private \DateTimeInterface $date;
+    private DateTimeInterface $date;
 
     public function __construct(
         int $adId,
         int $results,
         Money $costPerResult,
         Money $amountSpent,
-        \DateTimeInterface $date,
-        \DateTimeInterface $createdAt,
-        \DateTimeInterface $changedAt,
+        DateTimeInterface $date,
+        DateTimeInterface $createdAt,
+        DateTimeInterface $changedAt,
     ) {
         $this->adId = $adId;
         $this->results = $results;
@@ -80,7 +81,7 @@ class AdStats
         return Currency::of($this->currency);
     }
 
-    public function getDate(): \DateTimeInterface
+    public function getDate(): DateTimeInterface
     {
         return $this->date;
     }
