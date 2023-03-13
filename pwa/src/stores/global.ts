@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 
 type ScrollType = {
   x: number;
-  y: number;
+  y: number; 
 };
 
 type StateType = {
