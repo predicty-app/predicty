@@ -7,14 +7,14 @@ export default {
   title: "Components/Layouts/UserDashboardLayout",
   parameters: {
     status: {
-      type: "todo",
+      type: "todo"
     },
     docs: {
       description: {
-        component: "Component for on user dashboard layout",
-      },
-    },
-  },
+        component: "Component for on user dashboard layout"
+      }
+    }
+  }
 };
 
 export const UserDashboardLayout = (args: ComponentPropsType) => ({
@@ -30,5 +30,5 @@ export const UserDashboardLayout = (args: ComponentPropsType) => ({
       <template #ads-campaigns>ads-campaigns</template>
       <template #ads-chart>ads-chart</template>
     </UserDashboardLayoutComponent>
-  `,
+  `
 });

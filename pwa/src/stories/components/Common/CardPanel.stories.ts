@@ -11,20 +11,20 @@ export default {
       control: { type: "select" },
       description: "Card type.",
       name: "type",
-      type: { name: "string", required: false },
-    },
+      type: { name: "string", required: false }
+    }
   },
   parameters: {
     jest: ["Card.spec.ts"],
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for card panel",
-      },
-    },
-  },
+        component: "Component for card panel"
+      }
+    }
+  }
 };
 
 export const CardPanel = (args: ComponentPropsType) => ({
@@ -34,9 +34,9 @@ export const CardPanel = (args: ComponentPropsType) => ({
   },
   template: `
     <CardPanelComponent v-bind="args">Lorem ipsum dolor sit amet</CardPanelComponent>
-  `,
+  `
 });
 
 CardPanel.args = {
-  type: "default",
+  type: "default"
 };

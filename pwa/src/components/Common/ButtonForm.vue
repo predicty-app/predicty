@@ -4,7 +4,7 @@ type PropsType = {
 };
 
 withDefaults(defineProps<PropsType>(), {
-  type: "default",
+  type: "default"
 });
 </script>
 
@@ -21,8 +21,8 @@ withDefaults(defineProps<PropsType>(), {
         'bg-button-success text-text-white hover:bg-button-hover-success active:bg-button-active-success':
           type === 'success',
         'cursor-not-allowed text-text-white bg-button-disabled border-button-disabled hover:bg-button-disabled active:bg-button-disabled':
-          type === 'disbaled',
-      },
+          type === 'disbaled'
+      }
     ]"
   >
     <slot />

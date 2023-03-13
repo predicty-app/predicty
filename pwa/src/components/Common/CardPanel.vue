@@ -4,7 +4,7 @@ type PropsType = {
 };
 
 withDefaults(defineProps<PropsType>(), {
-  type: "default",
+  type: "default"
 });
 </script>
 
@@ -18,8 +18,8 @@ withDefaults(defineProps<PropsType>(), {
         ' bg-card-background-success border-card-border-success text-card-text-success':
           type === 'success',
         'bg-card-background-default border-card-border-default text-card-text-default':
-          type === 'default',
-      },
+          type === 'default'
+      }
     ]"
   >
     <slot />

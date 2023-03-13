@@ -7,14 +7,14 @@ export default {
   title: "Components/OnBoarding/AccountCreationEmailForm",
   parameters: {
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for account creation form",
-      },
-    },
-  },
+        component: "Component for account creation form"
+      }
+    }
+  }
 };
 
 export const AccountCreationEmailForm = (args: ComponentPropsType) => ({
@@ -25,5 +25,5 @@ export const AccountCreationEmailForm = (args: ComponentPropsType) => ({
   template: `
     <AccountCreationEmailFormComponent v-bind="args" />
     <div id="next-button"></div>
-  `,
+  `
 });

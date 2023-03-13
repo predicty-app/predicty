@@ -7,14 +7,14 @@ export default {
   title: "Components/Layouts/OnBoardingLayout",
   parameters: {
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for on boarding layout",
-      },
-    },
-  },
+        component: "Component for on boarding layout"
+      }
+    }
+  }
 };
 
 export const OnBoardingLayout = (args: ComponentPropsType) => ({
@@ -34,5 +34,5 @@ export const OnBoardingLayout = (args: ComponentPropsType) => ({
         Footer
       </template>
     </OnBoardingLayoutComponent>
-  `,
+  `
 });

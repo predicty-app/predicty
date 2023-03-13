@@ -12,7 +12,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/onboarding/start-screen",
         name: "on-boarding-start-screen",
-        component: () => import("@/views/StartScreenView.vue"),
+        component: () => import("@/views/StartScreenView.vue")
       },
       {
         path: "/onboarding/account-creation",
@@ -25,7 +25,7 @@ const routes: Array<RouteRecordRaw> = [
             path: "/onboarding/account-creation/email",
             name: "on-boarding-account-creation-email",
             component: () =>
-              import("@/views/AccountCreation/AccountCreationEmailView.vue"),
+              import("@/views/AccountCreation/AccountCreationEmailView.vue")
           },
           {
             path: "/onboarding/account-creation/password",
@@ -37,9 +37,9 @@ const routes: Array<RouteRecordRaw> = [
               if (!onboardingStore.email) {
                 return { path: "/onboarding/account-creation/email" };
               }
-            },
-          },
-        ],
+            }
+          }
+        ]
       },
       {
         path: "/onboarding/basic-media-integration",
@@ -50,7 +50,7 @@ const routes: Array<RouteRecordRaw> = [
           if (!onboardingStore.password) {
             return { path: "/onboarding/account-creation/password" };
           }
-        },
+        }
       },
       {
         path: "/onboarding/more-media-integration",
@@ -61,7 +61,7 @@ const routes: Array<RouteRecordRaw> = [
           if (Object.keys(onboardingStore.providers).length === 0) {
             return { path: "/onboarding/basic-media-integration" };
           }
-        },
+        }
       },
       {
         path: "/onboarding/preparing-screen",
@@ -72,20 +72,20 @@ const routes: Array<RouteRecordRaw> = [
           if (Object.keys(onboardingStore.providers).length === 0) {
             return { path: "/onboarding/basic-media-integration" };
           }
-        },
-      },
-    ],
+        }
+      }
+    ]
   },
   {
     path: "/",
     name: "user-dashboard",
-    component: () => import("@/views/UserDashboardView.vue"),
-  },
+    component: () => import("@/views/UserDashboardView.vue")
+  }
 ];
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes,
+  routes
 });
 
 export default router;

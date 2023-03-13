@@ -7,14 +7,14 @@ export default {
   title: "Views/PreparingScreenView",
   parameters: {
     status: {
-      type: "todo",
+      type: "todo"
     },
     docs: {
       description: {
-        component: "Component preparing screen view",
-      },
-    },
-  },
+        component: "Component preparing screen view"
+      }
+    }
+  }
 };
 
 export const PreparingScreenView = (args: ComponentPropsType) => ({
@@ -24,5 +24,5 @@ export const PreparingScreenView = (args: ComponentPropsType) => ({
   },
   template: `
     <PreparingScreenViewComponent v-bind="args" />
-  `,
+  `
 });

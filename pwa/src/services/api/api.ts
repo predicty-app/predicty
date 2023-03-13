@@ -21,7 +21,7 @@ class ApiService implements ApiService {
    * @var {HeadersType}
    */
   #headers: HeadersType = {
-    "content-type": "application/json",
+    "content-type": "application/json"
   };
 
   /**
@@ -41,8 +41,8 @@ class ApiService implements ApiService {
         headers: this.#headers,
         data: {
           query,
-          variables: params,
-        },
+          variables: params
+        }
       })
     ).data;
   }

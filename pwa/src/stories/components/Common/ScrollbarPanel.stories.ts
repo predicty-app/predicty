@@ -5,16 +5,38 @@ type ComponentPropsType = {};
 export default {
   component: ScrollbarPanelComponent,
   title: "Components/Common/ScrollbarPanel",
+  argTypes: {
+    scrollX: {
+      name: "scrollX",
+      description: "Scroll X position.",
+      type: { name: "number", required: false }
+    },
+    scrollY: {
+      name: "scrollY",
+      description: "Scroll Y position.",
+      type: { name: "number", required: false }
+    },
+    isHorizontalScrollVisible: {
+      name: "isHorizontalScrollVisible",
+      description: "Props for show horizontal scroll visible.",
+      type: { name: "boolean", required: false }
+    },
+    isVerticalScrollVisible: {
+      name: "isVerticalScrollVisible",
+      description: "Props for show vertical scroll visible.",
+      type: { name: "boolean", required: false }
+    }
+  },
   parameters: {
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for custom scrollbar",
-      },
-    },
-  },
+        component: "Component for custom scrollbar"
+      }
+    }
+  }
 };
 
 export const ScrollbarPanel = (args: ComponentPropsType) => ({
@@ -35,5 +57,5 @@ export const ScrollbarPanel = (args: ComponentPropsType) => ({
     </ScrollbarPanelComponent>
     <div>4</div>
   </div>
-  `,
+  `
 });

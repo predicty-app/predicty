@@ -8,14 +8,14 @@ export default {
   parameters: {
     jest: ["UploadFile.spec.ts"],
     status: {
-      type: "todo",
+      type: "todo"
     },
     docs: {
       description: {
-        component: "Component for upload file",
-      },
-    },
-  },
+        component: "Component for upload file"
+      }
+    }
+  }
 };
 
 export const UploadFile = (args: ComponentPropsType) => ({
@@ -25,9 +25,9 @@ export const UploadFile = (args: ComponentPropsType) => ({
   },
   template: `
     <UploadFileComponent v-bind="args" />
-  `,
+  `
 });
 
 UploadFile.args = {
-  filesType: [".csv", ".xls"],
+  filesType: [".csv", ".xls"]
 };

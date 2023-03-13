@@ -10,19 +10,19 @@ export default {
       control: { type: "object" },
       description: "Collection object data",
       name: "collection",
-      type: { name: "object", required: false },
-    },
+      type: { name: "object", required: false }
+    }
   },
   parameters: {
     status: {
-      type: "wip",
+      type: "wip"
     },
     docs: {
       description: {
-        component: "Component for a collection's content display",
-      },
-    },
-  },
+        component: "Component for a collection's content display"
+      }
+    }
+  }
 };
 
 export const CollectionBottomBar = (args: ComponentPropsType) => ({
@@ -32,7 +32,7 @@ export const CollectionBottomBar = (args: ComponentPropsType) => ({
   },
   template: `
   <CollectionBottomBarComponent v-bind="args" />
-  `,
+  `
 });
 
 CollectionBottomBar.args = {
@@ -41,6 +41,6 @@ CollectionBottomBar.args = {
     uid: "",
     ads: [""],
     start: "",
-    end: "",
-  },
+    end: ""
+  }
 };

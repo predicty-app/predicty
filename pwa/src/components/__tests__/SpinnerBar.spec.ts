@@ -12,8 +12,8 @@ describe("Tests for SpinnerBar component", () => {
     const wrapper = mount(SpinnerBar, {
       props,
       global: {
-        plugins: plugins,
-      },
+        plugins: plugins
+      }
     });
 
     const spinner = wrapper.find<HTMLButtonElement>(
@@ -21,7 +21,7 @@ describe("Tests for SpinnerBar component", () => {
     );
 
     return {
-      spinner,
+      spinner
     };
   }
 
@@ -37,7 +37,7 @@ describe("Tests for SpinnerBar component", () => {
     };
 
     const { spinner } = prepareElementsToTests<PropsType>({
-      isVisible: true,
+      isVisible: true
     });
 
     expect(spinner.exists()).toBeTruthy();
@@ -49,7 +49,7 @@ describe("Tests for SpinnerBar component", () => {
     };
 
     const { spinner } = prepareElementsToTests<PropsType>({
-      isVisible: true,
+      isVisible: true
     });
 
     expect(spinner.classes()).contains("relative");
@@ -63,7 +63,7 @@ describe("Tests for SpinnerBar component", () => {
 
     const { spinner } = prepareElementsToTests<PropsType>({
       isVisible: true,
-      isGlobal: true,
+      isGlobal: true
     });
 
     expect(spinner.classes()).contains("absolute");

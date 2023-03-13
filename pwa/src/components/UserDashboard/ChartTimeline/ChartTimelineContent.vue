@@ -1,24 +1,30 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import type { CampaignType } from "@/stores/userDashboard";
+import { calculateItemPosition, calculateItemHeight } from "@/helpers/timeline";
 
 type PropsType = {
-  countElements?: number;
+  campaign: CampaignType;
 };
 
-const props = withDefaults(defineProps<PropsType>(), {
-  countElements: 0,
-});
-
-const calculatedHeightElement = computed<number>(() => {
-  return props.countElements * 36 + props.countElements * 5;
-});
+defineProps<PropsType>();
 </script>
 
 <template>
   <div
-    class="chart-timeline-content h-dynamic mb-2"
-    :style="{ '--height': `${calculatedHeightElement}px` }"
+    class="chart-timeline-content-main h-dynamic absolute"
+    :style="{
+      '--height': `${calculateItemHeight(campaign)}px`,
+      '--top': `${calculateItemPosition(campaign, 12)}px`
+    }"
   >
-    <slot />
+    <div class="chart-timeline-content animate-fade-in">
+      <slot />
+    </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.chart-timeline-content-main {
+  top: var(--top);
+}
+</style>

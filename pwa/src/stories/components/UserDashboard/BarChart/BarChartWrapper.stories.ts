@@ -7,14 +7,14 @@ export default {
   title: "Components/UserDashboard/BarChart/BarChartWrapper",
   parameters: {
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for bar chart",
-      },
-    },
-  },
+        component: "Component for bar chart"
+      }
+    }
+  }
 };
 
 export const BarChartWrapper = (args: ComponentPropsType) => ({
@@ -24,5 +24,5 @@ export const BarChartWrapper = (args: ComponentPropsType) => ({
   },
   template: `
     <BarChartWrapperComponent v-bind="args" />
-  `,
+  `
 });

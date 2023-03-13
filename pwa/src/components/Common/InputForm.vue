@@ -2,18 +2,18 @@
 import { vMaska } from "maska";
 
 type PropsType = {
+  mask?: string;
   label?: string;
-  modelValue: string;
   type?: "default";
+  required?: boolean;
+  modelValue: string;
   placeholder?: string;
   errorMessage?: string;
-  required?: boolean;
-  mask?: string;
 };
 
 withDefaults(defineProps<PropsType>(), {
   type: "default",
-  required: false,
+  required: false
 });
 
 const emit = defineEmits<{
@@ -54,8 +54,8 @@ function changeValue(event: Event) {
       :class="[
         'w-full p-4 font-normal text-text-input text-base border border-slate-200 rounded-[10px] transition-all',
         {
-          'border-default-border outline-default-outline': type === 'default',
-        },
+          'border-default-border outline-default-outline': type === 'default'
+        }
       ]"
       :placeholder="placeholder"
     />

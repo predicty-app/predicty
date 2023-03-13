@@ -6,7 +6,7 @@ import { useGlobalStore } from "@/stores/global";
 import { useOnBoardingStore } from "@/stores/onboarding";
 import {
   isRequiredValidation,
-  isPasscodeCorrectValidation,
+  isPasscodeCorrectValidation
 } from "@/helpers/rulesValidation";
 import { handleLoginUser } from "@/services/api/onboarding";
 
@@ -35,7 +35,7 @@ async function handleSubmitForm() {
     globalStore.toogleSpinnerState();
     const response = await handleLoginUser({
       username: onBoardingStore.email,
-      passcode: modelValue.value.replace("-", ""),
+      passcode: modelValue.value.replace("-", "")
     });
 
     if (response !== "OK") {

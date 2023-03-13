@@ -7,14 +7,14 @@ export default {
   title: "Components/UserDashboard/HeaderDashboard",
   parameters: {
     status: {
-      type: "todo",
+      type: "todo"
     },
     docs: {
       description: {
-        component: "Component for header dashboard",
-      },
-    },
-  },
+        component: "Component for header dashboard"
+      }
+    }
+  }
 };
 
 export const HeaderDashboard = (args: ComponentPropsType) => ({
@@ -24,5 +24,5 @@ export const HeaderDashboard = (args: ComponentPropsType) => ({
   },
   template: `
     <HeaderDashboardComponent v-bind="args" />
-  `,
+  `
 });

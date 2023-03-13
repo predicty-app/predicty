@@ -1,11 +1,18 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   mode: "jit",
-  purge: ["./index.html", "./src/**/*.{js,ts,jsx,tsx,vue}"],
-  darkMode: false,
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx,vue}"],
   theme: {
     extend: {
+      top: {
+        dynamic: "var(--top)"
+      },
       width: {
+        calc: "calc(100vw)",
+        dynamic: "var(--height)"
+      },
+      content: {
+        dynamic: "var(--content)",
         calc: "calc(100vw)"
       },
       height: {

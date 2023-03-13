@@ -10,19 +10,19 @@ export default {
       name: "options",
       description: "Options for menu list.",
       control: { type: "array" },
-      type: { name: "string", required: true },
-    },
+      type: { name: "string", required: true }
+    }
   },
   parameters: {
     status: {
-      type: "todo",
+      type: "todo"
     },
     docs: {
       description: {
-        component: "Component for menu list",
-      },
-    },
-  },
+        component: "Component for menu list"
+      }
+    }
+  }
 };
 
 export const MenuList = (args: ComponentPropsType) => ({
@@ -32,7 +32,7 @@ export const MenuList = (args: ComponentPropsType) => ({
   },
   template: `
     <MenuListComponent v-bind="args" />
-  `,
+  `
 });
 
 MenuList.args = {
@@ -40,13 +40,13 @@ MenuList.args = {
     {
       key: "1",
       icon: "cogs",
-      label: "Settings 1",
+      label: "Settings 1"
     },
     {
       key: "2",
       icon: "logout",
       label: "Settings 2",
-      color: "#E24963",
-    },
-  ],
+      color: "#E24963"
+    }
+  ]
 };

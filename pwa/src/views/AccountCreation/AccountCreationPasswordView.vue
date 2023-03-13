@@ -19,7 +19,7 @@ const previousStepPath = "/onboarding/account-creation/email";
         :header-title="t('views.account-creation-pasword.header-title')"
         :header-description="
           t('views.account-creation-pasword.header-description', {
-            email: onBoardingStore.email,
+            email: onBoardingStore.email
           })
         "
       />

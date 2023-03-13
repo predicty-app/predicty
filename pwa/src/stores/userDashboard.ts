@@ -1,19 +1,20 @@
 import { defineStore } from "pinia";
+import { useGlobalStore } from "@/stores/global";
 
 export enum OptionsName {
   "CREATE_NEW_COLLECTION" = "create_new_collection",
   "ADD_TO_COLLECTION" = "add_to_collection",
-  "HIDE_ELEMENT" = "hide_element",
+  "HIDE_ELEMENT" = "hide_element"
 }
 
 export enum TypeOptionsChart {
   "WEEKS" = "weeks",
-  "DAYS" = "days",
+  "DAYS" = "days"
 }
 
 export enum MenuNames {
   "SETTINGS" = "settings",
-  "LOGOUT" = "logout",
+  "LOGOUT" = "logout"
 }
 
 export type AdsType = {
@@ -50,6 +51,8 @@ type CheckedAdsToCollectionType = {
 type StateType = {
   selectedAdsList: CheckedAdsToCollectionType;
   campaigns: CampaignType[];
+  hiddenAds: string[];
+  parsedCampaignsList: CampaignType[];
 };
 
 export const useUserDashboardStore = defineStore({
@@ -57,10 +60,12 @@ export const useUserDashboardStore = defineStore({
   state: () =>
     ({
       campaigns: [],
+      parsedCampaignsList: [],
+      hiddenAds: [],
       selectedAdsList: {
         campaignUid: null,
-        ads: [],
-      },
+        ads: []
+      }
     } as StateType),
 
   actions: {
@@ -97,5 +102,50 @@ export const useUserDashboardStore = defineStore({
         this.selectedAdsList.campaignUid = campaignUid;
       }
     },
-  },
+
+    /**
+     * Function to change state of ads visibility
+     * @param {string[]} adsList
+     */
+    toogleVisibilityAds(adsList: string[]) {
+      this.hiddenAds = adsList
+        .filter((x) => !this.hiddenAds.includes(x))
+        .concat(this.hiddenAds.filter((x) => !adsList.includes(x)));
+    },
+
+    /**
+     * Function to virtualize campaign list.
+     */
+    handleVirtualizeCampaignsList() {
+      const globalStore = useGlobalStore();
+
+      this.parsedCampaignsList = this.campaigns.filter(
+        (campaign: CampaignType, index: number) => {
+          const currentHeightElement =
+            (campaign.ads.length + campaign.collection.length) * 36 +
+            (campaign.ads.length + campaign.collection.length) * 5;
+
+          let previousHeightElement = 0;
+          for (let i = 0; i < index; i++) {
+            previousHeightElement +=
+              (this.campaigns[i].ads.length +
+                this.campaigns[i].collection.length) *
+                36 +
+              (this.campaigns[i].ads.length +
+                this.campaigns[i].collection.length) *
+                5;
+          }
+
+          const currentTopPosition = previousHeightElement;
+          return (
+            currentTopPosition <
+              globalStore.scrollCampaignList.scrollTop +
+                globalStore.scrollCampaignList.getBoundingClientRect().height &&
+            currentTopPosition + currentHeightElement >
+              globalStore.scrollCampaignList.scrollTop
+          );
+        }
+      );
+    }
+  }
 });

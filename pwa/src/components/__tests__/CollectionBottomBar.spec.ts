@@ -16,9 +16,9 @@ describe("Tests for CollectionBottomBar component", () => {
       global: {
         plugins: plugins,
         stubs: {
-          IconSvg,
-        },
-      },
+          IconSvg
+        }
+      }
     });
 
     const bottomBar = wrapper.find<HTMLDivElement>(
@@ -31,7 +31,7 @@ describe("Tests for CollectionBottomBar component", () => {
     return {
       wrapper,
       bottomBar,
-      button,
+      button
     };
   }
 
@@ -40,14 +40,14 @@ describe("Tests for CollectionBottomBar component", () => {
       collection?: AdsType | AdsCollection;
     };
 
-    const { wrapper, bottomBar, button } = prepareElementsToTests<PropsType>({
+    const { wrapper, button } = prepareElementsToTests<PropsType>({
       collection: {
         uid: "",
         name: "Collection",
         ads: [],
         start: "",
-        end: "",
-      },
+        end: ""
+      }
     });
 
     await button.trigger("click");

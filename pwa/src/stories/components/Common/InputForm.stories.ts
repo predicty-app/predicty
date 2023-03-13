@@ -11,41 +11,46 @@ export default {
       control: { type: "select" },
       description: "Input type.",
       name: "type",
-      type: { name: "string", required: false },
+      type: { name: "string", required: false }
     },
     placeholder: {
       name: "placeholder",
       description: "Placeholder for input element.",
-      type: { name: "string", required: false },
+      type: { name: "string", required: false }
     },
     errorMessage: {
       name: "errorMessage",
       description: "Error message when validation is false.",
-      type: { name: "string", required: false },
+      type: { name: "string", required: false }
     },
     label: {
       name: "label",
       description: "Label for input element.",
-      type: { name: "string", required: false },
+      type: { name: "string", required: false }
+    },
+    mask: {
+      name: "mask",
+      description: "Mask for input element.",
+      type: { name: "string", required: false }
     },
     required: {
       name: "required",
       control: { type: "boolean" },
       description: "Set element is required.",
-      type: { name: "boolean", required: false },
-    },
+      type: { name: "boolean", required: false }
+    }
   },
   parameters: {
     jest: ["InputForm.spec.ts"],
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for input element",
-      },
-    },
-  },
+        component: "Component for input element"
+      }
+    }
+  }
 };
 
 export const InputForm = (args: ComponentPropsType) => ({
@@ -55,12 +60,12 @@ export const InputForm = (args: ComponentPropsType) => ({
   },
   template: `
     <InputFormComponent v-bind="args" />
-  `,
+  `
 });
 
 InputForm.args = {
   label: "Lorem Ipsum:",
   type: "default",
   placeholder: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
-  errorMessage: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+  errorMessage: "Lorem ipsum dolor sit amet, consectetur adipiscing elit..."
 };

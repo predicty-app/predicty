@@ -6,7 +6,7 @@ type PropsType = {
 
 withDefaults(defineProps<PropsType>(), {
   isVisible: false,
-  isGlobal: false,
+  isGlobal: false
 });
 </script>
 
@@ -18,16 +18,16 @@ withDefaults(defineProps<PropsType>(), {
       'animate-fade-in',
       {
         relative: !isGlobal,
-        'absolute w-full h-full top-0 left-0 z-40': isGlobal,
-      },
+        'absolute w-full h-full top-0 left-0 z-40': isGlobal
+      }
     ]"
   >
     <div
       :class="[
         'spinner',
         {
-          'absolute top-0 bottom-0 left-0 right-0 m-auto z-40': isGlobal,
-        },
+          'absolute top-0 bottom-0 left-0 right-0 m-auto z-40': isGlobal
+        }
       ]"
     ></div>
     <div
@@ -35,8 +35,8 @@ withDefaults(defineProps<PropsType>(), {
         'w-full h-full z-20',
         {
           'grayscale opacity-50': isVisible,
-          'absolute bg-upload-border top-0 left-0': isGlobal,
-        },
+          'absolute bg-upload-border top-0 left-0': isGlobal
+        }
       ]"
     >
       <div class="w-full h-full z-10 absolute top-0 left-0" />

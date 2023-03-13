@@ -5,7 +5,7 @@ type PropsType = {
 };
 
 withDefaults(defineProps<PropsType>(), {
-  activeStep: -1,
+  activeStep: -1
 });
 </script>
 
@@ -19,8 +19,8 @@ withDefaults(defineProps<PropsType>(), {
       :class="[
         'flex-auto h-[6px]',
         {
-          'bg-progress-active': activeStep >= step,
-        },
+          'bg-progress-active': activeStep >= step
+        }
       ]"
     ></div>
   </div>

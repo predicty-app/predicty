@@ -19,7 +19,7 @@ export const useOnBoardingStore = defineStore({
     ({
       email: null,
       password: null,
-      providers: {},
+      providers: {}
     } as StateType),
 
   actions: {
@@ -49,6 +49,6 @@ export const useOnBoardingStore = defineStore({
       } else {
         this.providers[payload.name] = payload;
       }
-    },
-  },
+    }
+  }
 });

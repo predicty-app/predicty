@@ -7,14 +7,14 @@ export default {
   title: "Views/StartScreenView",
   parameters: {
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component start screen view",
-      },
-    },
-  },
+        component: "Component start screen view"
+      }
+    }
+  }
 };
 
 export const StartScreenView = (args: ComponentPropsType) => ({
@@ -24,5 +24,5 @@ export const StartScreenView = (args: ComponentPropsType) => ({
   },
   template: `
     <StartScreenViewComponent v-bind="args" />
-  `,
+  `
 });

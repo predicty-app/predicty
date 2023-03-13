@@ -11,20 +11,20 @@ export default {
       control: { type: "select" },
       description: "Button type.",
       name: "type",
-      type: { name: "string", required: false },
-    },
+      type: { name: "string", required: false }
+    }
   },
   parameters: {
     jest: ["ButtonForm.spec.ts"],
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for button form",
-      },
-    },
-  },
+        component: "Component for button form"
+      }
+    }
+  }
 };
 
 export const ButtonForm = (args: ComponentPropsType) => ({
@@ -34,9 +34,9 @@ export const ButtonForm = (args: ComponentPropsType) => ({
   },
   template: `
     <ButtonFormComponent v-bind="args" >Lorem ipsum</ButtonFormComponent>
-  `,
+  `
 });
 
 ButtonForm.args = {
-  type: "default",
+  type: "default"
 };

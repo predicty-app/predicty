@@ -21,23 +21,23 @@ type OptionsLegendType = {
 const legendOptions: OptionsLegendType[] = [
   {
     label: t("views.user-dashboard-view.legend-description.options.sales"),
-    color: "#4184FF",
+    color: "#4184FF"
   },
   {
     label: t("views.user-dashboard-view.legend-description.options.investment"),
-    color: "#FFAE4F",
-  },
+    color: "#FFAE4F"
+  }
 ];
 
 const chartTypeOptions: TypesOptionsChart[] = [
   {
     key: TypeOptionsChart.WEEKS,
-    label: t("views.user-dashboard-view.legend-description.chart-types.weeks"),
+    label: t("views.user-dashboard-view.legend-description.chart-types.weeks")
   },
   {
     key: TypeOptionsChart.DAYS,
-    label: t("views.user-dashboard-view.legend-description.chart-types.days"),
-  },
+    label: t("views.user-dashboard-view.legend-description.chart-types.days")
+  }
 ];
 
 const globalStore = useGlobalStore();
@@ -45,7 +45,7 @@ const userDashboardStore = useUserDashboardStore();
 
 let state = reactive({
   isCollectionSelected: false,
-  currentCollection: null,
+  currentCollection: null
 });
 
 /**
@@ -88,25 +88,34 @@ function toggleCollection(value?: AdsType | AdsCollection) {
     <template #providers-list>
       <ProvidersListForm />
     </template>
+    <template #chart-weeks>
+      <BarChartWeeks />
+    </template>
     <template #chart>
       <BarChartWrapper />
+    </template>
+    <template #chart-days>
+      <BarChartDaysWeek />
     </template>
     <template #ads-campaigns>
       <CampaningListForm />
     </template>
+    <template #ads-weeks>
+      <ChartTimelineWeeks />
+    </template>
     <template #ads-chart>
       <ChartTimelineWrapper>
         <ChartTimelineContent
-          :count-elements="campaign.ads.length + campaign.collection.length"
+          :campaign="campaign"
           :key="campaign.uid"
-          v-for="campaign in userDashboardStore.campaigns"
+          v-for="campaign in userDashboardStore.parsedCampaignsList"
         >
           <ChartTimelineItem
+            :element="adElement"
+            type="ad"
             :is-visible="
               checkIsAdInCollection(campaign.collection, adElement.uid)
             "
-            :element="adElement"
-            type="ad"
             :uid="adElement.uid"
             :color="campaign.color"
             :key="`${adElement.uid}_${Math.random()}`"
@@ -115,7 +124,6 @@ function toggleCollection(value?: AdsType | AdsCollection) {
             :campaing-uid="campaign.uid"
             :end="globalStore.dictionaryTimeline[adElement.end]"
           />
-
           <ChartTimelineItem
             :element="collection"
             type="collection"

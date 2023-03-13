@@ -12,8 +12,8 @@ describe("Tests for ButtonForm component", () => {
     const wrapper = mount(ButtonForm, {
       props,
       global: {
-        plugins: plugins,
-      },
+        plugins: plugins
+      }
     });
 
     const button = wrapper.find<HTMLButtonElement>(
@@ -21,7 +21,7 @@ describe("Tests for ButtonForm component", () => {
     );
 
     return {
-      button,
+      button
     };
   }
 
@@ -36,7 +36,7 @@ describe("Tests for ButtonForm component", () => {
     };
 
     const { button } = prepareElementsToTests<PropsType>({
-      type: "success",
+      type: "success"
     });
     expect(button.attributes("data-type")).toBe("success");
   });
@@ -47,7 +47,7 @@ describe("Tests for ButtonForm component", () => {
     };
 
     const { button } = prepareElementsToTests<PropsType>({
-      type: "default",
+      type: "default"
     });
     expect(button.attributes("data-type")).toBe("default");
   });

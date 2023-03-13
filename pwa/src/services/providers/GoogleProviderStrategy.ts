@@ -16,7 +16,7 @@ export default class GoogleProviderStrategy implements StrategyProviders {
    * @private
    */
   #scopeAccessPrivilages = [
-    "https://www.googleapis.com/auth/analytics.readonly",
+    "https://www.googleapis.com/auth/analytics.readonly"
   ];
 
   /**
@@ -43,7 +43,7 @@ export default class GoogleProviderStrategy implements StrategyProviders {
           this.#setAccessToken(response);
           resolve();
         },
-        scope: this.#scopeAccessPrivilages,
+        scope: this.#scopeAccessPrivilages
       });
       window.google.accounts.id.prompt();
     });

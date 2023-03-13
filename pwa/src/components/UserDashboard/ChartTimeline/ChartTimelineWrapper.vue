@@ -1,33 +1,19 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
-import { useElementSize } from "@vueuse/core";
+import { ref } from "vue";
 import { useGlobalStore } from "@/stores/global";
+import {
+  scaleLines,
+  scaleLinesGradient,
+  mainWidthGrid,
+  gapGrid,
+  scaleGrid,
+  scaleFirstGrid,
+  heightContent
+} from "@/helpers/timeline";
 
 const globalStore = useGlobalStore();
-
 const timelineContent = ref<HTMLElement | null>(null);
-const gapGrid = computed<string>(
-  () => `${5 * (globalStore.currentScale * 0.01)}px`
-);
-const scaleLines = computed<string>(
-  () => `${150 * (globalStore.currentScale * 0.01)}px`
-);
-const scaleGrid = computed<string>(
-  () => `${16.4 * (globalStore.currentScale * 0.01)}px`
-);
-const scaleFirstGrid = computed<string>(
-  () => `${16 * (globalStore.currentScale * 0.01)}px`
-);
-const mainWidthGrid = computed<string>(
-  () =>
-    `${
-      globalStore.currentsCountWeeks * (150 * (globalStore.currentScale * 0.01))
-    }px`
-);
 const timelineGridInstance = ref<HTMLDivElement | null>(null);
-const { height } = useElementSize(timelineGridInstance);
-
-const heightContent = computed<string>(() => `${height.value + 68}px`);
 
 /**
  * Function to handle scale up.
@@ -84,23 +70,8 @@ function handleChangeScale(eventWheel: WheelEvent) {
     class="chart-timeline-wrapper bg-timeline-background grid grid-rows-[1fr] w-fit h-full whitespace-nowrap relative"
   >
     <div
-      :class="[
-        'border-r border-timeline-lines-border',
-        {
-          'bg-timeline-lines-background_primary': item % 2 !== 0,
-          'bg-timeline-lines-background_secondary': item % 2 === 0,
-        },
-      ]"
-      :key="`line_${item}`"
-      v-for="item in globalStore.currentsCountWeeks"
-    >
-      <div class="pb-5 pt-1 px-2 text-sm font-bold text-timeline-lines-text">
-        {{ globalStore.dictionaryFirstDaysWeek[item] }}
-      </div>
-    </div>
-    <div
       ref="timelineGridInstance"
-      class="chart-timeline-wrapper__grid absolute top-[50px] left-0 z-10"
+      class="chart-timeline-wrapper__grid absolute top-0 left-0 z-10"
     >
       <slot />
     </div>
@@ -113,11 +84,20 @@ function handleChangeScale(eventWheel: WheelEvent) {
   width: v-bind(mainWidthGrid);
   grid-template-columns: repeat(auto-fill, v-bind(scaleLines));
 
+  background: repeating-linear-gradient(
+    90deg,
+    #f9f9fb 0px,
+    #f9f9fb v-bind(scaleLines),
+    #f4f4f6 v-bind(scaleLines),
+    #f4f4f6 v-bind(scaleLinesGradient)
+  );
+
   &__grid {
     width: v-bind(mainWidthGrid);
 
     :deep(.chart-timeline-content) {
       display: grid;
+      width: v-bind(mainWidthGrid);
       grid-template-columns: v-bind(scaleFirstGrid) repeat(
           auto-fill,
           v-bind(scaleGrid)

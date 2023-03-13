@@ -7,14 +7,14 @@ export default {
   title: "Views/UserDashboardView",
   parameters: {
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component start screen view",
-      },
-    },
-  },
+        component: "Component start screen view"
+      }
+    }
+  }
 };
 
 export const UserDashboardView = (args: ComponentPropsType) => ({
@@ -24,5 +24,5 @@ export const UserDashboardView = (args: ComponentPropsType) => ({
   },
   template: `
     <UserDashboardViewComponent v-bind="args" />
-  `,
+  `
 });

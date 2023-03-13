@@ -15,15 +15,15 @@ describe("Tests for TagPin component", () => {
       global: {
         plugins: plugins,
         stubs: {
-          IconSvg,
-        },
-      },
+          IconSvg
+        }
+      }
     });
 
     const tag = wrapper.find<HTMLDivElement>('[data-testid="tag-pin"]');
 
     return {
-      tag,
+      tag
     };
   }
 
@@ -38,7 +38,7 @@ describe("Tests for TagPin component", () => {
     };
 
     const { tag } = prepareElementsToTests<PropsType>({
-      type: "success",
+      type: "success"
     });
     expect(tag.attributes("data-type")).toBe("success");
   });
@@ -49,7 +49,7 @@ describe("Tests for TagPin component", () => {
     };
 
     const { tag } = prepareElementsToTests<PropsType>({
-      type: "primary",
+      type: "primary"
     });
     expect(tag.attributes("data-type")).toBe("primary");
   });
@@ -60,7 +60,7 @@ describe("Tests for TagPin component", () => {
     };
 
     const { tag } = prepareElementsToTests<PropsType>({
-      type: "default",
+      type: "default"
     });
     expect(tag.attributes("data-type")).toBe("default");
   });
