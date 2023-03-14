@@ -9,7 +9,7 @@ default: help
 help: # Show help for each of the Makefile recipes.
 	@grep -E '^[a-zA-Z0-9 -]+:.*#'  Makefile | sort | while read -r l; do printf "\033[1;32m$$(echo $$l | cut -f 1 -d':')\033[00m:$$(echo $$l | cut -f 2- -d'#')\n"; done
 
-build: docker-down docker-build start fixtures # Build or rebuild whole environment (this will DESTROY your database)
+build: docker-down docker-build start # Build or rebuild whole environment (this will DESTROY your database)
 
 stop: # Stop all containers
 	$(DOCKER_COMPOSE) stop
