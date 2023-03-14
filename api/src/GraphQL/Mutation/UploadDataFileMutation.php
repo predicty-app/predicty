@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutation;
 
-use App\Entity\FileImportType;
 use App\GraphQL\TypeResolver;
 use App\Message\Command\ImportDataFromFile;
 use App\Service\FileUpload\FileUploadService;
 use App\Service\User\CurrentUserService;
 use GraphQL\Type\Definition\FieldDefinition;
-use GraphQL\Type\Definition\PhpEnumType;
 use Symfony\Component\Messenger\HandleTrait;
 use Symfony\Component\Messenger\MessageBusInterface;
 
@@ -29,7 +27,7 @@ class UploadDataFileMutation extends FieldDefinition
             'type' => $this->type->string(),
             'args' => [
                 'file' => $this->type->upload(),
-                'type' => $this->type->nonNull(new PhpEnumType(FileImportType::class)),
+                'type' => $this->type->nonNull($this->type->fileImportType()),
             ],
             'resolve' => fn (mixed $root, array $args) => $this->resolve($args),
             'description' => 'Upload a data file',
