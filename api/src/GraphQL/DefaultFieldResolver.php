@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\GraphQL;
 
+use Closure;
 use GraphQL\Type\Definition\ResolveInfo;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
@@ -24,7 +25,7 @@ class DefaultFieldResolver
             $property = $this->accessor->getValue($objectLikeValue, $info->fieldName);
         }
 
-        return $property instanceof \Closure
+        return $property instanceof Closure
             ? $property($objectLikeValue, $args, $contextValue, $info)
             : $property;
     }

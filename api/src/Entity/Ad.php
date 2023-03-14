@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -38,8 +39,8 @@ class Ad
         int $adSetId,
         int $campaignId,
         string $name,
-        \DateTimeInterface $createdAt,
-        \DateTimeInterface $changedAt,
+        DateTimeInterface $createdAt,
+        DateTimeInterface $changedAt,
     ) {
         $this->userId = $userId;
         $this->externalId = $externalId;

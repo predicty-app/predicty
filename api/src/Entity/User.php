@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
 use Symfony\Component\Notifier\Recipient\EmailRecipientInterface;
@@ -34,7 +35,7 @@ class User implements UserInterface, EmailRecipientInterface, PasswordAuthentica
     #[ORM\Column(options: ['default' => 0])]
     private bool $isEmailVerified = false;
 
-    public function __construct(string $email, \DateTimeImmutable $createdAt, \DateTimeImmutable $changedAt)
+    public function __construct(string $email, DateTimeImmutable $createdAt, DateTimeImmutable $changedAt)
     {
         $this->email = $email;
         $this->createdAt = $createdAt;

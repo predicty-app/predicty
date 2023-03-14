@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @covers \App\GraphQL\Mutation\RegisterDataProviderMutation
- * @covers \App\MessageHandler\Command\RegisterDataProviderHandler
+ * @covers \App\Message\CommandHandler\RegisterDataProviderHandler
  */
 class RegisterDataProviderMutationTest extends GraphQLTestCase
 {

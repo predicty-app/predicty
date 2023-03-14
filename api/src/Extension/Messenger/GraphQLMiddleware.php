@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Messenger;
+namespace App\Extension\Messenger;
 
 use App\GraphQL\Exception\ClientSafeException;
 use Symfony\Component\Messenger\Envelope;
@@ -11,6 +11,7 @@ use Symfony\Component\Messenger\Exception\ValidationFailedException;
 use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
 use Symfony\Component\Messenger\Middleware\StackInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Throwable;
 
 /**
  * Unpacks exception thrown during message handling into GraphQL compatible type.
@@ -46,7 +47,7 @@ class GraphQLMiddleware implements MiddlewareInterface
         }
     }
 
-    private function isClientSafe(\Throwable $throwable): bool
+    private function isClientSafe(Throwable $throwable): bool
     {
         return
             $throwable instanceof AuthenticationException ||

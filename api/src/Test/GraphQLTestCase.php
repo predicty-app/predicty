@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace App\Test;
 
+use App\Repository\UserRepository;
 use Coduo\PHPMatcher\Backtrace;
 use Coduo\PHPMatcher\PHPUnit\PHPMatcherConstraint;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 abstract class GraphQLTestCase extends WebTestCase
 {
@@ -19,6 +21,15 @@ abstract class GraphQLTestCase extends WebTestCase
     {
         self::$client = null;
         parent::tearDown();
+    }
+
+    public static function authenticate(string $email = 'john.doe@example.com'): void
+    {
+        $client = static::getClient();
+        $users = static::getContainer()->get(UserRepository::class);
+        $user = $users->findByUsername($email);
+        assert($user instanceof UserInterface);
+        $client->loginUser($user);
     }
 
     public static function createClient(array $options = [], array $server = []): KernelBrowser
