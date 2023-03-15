@@ -4,38 +4,37 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Type;
 
-use App\GraphQL\TypeResolver;
+use App\GraphQL\TypeRegistry;
 use App\Repository\AdCollectionRepository;
 use App\Repository\CampaignRepository;
 use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
 
 class DashboardType extends ObjectType
 {
-    public function __construct(TypeResolver $types, CampaignRepository $campaignRepository, AdCollectionRepository $adCollectionRepository)
+    public function __construct(TypeRegistry $type, CampaignRepository $campaignRepository, AdCollectionRepository $adCollectionRepository)
     {
         parent::__construct([
             'name' => 'Dashboard',
             'fields' => [
                 'name' => [
-                    'type' => Type::string(),
+                    'type' => $type->string(),
                     'resolve' => fn () => 'Default Dashboard',
                 ],
                 'campaigns' => [
-                    'type' => Type::listOf($types->campaign()),
+                    'type' => $type->listOf($type->campaign()),
                     'args' => [
                         'limit' => [
-                            'type' => $types->int(),
+                            'type' => $type->int(),
                             'defaultValue' => 10,
                         ],
                     ],
                     'resolve' => fn () => $campaignRepository->findAll(),
                 ],
                 'collections' => [
-                    'type' => Type::listOf($types->adCollection()),
+                    'type' => $type->listOf($type->adCollection()),
                     'args' => [
                         'limit' => [
-                            'type' => $types->int(),
+                            'type' => $type->int(),
                             'defaultValue' => 10,
                         ],
                     ],

@@ -5,20 +5,17 @@ declare(strict_types=1);
 namespace App\GraphQL\Mutation;
 
 use App\Entity\User;
-use App\GraphQL\TypeResolver;
+use App\Extension\Messenger\HandleTrait;
+use App\GraphQL\TypeRegistry;
 use App\Message\Command\Login;
 use GraphQL\Type\Definition\FieldDefinition;
-use Symfony\Component\Messenger\HandleTrait;
-use Symfony\Component\Messenger\MessageBusInterface;
 
 class LoginMutation extends FieldDefinition
 {
     use HandleTrait;
 
-    public function __construct(
-        TypeResolver $type,
-        private MessageBusInterface $messageBus,
-    ) {
+    public function __construct(TypeRegistry $type)
+    {
         parent::__construct([
             'name' => 'login',
             'type' => $type->user(),

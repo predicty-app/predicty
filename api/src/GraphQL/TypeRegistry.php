@@ -10,6 +10,7 @@ use App\GraphQL\Type\AdStatsType;
 use App\GraphQL\Type\AdType;
 use App\GraphQL\Type\CampaignType;
 use App\GraphQL\Type\DashboardType;
+use App\GraphQL\Type\DataProviderTypeType;
 use App\GraphQL\Type\FileImportTypeType;
 use App\GraphQL\Type\MoneyType;
 use App\GraphQL\Type\UserType;
@@ -22,17 +23,18 @@ use RuntimeException;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 
 /**
- * @method UserType           user()
- * @method DashboardType      dashboard()
- * @method CampaignType       campaign()
- * @method AdSetType          adSet()
- * @method AdType             ad()
- * @method AdStatsType        adStats()
- * @method MoneyType          money()
- * @method AdCollectionType   adCollection()
- * @method FileImportTypeType fileImportType()
+ * @method UserType             user()
+ * @method DashboardType        dashboard()
+ * @method CampaignType         campaign()
+ * @method AdSetType            adSet()
+ * @method AdType               ad()
+ * @method AdStatsType          adStats()
+ * @method MoneyType            money()
+ * @method AdCollectionType     adCollection()
+ * @method FileImportTypeType   fileImportType()
+ * @method DataProviderTypeType dataProviderType()
  */
-class TypeResolver
+class TypeRegistry
 {
     private static array $guessingNamespaces = [
         'GraphQL\Type\Definition',
@@ -95,6 +97,11 @@ class TypeResolver
     {
         /** @phpstan-ignore-next-line */
         return new NonNull($type);
+    }
+
+    public function nonNullString(): NonNull
+    {
+        return new NonNull($this->string());
     }
 
     public function upload(): UploadType

@@ -8,7 +8,6 @@ use App\Message\Command\ImportFacebookCsvFile;
 use App\Repository\ImportRepository;
 use App\Service\Facebook\CsvImporter\FacebookCsvImporter;
 use League\Flysystem\FilesystemReader;
-use Psr\Clock\ClockInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Throwable;
 

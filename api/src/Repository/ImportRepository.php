@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use App\Entity\Campaign;
 use App\Entity\FileImport;
 use App\Entity\Import;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,13 +12,13 @@ use Doctrine\ORM\EntityRepository;
 class ImportRepository
 {
     /**
-     * @var EntityRepository<Campaign>
+     * @var EntityRepository<Import>
      */
     private EntityRepository $repository;
 
     public function __construct(private EntityManagerInterface $em)
     {
-        $this->repository = $em->getRepository(Campaign::class);
+        $this->repository = $em->getRepository(Import::class);
     }
 
     public function findById(int $id): Import
