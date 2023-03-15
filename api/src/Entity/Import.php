@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Service\Clock\Clock;
 use DateTimeImmutable;
-use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -27,24 +27,28 @@ class Import
     #[ORM\Column]
     private ImportStatus $status;
 
+    #[ORM\Column]
+    private DataProviderType $dataProviderType;
+
     #[ORM\Column(type: Types::TEXT)]
     private string $message = '';
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private ?DateTimeInterface $startedAt;
+    private ?DateTimeImmutable $startedAt;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private ?DateTimeInterface $completedAt;
+    private ?DateTimeImmutable $completedAt;
 
     public function __construct(
         int $userId,
-        DataProviderType $type,
-        DateTimeImmutable $createdAt
+        DataProviderType $dataProviderType,
+        ?DateTimeImmutable $createdAt = null
     ) {
         $this->userId = $userId;
         $this->status = ImportStatus::WAITING;
-        $this->createdAt = $createdAt;
-        $this->changedAt = $createdAt;
+        $this->dataProviderType = $dataProviderType;
+        $this->createdAt = $createdAt ?? Clock::now();
+        $this->changedAt = $createdAt ?? Clock::now();
     }
 
     public function getUserId(): int
@@ -62,34 +66,39 @@ class Import
         return $this->message;
     }
 
-    public function success(DateTimeImmutable $completedAt): void
+    public function getDataProviderType(): DataProviderType
+    {
+        return $this->dataProviderType;
+    }
+
+    public function success(): void
     {
         $this->status = ImportStatus::COMPLETE;
-        $this->completedAt = $completedAt;
-        $this->changedAt = $completedAt;
+        $this->completedAt = Clock::now();
+        $this->changedAt = Clock::now();
     }
 
-    public function start(DateTimeImmutable $startedAt): void
+    public function start(): void
     {
         $this->status = ImportStatus::IN_PROGRESS;
-        $this->startedAt = $startedAt;
-        $this->changedAt = $startedAt;
+        $this->startedAt = Clock::now();
+        $this->changedAt = Clock::now();
     }
 
-    public function fail(string $message, DateTimeInterface $failedAt): void
+    public function fail(string $message): void
     {
         $this->message = $message;
-        $this->completedAt = $failedAt;
-        $this->changedAt = $failedAt;
+        $this->completedAt = Clock::now();
+        $this->changedAt = Clock::now();
         $this->status = ImportStatus::FAILED;
     }
 
-    public function getStartedAt(): ?DateTimeInterface
+    public function getStartedAt(): ?DateTimeImmutable
     {
         return $this->startedAt;
     }
 
-    public function getCompletedAt(): ?DateTimeInterface
+    public function getCompletedAt(): ?DateTimeImmutable
     {
         return $this->completedAt;
     }

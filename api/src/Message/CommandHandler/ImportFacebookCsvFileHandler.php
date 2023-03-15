@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Message\CommandHandler;
 
-use App\Message\Command\ImportDataFromFacebookCsvFile;
+use App\Message\Command\ImportFacebookCsvFile;
 use App\Repository\ImportRepository;
 use App\Service\Facebook\CsvImporter\FacebookCsvImporter;
 use League\Flysystem\FilesystemReader;
@@ -13,7 +13,7 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Throwable;
 
 #[AsMessageHandler(fromTransport: 'async')]
-class ImportDataFromFacebookCsvFileHandler
+class ImportFacebookCsvFileHandler
 {
     public function __construct(
         private FacebookCsvImporter $facebookCsvImporter,
@@ -23,7 +23,7 @@ class ImportDataFromFacebookCsvFileHandler
     ) {
     }
 
-    public function __invoke(ImportDataFromFacebookCsvFile $command): void
+    public function __invoke(ImportFacebookCsvFile $command): void
     {
         $import = $this->importRepository->findFileImportById($command->importId);
         $import->start($this->clock->now());

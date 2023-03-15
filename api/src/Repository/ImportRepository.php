@@ -22,7 +22,7 @@ class ImportRepository
         $this->repository = $em->getRepository(Campaign::class);
     }
 
-    public function findById(int $id): ?Import
+    public function findById(int $id): Import
     {
         return $this->repository->find($id);
     }
