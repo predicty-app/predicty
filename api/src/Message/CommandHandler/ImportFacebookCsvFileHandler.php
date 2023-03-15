@@ -18,23 +18,22 @@ class ImportFacebookCsvFileHandler
     public function __construct(
         private FacebookCsvImporter $facebookCsvImporter,
         private ImportRepository $importRepository,
-        private FilesystemReader $filesystemReader,
-        private ClockInterface $clock
+        private FilesystemReader $filesystemReader
     ) {
     }
 
     public function __invoke(ImportFacebookCsvFile $command): void
     {
         $import = $this->importRepository->findFileImportById($command->importId);
-        $import->start($this->clock->now());
+        $import->start();
 
         try {
             $stream = $this->filesystemReader->readStream($command->filename);
             $this->facebookCsvImporter->import($import->getUserId(), $stream);
-            $import->success($this->clock->now());
+            $import->success();
             $this->importRepository->save($import);
         } catch (Throwable $exception) {
-            $import->fail($exception->getMessage(), $this->clock->now());
+            $import->fail($exception->getMessage());
             $this->importRepository->save($import);
 
             throw $exception;

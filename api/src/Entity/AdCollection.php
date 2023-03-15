@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Service\Clock\Clock;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -27,14 +28,14 @@ class AdCollection
         int $userId,
         string $name,
         array $adsIds,
-        DateTimeImmutable $createdAt,
-        DateTimeImmutable $changedAt
+        ?DateTimeImmutable $createdAt = null,
+        ?DateTimeImmutable $changedAt = null
     ) {
         $this->userId = $userId;
         $this->name = $name;
         $this->adsIds = $adsIds;
-        $this->createdAt = $createdAt;
-        $this->changedAt = $changedAt;
+        $this->createdAt = $createdAt ?? Clock::now();
+        $this->changedAt = $changedAt ?? Clock::now();
     }
 
     public function getUserId(): int

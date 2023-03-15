@@ -8,7 +8,6 @@ use App\Entity\AdCollection;
 use App\GraphQL\TypeResolver;
 use App\Repository\AdRepository;
 use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
 
 class AdCollectionType extends ObjectType
 {
@@ -18,10 +17,10 @@ class AdCollectionType extends ObjectType
             'name' => 'AdCollection',
             'fields' => [
                 'id' => [
-                    'type' => Type::id(),
+                    'type' => $types->id(),
                 ],
                 'name' => [
-                    'type' => Type::string(),
+                    'type' => $types->string(),
                 ],
                 'ads' => [
                     'type' => $types->listOf($types->ad()),

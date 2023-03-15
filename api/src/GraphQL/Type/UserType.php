@@ -17,7 +17,7 @@ class UserType extends ObjectType
             'fields' => [
                 'uid' => [
                     'type' => Type::id(),
-                    'resolve' => fn (User $user) => $user->getUuid()->__toString(),
+                    'resolve' => fn (User $user) => (string) $user->getUuid(),
                 ],
                 'email' => [
                     'type' => Type::string(),

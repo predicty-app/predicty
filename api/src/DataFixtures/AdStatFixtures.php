@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\DataFixtures;
 
-use App\Entity\Ad;
 use App\Entity\AdStats;
 use App\Service\DateTime\DateTimeHelper;
 use Brick\Money\Currency;

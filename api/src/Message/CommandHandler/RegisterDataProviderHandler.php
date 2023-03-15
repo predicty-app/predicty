@@ -20,8 +20,7 @@ class RegisterDataProviderHandler
 
     public function __invoke(RegisterDataProvider $command): void
     {
-        $userId = $this->currentUserService->getUser()->getId();
-        $credentials = $this->repository->findOrCreate($userId, $command->type);
+        $credentials = $this->repository->findOrCreate($command->userId, $command->type);
         $credentials->setCredentials(['token' => $command->oauthRefreshToken]);
         $this->repository->save($credentials);
     }
