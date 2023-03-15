@@ -27,6 +27,14 @@ module.exports = {
       }
     },
     colors: {
+      connectMoreMedia: {
+        text: "#272727",
+      },
+      codeForm: {
+        dash: {
+          background: "#111111"
+        }
+      },
       multiselect: {
         element: {
           disabled: {

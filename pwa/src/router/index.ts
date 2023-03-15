@@ -64,14 +64,29 @@ const routes: Array<RouteRecordRaw> = [
         }
       },
       {
+        path: "/onboarding/more-media-integration/file-settings",
+        name: "on-boarding-more-media-integration-file-settings",
+        component: () =>
+          import("@/views/MoreMediaIntegrationFileSettingsView.vue"),
+        beforeEnter: () => {
+          const onboardingStore = useOnBoardingStore();
+          if (!onboardingStore.file.file) {
+            return { path: "/onboarding/preparing-screen" };
+          }
+        }
+      },
+      {
         path: "/onboarding/preparing-screen",
         name: "on-boarding-preparing-screen",
         component: () => import("@/views/PreparingScreenView.vue"),
         beforeEnter: () => {
-          // const onboardingStore = useOnBoardingStore();
-          // if (Object.keys(onboardingStore.providers).length === 0) {
-          //   return { path: "/onboarding/basic-media-integration" };
-          // }
+          const onboardingStore = useOnBoardingStore();
+          if (
+            Object.keys(onboardingStore.providers).length === 0 &&
+            !onboardingStore.file.file
+          ) {
+            return { path: "/" };
+          }
         }
       }
     ]

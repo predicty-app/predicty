@@ -1,19 +1,23 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { useI18n } from "vue-i18n";
-import { useOnBoardingStore, FilesTypes } from "@/stores/onboarding";
+import { useRouter } from "vue-router";
 import { handleUploadFile } from "@/services/api/onboarding";
+import { useOnBoardingStore } from "@/stores/onboarding";
 
 const { t } = useI18n();
+const router = useRouter();
 const onBoardingStore = useOnBoardingStore();
 
 onMounted(async () => {
-  if (onBoardingStore.file) {
+  if (onBoardingStore.file.file) {
     await handleUploadFile({
-      file: onBoardingStore.file,
-      type: FilesTypes.FACEBOOK
+      file: onBoardingStore.file.file,
+      type: onBoardingStore.file.type
     });
   }
+
+  router.push("/");
 });
 </script>
 

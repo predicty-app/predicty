@@ -36,6 +36,44 @@
           "click-to-connect": "Click to connect"
         },
         "button": "Next"
+      },
+      "connect-more-services-form": {
+        "button": {
+          "next": "Next"
+        }
+      },
+      "connect-more-services-file-settings-form" : {
+        "data-type": {
+          "label": "Data type",
+          "placeholder": "Choose data type....",
+          "options": {
+            "meta": "Facebook",
+            "google": "Google",
+            "ooh": "OOH",
+            "sales-data": "Sales data",
+            "other": "Other"
+          },
+          "error-message": "The file type is required."
+        },
+        "button": {
+          "next": "Next"
+        },
+        "display-name": {
+          "label": "Display name",
+          "placeholder": "Type display name...",
+          "error-message": "The file name is required."
+        },
+        "descriptions": {
+          "header": "This file should be <b>separated per day</b> and contain columns:",
+          "columns-names": {
+            "campaign-id": "Campaign ID",
+            "adset-id": "Adset ID",
+            "ad-id": "Ad ID",
+            "ad-name": "Ad Name",
+            "image-hash": "Image Hash",
+            "spent": "Spent"
+          }
+        }
       }
     },
     "user-dashboard": {
@@ -102,8 +140,11 @@
     },
     "more-media-integration": {
       "header-title": "Connect more services",
-      "header-description": "We are platform that collects data from your websites and apps to create",
-      "button": "Next"
+      "header-description": "We are platform that collects data from your websites and apps to create"
+    },
+    "more-media-integration-file-settings": {
+      "header-title": "What is this file?",
+      "header-description": "Tell us what kind of data this file represents"
     },
     "preparing-screen": {
       "header-title": "Good job!",

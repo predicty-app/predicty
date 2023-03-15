@@ -36,6 +36,9 @@ watch(
   () => props.modelValue,
   () => {
     isFileUploaded.value = props.modelValue ? true : false;
+    if (!props.modelValue) {
+      inputInstance.value.value = null;
+    }
   }
 );
 
@@ -97,6 +100,12 @@ function handleSelectFile(e: Event) {
     <div
       class="text-upload-text gap-y-3 text-base relative bg-upload-background border border-upload-border border-dashed flex flex-col items-center justify-center w-full py-6"
     >
+      <IconSvg
+        v-if="isFileUploaded"
+        @click="emit('update:modelValue', null)"
+        name="close"
+        class-name="absolute top-3 right-3 z-30 cursor-pointer"
+      />
       {{ t("components.common.upload-file.content") }}
       <input
         ref="inputInstance"
@@ -106,13 +115,13 @@ function handleSelectFile(e: Event) {
         @change="handleSelectFile"
       />
       <div
-        v-if="!fileName"
-        class="bg-upload-button-background rounded-[6px] px-4 py-[10px] text-base items-center justify-center text-upload-button-text flex gap-x-3"
+        v-if="!isFileUploaded"
+        class="bg-upload-button-background animate-fade-in rounded-[6px] px-4 py-[10px] text-base items-center justify-center text-upload-button-text flex gap-x-3"
       >
         <IconSvg name="upload" />
         {{ t("components.common.upload-file.button") }}
       </div>
-      <div v-if="fileName">
+      <div v-if="isFileUploaded" class="animate-fade-in">
         {{ fileName }}
       </div>
     </div>

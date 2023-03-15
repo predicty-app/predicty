@@ -79,6 +79,8 @@ async function handleUploadFile(payload: UploadFilePayloadType) {
     uploadDataFile(file: $file, type: ${payload.type})
   }`;
 
+  console.log(payload);
+
   try {
     const response = await apiService.request<any, any>(
       query,

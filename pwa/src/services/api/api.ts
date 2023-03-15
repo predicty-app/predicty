@@ -35,6 +35,7 @@ class ApiService implements ApiService {
     this.#client = new ApolloClient({
       link: ApolloLink.from([
         createUploadLink({
+          credentials: "include",
           uri: import.meta.env.VITE_API_ENDPOINT
         })
       ]),
@@ -90,6 +91,7 @@ class ApiService implements ApiService {
       await axios({
         url: import.meta.env.VITE_API_ENDPOINT,
         method: "post",
+        withCredentials: true,
         headers: this.#headers,
         data: {
           query,

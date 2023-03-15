@@ -14,13 +14,14 @@ const previousStepPath = "/onboarding/basic-media-integration";
     </template>
     <template #content>
       <HeaderText
-        :header-title="t('views.more-media-integration.header-title')"
+        :header-title="
+          t('views.more-media-integration-file-settings.header-title')
+        "
         :header-description="
-          t('views.more-media-integration.header-description')
+          t('views.more-media-integration-file-settings.header-description')
         "
       />
-      <DividerLine />
-      <ConnectMoreServicesForm />
+      <ConnectMoreServicesFileSettingsForm />
     </template>
     <template #footer>
       <div class="w-full max-w-[48px]">
