@@ -27,6 +27,30 @@ module.exports = {
       }
     },
     colors: {
+      multiselect: {
+        element: {
+          disabled: {
+            background: "#fafafa"
+          },
+          hover: {
+            background: "#f1fff4"
+          },
+        },
+        lable: {
+          color: "#4E5B72"
+        },
+        icon: {
+          background: "#5CD070",
+          color: "#FFFFFF"
+        }
+      },
+      notification: {
+        success: "#266c04",
+        error: "#da2f2f",
+        warning: "#ca7e0b",
+        info: "#1881c7",
+        text: "#FFFFFF"
+      },
       charBarPole: {
         background: {
           primary: "#89B3FF",

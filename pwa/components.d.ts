@@ -46,6 +46,8 @@ declare module "@vue/runtime-core" {
     InputForm: typeof import("./src/components/Common/InputForm.vue")["default"];
     LegendDescription: typeof import("./src/components/UserDashboard/LegendDescription.vue")["default"];
     MenuList: typeof import("./src/components/Common/MenuList.vue")["default"];
+    MultiSelectForm: typeof import("./src/components/Common/MultiSelectForm.vue")["default"];
+    NotificationMessage: typeof import("./src/components/Common/NotificationMessage.vue")["default"];
     OnBoardingLayout: typeof import("./src/components/Layouts/OnBoardingLayout.vue")["default"];
     PopoverPanel: typeof import("./src/components/Common/PopoverPanel.vue")["default"];
     ProgressBar: typeof import("./src/components/Common/ProgressBar.vue")["default"];

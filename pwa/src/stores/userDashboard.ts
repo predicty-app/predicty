@@ -52,6 +52,7 @@ type StateType = {
   selectedAdsList: CheckedAdsToCollectionType;
   campaigns: CampaignType[];
   hiddenAds: string[];
+  activeProviders: string[];
   parsedCampaignsList: CampaignType[];
 };
 
@@ -62,6 +63,7 @@ export const useUserDashboardStore = defineStore({
       campaigns: [],
       parsedCampaignsList: [],
       hiddenAds: [],
+      activeProviders: ["google-analytics", "google-ads", "meta"],
       selectedAdsList: {
         campaignUid: null,
         ads: []
@@ -111,6 +113,14 @@ export const useUserDashboardStore = defineStore({
       this.hiddenAds = adsList
         .filter((x) => !this.hiddenAds.includes(x))
         .concat(this.hiddenAds.filter((x) => !adsList.includes(x)));
+    },
+
+    /**
+     * Function to set visible providers.
+     * @param {string[]} providers
+     */
+    handleSetVisibleProviders(providers: string[]) {
+      this.activeProviders = providers;
     },
 
     /**

@@ -1,7 +1,20 @@
 <script setup lang="ts">
+import { onMounted } from "vue";
 import { useI18n } from "vue-i18n";
+import { useOnBoardingStore, FilesTypes } from "@/stores/onboarding";
+import { handleUploadFile } from "@/services/api/onboarding";
 
 const { t } = useI18n();
+const onBoardingStore = useOnBoardingStore();
+
+onMounted(async () => {
+  if (onBoardingStore.file) {
+    await handleUploadFile({
+      file: onBoardingStore.file,
+      type: FilesTypes.FACEBOOK
+    });
+  }
+});
 </script>
 
 <template>

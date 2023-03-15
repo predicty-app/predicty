@@ -9,15 +9,21 @@ type ProviderStateType = {
 
 type StateType = {
   email: null | string;
+  file: File | null;
   password: null | string;
   providers: {};
 };
+
+export enum FilesTypes {
+  FACEBOOK = "FACEBOOK_CSV"
+}
 
 export const useOnBoardingStore = defineStore({
   id: "onboarding",
   state: () =>
     ({
       email: null,
+      file: null,
       password: null,
       providers: {}
     } as StateType),
@@ -37,6 +43,14 @@ export const useOnBoardingStore = defineStore({
      */
     async handleSavePassword(payload: string) {
       this.password = payload;
+    },
+
+    /**
+     * Function to handle save file with data.
+     * @param {File} file
+     */
+    async handleSaveFile(file: File) {
+      this.file = file;
     },
 
     /**

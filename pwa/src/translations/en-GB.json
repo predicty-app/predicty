@@ -4,12 +4,17 @@
       "upload-file": {
         "header": "Upload data file",
         "content": "Select a file or drag here",
-        "button": "Select a File"
+        "button": "Select a File",
+        "error-type": "Not a valid file type. Acceptable formats are csv."
       },
       "foating-panel": {
         "count-elements": "Item{s} Selected",
         "button": "Apply",
         "select-placeholder": "Select one of option..."
+      },
+      "multiselect": {
+        "placeholder": "Select one of options...",
+        "label": "Showing {count} channels"
       }
     },
     "on-boarding": {
@@ -68,6 +73,11 @@
       },
       "bottom-bar": {
         "close": "Close"
+      },
+      "providers-list-form": {
+        "google-analytics": "Google Analytics",
+        "google-ads": "Google Ads",
+        "meta": "Meta"
       }
     }
   },

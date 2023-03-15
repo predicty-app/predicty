@@ -57,10 +57,10 @@ const routes: Array<RouteRecordRaw> = [
         name: "on-boarding-more-media-integration",
         component: () => import("@/views/MoreMediaIntegrationView.vue"),
         beforeEnter: () => {
-          const onboardingStore = useOnBoardingStore();
-          if (Object.keys(onboardingStore.providers).length === 0) {
-            return { path: "/onboarding/basic-media-integration" };
-          }
+          // const onboardingStore = useOnBoardingStore();
+          // if (Object.keys(onboardingStore.providers).length === 0) {
+          //   return { path: "/onboarding/basic-media-integration" };
+          // }
         }
       },
       {
@@ -68,10 +68,10 @@ const routes: Array<RouteRecordRaw> = [
         name: "on-boarding-preparing-screen",
         component: () => import("@/views/PreparingScreenView.vue"),
         beforeEnter: () => {
-          const onboardingStore = useOnBoardingStore();
-          if (Object.keys(onboardingStore.providers).length === 0) {
-            return { path: "/onboarding/basic-media-integration" };
-          }
+          // const onboardingStore = useOnBoardingStore();
+          // if (Object.keys(onboardingStore.providers).length === 0) {
+          //   return { path: "/onboarding/basic-media-integration" };
+          // }
         }
       }
     ]

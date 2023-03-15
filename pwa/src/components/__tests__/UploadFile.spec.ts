@@ -14,6 +14,7 @@ describe("Tests for UploadFile component", () => {
     const wrapper = mount(UploadFile, {
       props: {
         filesType: [],
+        modelValue: '',
         ...props
       },
       global: {
