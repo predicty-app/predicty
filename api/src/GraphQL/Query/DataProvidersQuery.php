@@ -8,7 +8,7 @@ use App\Entity\DataProvider;
 use App\GraphQL\TypeRegistry;
 use GraphQL\Type\Definition\FieldDefinition;
 
-class DataProviderTypesQuery extends FieldDefinition
+class DataProvidersQuery extends FieldDefinition
 {
     public function __construct(TypeRegistry $type)
     {

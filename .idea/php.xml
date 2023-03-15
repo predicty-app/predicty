@@ -212,6 +212,7 @@
       <path value="$PROJECT_DIR$/api/vendor/symfony/doctrine-messenger" />
       <path value="$PROJECT_DIR$/api/vendor/zenstruck/assert" />
       <path value="$PROJECT_DIR$/api/vendor/zenstruck/messenger-test" />
+      <path value="$PROJECT_DIR$/api/vendor/phpstan/phpstan-webmozart-assert" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

@@ -1,0 +1,33 @@
+{
+  "data": {
+    "dataProviders": [
+      {
+        "id": "GOOGLE_ADS",
+        "name": "Google Ads",
+        "fileImportTypes": []
+      },
+      {
+        "id": "FACEBOOK_ADS",
+        "name": "Facebook Ads (Meta)",
+        "fileImportTypes": [
+          "FACEBOOK_CSV"
+        ]
+      },
+      {
+        "id": "GOOGLE_ANALYTICS",
+        "name": "Google Analytics",
+        "fileImportTypes": []
+      },
+      {
+        "id": "TIK_TOK",
+        "name": "TikTok",
+        "fileImportTypes": []
+      },
+      {
+        "id": "OTHER",
+        "name": "Other (internal)",
+        "fileImportTypes": []
+      }
+    ]
+  }
+}

@@ -21,12 +21,12 @@ class ImportRepository
         $this->repository = $em->getRepository(Import::class);
     }
 
-    public function findById(int $id): Import
+    public function findById(int $id): ?Import
     {
         return $this->repository->find($id);
     }
 
-    public function findFileImportById(int $id): FileImport
+    public function findFileImportById(int $id): ?FileImport
     {
         return $this->em->getRepository(FileImport::class)->find($id);
     }

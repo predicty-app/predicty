@@ -23,7 +23,7 @@ class DataProviderCredentialsRepository
 
     public function findOrCreate(int $userId, DataProvider $type): DataProviderCredentials
     {
-        $entity = $this->repository->findOneBy(['userId' => $userId, 'type' => $type]);
+        $entity = $this->repository->findOneBy(['userId' => $userId, 'dataProvider' => $type]);
 
         if ($entity === null) {
             $entity = new DataProviderCredentials($userId, $type);

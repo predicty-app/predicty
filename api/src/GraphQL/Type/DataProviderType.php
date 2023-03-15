@@ -15,7 +15,10 @@ class DataProviderType extends ObjectType
         parent::__construct([
             'name' => 'DataProvider',
             'fields' => [
-                'code' => $type->nonNullString(),
+                'id' => [
+                    'type' => $type->nonNull($type->dataProviderId()),
+                    'resolve' => fn (DataProvider $dataProvider) => $dataProvider,
+                ],
                 'name' => $type->string(),
                 'fileImportTypes' => [
                     'type' => $type->listOf($type->fileImportType()),
