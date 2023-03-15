@@ -17,7 +17,7 @@ class RegisterDataProviderHandler
 
     public function __invoke(RegisterDataProvider $command): void
     {
-        $credentials = $this->repository->findOrCreate($command->userId, $command->type);
+        $credentials = $this->repository->findOrCreate($command->userId, $command->dataProvider);
         $credentials->setCredentials(['token' => $command->oauthRefreshToken]);
         $this->repository->save($credentials);
     }

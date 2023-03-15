@@ -17,16 +17,16 @@ class DataProviderCredentials
     #[ORM\Column]
     private int $userId;
 
-    #[ORM\Column(name: 'type', enumType: DataProviderType::class)]
-    private DataProviderType $type;
+    #[ORM\Column]
+    private DataProvider $dataProvider;
 
     #[ORM\Column(nullable: true)]
     private array $credentials = [];
 
-    public function __construct(int $userId, DataProviderType $type, array $credentials = [])
+    public function __construct(int $userId, DataProvider $dataProvider, array $credentials = [])
     {
         $this->userId = $userId;
-        $this->type = $type;
+        $this->dataProvider = $dataProvider;
         $this->credentials = $credentials;
     }
 
@@ -42,9 +42,9 @@ class DataProviderCredentials
         return $this->userId;
     }
 
-    public function getType(): DataProviderType
+    public function getDataProvider(): DataProvider
     {
-        return $this->type;
+        return $this->dataProvider;
     }
 
     public function getCredentials(): array

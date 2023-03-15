@@ -25,6 +25,10 @@ class CampaignType extends ObjectType
                 'name' => [
                     'type' => $type->string(),
                 ],
+                'dataProvider' => [
+                    'type' => $type->dataProvider(),
+                    'resolve' => fn (Campaign $campaign) => $campaign->getDataProvider(),
+                ],
                 'adSets' => [
                     'type' => $type->listOf($type->adSet()),
                     'resolve' => fn (Campaign $campaign) => $adSetRepository->findAllByCampaignId($campaign->getId()),

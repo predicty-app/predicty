@@ -10,7 +10,8 @@ use App\GraphQL\Type\AdStatsType;
 use App\GraphQL\Type\AdType;
 use App\GraphQL\Type\CampaignType;
 use App\GraphQL\Type\DashboardType;
-use App\GraphQL\Type\DataProviderTypeType;
+use App\GraphQL\Type\DataProviderIdType;
+use App\GraphQL\Type\DataProviderType;
 use App\GraphQL\Type\FileImportTypeType;
 use App\GraphQL\Type\MoneyType;
 use App\GraphQL\Type\UserType;
@@ -23,16 +24,17 @@ use RuntimeException;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 
 /**
- * @method UserType             user()
- * @method DashboardType        dashboard()
- * @method CampaignType         campaign()
- * @method AdSetType            adSet()
- * @method AdType               ad()
- * @method AdStatsType          adStats()
- * @method MoneyType            money()
- * @method AdCollectionType     adCollection()
- * @method FileImportTypeType   fileImportType()
- * @method DataProviderTypeType dataProviderType()
+ * @method UserType           user()
+ * @method DashboardType      dashboard()
+ * @method CampaignType       campaign()
+ * @method AdSetType          adSet()
+ * @method AdType             ad()
+ * @method AdStatsType        adStats()
+ * @method MoneyType          money()
+ * @method AdCollectionType   adCollection()
+ * @method FileImportTypeType fileImportType()
+ * @method DataProviderIdType dataProviderId()
+ * @method DataProviderType   dataProvider()
  */
 class TypeRegistry
 {

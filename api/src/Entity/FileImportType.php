@@ -7,9 +7,13 @@ namespace App\Entity;
 enum FileImportType: string
 {
     case FACEBOOK_CSV = 'FACEBOOK_CSV';
+    case OTHER = 'OTHER';
 
-    public function getDataProviderType(): DataProviderType
+    public function getDataProvider(): DataProvider
     {
-        return DataProviderType::FACEBOOK_ADS;
+        return match ($this) {
+            FileImportType::FACEBOOK_CSV => DataProvider::FACEBOOK_ADS,
+            FileImportType::OTHER => DataProvider::OTHER,
+        };
     }
 }

@@ -13,16 +13,16 @@ class FileImport extends Import
     #[ORM\Column(length: 255)]
     private string $filename;
 
-    #[ORM\Column]
+    #[ORM\Column(options: ['default' => FileImportType::OTHER])]
     private FileImportType $fileImportType;
 
     public function __construct(
         int $userId,
         string $filename,
-        FileImportType $fileImportType,
+        FileImportType $fileImportType = FileImportType::OTHER,
         ?DateTimeImmutable $createdAt = null
     ) {
-        parent::__construct($userId, $fileImportType->getDataProviderType(), $createdAt);
+        parent::__construct($userId, $fileImportType->getDataProvider(), $createdAt);
         $this->filename = $filename;
         $this->fileImportType = $fileImportType;
     }

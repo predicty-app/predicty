@@ -17,6 +17,7 @@ class PingQuery extends FieldDefinition
             'fields' => [],
             'type' => $type->string(),
             'resolve' => fn () => 'pong at '.$clock->now()->getTimestamp(),
+            'description' => 'Test method that will return a response containing current unix timestamp',
         ]);
     }
 }
