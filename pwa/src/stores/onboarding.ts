@@ -1,5 +1,13 @@
 import { defineStore } from "pinia";
 
+export enum FilesTypes {
+  META = "FACEBOOK_CSV",
+  GOOGLE = "GOOGLE_CSV",
+  OOH = "OOH_CSV",
+  SALES_DATA = "SALES_DATA_CSV",
+  OTHER = "OTHER"
+}
+
 type ProviderStateType = {
   name: string;
   logoPath: string;
@@ -7,8 +15,15 @@ type ProviderStateType = {
   token?: string;
 };
 
+type FileType = {
+  file: File | null;
+  type: FilesTypes;
+  name: string;
+};
+
 type StateType = {
   email: null | string;
+  file: FileType;
   password: null | string;
   providers: {};
 };
@@ -18,6 +33,11 @@ export const useOnBoardingStore = defineStore({
   state: () =>
     ({
       email: null,
+      file: {
+        file: null,
+        type: null,
+        name: ""
+      },
       password: null,
       providers: {}
     } as StateType),
@@ -37,6 +57,14 @@ export const useOnBoardingStore = defineStore({
      */
     async handleSavePassword(payload: string) {
       this.password = payload;
+    },
+
+    /**
+     * Function to handle save file with data.
+     * @param {File} file
+     */
+    async handleSaveFile(file: File) {
+      this.file.file = file;
     },
 
     /**

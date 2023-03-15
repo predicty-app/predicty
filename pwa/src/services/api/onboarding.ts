@@ -1,4 +1,5 @@
 import apiService from "@/services/api/api";
+import { FilesTypes } from "@/stores/onboarding";
 
 export type RegisterUserPayloadType = {
   email: string;
@@ -7,6 +8,11 @@ export type RegisterUserPayloadType = {
 export type LoginUserPayloadType = {
   username: string;
   passcode: string;
+};
+
+export type UploadFilePayloadType = {
+  type: FilesTypes;
+  file: File;
 };
 
 /**
@@ -64,4 +70,30 @@ async function handleLoginUser(payload: LoginUserPayloadType) {
   }
 }
 
-export { handleRegisterUser, handleLoginUser };
+/**
+ * Function to handle upload file.
+ * @param {UploadFilePayloadType} payload
+ */
+async function handleUploadFile(payload: UploadFilePayloadType) {
+  const query = `mutation($file: Upload) {
+    uploadDataFile(file: $file, type: ${payload.type})
+  }`;
+
+  console.log(payload);
+
+  try {
+    const response = await apiService.request<any, any>(
+      query,
+      {
+        file: payload.file
+      },
+      "apollo"
+    );
+
+    return response.errors ? response.errors[0].message : "OK";
+  } catch (error) {
+    return (error as Error).message;
+  }
+}
+
+export { handleRegisterUser, handleLoginUser, handleUploadFile };

@@ -143,9 +143,10 @@ async function handleToogleConnecttoProvider(provider: ProviderType) {
       </TagPin>
     </CardPanel>
     <Teleport to="#next-button">
+      <!-- :type="providersList.find((provider: ProviderType) => provider.status) ? 'success' : 'disabled'" -->
       <ButtonForm
         @click="router.push(nextStepPath)"
-        :type="providersList.find((provider: ProviderType) => provider.status) ? 'success' : 'disbaled'"
+        type="success"
         class="w-full"
       >
         <div class="relative">

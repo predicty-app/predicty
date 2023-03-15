@@ -57,9 +57,21 @@ const routes: Array<RouteRecordRaw> = [
         name: "on-boarding-more-media-integration",
         component: () => import("@/views/MoreMediaIntegrationView.vue"),
         beforeEnter: () => {
+          // const onboardingStore = useOnBoardingStore();
+          // if (Object.keys(onboardingStore.providers).length === 0) {
+          //   return { path: "/onboarding/basic-media-integration" };
+          // }
+        }
+      },
+      {
+        path: "/onboarding/more-media-integration/file-settings",
+        name: "on-boarding-more-media-integration-file-settings",
+        component: () =>
+          import("@/views/MoreMediaIntegrationFileSettingsView.vue"),
+        beforeEnter: () => {
           const onboardingStore = useOnBoardingStore();
-          if (Object.keys(onboardingStore.providers).length === 0) {
-            return { path: "/onboarding/basic-media-integration" };
+          if (!onboardingStore.file.file) {
+            return { path: "/onboarding/preparing-screen" };
           }
         }
       },
@@ -69,8 +81,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/PreparingScreenView.vue"),
         beforeEnter: () => {
           const onboardingStore = useOnBoardingStore();
-          if (Object.keys(onboardingStore.providers).length === 0) {
-            return { path: "/onboarding/basic-media-integration" };
+          if (
+            Object.keys(onboardingStore.providers).length === 0 &&
+            !onboardingStore.file.file
+          ) {
+            return { path: "/" };
           }
         }
       }

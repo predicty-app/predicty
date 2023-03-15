@@ -34,9 +34,13 @@ function handleSelectElement(item: string | number) {
 </script>
 
 <template>
-  <div class="relative" tabindex="0" @focusout="isSelectOpened = false">
+  <div
+    class="select-form relative"
+    tabindex="0"
+    @focusout="isSelectOpened = false"
+  >
     <div
-      class="text-select-input-text bg-select-input-background border-select-input-border border py-2 px-3 text-xs rounded relative cursor-pointer"
+      class="select-form-content text-select-input-text bg-select-input-background border-select-input-border border py-2 px-3 text-xs rounded relative cursor-pointer"
       @click="isSelectOpened = !isSelectOpened"
     >
       <span
