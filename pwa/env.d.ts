@@ -1,5 +1,5 @@
 /// <reference types="vite/client" />
-declare module "uuid";
+declare module "uuid"; 
 declare module "vue-i18n";
 declare module "@/components";
 
