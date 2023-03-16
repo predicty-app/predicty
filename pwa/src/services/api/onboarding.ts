@@ -1,5 +1,4 @@
 import apiService from "@/services/api/api";
-import { FilesTypes } from "@/stores/onboarding";
 
 export type RegisterUserPayloadType = {
   email: string;
@@ -11,7 +10,7 @@ export type LoginUserPayloadType = {
 };
 
 export type UploadFilePayloadType = {
-  type: FilesTypes;
+  type: string;
   file: File;
 };
 
@@ -78,8 +77,6 @@ async function handleUploadFile(payload: UploadFilePayloadType) {
   const query = `mutation($file: Upload) {
     uploadDataFile(file: $file, type: ${payload.type})
   }`;
-
-  console.log(payload);
 
   try {
     const response = await apiService.request<any, any>(

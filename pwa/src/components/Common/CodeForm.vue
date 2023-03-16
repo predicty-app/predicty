@@ -54,39 +54,35 @@ function handleFocusElement(indexElement: number) {
   }
 }
 
+/**
+ * Function to handle change value input.
+ * @param {string} type 
+ * @param {string} value 
+ * @param {number} index 
+ */
+function handleChangeValue(type: string, value: string, index: number) {
+  currentSelectedElement.value = index + 1;
+
+  const inputElement =
+    elementCodeInstance.value.querySelectorAll("input")[index + 1];
+
+    if (index < 6) {
+      const valueModel = currentModelValue.value.split("");
+      valueModel[index] = modelCodeNumbers[type];
+
+      emit("update:modelValue", valueModel.slice(0, 6).join(""));
+    }
+
+    if (inputElement) {
+      inputElement.focus();
+      inputElement.setSelectionRange(0, 1);
+    }
+}
+
 watch(
   () => props.modelValue,
   () => (currentModelValue.value = props.modelValue)
 );
-
-[
-  "number_one",
-  "number_two",
-  "number_three",
-  "number_four",
-  "number_five",
-  "number_six"
-].forEach((item, index) => {
-  watch(
-    () => modelCodeNumbers[item],
-    () => {
-      currentSelectedElement.value = index + 1;
-      const inputElement =
-        elementCodeInstance.value.querySelectorAll("input")[index + 1];
-
-      if (index < 6) {
-        const value = currentModelValue.value.split("");
-        value[index] = modelCodeNumbers[item];
-        emit("update:modelValue", value.slice(0, 6).join(""));
-      }
-
-      if (inputElement) {
-        inputElement.focus();
-        inputElement.setSelectionRange(0, 1);
-      }
-    }
-  );
-});
 </script>
 
 <template>
@@ -101,6 +97,7 @@ watch(
         class="w-[45px]"
         @focusin="handleFocusElement(0)"
         v-model="modelCodeNumbers.number_one"
+        @onChange="(param) => handleChangeValue('number_one', param, 0)"
         mask="#"
       />
       <InputForm
@@ -108,6 +105,7 @@ watch(
         class="w-[45px]"
         @focusin="handleFocusElement(1)"
         v-model="modelCodeNumbers.number_two"
+        @onChange="(param) => handleChangeValue('number_two', param, 1)"
         mask="#"
       />
       <InputForm
@@ -115,6 +113,7 @@ watch(
         class="w-[45px]"
         @focusin="handleFocusElement(2)"
         v-model="modelCodeNumbers.number_three"
+        @onChange="(param) => handleChangeValue('number_three', param, 2)"
         mask="#"
       />
       <div class="w-[10px] h-[2px] bg-codeForm-dash-background"></div>
@@ -123,6 +122,7 @@ watch(
         class="w-[45px]"
         @focusin="handleFocusElement(3)"
         v-model="modelCodeNumbers.number_four"
+        @onChange="(param) => handleChangeValue('number_four', param, 3)"
         mask="#"
       />
       <InputForm
@@ -130,6 +130,7 @@ watch(
         class="w-[45px]"
         @focusin="handleFocusElement(4)"
         v-model="modelCodeNumbers.number_five"
+        @onChange="(param) => handleChangeValue('number_five', param, 4)"
         mask="#"
       />
       <InputForm
@@ -137,6 +138,7 @@ watch(
         class="w-[45px]"
         @focusin="handleFocusElement(5)"
         v-model="modelCodeNumbers.number_six"
+        @onChange="(param) => handleChangeValue('number_six', param, 5)"
         mask="#"
       />
     </div>

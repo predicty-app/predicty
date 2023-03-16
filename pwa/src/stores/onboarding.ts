@@ -1,10 +1,10 @@
 import { defineStore } from "pinia";
 
-export enum FilesTypes {
-  META = "FACEBOOK_CSV",
-  GOOGLE = "GOOGLE_CSV",
-  OOH = "OOH_CSV",
-  SALES_DATA = "SALES_DATA_CSV",
+export enum AvalibleProviders {
+  GOOGLE_ADS = "GOOGLE_ADS",
+  FACEBOOK_ADS = "FACEBOOK_ADS",
+  GOOGLE_ANALYTICS = "GOOGLE_ANALYTICS",
+  TIK_TOK = "TIK_TOK",
   OTHER = "OTHER"
 }
 
@@ -17,7 +17,7 @@ type ProviderStateType = {
 
 type FileType = {
   file: File | null;
-  type: FilesTypes;
+  type: string;
   name: string;
 };
 
