@@ -48,7 +48,14 @@ type CheckedAdsToCollectionType = {
   ads: string[];
 };
 
+type AuthenticatedUserParamsType = {
+  uid: string;
+  email: string;
+  isEmailVerified: boolean;
+};
+
 type StateType = {
+  authenticatedUserParams: AuthenticatedUserParamsType;
   selectedAdsList: CheckedAdsToCollectionType;
   campaigns: CampaignType[];
   hiddenAds: string[];
@@ -60,6 +67,7 @@ export const useUserDashboardStore = defineStore({
   id: "userDashboard",
   state: () =>
     ({
+      authenticatedUserParams: null,
       campaigns: [],
       parsedCampaignsList: [],
       hiddenAds: [],
@@ -82,6 +90,14 @@ export const useUserDashboardStore = defineStore({
         )}`;
         return campaign;
       });
+    },
+
+    /**
+     * Function to set user params.
+     * @param {AuthenticatedUserParamsType} user
+     */
+    setAuthenticatedUserParams(user: AuthenticatedUserParamsType) {
+      this.authenticatedUserParams = user;
     },
 
     /**

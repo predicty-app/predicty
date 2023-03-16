@@ -1,6 +1,6 @@
 import axios from "axios";
 import gql from "graphql-tag";
-import ApolloClient from "apollo-client";
+import { ApolloClient } from "apollo-client";
 import { ApolloLink } from "apollo-link";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { createUploadLink } from "apollo-upload-client";

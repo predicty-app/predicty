@@ -27,6 +27,11 @@ module.exports = {
       }
     },
     colors: {
+      modalWindow: {
+        mask: {
+          background: "#00000030"
+        }
+      },
       connectMoreMedia: {
         text: "#272727",
       },
