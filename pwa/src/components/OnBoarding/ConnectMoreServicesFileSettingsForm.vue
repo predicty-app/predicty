@@ -184,7 +184,10 @@ function handleSubmitForm() {
         "
       ></p>
       <ul class="list-disc pl-4 flex flex-col gap-y-1">
-        <li :key="`${column}_${Math.random()}`" v-for="column in columnsProvider[selectedProvider]">
+        <li
+          :key="`${column}_${Math.random()}`"
+          v-for="column in columnsProvider[selectedProvider]"
+        >
           {{ columnsList[column] }}
         </li>
       </ul>

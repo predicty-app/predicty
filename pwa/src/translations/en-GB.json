@@ -87,6 +87,16 @@
         "menu-list": {
           "settings": "Settings",
           "logout": "Logout"
+        },
+        "logout-modal": {
+          "content": {
+            "title": "Logging out of the application",
+            "description": "Are you sure you want to log out for the application ? "
+          },
+          "buttons": {
+            "cancel": "Cancel",
+            "logout": "Logout"
+          }
         }
       },
       "sales-number": {
