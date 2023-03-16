@@ -40,7 +40,7 @@ describe("Tests for CollectionBottomBar component", () => {
       collection?: AdsType | AdsCollection;
     };
 
-    const { wrapper, bottomBar, button } = prepareElementsToTests<PropsType>({
+    const { wrapper, button } = prepareElementsToTests<PropsType>({
       collection: {
         uid: "",
         name: "Collection",

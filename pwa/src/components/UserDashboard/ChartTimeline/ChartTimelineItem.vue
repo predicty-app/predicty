@@ -13,6 +13,7 @@ type PropsType = {
   isVisible?: boolean;
   campaingUid?: string;
   element: AdsType | AdsCollection;
+  noName?: boolean;
 };
 
 const props = withDefaults(defineProps<PropsType>(), {
@@ -172,7 +173,7 @@ defineEmits<{
       >
         {{ (element as AdsCollection).ads.length }}
       </div>
-      {{ element.name }}
+      <p v-if="!noName">{{ element.name }}</p>
     </div>
   </div>
 </template>

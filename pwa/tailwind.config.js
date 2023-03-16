@@ -221,7 +221,13 @@ module.exports = {
         }
       },
       bottombar: {
-        hover: "#D9D9D980"
+        hover: "#D9D9D980",
+        text: "#4E5B72",
+        grey: "#EDF0F3",
+        background: {
+          light: "#FFF",
+          dark: "rgba(0, 0, 0, 0.03)"
+        }
       },
       text: {
         white: "#FFFFFF",
@@ -251,6 +257,11 @@ module.exports = {
     },
     boxShadow: {
       bottombar: "0px -5px 30px rgba(0, 0, 0, 0.15)"
+    },
+    backgroundImage: {
+      light:
+        "repeating-linear-gradient( to right, #fff 0 calc((100% / 7) - 1px), rgb(233, 233, 233) calc((100% / 7) - 1px) calc(100% / 7) )",
+      dark: "repeating-linear-gradient( to right, #f4f4f6 0 calc((100% / 7) - 1px), rgb(233, 233, 233) calc((100% / 7) - 1px) calc(100% / 7) )"
     }
   },
   variants: {

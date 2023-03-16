@@ -3,6 +3,12 @@ import { ref, computed } from "vue";
 import { useElementSize } from "@vueuse/core";
 import { useGlobalStore } from "@/stores/global";
 
+type PropsType = {
+  hasWeekdays?: boolean;
+};
+
+defineProps<PropsType>();
+
 const globalStore = useGlobalStore();
 
 const timelineContent = ref<HTMLElement | null>(null);
@@ -87,8 +93,12 @@ function handleChangeScale(eventWheel: WheelEvent) {
       :class="[
         'border-r border-timeline-lines-border',
         {
-          'bg-timeline-lines-background_primary': item % 2 !== 0,
-          'bg-timeline-lines-background_secondary': item % 2 === 0,
+          'bg-light': item % 2 !== 0 && hasWeekdays,
+          'bg-dark': item % 2 === 0 && hasWeekdays,
+          'bg-timeline-lines-background_primary':
+            item % 2 !== 0 && !hasWeekdays,
+          'bg-timeline-lines-background_secondary':
+            item % 2 === 0 && !hasWeekdays,
         },
       ]"
       :key="`line_${item}`"

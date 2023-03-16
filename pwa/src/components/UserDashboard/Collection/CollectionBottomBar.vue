@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import type { AdsCollection, AdsType } from "@/stores/userDashboard";
+import type { AdsCollection } from "@/stores/userDashboard";
 
 const { t } = useI18n();
 
 type PropsType = {
-  collection?: AdsType | AdsCollection;
+  collection?: AdsCollection;
 };
 
-const props = defineProps<PropsType>();
+defineProps<PropsType>();
 
 defineEmits<{
   (e: "close"): void;
@@ -17,14 +17,14 @@ defineEmits<{
 
 <template>
   <div
-    v-if="props.collection"
-    class="collection-bottom-bar fixed display-flex left-0 right-0 bottom-0 z-10 p-5 rounded-t-2xl bg-text-white shadow-bottombar"
+    v-if="collection"
+    class="collection-bottom-bar fixed display-flex left-0 right-0 bottom-0 z-20 p-5 rounded-t-2xl bg-text-white shadow-bottombar"
     data-testid="collection-bottom-bar"
   >
-    <div class="flex justify-between">
-      <h1 class="font-semibold text-xl">{{ props.collection.name }}</h1>
+    <div class="collection-bottom-bar__header pb-5 flex justify-between">
+      <CollectionHeader :collection="collection" />
       <button
-        class="collection-bottom-bar__close p-2 focus:bg-bottombar-hover/50 hover:bg-bottombar-hover/50 rounded-md m-l-auto"
+        class="collection-bottom-bar__close p-2 focus:bg-bottombar-hover/50 hover:bg-bottombar-hover/50 rounded-md m-l-auto self-baseline"
         @click="$emit('close')"
         :aria-label="t('components.user-dashboard.bottom-bar.close')"
         data-testid="collection-bottom-bar__close"
@@ -32,6 +32,10 @@ defineEmits<{
         <IconSvg name="close" class="w-[12px] h-[12px]" />
       </button>
     </div>
-    <div>Hello collection</div>
+    <div
+      class="collection-bottom-bar__content max-h-[50vh] max-w-full scroll-bar whitespace-nowrap overflow-scroll"
+    >
+      <CollectionTimeline :collection="collection" />
+    </div>
   </div>
 </template>
