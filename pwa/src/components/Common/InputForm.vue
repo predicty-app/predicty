@@ -18,6 +18,7 @@ withDefaults(defineProps<PropsType>(), {
 
 const emit = defineEmits<{
   (e: "update:modelValue", value: string): void;
+  (e: "onChange", value: string): void;
 }>();
 
 /**
@@ -26,6 +27,7 @@ const emit = defineEmits<{
  */
 function changeValue(event: Event) {
   emit("update:modelValue", (event.target as HTMLInputElement).value);
+  emit("onChange", (event.target as HTMLInputElement).value);
 }
 </script>
 

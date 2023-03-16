@@ -2,8 +2,9 @@
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { ref, onMounted, nextTick, watch, computed } from "vue";
-import { useOnBoardingStore, FilesTypes } from "@/stores/onboarding";
-
+import { handleGetProvidersList, type ProviderType } from '@/services/api/providers'
+import { useOnBoardingStore, AvalibleProviders } from "@/stores/onboarding";
+ 
 const { t } = useI18n();
 
 const router = useRouter();
@@ -16,12 +17,18 @@ const isNextButtonDisabled = computed<boolean>(() => {
     return true;
   }
 
-  if (selectedProvider.value === FilesTypes.OTHER && !displayedName.value) {
+  if (selectedProvider.value === AvalibleProviders.OTHER && !displayedName.value) {
     return true;
   }
 
   return false;
 });
+
+type ProvidersListType = {
+  key: string,
+  label: string
+  fileImportTypes: string[]
+}
 
 const columnsList = {
   "campaign-id": t(
@@ -39,13 +46,13 @@ const columnsList = {
   "image-hash": t(
     "components.on-boarding.connect-more-services-file-settings-form.descriptions.columns-names.image-hash"
   ),
-  spent: t(
+  "spent": t(
     "components.on-boarding.connect-more-services-file-settings-form.descriptions.columns-names.spent"
   )
 };
 
 const columnsProvider = {
-  [FilesTypes.META]: [
+  [AvalibleProviders.FACEBOOK_ADS]: [
     "campaign-id",
     "adset-id",
     "ad-id",
@@ -53,7 +60,7 @@ const columnsProvider = {
     "image-hash",
     "spent"
   ],
-  [FilesTypes.GOOGLE]: [
+  [AvalibleProviders.GOOGLE_ADS]: [
     "campaign-id",
     "adset-id",
     "ad-id",
@@ -61,7 +68,7 @@ const columnsProvider = {
     "image-hash",
     "spent"
   ],
-  [FilesTypes.OOH]: [
+  [AvalibleProviders.GOOGLE_ANALYTICS]: [
     "campaign-id",
     "adset-id",
     "ad-id",
@@ -69,7 +76,7 @@ const columnsProvider = {
     "image-hash",
     "spent"
   ],
-  [FilesTypes.SALES_DATA]: [
+  [AvalibleProviders.TIK_TOK]: [
     "campaign-id",
     "adset-id",
     "ad-id",
@@ -77,47 +84,34 @@ const columnsProvider = {
     "image-hash",
     "spent"
   ],
-  [FilesTypes.OTHER]: ["ad-name", "spent"]
+  [AvalibleProviders.OTHER]: ["ad-name", "spent"]
 };
 
-const providersList = [
-  {
-    key: FilesTypes.META,
-    label: t(
-      "components.on-boarding.connect-more-services-file-settings-form.data-type.options.meta"
-    )
-  },
-  {
-    key: FilesTypes.GOOGLE,
-    label: t(
-      "components.on-boarding.connect-more-services-file-settings-form.data-type.options.google"
-    )
-  },
-  {
-    key: FilesTypes.OOH,
-    label: t(
-      "components.on-boarding.connect-more-services-file-settings-form.data-type.options.ooh"
-    )
-  },
-  {
-    key: FilesTypes.SALES_DATA,
-    label: t(
-      "components.on-boarding.connect-more-services-file-settings-form.data-type.options.sales-data"
-    )
-  },
-  {
-    key: FilesTypes.OTHER,
-    label: t(
-      "components.on-boarding.connect-more-services-file-settings-form.data-type.options.other"
-    )
-  }
-];
+const dictionaryFileTypes = {
+  "text/csv": "_CSV",
+}
+const providersList = ref<ProvidersListType[]>([])
 
-onMounted(() => nextTick(() => (isComponentMounted.value = true)));
+onMounted(async () => {
+  const response = await handleGetProvidersList()
+  if(response) {
+    providersList.value = response.map((provider: ProviderType) => ({
+      key: provider.id,
+      label: t(
+        `components.on-boarding.connect-more-services-file-settings-form.data-type.options.${provider.id}`
+      ),
+      fileImportTypes: provider.fileImportTypes
+    }))
+  }
+  nextTick(() => (isComponentMounted.value = true))
+});
 
 watch(selectedProvider, () => {
-  onBoardingStore.file.type = selectedProvider.value as FilesTypes;
-  if (onBoardingStore.file.type === FilesTypes.OTHER) {
+  const provider = providersList.value.find((provider: ProvidersListType) => provider.key === selectedProvider.value)
+  const type = provider.fileImportTypes.find((name: string) => name.includes(dictionaryFileTypes[onBoardingStore.file.file.type]))
+  onBoardingStore.file.type = type;
+
+  if (onBoardingStore.file.type === AvalibleProviders.OTHER) {
     displayedName.value = "";
   }
 });
@@ -159,7 +153,7 @@ function handleSubmitForm() {
     />
     <InputForm
       class="animate-fade-in"
-      v-if="selectedProvider === FilesTypes.OTHER"
+      v-if="selectedProvider === AvalibleProviders.OTHER"
       v-model="displayedName"
       :label="
         t(

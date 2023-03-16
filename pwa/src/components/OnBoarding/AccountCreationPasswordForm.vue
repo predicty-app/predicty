@@ -67,6 +67,7 @@ function setErrorFormResponse(response: string) {
     <CodeForm
       v-model="modelValue"
       :error-message="errorMessage"
+      v-on:keyup.enter="handleSubmitForm"
       :required="true"
       :label="
         t('components.on-boarding.account-creation-password-form.input-label')
