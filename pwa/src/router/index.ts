@@ -13,6 +13,10 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/onboarding/start-screen",
         name: "on-boarding-start-screen",
+        meta: {
+          authentication: false,
+          authorizationType: "login"
+        },
         component: () => import("@/views/StartScreenView.vue")
       },
       {
@@ -27,7 +31,7 @@ const routes: Array<RouteRecordRaw> = [
             name: "on-boarding-account-creation-email",
             meta: {
               authentication: false,
-              authorizationType: "login"
+              authorizationType: "dashboard"
             },
             component: () =>
               import("@/views/AccountCreation/AccountCreationEmailView.vue")

@@ -53,7 +53,7 @@ function handleFiredAction(menuName: MenuNames) {
 async function handleLogoutUser() {
   isSpinnerLoadingVisible.value = true;
   await handleDeleteAuthenticationUser();
-  router.push("/onboarding/account-creation/email");
+  router.push("/onboarding/start-screen");
 }
 </script>
 

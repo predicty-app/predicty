@@ -35,7 +35,11 @@ export default class GuardService {
         } else if (to.name === (pathWithLogin && pathWithLogin.name)) {
           const state = await handleAuthenticatedUser();
 
+
           if (state) {
+            const isDashboard = to.matched.some(
+              (record) => record.meta.authorizationType === 'dashboard'
+            );
             next(
               this.getPathByName(router.options.routes, "after", null) as any
             );
@@ -43,7 +47,22 @@ export default class GuardService {
             next();
           }
         } else {
-          next();
+          const state = await handleAuthenticatedUser();
+          if (state) {
+            const isDashboard = to.matched.some(
+              (record) => record.meta.authorizationType === 'dashboard'
+            );
+
+            if(isDashboard) {
+              next(
+                this.getPathByName(router.options.routes, "after", null) as any
+              );
+            } else {
+              next();
+            }
+          } else {
+            next();
+          }
         }
       })();
     });
