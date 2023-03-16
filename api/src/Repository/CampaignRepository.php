@@ -20,6 +20,11 @@ class CampaignRepository
         $this->repository = $em->getRepository(Campaign::class);
     }
 
+    public function findById(int $id): ?Campaign
+    {
+        return $this->repository->find($id);
+    }
+
     public function findByUserIdAndName(int $userId, string $name): ?Campaign
     {
         return $this->repository->findOneBy(['userId' => $userId, 'name' => $name]);

@@ -7,12 +7,16 @@ namespace App\GraphQL\Type;
 use App\Entity\Ad;
 use App\GraphQL\TypeRegistry;
 use App\Repository\AdStatsRepository;
+use App\Repository\CampaignRepository;
 use GraphQL\Type\Definition\ObjectType;
 
 class AdType extends ObjectType
 {
-    public function __construct(TypeRegistry $type, AdStatsRepository $adStatsRepository)
-    {
+    public function __construct(
+        TypeRegistry $type,
+        AdStatsRepository $adStatsRepository,
+        CampaignRepository $campaignRepository
+    ) {
         parent::__construct([
             'name' => 'Ad',
             'fields' => [
@@ -24,6 +28,10 @@ class AdType extends ObjectType
                 ],
                 'name' => [
                     'type' => $type->string(),
+                ],
+                'campaign' => [
+                    'type' => fn () => $type->campaign(),
+                    'resolve' => fn (Ad $ad) => $campaignRepository->findById($ad->getCampaignId()),
                 ],
                 'adStats' => [
                     'type' => $type->listOf($type->adStats()),
