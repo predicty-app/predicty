@@ -26,6 +26,7 @@ services:
             - '../src/Test/'
             - '../src/Message/Command'
             - '../src/Kernel.php'
+            - '../src/Validator/EntityExists.php'
 
     _instanceof:
         GraphQL\Type\Definition\Type:

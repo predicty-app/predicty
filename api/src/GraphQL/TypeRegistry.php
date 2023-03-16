@@ -77,6 +77,11 @@ class TypeRegistry
         return Type::id();
     }
 
+    public function nonNullId(): NonNull
+    {
+        return new NonNull($this->id());
+    }
+
     public function int(): ScalarType
     {
         return Type::int();

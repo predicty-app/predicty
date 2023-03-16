@@ -1,0 +1,8 @@
+{
+  "data": {
+    "createAdCollection": {
+      "id": "@integer@",
+      "name": "Test"
+    }
+  }
+}
