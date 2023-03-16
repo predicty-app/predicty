@@ -8,6 +8,7 @@
       <sourceFolder url="file://$MODULE_DIR$/api/tests/unit" isTestSource="true" packagePrefix="App\Tests\Unit\" />
       <sourceFolder url="file://$MODULE_DIR$/api/tests/functional" isTestSource="true" packagePrefix="App\Tests\Functional\" />
       <sourceFolder url="file://$MODULE_DIR$/api/tests/integration" isTestSource="true" packagePrefix="App\Tests\Integration\" />
+      <sourceFolder url="file://$MODULE_DIR$/api/vendor" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/dotenv" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/config" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/web-profiler-bundle" />
@@ -186,12 +187,14 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/brick/money" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/league/csv" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/squizlabs/php_codesniffer" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/slevomat/coding-standard" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/dealerdirect/phpcodesniffer-composer-installer" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpstan/phpdoc-parser" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/doctrine-messenger" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/zenstruck/assert" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/zenstruck/messenger-test" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/zenstruck/assert" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/dealerdirect/phpcodesniffer-composer-installer" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/slevomat/coding-standard" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/doctrine-messenger" />
+      <excludeFolder url="file://$MODULE_DIR$/api/var/cache/test" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpstan/phpstan-webmozart-assert" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

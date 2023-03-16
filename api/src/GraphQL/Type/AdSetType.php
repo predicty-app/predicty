@@ -5,29 +5,28 @@ declare(strict_types=1);
 namespace App\GraphQL\Type;
 
 use App\Entity\AdSet;
-use App\GraphQL\TypeResolver;
+use App\GraphQL\TypeRegistry;
 use App\Repository\AdRepository;
 use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
 
 class AdSetType extends ObjectType
 {
-    public function __construct(TypeResolver $types, AdRepository $adRepository)
+    public function __construct(TypeRegistry $type, AdRepository $adRepository)
     {
         parent::__construct([
             'name' => 'AdSet',
             'fields' => [
                 'id' => [
-                    'type' => Type::id(),
+                    'type' => $type->id(),
                 ],
                 'externalId' => [
-                    'type' => Type::string(),
+                    'type' => $type->string(),
                 ],
                 'name' => [
-                    'type' => Type::string(),
+                    'type' => $type->string(),
                 ],
                 'ads' => [
-                    'type' => $types->listOf($types->ad()),
+                    'type' => $type->listOf($type->ad()),
                     'resolve' => fn (AdSet $adSet) => $adRepository->findAllByAdSetId($adSet->getId()),
                 ],
             ],

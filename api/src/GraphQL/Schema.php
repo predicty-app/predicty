@@ -11,7 +11,7 @@ use GraphQL\Type\SchemaConfig;
 
 class Schema extends GraphQLSchema
 {
-    public function __construct(TypeResolver $typeResolver)
+    public function __construct(TypeRegistry $typeResolver)
     {
         $config = SchemaConfig::create()
             ->setQuery($typeResolver->get(QueryType::class))

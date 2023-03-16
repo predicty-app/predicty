@@ -16,7 +16,7 @@ class ApiImport extends Import
     public function __construct(
         int $userId,
         int $dataProviderCredentialsId,
-        DataProviderType $type,
+        DataProvider $type,
         DateTimeImmutable $createdAt
     ) {
         parent::__construct($userId, $type, $createdAt);

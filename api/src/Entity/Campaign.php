@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Service\Clock\Clock;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -25,13 +26,23 @@ class Campaign
     #[ORM\Column(length: 255)]
     private string $name;
 
-    public function __construct(string $externalId, int $userId, string $name, DateTimeInterface $createdAt, DateTimeInterface $changedAt)
-    {
+    #[ORM\Column(options: ['default' => DataProvider::OTHER])]
+    private DataProvider $dataProvider;
+
+    public function __construct(
+        string $externalId,
+        int $userId,
+        string $name,
+        DataProvider $dataProvider = DataProvider::OTHER,
+        ?DateTimeInterface $createdAt = null,
+        ?DateTimeInterface $changedAt = null
+    ) {
         $this->externalId = $externalId;
         $this->userId = $userId;
         $this->name = $name;
-        $this->createdAt = $createdAt;
-        $this->changedAt = $changedAt;
+        $this->dataProvider = $dataProvider;
+        $this->createdAt = $createdAt ?? Clock::now();
+        $this->changedAt = $changedAt ?? Clock::now();
     }
 
     public function getUserId(): int
@@ -54,5 +65,10 @@ class Campaign
     public function getExternalId(): string
     {
         return $this->externalId;
+    }
+
+    public function getDataProvider(): DataProvider
+    {
+        return $this->dataProvider;
     }
 }

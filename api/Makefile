@@ -29,10 +29,11 @@ composer-install:
 	$(PHP_EXEC) composer install
 
 fix:
-	$(PHP_EXEC) ./vendor/bin/php-cs-fixer fix --allow-risky yes
+	@$(PHP_EXEC) ./vendor/bin/php-cs-fixer fix --allow-risky yes
+	@$(PHP_EXEC) ./vendor/bin/phpcbf
 
 phpstan:
-	$(PHP_EXEC) ./vendor/bin/phpstan analyze
+	@$(PHP_EXEC) ./vendor/bin/phpstan analyze
 
 fixtures:
 	@$(PHP_EXEC) ./bin/console doctrine:fixtures:load --no-interaction
