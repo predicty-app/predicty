@@ -12,8 +12,8 @@ export default class GuardService {
    * @param {Router} router
    */
   public static checkAuthentication(router: Router): void {
-    if(import.meta.env.NODE_ENV === 'test') {
-      return
+    if (import.meta.env.NODE_ENV === "test") {
+      return;
     }
 
     const pathWithLogin = this.getPathByName(
