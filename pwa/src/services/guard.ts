@@ -1,6 +1,6 @@
 import type { Router, RouteRecordRaw } from "vue-router";
 import { handleAuthenticatedUser } from "@/services/api/authentication";
-
+ 
 /**
  * RouterService
  * Router service to check authorization.
