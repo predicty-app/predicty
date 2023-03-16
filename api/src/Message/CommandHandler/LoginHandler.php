@@ -64,7 +64,7 @@ class LoginHandler
 
             // user used a passcode, therefore we also mark email as verified
             if ($user->isEmailVerified() === false) {
-                $user->markEmailAsVerified();
+                $user->setEmailVerified();
                 $this->userRepository->save($user);
             }
         }
