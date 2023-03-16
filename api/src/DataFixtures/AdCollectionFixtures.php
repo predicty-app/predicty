@@ -15,7 +15,7 @@ class AdCollectionFixtures extends Fixture implements DependentFixtureInterface
 {
     public const AD_COLLECTION_1 = 'AD_COLLECTION_1';
     public const AD_COLLECTION_2 = 'AD_COLLECTION_2';
-    public const AD_COLLECTION_3 = 'AD_COLLECTION_3';
+    public const EMPTY_COLLECTION = 'AD_COLLECTION_3';
 
     public function __construct(private ClockInterface $clock)
     {
@@ -37,7 +37,7 @@ class AdCollectionFixtures extends Fixture implements DependentFixtureInterface
         $data = [
             ['Red Collection', $userId, [$ad1->getId(), $ad2->getId()], self::AD_COLLECTION_1],
             ['Green Collection', $userId, [$ad2->getId(), $ad3->getId()], self::AD_COLLECTION_2],
-            ['Blue Collection', $userId, [], self::AD_COLLECTION_3],
+            ['Blue Collection', $userId, [], self::EMPTY_COLLECTION],
         ];
 
         foreach ($data as $row) {

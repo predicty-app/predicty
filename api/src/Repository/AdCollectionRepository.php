@@ -33,4 +33,9 @@ class AdCollectionRepository
     {
         return $this->repository->findAll();
     }
+
+    public function findById(int $adCollectionId): ?AdCollection
+    {
+        return $this->repository->find($adCollectionId);
+    }
 }

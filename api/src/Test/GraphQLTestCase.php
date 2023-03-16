@@ -14,6 +14,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 abstract class GraphQLTestCase extends WebTestCase
 {
+    use FixturesTrait;
+
     private static ?KernelBrowser $client = null;
     private static ?Backtrace $backtrace = null;
 

@@ -1,0 +1,19 @@
+{
+  "errors": [
+    {
+      "message": "Entity \u0022Ad\u0022 with property \u0022id\u0022: \u002299999\u0022 does not exist.",
+      "locations": [
+        {
+          "line": 2,
+          "column": 5
+        }
+      ],
+      "path": [
+        "addToAdCollection"
+      ]
+    }
+  ],
+  "data": {
+    "addToAdCollection": null
+  }
+}

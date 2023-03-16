@@ -27,7 +27,7 @@ class AdCollection
     public function __construct(
         int $userId,
         string $name,
-        array $adsIds,
+        array $adsIds = [],
         ?DateTimeImmutable $createdAt = null,
         ?DateTimeImmutable $changedAt = null
     ) {
@@ -67,5 +67,10 @@ class AdCollection
         $this->adsIds = $adsIds;
 
         return $this;
+    }
+
+    public function addAdsIds(array $adsIds): void
+    {
+        $this->adsIds = array_unique(array_merge($this->adsIds, $adsIds));
     }
 }
