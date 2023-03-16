@@ -1,6 +1,5 @@
 import type { Router, RouteRecordRaw } from "vue-router";
 import { handleAuthenticatedUser } from "@/services/api/authentication";
-// import { useAuthenticationStore } from '@/stores/authentication'
 
 /**
  * RouterService
