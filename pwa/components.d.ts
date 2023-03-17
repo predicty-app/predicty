@@ -26,7 +26,7 @@ declare module "@vue/runtime-core" {
     CheckboxForm: typeof import("./src/components/Common/CheckboxForm.vue")["default"];
     CollectionBottomBar: typeof import("./src/components/UserDashboard/Collection/CollectionBottomBar.vue")["default"];
     CollectionHeader: typeof import("./src/components/UserDashboard/Collection/CollectionHeader.vue")["default"];
-    CollectionSideItem: typeof import("./src/components/UserDashboard/Collection/CollectionSideItem.vue")["default"];
+    CollectionSideItems: typeof import("./src/components/UserDashboard/Collection/CollectionSideItems.vue")["default"];
     CollectionTimeline: typeof import("./src/components/UserDashboard/Collection/CollectionTimeline.vue")["default"];
     ConnectAccountForm: typeof import("./src/components/OnBoarding/ConnectAccountForm.vue")["default"];
     ConnectMoreServicesForm: typeof import("./src/components/OnBoarding/ConnectMoreServicesForm.vue")["default"];

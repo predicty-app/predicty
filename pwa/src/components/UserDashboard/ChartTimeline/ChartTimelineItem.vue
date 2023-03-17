@@ -129,7 +129,7 @@ defineEmits<{
     v-if="isElementVisible"
     ref="timelineItemInstance"
     :class="[
-      `col-start-dynamic col-end-dynamic p-[1.5px] rounded-[6px] h-fit`,
+      `col-start-dynamic col-end-dynamic p-[1.5px] rounded-[6px] h-fit my-auto`,
       {
         'border-[2px] border-timeline-item-border cursor-pointer':
           type === 'collection',

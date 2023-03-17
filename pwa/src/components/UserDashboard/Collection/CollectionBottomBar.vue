@@ -18,10 +18,10 @@ defineEmits<{
 <template>
   <div
     v-if="collection"
-    class="collection-bottom-bar fixed display-flex left-0 right-0 bottom-0 z-20 p-5 rounded-t-2xl bg-text-white shadow-bottombar"
+    class="collection-bottom-bar fixed display-flex left-0 right-0 bottom-0 z-50 rounded-t-2xl bg-text-white shadow-bottombar"
     data-testid="collection-bottom-bar"
   >
-    <div class="collection-bottom-bar__header pb-5 flex justify-between">
+    <div class="collection-bottom-bar__header p-5 flex justify-between">
       <CollectionHeader :collection="collection" />
       <button
         class="collection-bottom-bar__close p-2 focus:bg-bottombar-hover/50 hover:bg-bottombar-hover/50 rounded-md m-l-auto self-baseline"

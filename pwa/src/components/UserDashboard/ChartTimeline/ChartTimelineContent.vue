@@ -3,6 +3,7 @@ import { computed } from "vue";
 
 type PropsType = {
   countElements?: number;
+  fixedHeight?: boolean;
 };
 
 const props = withDefaults(defineProps<PropsType>(), {
@@ -16,7 +17,13 @@ const calculatedHeightElement = computed<number>(() => {
 
 <template>
   <div
-    class="chart-timeline-content h-dynamic mb-2"
+    :class="[
+      'chart-timeline-content',
+      {
+        'h-dynamic mb-2': !fixedHeight,
+        'h-[52px]': fixedHeight,
+      },
+    ]"
     :style="{ '--height': `${calculatedHeightElement}px` }"
   >
     <slot />
