@@ -9,7 +9,6 @@
       <sourceFolder url="file://$MODULE_DIR$/api/tests/functional" isTestSource="true" packagePrefix="App\Tests\Functional\" />
       <sourceFolder url="file://$MODULE_DIR$/api/tests/integration" isTestSource="true" packagePrefix="App\Tests\Integration\" />
       <sourceFolder url="file://$MODULE_DIR$/api/vendor" isTestSource="false" />
-      <excludeFolder url="file://$MODULE_DIR$/api/var/cache/test" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/dependency-injection" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/cache" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/doctrine-bridge" />
@@ -182,7 +181,6 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/myclabs/deep-copy" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phar-io/version" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phar-io/manifest" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpstan/phpstan-webmozart-assert" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/simpod/doctrine-utcdatetime" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/egulias/email-validator" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/lorenzo/pinky" />
@@ -195,6 +193,11 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpstan/phpstan-symfony" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpstan/phpstan" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpstan/phpdoc-parser" />
+      <excludeFolder url="file://$MODULE_DIR$/api/var/cache/test" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpstan/phpstan-webmozart-assert" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/thecodingmachine/safe" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/mll-lab/graphql-php-scalars" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/spatie/regex" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

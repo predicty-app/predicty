@@ -18,6 +18,7 @@
         "league/csv": "^9.8",
         "league/flysystem-bundle": "^3.1",
         "league/flysystem-memory": "^3.10",
+        "mll-lab/graphql-php-scalars": "^6.1",
         "nelmio/cors-bundle": "^2.3",
         "nyholm/psr7": "^1.5",
         "phpdocumentor/reflection-docblock": "^5.3",

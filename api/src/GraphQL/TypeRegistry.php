@@ -20,6 +20,7 @@ use GraphQL\Type\Definition\NonNull;
 use GraphQL\Type\Definition\ScalarType;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Upload\UploadType;
+use MLL\GraphQLScalars\Date;
 use RuntimeException;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 
@@ -35,15 +36,15 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
  * @method FileImportTypeType fileImportType()
  * @method DataProviderIdType dataProviderId()
  * @method DataProviderType   dataProvider()
+ * @method Date               date()
  */
 class TypeRegistry
 {
     private static array $guessingNamespaces = [
-        'GraphQL\Type\Definition',
-        'App\GraphQL\Type',
-        'App\GraphQL\Mutation',
-        'App\GraphQL\Query',
-        'GraphQL\Upload',
+        'GraphQL\Type\Definition\%sType',
+        'MLL\GraphQLScalars\%s',
+        'App\GraphQL\Type\%sType',
+        'GraphQL\Upload\%sType',
     ];
 
     public function __construct(private readonly ServiceLocator $serviceLocator)
@@ -137,7 +138,7 @@ class TypeRegistry
         $typeName = ucfirst($typeName);
 
         foreach (self::$guessingNamespaces as $namespace) {
-            $guessedClassName = $namespace.'\\'.$typeName.'Type';
+            $guessedClassName = sprintf($namespace, $typeName);
             if (is_a($guessedClassName, Type::class, true)) {
                 return $guessedClassName;
             }
