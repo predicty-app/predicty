@@ -213,6 +213,9 @@
       <path value="$PROJECT_DIR$/api/vendor/phpstan/phpstan-symfony" />
       <path value="$PROJECT_DIR$/api/vendor/phpstan/phpstan" />
       <path value="$PROJECT_DIR$/api/vendor/phpstan/phpdoc-parser" />
+      <path value="$PROJECT_DIR$/api/vendor/thecodingmachine/safe" />
+      <path value="$PROJECT_DIR$/api/vendor/mll-lab/graphql-php-scalars" />
+      <path value="$PROJECT_DIR$/api/vendor/spatie/regex" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

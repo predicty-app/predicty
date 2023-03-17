@@ -52,6 +52,7 @@ services:
         arguments: [!tagged_iterator {tag: graphql_mutation}]
 
     GraphQL\Upload\UploadType: ~
+    MLL\GraphQLScalars\Date: ~
 
     App\Service\Google\GoogleAdsClient:
         factory: [App\Service\Google\GoogleAdsClientFactory, build]

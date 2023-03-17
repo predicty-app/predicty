@@ -1,0 +1,32 @@
+{
+  "data": {
+    "dashboard": {
+      "campaigns": [
+        {
+          "adSets": [
+            {
+              "id": "@integer@",
+              "externalId": "adset-external-id-1",
+              "name": "Dummy AdSet 1",
+              "startedAt": "@date@",
+              "endedAt": "@date@"
+            },
+            "@...@"
+          ]
+        },
+        "@...@",
+        {
+          "adSets": [
+            {
+              "id": "@integer@",
+              "externalId": "adset-external-id-4",
+              "name": "Dummy AdSet 4",
+              "startedAt": null,
+              "endedAt": null
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
