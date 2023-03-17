@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Test;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
 use Coduo\PHPMatcher\Backtrace;
 use Coduo\PHPMatcher\PHPUnit\PHPMatcherConstraint;
@@ -25,11 +26,19 @@ abstract class GraphQLTestCase extends WebTestCase
         parent::tearDown();
     }
 
-    public static function authenticate(string $email = 'john.doe@example.com'): void
+    public static function authenticate(User|string $user = null): void
     {
+        if ($user === null) {
+            $user = 'john.doe@example.com';
+        }
+
+        if ($user instanceof User) {
+            $user = $user->getEmail();
+        }
+
         $client = static::getClient();
         $users = static::getContainer()->get(UserRepository::class);
-        $user = $users->findByUsername($email);
+        $user = $users->findByUsername($user);
         assert($user instanceof UserInterface);
         $client->loginUser($user);
     }

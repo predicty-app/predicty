@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Service\Clock\Clock;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Types\UuidType;
@@ -34,6 +35,9 @@ class User implements UserInterface, EmailRecipientInterface, PasswordAuthentica
 
     #[ORM\Column(options: ['default' => 0])]
     private bool $isEmailVerified = false;
+
+    #[ORM\Column(options: ['default' => 0])]
+    private bool $isOnboardingComplete = false;
 
     public function __construct(string $email, DateTimeImmutable $createdAt, DateTimeImmutable $changedAt)
     {
@@ -116,9 +120,21 @@ class User implements UserInterface, EmailRecipientInterface, PasswordAuthentica
         return $this->isEmailVerified;
     }
 
-    public function markEmailAsVerified(): void
+    public function setEmailVerified(): void
     {
         $this->isEmailVerified = true;
+        $this->changedAt = Clock::now();
+    }
+
+    public function isOnboardingComplete(): bool
+    {
+        return $this->isOnboardingComplete;
+    }
+
+    public function setOnboardingComplete(): void
+    {
+        $this->isOnboardingComplete = true;
+        $this->changedAt = Clock::now();
     }
 
     public function eraseCredentials(): void
