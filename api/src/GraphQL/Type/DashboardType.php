@@ -27,8 +27,18 @@ class DashboardType extends ObjectType
                             'type' => $type->int(),
                             'defaultValue' => 10,
                         ],
+                        'id' => [
+                            'type' => $type->id(),
+                            'defaultValue' => '',
+                        ],
                     ],
-                    'resolve' => fn () => $campaignRepository->findAll(),
+                    'resolve' => function (mixed $dashboard, array $args) use ($campaignRepository) {
+                        if ($args['id'] !== '') {
+                            return [$campaignRepository->findById((int) $args['id'])];
+                        }
+
+                        return $campaignRepository->findAll((int) $args['limit']);
+                    },
                 ],
                 'collections' => [
                     'type' => $type->listOf($type->adCollection()),
