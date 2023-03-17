@@ -1,0 +1,26 @@
+{
+  "data": {
+    "dashboard": {
+      "campaigns": [
+        {
+          "adSets": [
+            {
+              "ads": [
+                {
+                  "id": "@integer@",
+                  "externalId": "ad-external-id-1",
+                  "name": "Dummy Ad 1",
+                  "campaignId": "@integer@",
+                  "adStats": "@...@"
+                },
+                "@...@"
+              ]
+            },
+            "@...@"
+          ]
+        },
+        "@...@"
+      ]
+    }
+  }
+}

@@ -11,6 +11,8 @@ use GraphQL\Error\Error;
 use GraphQL\Server\ServerConfig;
 use GraphQL\Server\StandardServer;
 use GraphQL\Upload\UploadMiddleware;
+use GraphQL\Validator\DocumentValidator;
+use GraphQL\Validator\Rules\QueryDepth;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -36,6 +38,7 @@ class GraphQlController extends AbstractController
 
         $rootValue = [];
 
+        DocumentValidator::addRule(new QueryDepth(20));
         $config = ServerConfig::create()
             ->setRootValue($rootValue)
             ->setSchema($schema)

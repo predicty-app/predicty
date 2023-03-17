@@ -25,6 +25,9 @@ class UserType extends ObjectType
                 'isEmailVerified' => [
                     'type' => $type->boolean(),
                 ],
+                'isOnboardingComplete' => [
+                    'type' => $type->boolean(),
+                ],
             ],
         ]);
     }

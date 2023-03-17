@@ -21,6 +21,13 @@ class DefaultFieldResolver
     public function __invoke(mixed $objectLikeValue, array $args, mixed $contextValue, ResolveInfo $info): mixed
     {
         $property = null;
+
+        if (is_array($objectLikeValue)) {
+            if (isset($objectLikeValue[$info->fieldName])) {
+                return $objectLikeValue[$info->fieldName];
+            }
+        }
+
         if ($this->isObjectOrArrayLike($objectLikeValue)) {
             $property = $this->accessor->getValue($objectLikeValue, $info->fieldName);
         }

@@ -26,6 +26,7 @@ services:
             - '../src/Test/'
             - '../src/Message/Command'
             - '../src/Kernel.php'
+            - '../src/Validator/EntityExists.php'
 
     _instanceof:
         GraphQL\Type\Definition\Type:
@@ -51,6 +52,7 @@ services:
         arguments: [!tagged_iterator {tag: graphql_mutation}]
 
     GraphQL\Upload\UploadType: ~
+    MLL\GraphQLScalars\Date: ~
 
     App\Service\Google\GoogleAdsClient:
         factory: [App\Service\Google\GoogleAdsClientFactory, build]
