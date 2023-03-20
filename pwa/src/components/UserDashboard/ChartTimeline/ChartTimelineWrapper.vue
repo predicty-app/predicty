@@ -2,13 +2,13 @@
 import { ref } from "vue";
 import { useGlobalStore } from "@/stores/global";
 import {
-  scaleLines,
-  scaleLinesGradient,
-  mainWidthGrid,
   gapGrid,
   scaleGrid,
+  scaleLines,
+  heightContent,
+  mainWidthGrid,
   scaleFirstGrid,
-  heightContent
+  scaleLinesGradient
 } from "@/helpers/timeline";
 
 const globalStore = useGlobalStore();
@@ -71,7 +71,7 @@ function handleChangeScale(eventWheel: WheelEvent) {
   >
     <div
       ref="timelineGridInstance"
-      class="chart-timeline-wrapper__grid absolute top-0 left-0 z-10"
+      class="chart-timeline-wrapper__grid absolute top-4 left-0 z-10"
     >
       <slot />
     </div>

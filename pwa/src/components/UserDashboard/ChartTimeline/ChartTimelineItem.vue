@@ -3,7 +3,7 @@ import { useGlobalStore } from "@/stores/global";
 import { ref, onMounted, watch, computed } from "vue";
 import { hLightenDarkenColor } from "@/helpers/utils";
 import { useUserDashboardStore } from "@/stores/userDashboard";
-import type { AdsType, AdsCollection } from "@/stores/userDashboard";
+import type { AdsType, AdSetsType } from "@/stores/userDashboard";
 
 type PropsType = {
   end: number;
@@ -12,7 +12,7 @@ type PropsType = {
   isVisible?: boolean;
   campaingUid?: string;
   type?: "ad" | "collection";
-  element: AdsType | AdsCollection;
+  element: AdsType | AdSetsType;
 };
 
 const props = withDefaults(defineProps<PropsType>(), {
@@ -107,7 +107,7 @@ function handleToogleSelectAd() {
 }
 
 defineEmits<{
-  (e: "collectionSelected", value: AdsType | AdsCollection): void;
+  (e: "collectionSelected", value: AdsType): void;
 }>();
 </script>
 
@@ -150,7 +150,7 @@ defineEmits<{
         v-if="type === 'collection'"
         class="rounded font-semibold text-xs w-[14px] py-[1px] bg-timeline-collection-count flex items-center justify-center"
       >
-        {{ (element as AdsCollection).ads.length }}
+        {{ (element as AdSetsType).ads.length }}
       </div>
       {{ element.name }}
     </div>

@@ -3,7 +3,7 @@ import { createI18n } from "vue-i18n";
 /**
  * Function to get dynamical transalations for application.
  * @returns {Object}
- */ 
+ */
 function getTranslationsNames() {
   const modules = import.meta.glob("./*.json");
   const names = Object.keys(modules).map((name) =>

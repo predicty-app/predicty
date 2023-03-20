@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import type { AdsCollection, AdsType } from "@/stores/userDashboard";
+import type { AdSetsType, AdsType } from "@/stores/userDashboard";
 
 const { t } = useI18n();
 
 type PropsType = {
-  collection?: AdsType | AdsCollection;
+  collection?: AdsType | AdSetsType;
 };
 
 const props = defineProps<PropsType>();

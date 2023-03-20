@@ -17,30 +17,49 @@ export enum MenuNames {
   "LOGOUT" = "logout"
 }
 
-export type AdsType = {
-  uid: string;
-  name: string;
-  start: string;
-  end: string;
-  creation: string;
-  cost_total: number;
-  cost_per_day: number;
+export type AmountNumberType = {
+  currency: string;
+  amount: number;
 };
 
-export type AdsCollection = {
+export type AdStatusType = {
+  results: number;
+  amountSpent: AmountNumberType;
+  costPerResult: AmountNumberType;
+  date: string;
+  id: string;
+};
+
+export type AdsType = {
+  uid: string;
+  end: string;
+  name: string;
+  start: string;
+  creation: string;
+  isActive: boolean;
+  status: AdStatusType[];
+  dataProvider: string[];
+};
+
+export type AdSetsType = {
   uid: string;
   name: string;
-  ads: string[];
+  externalId: string;
   start: string;
+  campaignId?: string;
+  isActive: boolean;
   end: string;
+  ads: AdsType[];
 };
 
 export type CampaignType = {
   uid: string;
   name: string;
-  ads: AdsType[];
+  adsets: AdSetsType[];
   color?: string;
-  collection: AdsCollection[];
+  campaignId?: string;
+  externalId: string;
+  dataProvider: string[];
 };
 
 type CheckedAdsToCollectionType = {
@@ -55,12 +74,12 @@ type AuthenticatedUserParamsType = {
 };
 
 type StateType = {
-  authenticatedUserParams: AuthenticatedUserParamsType;
-  selectedAdsList: CheckedAdsToCollectionType;
-  campaigns: CampaignType[];
   hiddenAds: string[];
+  campaigns: CampaignType[];
   activeProviders: string[];
   parsedCampaignsList: CampaignType[];
+  selectedAdsList: CheckedAdsToCollectionType;
+  authenticatedUserParams: AuthenticatedUserParamsType;
 };
 
 export const useUserDashboardStore = defineStore({
@@ -71,7 +90,13 @@ export const useUserDashboardStore = defineStore({
       campaigns: [],
       parsedCampaignsList: [],
       hiddenAds: [],
-      activeProviders: ["google-analytics", "google-ads", "meta"],
+      activeProviders: [
+        "GOOGLE_ADS",
+        "FACEBOOK_ADS",
+        "GOOGLE_ANALYTICS",
+        "TIK_TOK",
+        "OTHER"
+      ],
       selectedAdsList: {
         campaignUid: null,
         ads: []
@@ -84,12 +109,7 @@ export const useUserDashboardStore = defineStore({
      * @param {CampaignType[]} list
      */
     setCampaignsList(list: CampaignType[]) {
-      this.campaigns = list.map((campaign: CampaignType) => {
-        campaign.color = `#${Math.floor(Math.random() * 16777215).toString(
-          16
-        )}`;
-        return campaign;
-      });
+      this.campaigns = list;
     },
 
     /**
@@ -145,21 +165,26 @@ export const useUserDashboardStore = defineStore({
     handleVirtualizeCampaignsList() {
       const globalStore = useGlobalStore();
 
-      this.parsedCampaignsList = this.campaigns.filter(
-        (campaign: CampaignType, index: number) => {
-          const currentHeightElement =
-            (campaign.ads.length + campaign.collection.length) * 36 +
-            (campaign.ads.length + campaign.collection.length) * 5;
+      this.parsedCampaignsList = this.campaigns
+        .filter(
+          (campaign: CampaignType) =>
+            campaign.adsets.filter((adset: AdSetsType) => !adset.campaignId)
+              .length > 0
+        )
+        .filter((campaign: CampaignType, index: number) => {
+          let currentHeightElement = 0;
+
+          campaign.adsets.forEach((adset: AdSetsType) => {
+            currentHeightElement +=
+              adset.ads.length * 36 + adset.ads.length * 5;
+          });
 
           let previousHeightElement = 0;
           for (let i = 0; i < index; i++) {
-            previousHeightElement +=
-              (this.campaigns[i].ads.length +
-                this.campaigns[i].collection.length) *
-                36 +
-              (this.campaigns[i].ads.length +
-                this.campaigns[i].collection.length) *
-                5;
+            this.campaigns[0].adsets.forEach((adset: AdSetsType) => {
+              previousHeightElement +=
+                adset.ads.length * 36 + adset.ads.length * 5;
+            });
           }
 
           const currentTopPosition = previousHeightElement;
@@ -170,8 +195,7 @@ export const useUserDashboardStore = defineStore({
             currentTopPosition + currentHeightElement >
               globalStore.scrollCampaignList.scrollTop
           );
-        }
-      );
+        });
     }
   }
 });

@@ -25,7 +25,7 @@ function handleChangeScrollParams(params: ScrollType) {
   <slot name="header" />
   <div class="h-calc select-none grid grid-cols-[336px_auto]">
     <div
-      class="h-calc select-none grid grid-cols-[auto] grid-rows-[320px_auto]"
+      class="h-calc select-none grid grid-cols-[auto] grid-rows-[320px_80px_auto]"
     >
       <div>
         <slot name="chart-legend" />

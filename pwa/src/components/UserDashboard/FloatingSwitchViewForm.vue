@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { computed, ref } from "vue";
-import type { CampaignType, AdsCollection } from "@/stores/userDashboard";
+import type { CampaignType, AdSetsType } from "@/stores/userDashboard";
 import { useUserDashboardStore, OptionsName } from "@/stores/userDashboard";
 import {
   handleCreateCollection,
@@ -17,16 +17,9 @@ const { t } = useI18n();
 const campaignModelValue = ref<string>("");
 const userDashboardStore = useUserDashboardStore();
 const optionsCollectionList = computed<OptionsType[]>(() => {
-  const campaigns = userDashboardStore.campaigns.find(
-    (campaign: CampaignType) =>
-      campaign.uid === userDashboardStore.selectedAdsList.campaignUid
-  );
-  if (!campaigns) {
-    return [];
-  }
-  return campaigns.collection.map((collection: AdsCollection) => ({
-    key: collection.uid,
-    label: collection.name
+  return userDashboardStore.campaigns[0].adsets.map((adsets: AdSetsType) => ({
+    key: adsets.uid,
+    label: adsets.name
   }));
 });
 
@@ -46,12 +39,7 @@ const optionsButtons = computed<OptionsType[]>(() => {
     }
   ];
 
-  const campaign = userDashboardStore.campaigns.find(
-    (campaing: CampaignType) =>
-      campaing.uid === userDashboardStore.selectedAdsList.campaignUid
-  );
-
-  if (campaign && campaign.collection.length > 0) {
+  if (userDashboardStore.campaigns[0].adsets.length > 0) {
     options.push({
       key: OptionsName.ADD_TO_COLLECTION,
       label: t(

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { onMounted, nextTick } from "vue";
-import { useUserDashboardStore } from "@/stores/userDashboard";
+import { useUserDashboardStore, type AdSetsType } from "@/stores/userDashboard";
 import { handleGetCampaigns } from "@/services/api/userDashboard";
 import type { CampaignType, AdsType } from "@/stores/userDashboard";
 import {
@@ -27,16 +27,10 @@ onMounted(async () => {
  * @return {number}
  */
 function calculateActiveCurrentAds(campaign: CampaignType): number {
-  const currentTimestamp = Math.floor(Date.now() / 1000);
   let count = 0;
-
-  campaign.ads.forEach((ad: AdsType) => {
-    if (
-      Date.parse(ad.start) / 1000 < currentTimestamp &&
-      Date.parse(ad.end) / 1000 > currentTimestamp
-    ) {
-      count++;
-    }
+  const adsets = campaign.adsets.filter((adset: AdSetsType) => adset.isActive);
+  adsets.forEach((adset: AdSetsType) => {
+    count += adset.ads.filter((ad: AdsType) => ad.isActive).length;
   });
 
   return count;
@@ -61,7 +55,9 @@ function calculateActiveCurrentAds(campaign: CampaignType): number {
           t(
             "components.user-dashboard.campaning-list-form.active_ad_collection",
             {
-              count: campaign.collection.length
+              count: userDashboardStore.parsedCampaignsList[0].adsets.filter(
+                (adset: AdSetsType) => adset.campaignId === campaign.uid
+              ).length
             }
           )
         }}
@@ -69,7 +65,8 @@ function calculateActiveCurrentAds(campaign: CampaignType): number {
       <div>
         {{
           t("components.user-dashboard.campaning-list-form.active_ad_sets", {
-            count: 0
+            count: campaign.adsets.filter((adset: AdSetsType) => adset.isActive)
+              .length
           })
         }}
       </div>

@@ -123,10 +123,19 @@
         "close": "Close"
       },
       "providers-list-form": {
-        "google-analytics": "Google Analytics",
-        "google-ads": "Google Ads",
-        "meta": "Meta"
+        "provider": {
+          "GOOGLE_ADS": "Google Ads",
+          "FACEBOOK_ADS": "Facebook Ads (Meta)",
+          "GOOGLE_ANALYTICS": "Google Analytics",
+          "TIK_TOK": "TikTok",
+          "OTHER": "Other (internal)"
+        }
       }
+    }
+  },
+  "services": {
+    "collections": {
+      "title": "External collection"
     }
   },
   "views": {

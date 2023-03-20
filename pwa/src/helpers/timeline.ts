@@ -1,7 +1,7 @@
 import { computed } from "vue";
 import { useGlobalStore } from "@/stores/global";
-import type { CampaignType } from "@/stores/userDashboard";
 import { useUserDashboardStore } from "@/stores/userDashboard";
+import type { CampaignType, AdSetsType } from "@/stores/userDashboard";
 
 const globalStore = useGlobalStore();
 const userDashboardStore = useUserDashboardStore();
@@ -59,10 +59,16 @@ export const heightContent = computed<string>(() => {
  * @return {number}
  */
 export function calculateItemHeight(campaign: CampaignType): number {
-  return (
-    (campaign.ads.length + campaign.collection.length) * 36 +
-    (campaign.ads.length + campaign.collection.length) * 5
+  const adsets = campaign.adsets.filter(
+    (adset: AdSetsType) => !adset.campaignId
   );
+  let height = 0;
+
+  adsets.forEach((adset: AdSetsType) => {
+    height += adset.ads.length * 36 + adset.ads.length * 5;
+  });
+
+  return height;
 }
 
 /**
@@ -102,20 +108,19 @@ export function calculateItemPosition(
   campaign: CampaignType,
   modifierHeight: number
 ): number {
-  let previousHeightElement = 0;
+  const previousHeightElement = 0;
   const index = userDashboardStore.campaigns.findIndex(
     (item: CampaignType) => item.uid === campaign.uid
   );
 
   for (let i = 0; i < index; i++) {
-    previousHeightElement +=
-      (userDashboardStore.campaigns[i].ads.length +
-        userDashboardStore.campaigns[i].collection.length) *
-        36 +
-      (userDashboardStore.campaigns[i].ads.length +
-        userDashboardStore.campaigns[i].collection.length) *
-        5 +
-      modifierHeight;
+    let previousHeightElement = 0;
+    for (let i = 0; i < index; i++) {
+      userDashboardStore.campaigns[0].adsets.forEach((adset: AdSetsType) => {
+        previousHeightElement +=
+          adset.ads.length * 36 + adset.ads.length * 5 + modifierHeight;
+      });
+    }
   }
 
   return previousHeightElement;

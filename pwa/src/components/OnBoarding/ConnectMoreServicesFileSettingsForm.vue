@@ -2,9 +2,12 @@
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { ref, onMounted, nextTick, watch, computed } from "vue";
-import { handleGetProvidersList, type ProviderType } from '@/services/api/providers'
+import {
+  handleGetProvidersList,
+  type ProviderType
+} from "@/services/api/providers";
 import { useOnBoardingStore, AvalibleProviders } from "@/stores/onboarding";
- 
+
 const { t } = useI18n();
 
 const router = useRouter();
@@ -17,7 +20,10 @@ const isNextButtonDisabled = computed<boolean>(() => {
     return true;
   }
 
-  if (selectedProvider.value === AvalibleProviders.OTHER && !displayedName.value) {
+  if (
+    selectedProvider.value === AvalibleProviders.OTHER &&
+    !displayedName.value
+  ) {
     return true;
   }
 
@@ -25,10 +31,10 @@ const isNextButtonDisabled = computed<boolean>(() => {
 });
 
 type ProvidersListType = {
-  key: string,
-  label: string
-  fileImportTypes: string[]
-}
+  key: string;
+  label: string;
+  fileImportTypes: string[];
+};
 
 const columnsList = {
   "campaign-id": t(
@@ -46,7 +52,7 @@ const columnsList = {
   "image-hash": t(
     "components.on-boarding.connect-more-services-file-settings-form.descriptions.columns-names.image-hash"
   ),
-  "spent": t(
+  spent: t(
     "components.on-boarding.connect-more-services-file-settings-form.descriptions.columns-names.spent"
   )
 };
@@ -88,27 +94,31 @@ const columnsProvider = {
 };
 
 const dictionaryFileTypes = {
-  "text/csv": "_CSV",
-}
-const providersList = ref<ProvidersListType[]>([])
+  "text/csv": "_CSV"
+};
+const providersList = ref<ProvidersListType[]>([]);
 
 onMounted(async () => {
-  const response = await handleGetProvidersList()
-  if(response) {
+  const response = await handleGetProvidersList();
+  if (response) {
     providersList.value = response.map((provider: ProviderType) => ({
       key: provider.id,
       label: t(
         `components.on-boarding.connect-more-services-file-settings-form.data-type.options.${provider.id}`
       ),
       fileImportTypes: provider.fileImportTypes
-    }))
+    }));
   }
-  nextTick(() => (isComponentMounted.value = true))
+  nextTick(() => (isComponentMounted.value = true));
 });
 
 watch(selectedProvider, () => {
-  const provider = providersList.value.find((provider: ProvidersListType) => provider.key === selectedProvider.value)
-  const type = provider.fileImportTypes.find((name: string) => name.includes(dictionaryFileTypes[onBoardingStore.file.file.type]))
+  const provider = providersList.value.find(
+    (provider: ProvidersListType) => provider.key === selectedProvider.value
+  );
+  const type = provider.fileImportTypes.find((name: string) =>
+    name.includes(dictionaryFileTypes[onBoardingStore.file.file.type])
+  );
   onBoardingStore.file.type = type;
 
   if (onBoardingStore.file.type === AvalibleProviders.OTHER) {
