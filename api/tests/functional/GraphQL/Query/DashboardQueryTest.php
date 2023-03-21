@@ -133,4 +133,35 @@ class DashboardQueryTest extends GraphQLTestCase
         $this->assertResponseIsSuccessful();
         $this->assertResponseMatchesJsonFile(__DIR__.'/response/DashboardCampaignAdSets.json');
     }
+
+    /**
+     * @covers \App\GraphQL\Type\DailyRevenueType
+     */
+    public function test_get_dashboard_campaign_ad_revenue_share(): void
+    {
+        $this->authenticate();
+
+        $query = <<<'EOF'
+            query {
+              dashboard {
+                campaigns {
+                        adSets{
+                    ads{
+                      adStats{
+                        revenueShare {
+                          amount
+                          currency
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            EOF;
+
+        $this->executeQuery($query);
+        $this->assertResponseIsSuccessful();
+        $this->assertResponseMatchesJsonFile(__DIR__.'/response/DashboardAdRevenueShare.json');
+    }
 }
