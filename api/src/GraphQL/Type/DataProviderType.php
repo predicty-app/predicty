@@ -16,14 +16,16 @@ class DataProviderType extends ObjectType
             'name' => 'DataProvider',
             'fields' => [
                 'id' => [
-                    'type' => $type->nonNull($type->dataProviderId()),
-                    'resolve' => fn (DataProvider $dataProvider) => $dataProvider,
+                    'type' => $type->id(),
+                    'resolve' => fn (DataProvider $dataProvider) => $dataProvider->getId(),
                 ],
                 'name' => $type->string(),
                 'fileImportTypes' => [
                     'type' => $type->listOf($type->fileImportType()),
                     'resolve' => fn (DataProvider $dataProvider) => $dataProvider->getFileImportTypes(),
                 ],
+                'type' => $type->dataProviderType(),
+                'createdAt' => $type->date(),
             ],
         ]);
     }

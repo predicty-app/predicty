@@ -23,6 +23,7 @@ class CampaignFactory
                 externalId: $externalId,
                 userId: $userId,
                 name: $name,
+                dataProviderId: $this->clock->now(),
                 createdAt: $this->clock->now(),
                 changedAt: $this->clock->now()
             );

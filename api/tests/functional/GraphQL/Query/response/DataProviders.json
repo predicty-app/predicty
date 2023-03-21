@@ -2,31 +2,34 @@
   "data": {
     "dataProviders": [
       {
-        "id": "GOOGLE_ADS",
+        "createdAt": "2023-03-21",
+        "fileImportTypes": [],
+        "id": "@integer@",
         "name": "Google Ads",
-        "fileImportTypes": []
+        "type": "GOOGLE_ADS"
       },
       {
-        "id": "FACEBOOK_ADS",
-        "name": "Facebook Ads (Meta)",
+        "createdAt": "2023-03-21",
         "fileImportTypes": [
           "FACEBOOK_CSV"
-        ]
+        ],
+        "id": "@integer@",
+        "name": "Facebook Ads (Meta)",
+        "type": "FACEBOOK_ADS"
       },
       {
-        "id": "GOOGLE_ANALYTICS",
+        "createdAt": "2023-03-21",
+        "fileImportTypes": [],
+        "id": "@integer@",
         "name": "Google Analytics",
-        "fileImportTypes": []
+        "type": "GOOGLE_ANALYTICS"
       },
       {
-        "id": "TIK_TOK",
+        "createdAt": "2023-03-21",
+        "fileImportTypes": [],
+        "id": "@integer@",
         "name": "TikTok",
-        "fileImportTypes": []
-      },
-      {
-        "id": "OTHER",
-        "name": "Other (internal)",
-        "fileImportTypes": []
+        "type": "TIK_TOK"
       }
     ]
   }

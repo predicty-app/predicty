@@ -27,8 +27,8 @@ class Import
     #[ORM\Column]
     private ImportStatus $status;
 
-    #[ORM\Column(options: ['default' => DataProvider::OTHER])]
-    private DataProvider $dataProvider;
+    #[ORM\Column]
+    private int $dataProviderId;
 
     #[ORM\Column(type: Types::TEXT)]
     private string $message = '';
@@ -41,12 +41,12 @@ class Import
 
     public function __construct(
         int $userId,
-        DataProvider $dataProvider,
+        int $dataProviderId,
         ?DateTimeImmutable $createdAt = null
     ) {
         $this->userId = $userId;
         $this->status = ImportStatus::WAITING;
-        $this->dataProvider = $dataProvider;
+        $this->dataProviderId = $dataProviderId;
         $this->createdAt = $createdAt ?? Clock::now();
         $this->changedAt = $createdAt ?? Clock::now();
     }
@@ -66,9 +66,9 @@ class Import
         return $this->message;
     }
 
-    public function getDataProvider(): DataProvider
+    public function getDataProviderId(): int
     {
-        return $this->dataProvider;
+        return $this->dataProviderId;
     }
 
     public function success(): void

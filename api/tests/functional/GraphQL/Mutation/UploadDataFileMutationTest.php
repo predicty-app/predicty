@@ -17,8 +17,8 @@ class UploadDataFileMutationTest extends GraphQLTestCase
         $this->authenticate();
 
         $mutation = <<<'EOF'
-                mutation($file: Upload, $type: FileImportType!) {
-                  uploadDataFile(file: $file, type: $type)
+                mutation($file: Upload, $dataProviderId: ID!, $type: FileImportType!) {
+                  uploadDataFile(file: $file, type: $type, dataProviderId: $dataProviderId)
                 }
             EOF;
 
@@ -31,7 +31,7 @@ class UploadDataFileMutationTest extends GraphQLTestCase
             parameters: [
                 'operations' => json_encode([
                     'query' => $mutation,
-                    'variables' => ['file' => null, 'type' => 'FACEBOOK_CSV'],
+                    'variables' => ['file' => null, 'type' => 'FACEBOOK_CSV', 'dataProviderId' => 1],
                     'operationName' => null,
                 ]),
                 'map' => json_encode([0 => ['variables.file']]),

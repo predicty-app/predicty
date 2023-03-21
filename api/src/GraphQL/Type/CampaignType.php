@@ -7,11 +7,12 @@ namespace App\GraphQL\Type;
 use App\Entity\Campaign;
 use App\GraphQL\TypeRegistry;
 use App\Repository\AdSetRepository;
+use App\Repository\DataProviderRepository;
 use GraphQL\Type\Definition\ObjectType;
 
 class CampaignType extends ObjectType
 {
-    public function __construct(TypeRegistry $type, AdSetRepository $adSetRepository)
+    public function __construct(TypeRegistry $type, AdSetRepository $adSetRepository, DataProviderRepository $dataProviderRepository)
     {
         parent::__construct([
             'name' => 'Campaign',
@@ -27,7 +28,7 @@ class CampaignType extends ObjectType
                 ],
                 'dataProvider' => [
                     'type' => $type->dataProvider(),
-                    'resolve' => fn (Campaign $campaign) => $campaign->getDataProvider(),
+                    'resolve' => fn (Campaign $campaign) => $dataProviderRepository->findById($campaign->getDataProviderId()),
                 ],
                 'adSets' => [
                     'type' => $type->listOf($type->adSet()),

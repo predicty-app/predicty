@@ -27,6 +27,7 @@ class UploadDataFileMutation extends FieldDefinition
             'type' => $this->type->string(),
             'args' => [
                 'file' => $this->type->upload(),
+                'dataProviderId' => $this->type->nonNull($this->type->id()),
                 'type' => $this->type->nonNull($this->type->fileImportType()),
             ],
             'resolve' => fn (mixed $root, array $args) => $this->resolve($args),
@@ -38,7 +39,12 @@ class UploadDataFileMutation extends FieldDefinition
     {
         $filename = $this->fileUploadService->receive($args['file']);
         $this->commandBus->dispatch(
-            new ImportFile($this->currentUserService->getId(), $args['type'], $filename)
+            new ImportFile(
+                $this->currentUserService->getId(),
+                $args['dataProviderId'],
+                $args['type'],
+                $filename
+            )
         );
 
         return 'OK';

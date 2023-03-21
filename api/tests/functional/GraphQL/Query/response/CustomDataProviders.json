@@ -1,0 +1,25 @@
+{
+  "data": {
+    "dataProviders": [
+      "@...@",
+      {
+        "id": "@integer@",
+        "type": "OTHER",
+        "name": "TV Ads",
+        "fileImportTypes": [
+          "SIMPLIFIED_CSV"
+        ],
+        "createdAt": "@date@"
+      },
+      {
+        "id": "@integer@",
+        "type": "OTHER",
+        "name": "Newspaper",
+        "fileImportTypes": [
+          "SIMPLIFIED_CSV"
+        ],
+        "createdAt": "@date@"
+      }
+    ]
+  }
+}

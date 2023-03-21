@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity]
 #[ORM\Index(fields: ['userId'])]
 #[ORM\Index(fields: ['externalId'])]
+#[ORM\Index(fields: ['dataProviderId'])]
 #[ORM\UniqueConstraint(fields: ['userId', 'externalId'])]
 class Campaign
 {
@@ -26,21 +27,21 @@ class Campaign
     #[ORM\Column(length: 255)]
     private string $name;
 
-    #[ORM\Column(options: ['default' => DataProvider::OTHER])]
-    private DataProvider $dataProvider;
+    #[ORM\Column]
+    private int $dataProviderId;
 
     public function __construct(
         string $externalId,
         int $userId,
         string $name,
-        DataProvider $dataProvider = DataProvider::OTHER,
+        int $dataProviderId,
         ?DateTimeInterface $createdAt = null,
         ?DateTimeInterface $changedAt = null
     ) {
         $this->externalId = $externalId;
         $this->userId = $userId;
         $this->name = $name;
-        $this->dataProvider = $dataProvider;
+        $this->dataProviderId = $dataProviderId;
         $this->createdAt = $createdAt ?? Clock::now();
         $this->changedAt = $changedAt ?? Clock::now();
     }
@@ -67,8 +68,8 @@ class Campaign
         return $this->externalId;
     }
 
-    public function getDataProvider(): DataProvider
+    public function getDataProviderId(): int
     {
-        return $this->dataProvider;
+        return $this->dataProviderId;
     }
 }

@@ -18,15 +18,15 @@ class DataProviderCredentials
     private int $userId;
 
     #[ORM\Column]
-    private DataProvider $dataProvider;
+    private int $dataProviderId;
 
     #[ORM\Column(nullable: true)]
     private array $credentials = [];
 
-    public function __construct(int $userId, DataProvider $dataProvider, array $credentials = [])
+    public function __construct(int $userId, int $dataProviderId, array $credentials = [])
     {
         $this->userId = $userId;
-        $this->dataProvider = $dataProvider;
+        $this->dataProviderId = $dataProviderId;
         $this->credentials = $credentials;
     }
 
@@ -42,9 +42,9 @@ class DataProviderCredentials
         return $this->userId;
     }
 
-    public function getDataProvider(): DataProvider
+    public function getDataProviderId(): int
     {
-        return $this->dataProvider;
+        return $this->dataProviderId;
     }
 
     public function getCredentials(): array

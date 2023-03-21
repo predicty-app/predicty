@@ -21,7 +21,7 @@ class RegisterDataProviderMutation extends FieldDefinition
             'type' => $type->string(),
             'args' => [
                 'oauthRefreshToken' => $type->nonNullString(),
-                'type' => $type->nonNull($type->dataProviderId()),
+                'type' => $type->nonNull($type->id()),
             ],
             'resolve' => fn (mixed $root, array $args) => $this->resolve($args),
             'description' => 'Register a new data provider. Returns "OK" on success',

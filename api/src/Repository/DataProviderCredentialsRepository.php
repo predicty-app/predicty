@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use App\Entity\DataProvider;
 use App\Entity\DataProviderCredentials;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -21,12 +20,12 @@ class DataProviderCredentialsRepository
         $this->repository = $this->em->getRepository(DataProviderCredentials::class);
     }
 
-    public function findOrCreate(int $userId, DataProvider $type): DataProviderCredentials
+    public function findOrCreate(int $userId, int $dataProviderId): DataProviderCredentials
     {
-        $entity = $this->repository->findOneBy(['userId' => $userId, 'dataProvider' => $type]);
+        $entity = $this->repository->findOneBy(['userId' => $userId, 'dataProviderId' => $dataProviderId]);
 
         if ($entity === null) {
-            $entity = new DataProviderCredentials($userId, $type);
+            $entity = new DataProviderCredentials($userId, $dataProviderId);
         }
 
         return $entity;

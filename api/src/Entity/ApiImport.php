@@ -15,12 +15,12 @@ class ApiImport extends Import
 
     public function __construct(
         int $userId,
-        int $dataProviderCredentialsId,
+        int $dataProviderIdCredentialsId,
         DataProvider $type,
         DateTimeImmutable $createdAt
     ) {
         parent::__construct($userId, $type, $createdAt);
-        $this->dataProviderCredentialsId = $dataProviderCredentialsId;
+        $this->dataProviderCredentialsId = $dataProviderIdCredentialsId;
     }
 
     public function getDataProviderCredentialsId(): int

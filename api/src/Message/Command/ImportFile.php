@@ -8,7 +8,12 @@ use App\Entity\FileImportType;
 
 class ImportFile
 {
-    public function __construct(public int $userId, public FileImportType $fileImportType, public string $filename)
+    public function __construct(
+        public int $userId,
+        public int $dataProviderId,
+        public FileImportType $fileImportType,
+        public string $filename
+    )
     {
     }
 }

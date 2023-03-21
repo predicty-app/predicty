@@ -4,28 +4,51 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-enum DataProvider: string
-{
-    case GOOGLE_ADS = 'GOOGLE_ADS';
-    case FACEBOOK_ADS = 'FACEBOOK_ADS';
-    case GOOGLE_ANALYTICS = 'GOOGLE_ANALYTICS';
-    case TIK_TOK = 'TIK_TOK';
-    case OTHER = 'OTHER';
+use App\Service\Clock\Clock;
+use Doctrine\ORM\Mapping as ORM;
 
-    public function getCode(): string
+#[ORM\Entity]
+#[ORM\Index(fields: ['userId'])]
+class DataProvider
+{
+    use IdTrait;
+    use TimestampableTrait;
+
+    #[ORM\Column]
+    private string $name;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $userId;
+
+    #[ORM\Column(enumType: DataProviderType::class)]
+    private DataProviderType $type;
+
+    public function __construct(DataProviderType $type, string $name = '', ?int $userId = null)
     {
-        return $this->value;
+        $this->userId = $userId;
+        $this->type = $type;
+        $this->name = $name;
+        $this->createdAt = $createdAt ?? Clock::now();
+        $this->changedAt = $changedAt ?? Clock::now();
     }
 
     public function getName(): string
     {
-        return match ($this) {
-            self::GOOGLE_ADS => 'Google Ads',
-            self::FACEBOOK_ADS => 'Facebook Ads (Meta)',
-            self::GOOGLE_ANALYTICS => 'Google Analytics',
-            self::TIK_TOK => 'TikTok',
-            self::OTHER => 'Other (internal)',
-        };
+        if ($this->name !== '') {
+            return $this->name;
+        }
+
+        return $this->type->getName();
+    }
+
+    public function getUserId(): ?int
+    {
+        return $this->userId;
+    }
+
+    public function getType(): DataProviderType
+    {
+        return $this->type;
     }
 
     /**
@@ -33,9 +56,12 @@ enum DataProvider: string
      */
     public function getFileImportTypes(): array
     {
-        return match ($this) {
-            self::FACEBOOK_ADS => [
+        return match ($this->type) {
+            DataProviderType::FACEBOOK_ADS => [
                 FileImportType::FACEBOOK_CSV,
+            ],
+            DataProviderType::OTHER => [
+                FileImportType::SIMPLIFIED_CSV,
             ],
             default => []
         };

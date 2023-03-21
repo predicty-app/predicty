@@ -19,6 +19,11 @@ class CurrentUserService
         return $this->getUser()->getId();
     }
 
+    public function hasLoggedInUser(): bool
+    {
+        return $this->security->getUser() instanceof User;
+    }
+
     public function getUser(): User
     {
         $user = $this->security->getUser();
