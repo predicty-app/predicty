@@ -41,7 +41,7 @@ class UploadDataFileMutation extends FieldDefinition
         $this->commandBus->dispatch(
             new ImportFile(
                 $this->currentUserService->getId(),
-                $args['dataProviderId'],
+                (int)$args['dataProviderId'],
                 $args['type'],
                 $filename
             )

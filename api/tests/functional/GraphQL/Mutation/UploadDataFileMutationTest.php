@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\GraphQL\Mutation;
 
+use App\DataFixtures\CustomDataProviderFixtures;
+use App\DataFixtures\DataProviderFixtures;
+use App\DataFixtures\UserFixtures;
+use App\Entity\DataProvider;
 use App\Test\GraphQLTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -14,6 +18,14 @@ class UploadDataFileMutationTest extends GraphQLTestCase
 {
     public function test_upload_facebook_csv_file(): void
     {
+        $this->loadFixtures([
+            UserFixtures::class,
+            DataProviderFixtures::class
+        ]);
+
+        /** @var DataProvider $provider */
+        $provider =  $this->getReference(DataProviderFixtures::FACEBOOK_ADS);
+
         $this->authenticate();
 
         $mutation = <<<'EOF'
@@ -31,7 +43,11 @@ class UploadDataFileMutationTest extends GraphQLTestCase
             parameters: [
                 'operations' => json_encode([
                     'query' => $mutation,
-                    'variables' => ['file' => null, 'type' => 'FACEBOOK_CSV', 'dataProviderId' => 1],
+                    'variables' => [
+                        'file' => null,
+                        'type' => 'FACEBOOK_CSV',
+                        'dataProviderId' => $provider->getId()
+                    ],
                     'operationName' => null,
                 ]),
                 'map' => json_encode([0 => ['variables.file']]),
