@@ -27,6 +27,11 @@ class UploadDataFileMutation extends FieldDefinition
             'type' => $this->type->string(),
             'args' => [
                 'file' => $this->type->upload(),
+                'campaignName' => [
+                    'type' => $this->type->string(),
+                    'description' => 'You can specify campaign name if imported file is of simplified format. Otherwise it will be skipped.',
+                ],
+                'dataProvider' => $type->nonNull($type->dataProviderId()),
                 'type' => $this->type->nonNull($this->type->fileImportType()),
             ],
             'resolve' => fn (mixed $root, array $args) => $this->resolve($args),
@@ -38,7 +43,12 @@ class UploadDataFileMutation extends FieldDefinition
     {
         $filename = $this->fileUploadService->receive($args['file']);
         $this->commandBus->dispatch(
-            new ImportFile($this->currentUserService->getId(), $args['type'], $filename)
+            new ImportFile(
+                $this->currentUserService->getId(),
+                $args['dataProvider'],
+                $args['type'],
+                $filename
+            )
         );
 
         return 'OK';

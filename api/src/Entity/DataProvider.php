@@ -24,7 +24,7 @@ enum DataProvider: string
             self::FACEBOOK_ADS => 'Facebook Ads (Meta)',
             self::GOOGLE_ANALYTICS => 'Google Analytics',
             self::TIK_TOK => 'TikTok',
-            self::OTHER => 'Other (internal)',
+            self::OTHER => 'Other',
         };
     }
 

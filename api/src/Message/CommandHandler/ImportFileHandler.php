@@ -34,6 +34,7 @@ class ImportFileHandler
         $import = new FileImport(
             userId: $command->userId,
             filename: $command->filename,
+            dataProvider: $command->dataProvider,
             fileImportType: $command->fileImportType,
             createdAt: $this->clock->now()
         );
