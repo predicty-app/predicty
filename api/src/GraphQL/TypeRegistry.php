@@ -9,6 +9,7 @@ use App\GraphQL\Type\AdSetType;
 use App\GraphQL\Type\AdStatsType;
 use App\GraphQL\Type\AdType;
 use App\GraphQL\Type\CampaignType;
+use App\GraphQL\Type\DailyRevenueType;
 use App\GraphQL\Type\DashboardType;
 use App\GraphQL\Type\DataProviderIdType;
 use App\GraphQL\Type\DataProviderType;
@@ -37,6 +38,7 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
  * @method DataProviderIdType dataProviderId()
  * @method DataProviderType   dataProvider()
  * @method Date               date()
+ * @method DailyRevenueType   dailyRevenue()
  */
 class TypeRegistry
 {
