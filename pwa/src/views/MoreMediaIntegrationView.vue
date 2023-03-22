@@ -4,7 +4,6 @@ import { useRouter } from "vue-router";
 
 const { t } = useI18n();
 const router = useRouter();
-const nextStepPath = "/onboarding/preparing-screen";
 const previousStepPath = "/onboarding/basic-media-integration";
 </script>
 
@@ -33,21 +32,7 @@ const previousStepPath = "/onboarding/basic-media-integration";
         </ButtonForm>
       </div>
       <div class="flex items-center flex-auto"></div>
-      <div class="w-full max-w-[267px]">
-        <ButtonForm
-          type="success"
-          class="w-full"
-          @click="router.push(nextStepPath)"
-        >
-          <div class="relative">
-            {{ t("views.more-media-integration.button") }}
-            <IconSvg
-              name="arrownext"
-              class-name="absolute right-5 top-0 bottom-0 m-auto h-3 w-3"
-            />
-          </div>
-        </ButtonForm>
-      </div>
+      <div class="w-full max-w-[267px]" id="next-button"></div>
     </template>
     <template #progress>
       <ProgressBar :count-steps="6" :active-step="5" />

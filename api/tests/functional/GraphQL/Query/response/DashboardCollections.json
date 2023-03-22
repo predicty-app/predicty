@@ -1,0 +1,20 @@
+{
+  "data": {
+    "dashboard": {
+      "collections": [
+        {
+          "id": "1",
+          "name": "Red Collection"
+        },
+        {
+          "id": "2",
+          "name": "Green Collection"
+        },
+        {
+          "id": "3",
+          "name": "Blue Collection"
+        }
+      ]
+    }
+  }
+}

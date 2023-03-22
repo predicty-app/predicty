@@ -1,0 +1,21 @@
+{
+  "data": {
+    "addToAdCollection": {
+      "ads": [
+        {
+          "id": "@integer@",
+          "name": "Dummy Ad 1"
+        },
+        {
+          "id": "@integer@",
+          "name": "Dummy Ad 2"
+        },
+        {
+          "id": "@integer@",
+          "name": "Dummy Ad 3"
+        }
+      ],
+      "id": "@integer@"
+    }
+  }
+}

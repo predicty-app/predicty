@@ -9,6 +9,7 @@ use App\Factory\AdSetFactory;
 use App\Factory\AdStatsFactory;
 use App\Factory\CampaignFactory;
 use Brick\Money\Currency;
+use Closure;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;
 use League\Csv\Statement;
@@ -44,9 +45,9 @@ class FacebookCsvImporter
     ) {
     }
 
-    public function import(int $userId, string $filename, ?\Closure $callback = null): void
+    public function import(int $userId, mixed $stream, ?Closure $callback = null): void
     {
-        $csv = Reader::createFromPath($filename);
+        $csv = Reader::createFromStream($stream);
         $csv->setHeaderOffset(0);
 
         $stmt = Statement::create();

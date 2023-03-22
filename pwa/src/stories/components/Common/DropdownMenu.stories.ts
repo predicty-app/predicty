@@ -7,14 +7,14 @@ export default {
   title: "Components/Common/DropdownMenu",
   parameters: {
     status: {
-      type: "todo",
+      type: "todo"
     },
     docs: {
       description: {
-        component: "Component for drop down menu",
-      },
-    },
-  },
+        component: "Component for drop down menu"
+      }
+    }
+  }
 };
 
 export const DropdownMenu = (args: ComponentPropsType) => ({
@@ -30,5 +30,5 @@ export const DropdownMenu = (args: ComponentPropsType) => ({
         </template>
       </DropdownMenuComponent>
     </div>
-  `,
+  `
 });

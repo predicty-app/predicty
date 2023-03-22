@@ -7,20 +7,20 @@ type OptionsType = {
 };
 
 type ChartOptionsType = {
-  label: string;
   key: string;
+  label: string;
 };
 
 type PropsType = {
-  typeChartOptions: ChartOptionsType[];
   amountScale?: string[];
   options?: OptionsType[];
+  typeChartOptions: ChartOptionsType[];
 };
 
 const currentTypeChart = ref<string>("weeks");
 
 withDefaults(defineProps<PropsType>(), {
-  amountScale: () => ["$ 1,000", "$ 500", "$ 250"],
+  amountScale: () => ["$ 1,000", "$ 500", "$ 250"]
 });
 </script>
 

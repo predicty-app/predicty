@@ -4,19 +4,21 @@ declare(strict_types=1);
 
 namespace App\Message\Command;
 
-use App\Entity\DataProviderType;
+use App\Entity\DataProvider;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class RegisterDataProvider
 {
-    public DataProviderType $type;
+    public int $userId;
+    public DataProvider $dataProvider;
 
     #[Assert\NotBlank(message: 'You must provide a refresh token')]
     public string $oauthRefreshToken;
 
-    public function __construct(DataProviderType $type, string $oauthRefreshToken)
+    public function __construct(int $userId, DataProvider $dataProvider, string $oauthRefreshToken)
     {
-        $this->type = $type;
+        $this->dataProvider = $dataProvider;
         $this->oauthRefreshToken = $oauthRefreshToken;
+        $this->userId = $userId;
     }
 }

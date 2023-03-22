@@ -9,34 +9,34 @@ export default {
     date: {
       description: "Date for tooltip",
       name: "date",
-      type: { name: "string", required: false },
+      type: { name: "string", required: false }
     },
     day: {
       description: "Day for tooltip",
       name: "day",
-      type: { name: "string", required: false },
+      type: { name: "string", required: false }
     },
     sales: {
       description: "Sales for tooltip",
       name: "sales",
-      type: { name: "string", required: false },
+      type: { name: "string", required: false }
     },
     investment: {
       description: "Investment for tooltip",
       name: "investment",
-      type: { name: "string", required: false },
-    },
+      type: { name: "string", required: false }
+    }
   },
   parameters: {
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for floating switch view form",
-      },
-    },
-  },
+        component: "Component for floating switch view form"
+      }
+    }
+  }
 };
 
 export const SalesNumber = (args: ComponentPropsType) => ({
@@ -48,11 +48,11 @@ export const SalesNumber = (args: ComponentPropsType) => ({
     <div class="h-full relative">
       <SalesNumberComponent v-bind="args" />
     </div>
-  `,
+  `
 });
 
 SalesNumber.args = {
   date: "2023.03.01",
   sales: "$5,345",
-  investment: "$345",
+  investment: "$345"
 };

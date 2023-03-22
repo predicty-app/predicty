@@ -2,8 +2,8 @@
 import { ref } from "vue";
 
 type OptionsType = {
-  key: string | number;
   label: string;
+  key: string | number;
 };
 
 type PropsType = {
@@ -14,7 +14,7 @@ type PropsType = {
 };
 
 withDefaults(defineProps<PropsType>(), {
-  position: "bottom",
+  position: "bottom"
 });
 
 const emit = defineEmits<{
@@ -34,9 +34,13 @@ function handleSelectElement(item: string | number) {
 </script>
 
 <template>
-  <div class="relative" tabindex="0" @focusout="isSelectOpened = false">
+  <div
+    class="select-form relative"
+    tabindex="0"
+    @focusout="isSelectOpened = false"
+  >
     <div
-      class="text-select-input-text bg-select-input-background border-select-input-border border py-2 px-3 text-xs rounded relative cursor-pointer"
+      class="select-form-content text-select-input-text bg-select-input-background border-select-input-border border py-2 px-3 text-xs rounded relative cursor-pointer"
       @click="isSelectOpened = !isSelectOpened"
     >
       <span
@@ -60,8 +64,8 @@ function handleSelectElement(item: string | number) {
               (!isSelectOpened && position === 'top'),
             'rotate-[-90deg]':
               (!isSelectOpened && position === 'bottom') ||
-              (isSelectOpened && position === 'top'),
-          },
+              (isSelectOpened && position === 'top')
+          }
         ]"
       />
     </div>
@@ -71,8 +75,8 @@ function handleSelectElement(item: string | number) {
         'absolute left-0 w-full animate-fade-in shadow-sm bg-select-input-background border-select-overlayer-border border rounded',
         {
           'bottom-[110%]': position === 'top',
-          'top-[110%]': position === 'bottom',
-        },
+          'top-[110%]': position === 'bottom'
+        }
       ]"
     >
       <div
@@ -82,8 +86,8 @@ function handleSelectElement(item: string | number) {
             ' text-select-options-default-text bg-select-options-default-background hover:bg-select-options-default-hover cursor-pointer':
               option.key !== modelValue,
             '  bg-select-options-active-background cursor-default':
-              option.key === modelValue,
-          },
+              option.key === modelValue
+          }
         ]"
         :key="option.key"
         v-for="option in options"

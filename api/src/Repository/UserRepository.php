@@ -7,6 +7,7 @@ namespace App\Repository;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use RuntimeException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
@@ -23,12 +24,20 @@ class UserRepository implements PasswordUpgraderInterface
         $this->repository = $em->getRepository(User::class);
     }
 
+    public function getById(int $id): User
+    {
+        $user = $this->repository->find($id);
+        assert($user instanceof User, 'User not found');
+
+        return $user;
+    }
+
     public function getByUsername(string $username): User
     {
         $user = $this->findByUsername($username);
 
         if ($user === null) {
-            throw new \RuntimeException('User was not found');
+            throw new RuntimeException('User was not found');
         }
 
         return $user;

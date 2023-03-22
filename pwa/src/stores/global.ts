@@ -6,12 +6,14 @@ type ScrollType = {
 };
 
 type StateType = {
-  isSpinnerVisible: boolean;
-  scrollParams: ScrollType;
   currentScale: number;
   numberFirstWeek: number;
+  scrollParams: ScrollType;
+  isSpinnerVisible: boolean;
   currentsCountWeeks: number;
   dictionaryFirstDaysWeek: string[];
+  scrollTimeline: HTMLDivElement | null;
+  scrollCampaignList: HTMLDivElement | null;
   dictionaryTimeline: TimelineDictionaryType;
 };
 
@@ -26,13 +28,15 @@ export const useGlobalStore = defineStore({
       isSpinnerVisible: false,
       currentScale: 100,
       numberFirstWeek: 0,
+      scrollTimeline: null,
+      scrollCampaignList: null,
       dictionaryTimeline: {},
       dictionaryFirstDaysWeek: [],
       currentsCountWeeks: 52,
       scrollParams: {
         x: 0,
-        y: 0,
-      },
+        y: 0
+      }
     } as StateType),
 
   actions: {
@@ -57,6 +61,22 @@ export const useGlobalStore = defineStore({
      */
     setCurrentWeeks(weeks: number) {
       this.currentsCountWeeks = weeks;
+    },
+
+    /**
+     * Function to set timeline scroll element.
+     * @param {HTMLDivElement} element
+     */
+    setInstanceScrollTimeline(element: HTMLDivElement) {
+      this.scrollTimeline = element;
+    },
+
+    /**
+     * Function to set campaigns list scroll element.
+     * @param {HTMLDivElement} element
+     */
+    setInstanceScrollCampaignsList(element: HTMLDivElement) {
+      this.scrollCampaignList = element;
     },
 
     /**
@@ -89,6 +109,6 @@ export const useGlobalStore = defineStore({
      */
     handleChangeScale(scale: number) {
       this.currentScale = scale;
-    },
-  },
+    }
+  }
 });

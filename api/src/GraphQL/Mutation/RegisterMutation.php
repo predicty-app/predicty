@@ -4,20 +4,17 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Mutation;
 
-use App\GraphQL\TypeResolver;
+use App\Extension\Messenger\HandleTrait;
+use App\GraphQL\TypeRegistry;
 use App\Message\Command\Register;
 use GraphQL\Type\Definition\FieldDefinition;
-use Symfony\Component\Messenger\HandleTrait;
-use Symfony\Component\Messenger\MessageBusInterface;
 
 class RegisterMutation extends FieldDefinition
 {
     use HandleTrait;
 
-    public function __construct(
-        TypeResolver $type,
-        private MessageBusInterface $messageBus
-    ) {
+    public function __construct(TypeRegistry $type)
+    {
         parent::__construct([
             'name' => 'register',
             'type' => $type->string(),

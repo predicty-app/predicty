@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted, nextTick } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+import { ref, onMounted, nextTick } from "vue";
 import { useGlobalStore } from "@/stores/global";
 import { useOnBoardingStore } from "@/stores/onboarding";
 import {
   isRequiredValidation,
-  isPasscodeCorrectValidation,
+  isPasscodeCorrectValidation
 } from "@/helpers/rulesValidation";
 import { handleLoginUser } from "@/services/api/onboarding";
 
@@ -18,6 +18,8 @@ const isComponentMounted = ref<boolean>(false);
 
 const modelValue = ref<string>("");
 const errorMessage = ref<string | null>(null);
+
+onMounted(() => nextTick(() => (isComponentMounted.value = true)));
 
 /**
  * Function to handle submit form.
@@ -35,7 +37,7 @@ async function handleSubmitForm() {
     globalStore.toogleSpinnerState();
     const response = await handleLoginUser({
       username: onBoardingStore.email,
-      passcode: modelValue.value.replace("-", ""),
+      passcode: modelValue.value.replace("-", "")
     });
 
     if (response !== "OK") {
@@ -58,29 +60,25 @@ function setErrorFormResponse(response: string) {
   onBoardingStore.password = null;
   globalStore.toogleSpinnerState();
 }
-
-onMounted(() => nextTick(() => (isComponentMounted.value = true)));
 </script>
 
 <template>
   <div v-if="isComponentMounted" class="flex flex-col gap-y-6">
-    <InputForm
+    <CodeForm
       v-model="modelValue"
-      mask="###-###"
       :error-message="errorMessage"
       v-on:keyup.enter="handleSubmitForm"
       :required="true"
-      :placeholder="
-        t(
-          'components.on-boarding.account-creation-password-form.input-placeholder'
-        )
-      "
       :label="
         t('components.on-boarding.account-creation-password-form.input-label')
       "
     />
     <Teleport to="#next-button">
-      <ButtonForm type="success" class="w-full" @click="handleSubmitForm">
+      <ButtonForm
+        :type="modelValue.length === 6 ? 'success' : 'disabled'"
+        class="w-full"
+        @click="handleSubmitForm"
+      >
         <div class="relative">
           {{
             t(

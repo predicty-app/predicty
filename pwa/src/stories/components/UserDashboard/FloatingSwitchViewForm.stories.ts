@@ -7,14 +7,14 @@ export default {
   title: "Components/UserDashboard/FloatingSwitchViewForm",
   parameters: {
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for floating switch view form",
-      },
-    },
-  },
+        component: "Component for floating switch view form"
+      }
+    }
+  }
 };
 
 export const FloatingSwitchViewForm = (args: ComponentPropsType) => ({
@@ -26,5 +26,5 @@ export const FloatingSwitchViewForm = (args: ComponentPropsType) => ({
     <div class="h-full relative">
       <FloatingSwitchViewFormComponent v-bind="args" />
     </div>
-  `,
+  `
 });

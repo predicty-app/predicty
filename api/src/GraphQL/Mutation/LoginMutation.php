@@ -5,22 +5,17 @@ declare(strict_types=1);
 namespace App\GraphQL\Mutation;
 
 use App\Entity\User;
-use App\GraphQL\Mapper\UserMapper;
-use App\GraphQL\TypeResolver;
+use App\Extension\Messenger\HandleTrait;
+use App\GraphQL\TypeRegistry;
 use App\Message\Command\Login;
 use GraphQL\Type\Definition\FieldDefinition;
-use Symfony\Component\Messenger\HandleTrait;
-use Symfony\Component\Messenger\MessageBusInterface;
 
 class LoginMutation extends FieldDefinition
 {
     use HandleTrait;
 
-    public function __construct(
-        TypeResolver $type,
-        private MessageBusInterface $messageBus,
-        private UserMapper $userMapper
-    ) {
+    public function __construct(TypeRegistry $type)
+    {
         parent::__construct([
             'name' => 'login',
             'type' => $type->user(),
@@ -33,11 +28,8 @@ class LoginMutation extends FieldDefinition
         ]);
     }
 
-    private function resolve(array $args): array
+    private function resolve(array $args): User
     {
-        $user = $this->handle(new Login($args['username'], $args['passcode']));
-        assert($user instanceof User);
-
-        return $this->userMapper->map($user);
+        return $this->handle(new Login($args['username'], $args['passcode']));
     }
 }

@@ -1,5 +1,13 @@
 import { defineStore } from "pinia";
 
+export enum AvalibleProviders {
+  GOOGLE_ADS = "GOOGLE_ADS",
+  FACEBOOK_ADS = "FACEBOOK_ADS",
+  GOOGLE_ANALYTICS = "GOOGLE_ANALYTICS",
+  TIK_TOK = "TIK_TOK",
+  OTHER = "OTHER"
+}
+
 type ProviderStateType = {
   name: string;
   logoPath: string;
@@ -7,8 +15,15 @@ type ProviderStateType = {
   token?: string;
 };
 
+type FileType = {
+  file: File | null;
+  type: string;
+  name: string;
+};
+
 type StateType = {
   email: null | string;
+  file: FileType;
   password: null | string;
   providers: {};
 };
@@ -18,8 +33,13 @@ export const useOnBoardingStore = defineStore({
   state: () =>
     ({
       email: null,
+      file: {
+        file: null,
+        type: null,
+        name: ""
+      },
       password: null,
-      providers: {},
+      providers: {}
     } as StateType),
 
   actions: {
@@ -40,6 +60,14 @@ export const useOnBoardingStore = defineStore({
     },
 
     /**
+     * Function to handle save file with data.
+     * @param {File} file
+     */
+    async handleSaveFile(file: File) {
+      this.file.file = file;
+    },
+
+    /**
      * Function to handle save code(password) user.
      * @param {string} payload
      */
@@ -49,6 +77,6 @@ export const useOnBoardingStore = defineStore({
       } else {
         this.providers[payload.name] = payload;
       }
-    },
-  },
+    }
+  }
 });

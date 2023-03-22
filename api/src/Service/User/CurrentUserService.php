@@ -7,7 +7,6 @@ namespace App\Service\User;
 use App\Entity\User;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class CurrentUserService
 {
@@ -15,12 +14,12 @@ class CurrentUserService
     {
     }
 
-    public function isLoggedIn(): bool
+    public function getId(): int
     {
-        return $this->security->getUser() !== null;
+        return $this->getUser()->getId();
     }
 
-    public function getUser(): User|UserInterface
+    public function getUser(): User
     {
         $user = $this->security->getUser();
 

@@ -136,7 +136,7 @@ export function hNextDaysDictionary(
 
   daysDictionary[firstDateParsed] = 1;
 
-  for (let i = 2; i <= (range + 2) * 7; i++) {
+  for (let i = 2; i <= range * 7; i++) {
     const tomorrowDay = new Date(firstDateParsed);
     tomorrowDay.setDate(tomorrowDay.getDate() + 1);
 
@@ -171,7 +171,7 @@ export function hFirstDaysWeeks(firstDay: Date, range: number): string[] {
       : firstDay.getMonth() + 1
   }-${firstDay.getDate() < 10 ? `0${firstDay.getDate()}` : firstDay.getDate()}`;
 
-  daysDictionary[1] = `${
+  daysDictionary[0] = `${
     firstDay.getDate() < 10 ? `0${firstDay.getDate()}` : firstDay.getDate()
   }.${
     firstDay.getMonth() + 1 < 10
@@ -179,7 +179,7 @@ export function hFirstDaysWeeks(firstDay: Date, range: number): string[] {
       : firstDay.getMonth() + 1
   }`;
 
-  for (let i = 2; i <= (range + 2) * 7; i++) {
+  for (let i = 1; i <= range; i++) {
     const nextMonday = new Date(firstDateParsed);
     nextMonday.setDate(nextMonday.getDate() + 7);
 
@@ -202,6 +202,7 @@ export function hFirstDaysWeeks(firstDay: Date, range: number): string[] {
         ? `0${nextMonday.getMonth() + 1}`
         : nextMonday.getMonth() + 1
     }`;
+
     firstDateParsed = parsedDay;
   }
 

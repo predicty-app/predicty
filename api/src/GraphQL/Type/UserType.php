@@ -4,24 +4,29 @@ declare(strict_types=1);
 
 namespace App\GraphQL\Type;
 
+use App\Entity\User;
+use App\GraphQL\TypeRegistry;
 use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
 
 class UserType extends ObjectType
 {
-    public function __construct()
+    public function __construct(TypeRegistry $type)
     {
         parent::__construct([
             'name' => 'User',
             'fields' => [
                 'uid' => [
-                    'type' => Type::id(),
+                    'type' => $type->id(),
+                    'resolve' => fn (User $user) => (string) $user->getUuid(),
                 ],
                 'email' => [
-                    'type' => Type::string(),
+                    'type' => $type->string(),
                 ],
-                'is_email_verified' => [
-                    'type' => Type::boolean(),
+                'isEmailVerified' => [
+                    'type' => $type->boolean(),
+                ],
+                'isOnboardingComplete' => [
+                    'type' => $type->boolean(),
                 ],
             ],
         ]);

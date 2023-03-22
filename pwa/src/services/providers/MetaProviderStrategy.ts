@@ -31,7 +31,7 @@ export default class MetaProviderStrategy implements StrategyProviders {
       appId: import.meta.env.VITE_FB_ACCOUNT_APP,
       autoLogAppEvents: true,
       xfbml: true,
-      version: "v16.0",
+      version: "v16.0"
     });
   }
 

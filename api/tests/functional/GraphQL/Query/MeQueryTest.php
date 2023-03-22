@@ -25,8 +25,10 @@ class MeQueryTest extends GraphQLTestCase
         $query = <<<'EOF'
                 query {
                   me {
-                    uid,
+                    uid
                     email
+                    isEmailVerified
+                    isOnboardingComplete
                   }
                 }
             EOF;

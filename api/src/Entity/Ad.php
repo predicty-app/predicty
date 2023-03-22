@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Service\Clock\Clock;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -38,16 +40,16 @@ class Ad
         int $adSetId,
         int $campaignId,
         string $name,
-        \DateTimeInterface $createdAt,
-        \DateTimeInterface $changedAt,
+        ?DateTimeInterface $createdAt = null,
+        ?DateTimeInterface $changedAt = null,
     ) {
         $this->userId = $userId;
         $this->externalId = $externalId;
         $this->adSetId = $adSetId;
         $this->campaignId = $campaignId;
         $this->name = $name;
-        $this->createdAt = $createdAt;
-        $this->changedAt = $changedAt;
+        $this->createdAt = $createdAt ?? Clock::now();
+        $this->changedAt = $changedAt ?? Clock::now();
     }
 
     public function getExternalId(): string

@@ -17,6 +17,7 @@ module.exports = {
     "@storybook/addon-jest",
     "@etchteam/storybook-addon-status",
   ],
+  "staticDirs": ["../public"],
   "framework": "@storybook/vue3",
   "core": {
     "builder": "@storybook/builder-vite"

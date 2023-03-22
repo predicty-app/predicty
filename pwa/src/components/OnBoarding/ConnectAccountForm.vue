@@ -27,18 +27,18 @@ const providersList = ref<ProviderType[]>([
   {
     name: "Google Analytics",
     logoPath: "google-analytics-provider",
-    status: false,
+    status: false
   },
   {
     name: "Google Ads",
     logoPath: "google-ads-provider",
-    status: false,
+    status: false
   },
   {
     name: "Meta Ads",
     logoPath: "meta-ads-provider",
-    status: false,
-  },
+    status: false
+  }
 ]);
 const isComponentMounted = ref<boolean>(false);
 
@@ -103,8 +103,8 @@ async function handleToogleConnecttoProvider(provider: ProviderType) {
         :class="[
           'w-12',
           {
-            'opacity-70': provider.status,
-          },
+            'opacity-70': provider.status
+          }
         ]"
       />
       <h3
@@ -112,8 +112,8 @@ async function handleToogleConnecttoProvider(provider: ProviderType) {
           'text-base w-16 text-center',
           {
             'font-bold': provider.status,
-            'font-normal': !provider.status,
-          },
+            'font-normal': !provider.status
+          }
         ]"
       >
         {{ provider.name }}
@@ -129,8 +129,8 @@ async function handleToogleConnecttoProvider(provider: ProviderType) {
         type="primary"
         :class="[
           {
-            'cursor-pointer': !provider.status,
-          },
+            'cursor-pointer': !provider.status
+          }
         ]"
       >
         {{
@@ -143,9 +143,10 @@ async function handleToogleConnecttoProvider(provider: ProviderType) {
       </TagPin>
     </CardPanel>
     <Teleport to="#next-button">
+      <!-- :type="providersList.find((provider: ProviderType) => provider.status) ? 'success' : 'disabled'" -->
       <ButtonForm
         @click="router.push(nextStepPath)"
-        :type="providersList.find((provider: ProviderType) => provider.status) ? 'success' : 'disbaled'"
+        type="success"
         class="w-full"
       >
         <div class="relative">

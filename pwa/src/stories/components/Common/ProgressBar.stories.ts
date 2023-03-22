@@ -10,26 +10,26 @@ export default {
       name: "countSteps",
       control: { type: "number" },
       description: "Count of current step for progress bar",
-      type: { name: "number", required: true },
+      type: { name: "number", required: true }
     },
     activeStep: {
       name: "activeStep",
       control: { type: "number" },
       description: "Current active step in progress bar",
-      type: { name: "number", required: false },
-    },
+      type: { name: "number", required: false }
+    }
   },
   parameters: {
     jest: ["ProgressBar.spec.ts"],
     status: {
-      type: "stable",
+      type: "stable"
     },
     docs: {
       description: {
-        component: "Component for progress bar",
-      },
-    },
-  },
+        component: "Component for progress bar"
+      }
+    }
+  }
 };
 
 export const ProgressBar = (args: ComponentPropsType) => ({
@@ -39,10 +39,10 @@ export const ProgressBar = (args: ComponentPropsType) => ({
   },
   template: `
     <ProgressBarComponent v-bind="args" />
-  `,
+  `
 });
 
 ProgressBar.args = {
   countSteps: 5,
-  activeStep: 3,
+  activeStep: 3
 };

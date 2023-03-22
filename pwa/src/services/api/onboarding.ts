@@ -9,6 +9,11 @@ export type LoginUserPayloadType = {
   passcode: string;
 };
 
+export type UploadFilePayloadType = {
+  type: string;
+  file: File;
+};
+
 /**
  * Function to handle register user.
  * @param {RegisterUserPayloadType} payload
@@ -24,7 +29,7 @@ async function handleRegisterUser(payload: RegisterUserPayloadType) {
 
   try {
     const response = await apiService.request<RegisterParamsType, any>(query, {
-      email: payload.email,
+      email: payload.email
     });
 
     return response.errors
@@ -55,7 +60,7 @@ async function handleLoginUser(payload: LoginUserPayloadType) {
 
   try {
     const response = await apiService.request<LoginParamsType, any>(query, {
-      ...payload,
+      ...payload
     });
 
     return response.errors ? response.errors[0].message : "OK";
@@ -64,4 +69,28 @@ async function handleLoginUser(payload: LoginUserPayloadType) {
   }
 }
 
-export { handleRegisterUser, handleLoginUser };
+/**
+ * Function to handle upload file.
+ * @param {UploadFilePayloadType} payload
+ */
+async function handleUploadFile(payload: UploadFilePayloadType) {
+  const query = `mutation($file: Upload) {
+    uploadDataFile(file: $file, type: ${payload.type})
+  }`;
+
+  try {
+    const response = await apiService.request<any, any>(
+      query,
+      {
+        file: payload.file
+      },
+      "apollo"
+    );
+
+    return response.errors ? response.errors[0].message : "OK";
+  } catch (error) {
+    return (error as Error).message;
+  }
+}
+
+export { handleRegisterUser, handleLoginUser, handleUploadFile };

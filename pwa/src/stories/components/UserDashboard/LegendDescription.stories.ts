@@ -10,31 +10,31 @@ export default {
       name: "typeChartOptions",
       description: "Types option of chart.",
       control: { type: "array" },
-      type: { name: "string", required: false },
+      type: { name: "string", required: false }
     },
     options: {
       name: "options",
       description: "Options for legend list.",
       control: { type: "array" },
-      type: { name: "string", required: false },
+      type: { name: "string", required: false }
     },
     amountScale: {
       name: "amountScale",
       description: "Amount scale for legend list.",
       control: { type: "array" },
-      type: { name: "string", required: false },
-    },
+      type: { name: "string", required: false }
+    }
   },
   parameters: {
     status: {
-      type: "todo",
+      type: "todo"
     },
     docs: {
       description: {
-        component: "Component for legend chart",
-      },
-    },
-  },
+        component: "Component for legend chart"
+      }
+    }
+  }
 };
 
 export const LegendDescription = (args: ComponentPropsType) => ({
@@ -46,19 +46,29 @@ export const LegendDescription = (args: ComponentPropsType) => ({
     <div class="h-full">
       <LegendDescriptionComponent v-bind="args" />
     </div>
-  `,
+  `
 });
 
 LegendDescription.args = {
   header: "week of the year",
+  typeChartOptions: [
+    {
+      key: "weeks",
+      label: "Weeks"
+    },
+    {
+      key: "days",
+      label: "Days"
+    }
+  ],
   options: [
     {
       label: "Overall sales",
-      color: "#4184FF",
+      color: "#4184FF"
     },
     {
       label: "Overall investment",
-      color: "#FFAE4F",
-    },
-  ],
+      color: "#FFAE4F"
+    }
+  ]
 };

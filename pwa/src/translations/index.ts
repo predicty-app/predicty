@@ -24,7 +24,7 @@ const i18n = createI18n({
   locale: "en-GB",
   legacy: false,
   fallbackLocale: "en-GB",
-  messages: getTranslationsNames(),
+  messages: getTranslationsNames()
 });
 
 export default i18n;

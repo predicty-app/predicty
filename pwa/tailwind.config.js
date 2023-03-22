@@ -1,11 +1,18 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   mode: "jit",
-  purge: ["./index.html", "./src/**/*.{js,ts,jsx,tsx,vue}"],
-  darkMode: false,
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx,vue}"],
   theme: {
     extend: {
+      top: {
+        dynamic: "var(--top)",
+      },
       width: {
+        calc: "calc(100vw)",
+        dynamic: "var(--height)",
+      },
+      content: {
+        dynamic: "var(--content)",
         calc: "calc(100vw)",
       },
       height: {
@@ -20,6 +27,43 @@ module.exports = {
       },
     },
     colors: {
+      modalWindow: {
+        mask: {
+          background: "#00000030",
+        },
+      },
+      connectMoreMedia: {
+        text: "#272727",
+      },
+      codeForm: {
+        dash: {
+          background: "#111111",
+        },
+      },
+      multiselect: {
+        element: {
+          disabled: {
+            background: "#fafafa",
+          },
+          hover: {
+            background: "#f1fff4",
+          },
+        },
+        lable: {
+          color: "#4E5B72",
+        },
+        icon: {
+          background: "#5CD070",
+          color: "#FFFFFF",
+        },
+      },
+      notification: {
+        success: "#266c04",
+        error: "#da2f2f",
+        warning: "#ca7e0b",
+        info: "#1881c7",
+        text: "#FFFFFF",
+      },
       charBarPole: {
         background: {
           primary: "#89B3FF",
@@ -267,6 +311,7 @@ module.exports = {
       light:
         "repeating-linear-gradient( to right, #fff 0 calc((100% / 7) - 1px), rgb(233, 233, 233) calc((100% / 7) - 1px) calc(100% / 7) )",
       dark: "repeating-linear-gradient( to right, #f4f4f6 0 calc((100% / 7) - 1px), rgb(233, 233, 233) calc((100% / 7) - 1px) calc(100% / 7) )",
+      one: "repeating-linear-gradient(to right,rgb(233, 233, 233) 0 1px,#fff 1px calc(v-bind(scaleLines) / 7),rgb(233, 233, 233) calc(v-bind(scaleLines) / 7) calc((v-bind(scaleLines) / 7) + 1px),#fff calc((v-bind(scaleLines) / 7) + 1px) calc(2 * (v-bind(scaleLines) / 7)), rgb(233, 233, 233) calc(2 * (v-bind(scaleLines) / 7)) calc(2 * (v-bind(scaleLines) / 7) + 1px),#fff calc(2 * (v-bind(scaleLines) / 7) + 1px) calc(3 * (v-bind(scaleLines) / 7)),rgb(233, 233, 233) calc(3 * (v-bind(scaleLines) / 7)) calc(3 * (v-bind(scaleLines) / 7) + 1px),#fff calc(3 * (v-bind(scaleLines) / 7) + 1px) calc(4 * (v-bind(scaleLines) / 7)),rgb(233, 233, 233) calc(4 * (v-bind(scaleLines) / 7)) calc(4 * (v-bind(scaleLines) / 7) + 1px),#fff calc(4 * (v-bind(scaleLines) / 7) + 1px) calc(5 * (v-bind(scaleLines) / 7)),rgb(233, 233, 233) calc(5 * (v-bind(scaleLines) / 7)) calc(5 * (v-bind(scaleLines) / 7) + 1px),#fff calc(5 * (v-bind(scaleLines) / 7) + 1px) calc(6 * (v-bind(scaleLines) / 7)),rgb(233, 233, 233) calc(6 * (v-bind(scaleLines) / 7)) calc(6 * (v-bind(scaleLines) / 7) + 1px),#fff calc(6 * (v-bind(scaleLines) / 7) + 1px) calc(7 * (v-bind(scaleLines) / 7)),rgb(233, 233, 233) calc(7 * (v-bind(scaleLines) / 7)) calc(7 * (v-bind(scaleLines) / 7) + 1px),#f4f4f6 calc(7 * (v-bind(scaleLines) / 7) + 1px) calc(8 * (v-bind(scaleLines) / 7)),rgb(233, 233, 233) calc(8 * (v-bind(scaleLines) / 7)) calc(8 * (v-bind(scaleLines) / 7) + 1px),#f4f4f6 calc(8 * (v-bind(scaleLines) / 7) + 1px) calc(9 * (v-bind(scaleLines) / 7)),rgb(233, 233, 233) calc(9 * (v-bind(scaleLines) / 7)) calc(9 * (v-bind(scaleLines) / 7) + 1px),#f4f4f6 calc(9 * (v-bind(scaleLines) / 7) + 1px) calc(10 * (v-bind(scaleLines) / 7)),rgb(233, 233, 233) calc(10 * (v-bind(scaleLines) / 7)) calc(10 * (v-bind(scaleLines) / 7) + 1px),#f4f4f6 calc(10 * (v-bind(scaleLines) / 7) + 1px) calc(11 * (v-bind(scaleLines) / 7)),rgb(233, 233, 233) calc(11 * (v-bind(scaleLines) / 7)) calc(11 * (v-bind(scaleLines) / 7) + 1px),#f4f4f6 calc(11 * (v-bind(scaleLines) / 7) + 1px) calc(12 * (v-bind(scaleLines) / 7)),rgb(233, 233, 233) calc(12 * (v-bind(scaleLines) / 7)) calc(12 * (v-bind(scaleLines) / 7) + 1px),#f4f4f6 calc(12 * (v-bind(scaleLines) / 7) + 1px) calc(13 * (v-bind(scaleLines) / 7)),rgb(233, 233, 233) calc(13 * (v-bind(scaleLines) / 7)) calc(13 * (v-bind(scaleLines) / 7) + 1px),#f4f4f6 calc(13 * (v-bind(scaleLines) / 7) + 1px) calc(14 * (v-bind(scaleLines) / 7)))",
     },
   },
   variants: {

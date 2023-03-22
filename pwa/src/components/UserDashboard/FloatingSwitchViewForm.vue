@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import { computed } from "vue";
 import { useI18n } from "vue-i18n";
+import { computed, ref } from "vue";
+import type { CampaignType, AdsCollection } from "@/stores/userDashboard";
 import { useUserDashboardStore, OptionsName } from "@/stores/userDashboard";
-import type { CampaignType } from "@/stores/userDashboard";
+import {
+  handleCreateCollection,
+  handleAssignAdToCollection
+} from "@/services/api/userDashboard";
 
 type OptionsType = {
   key: string;
@@ -10,21 +14,36 @@ type OptionsType = {
 };
 
 const { t } = useI18n();
+const campaignModelValue = ref<string>("");
 const userDashboardStore = useUserDashboardStore();
+const optionsCollectionList = computed<OptionsType[]>(() => {
+  const campaigns = userDashboardStore.campaigns.find(
+    (campaign: CampaignType) =>
+      campaign.uid === userDashboardStore.selectedAdsList.campaignUid
+  );
+  if (!campaigns) {
+    return [];
+  }
+  return campaigns.collection.map((collection: AdsCollection) => ({
+    key: collection.uid,
+    label: collection.name
+  }));
+});
+
 const optionsButtons = computed<OptionsType[]>(() => {
   const options: OptionsType[] = [
     {
       key: OptionsName.CREATE_NEW_COLLECTION,
       label: t(
         "components.user-dashboard.floating-switch-view-form.create-new-collection"
-      ),
+      )
     },
     {
       key: OptionsName.HIDE_ELEMENT,
       label: t(
         "components.user-dashboard.floating-switch-view-form.hide-element"
-      ),
-    },
+      )
+    }
   ];
 
   const campaign = userDashboardStore.campaigns.find(
@@ -32,12 +51,12 @@ const optionsButtons = computed<OptionsType[]>(() => {
       campaing.uid === userDashboardStore.selectedAdsList.campaignUid
   );
 
-  if (campaign.collection.length > 0) {
+  if (campaign && campaign.collection.length > 0) {
     options.push({
       key: OptionsName.ADD_TO_COLLECTION,
       label: t(
         "components.user-dashboard.floating-switch-view-form.add-to-collection"
-      ),
+      )
     });
   }
 
@@ -49,8 +68,38 @@ const optionsButtons = computed<OptionsType[]>(() => {
  * @param {OptionsName} optionName
  */
 function handleFiredAction(actionName: OptionsName) {
-  console.log(actionName);
-  //selectedAds
+  switch (actionName) {
+    case "create_new_collection":
+      {
+        handleCreateCollection({
+          campaignUid: userDashboardStore.selectedAdsList.campaignUid,
+          ads: userDashboardStore.selectedAdsList.ads
+        });
+
+        userDashboardStore.selectedAdsList.ads = [];
+        userDashboardStore.selectedAdsList.campaignUid = null;
+      }
+      break;
+    case "add_to_collection":
+      {
+        handleAssignAdToCollection({
+          campaignUid: userDashboardStore.selectedAdsList.campaignUid,
+          collectionUid: campaignModelValue.value,
+          ads: userDashboardStore.selectedAdsList.ads
+        });
+      }
+      break;
+    case "hide_element":
+      {
+        userDashboardStore.toogleVisibilityAds(
+          userDashboardStore.selectedAdsList.ads
+        );
+      }
+      break;
+  }
+
+  userDashboardStore.selectedAdsList.ads = [];
+  userDashboardStore.selectedAdsList.campaignUid = null;
 }
 </script>
 
@@ -60,5 +109,19 @@ function handleFiredAction(actionName: OptionsName) {
     :selected-elements="userDashboardStore.selectedAdsList.ads.length"
     :options="optionsButtons"
     @on-click="handleFiredAction"
-  />
+  >
+    <template #additional>
+      <SelectForm
+        class="w-44 animate-fade-in"
+        v-model="campaignModelValue"
+        position="top"
+        :options="optionsCollectionList"
+        :placeholder="
+          t(
+            'components.user-dashboard.floating-switch-view-form.select-placeholder'
+          )
+        "
+      />
+    </template>
+  </FloatingPanel>
 </template>

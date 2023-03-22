@@ -33,7 +33,7 @@ defineEmits<{
       </button>
     </div>
     <div
-      class="collection-bottom-bar__content max-h-[50vh] max-w-full scroll-bar whitespace-nowrap overflow-scroll"
+      class="collection-bottom-bar__content max-h-[50vh] max-w-full scroll-bar whitespace-nowrap overflow-y-scroll overflow-x-hidden"
     >
       <CollectionTimeline :collection="collection" />
     </div>

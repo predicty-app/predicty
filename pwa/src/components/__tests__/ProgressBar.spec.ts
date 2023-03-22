@@ -12,11 +12,11 @@ describe("Tests for ProgressBar component", () => {
     const wrapper = mount(ProgressBar, {
       props: {
         countSteps: 1,
-        ...props,
+        ...props
       },
       global: {
-        plugins: plugins,
-      },
+        plugins: plugins
+      }
     });
 
     const lines = wrapper.findAll<HTMLDivElement>(
@@ -24,7 +24,7 @@ describe("Tests for ProgressBar component", () => {
     );
 
     return {
-      lines,
+      lines
     };
   }
 
@@ -34,7 +34,7 @@ describe("Tests for ProgressBar component", () => {
     };
 
     const { lines } = prepareElementsToTests<PropsType>({
-      countSteps: 6,
+      countSteps: 6
     });
 
     expect(lines.length).toBe(6);
@@ -48,7 +48,7 @@ describe("Tests for ProgressBar component", () => {
 
     const { lines } = prepareElementsToTests<PropsType>({
       countSteps: 3,
-      activeStep: 2,
+      activeStep: 2
     });
 
     expect(lines[0].attributes("data-active")).toBe("true");

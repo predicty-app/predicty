@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Command;
 
+use App\Entity\DataProvider;
 use App\Message\Command\RegisterDataProvider;
 use App\Repository\UserRepository;
 use App\Service\Google\GoogleOAuth;
@@ -70,7 +71,7 @@ class ConnectGoogleAdsCommand extends Command
             sleep(1);
         }
 
-        $this->bus->dispatch(new RegisterDataProvider($userId, $refreshToken));
+        $this->bus->dispatch(new RegisterDataProvider($userId, DataProvider::GOOGLE_ADS, $refreshToken));
 
         $io->success('Refresh token was saved in the database. '.
             'You can now connect to the Google Ads using this user\'s account');

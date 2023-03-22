@@ -1,10 +1,10 @@
 <script setup lang="ts">
 type PropsType = {
-  type?: "success" | "default" | "disbaled";
+  type?: "success" | "default" | "disabled";
 };
 
 withDefaults(defineProps<PropsType>(), {
-  type: "default",
+  type: "default"
 });
 </script>
 
@@ -12,7 +12,7 @@ withDefaults(defineProps<PropsType>(), {
   <button
     data-testid="button-form"
     :data-type="type"
-    :disabled="type === 'disbaled'"
+    :disabled="type === 'disabled'"
     :class="[
       'py-[18px] rounded-[10px] w-full text-base transition-all',
       {
@@ -21,8 +21,8 @@ withDefaults(defineProps<PropsType>(), {
         'bg-button-success text-text-white hover:bg-button-hover-success active:bg-button-active-success':
           type === 'success',
         'cursor-not-allowed text-text-white bg-button-disabled border-button-disabled hover:bg-button-disabled active:bg-button-disabled':
-          type === 'disbaled',
-      },
+          type === 'disabled'
+      }
     ]"
   >
     <slot />

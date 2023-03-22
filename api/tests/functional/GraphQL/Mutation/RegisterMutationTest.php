@@ -9,7 +9,7 @@ use Symfony\Component\Mime\RawMessage;
 
 /**
  * @covers \App\GraphQL\Mutation\RegisterMutation
- * @covers \App\MessageHandler\Command\RegisterHandler
+ * @covers \App\Message\CommandHandler\RegisterHandler
  */
 class RegisterMutationTest extends GraphQLTestCase
 {

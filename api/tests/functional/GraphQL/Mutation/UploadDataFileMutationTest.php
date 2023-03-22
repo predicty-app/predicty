@@ -12,15 +12,17 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class UploadDataFileMutationTest extends GraphQLTestCase
 {
-    public function test_upload_single_file(): void
+    public function test_upload_facebook_csv_file(): void
     {
+        $this->authenticate();
+
         $mutation = <<<'EOF'
-                mutation($file: Upload) {
-                  uploadDataFile(file: $file)
+                mutation($file: Upload, $type: FileImportType!) {
+                  uploadDataFile(file: $file, type: $type)
                 }
             EOF;
 
-        $client = static::createClient();
+        $client = static::getClient();
         $filesystem = $client->getContainer()->get('default.storage');
 
         $client->request(
@@ -29,7 +31,7 @@ class UploadDataFileMutationTest extends GraphQLTestCase
             parameters: [
                 'operations' => json_encode([
                     'query' => $mutation,
-                    'variables' => ['file' => null],
+                    'variables' => ['file' => null, 'type' => 'FACEBOOK_CSV'],
                     'operationName' => null,
                 ]),
                 'map' => json_encode([0 => ['variables.file']]),

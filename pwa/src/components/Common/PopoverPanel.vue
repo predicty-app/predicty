@@ -5,7 +5,7 @@ type PropsType = {
 };
 
 withDefaults(defineProps<PropsType>(), {
-  height: 0,
+  height: 0
 });
 
 const isVisibleOverlayer = ref<boolean>(false);

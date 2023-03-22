@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { ref, onMounted, nextTick } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+import { ref, onMounted, nextTick } from "vue";
 import { useGlobalStore } from "@/stores/global";
 import { useOnBoardingStore } from "@/stores/onboarding";
 import { handleRegisterUser } from "@/services/api/onboarding";
 import {
   isRequiredValidation,
-  isEmailValidation,
+  isEmailValidation
 } from "@/helpers/rulesValidation";
 
 const { t } = useI18n();
