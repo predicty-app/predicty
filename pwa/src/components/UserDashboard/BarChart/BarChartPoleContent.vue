@@ -3,14 +3,31 @@ unction to handle scale down.
 import { ref, onMounted, watch } from "vue";
 import { useGlobalStore } from "@/stores/global";
 import {
+  useUserDashboardStore,
+  type AdSetsType,
+  type AdsType,
+  type CampaignType
+} from "@/stores/userDashboard";
+import {
+  gapGrid,
   scaleGrid,
   scaleFirstGrid,
-  gapGrid,
   handleVirtualizationElement
 } from "@/helpers/timeline";
+import type { AdStatusType } from "@/stores/userDashboard";
+
+type PropsType = {
+  fisrtDayWeek: string;
+};
+
+const props = withDefaults(defineProps<PropsType>(), {
+  fisrtDayWeek: ""
+});
 
 const globalStore = useGlobalStore();
+const resultNumber = ref<number[]>([0, 0, 0, 0, 0, 0, 0]);
 const isElementVisible = ref<boolean>(true);
+const userDashboardStore = useUserDashboardStore();
 const boundingBoxElement = ref<DOMRect | null>(null);
 const barChartPoleContentInstance = ref<HTMLDivElement | null>(null);
 
@@ -33,21 +50,101 @@ watch(
       boundingBoxElement.value
     ))
 );
+
+watch(isElementVisible, () => {
+  concatResultsPerDay();
+});
+
+watch(
+  () => userDashboardStore.selectedAdsList.ads.length,
+  () => {
+    concatResultsPerDay();
+  }
+);
+
+watch(
+  () => userDashboardStore.selectedCollection,
+  () => {
+    concatResultsPerDay();
+  }
+);
+
+/**
+ * Function to parse ads.
+ * @param {string[]} ads
+ */
+function parseDateforAd(ads: string[]) {
+  ads.forEach((adSelected: string) => {
+    userDashboardStore.campaigns.forEach((campaign: CampaignType) => {
+      if (campaign.isCollection) {
+        return;
+      }
+
+      campaign.adsets.forEach((adsets: AdSetsType) => {
+        adsets.ads.forEach((ad: AdsType) => {
+          if (ad.uid === adSelected) {
+            addingResults(ad.status);
+          }
+        });
+      });
+    });
+  });
+}
+
+/**
+ * Function to adding results.
+ * @param {AdStatusType[]}
+ */
+function addingResults(status: AdStatusType[]) {
+  for (let i = 0; i < 7; i++) {
+    const date = props.fisrtDayWeek.split(".");
+    const parsedDate = new Date(`${date[2]}-${date[1]}-${date[0]}`);
+    parsedDate.setDate(parsedDate.getDate() + i);
+
+    const createdDate = `${parsedDate.getFullYear()}-${
+      parsedDate.getMonth() < 10
+        ? `0${parsedDate.getMonth() + 1}`
+        : parsedDate.getMonth() + 1
+    }-${
+      parsedDate.getDate() < 10
+        ? `0${parsedDate.getDate()}`
+        : parsedDate.getDate()
+    }`;
+
+    status.forEach((stat: AdStatusType) => {
+      if (stat.date === createdDate) {
+        resultNumber.value[i] += stat.revenueShare.amount;
+      }
+    });
+  }
+}
+
+/**
+ * Function to concat results.
+ */
+function concatResultsPerDay() {
+  resultNumber.value = [0, 0, 0, 0, 0, 0, 0];
+  if (userDashboardStore.selectedAdsList.ads.length > 0) {
+    parseDateforAd(userDashboardStore.selectedAdsList.ads);
+  }
+
+  if (userDashboardStore.selectedCollection) {
+    const ads = (userDashboardStore.selectedCollection as AdSetsType).ads.map(
+      (ad: AdsType) => ad.uid
+    );
+    parseDateforAd(ads);
+  }
+}
 </script>
 
 <template>
-  <div
-    v-if="isElementVisible"
-    ref="barChartPoleContentInstance"
-    class="bar-chart-pole-content w-full"
-  >
-    <BarChartPoleItem :height="200" />
-    <BarChartPoleItem :height="100" />
-    <BarChartPoleItem :height="50" />
-    <BarChartPoleItem :height="150" />
-    <BarChartPoleItem :height="45" />
-    <BarChartPoleItem :height="45" />
-    <BarChartPoleItem :height="45" />
+  <div ref="barChartPoleContentInstance" class="bar-chart-pole-content w-full">
+    <BarChartPoleItem
+      :height="250"
+      :key="`${Math.random()}_${item}`"
+      :result="resultNumber[item - 1]"
+      v-for="item in 7"
+    />
   </div>
 </template>
 

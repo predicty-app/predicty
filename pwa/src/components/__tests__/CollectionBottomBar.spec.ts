@@ -35,22 +35,22 @@ describe("Tests for CollectionBottomBar component", () => {
     };
   }
 
-  // it("should close on Close button click", async () => {
-  //   type PropsType = {
-  //     collection?: AdsType | AdSetsType;
-  //   };
+  it("should close on Close button click", async () => {
+    type PropsType = {
+      collection?: AdsType | AdSetsType;
+    };
 
-  //   const { wrapper, button } = prepareElementsToTests<PropsType>({
-  //     collection: {
-  //       uid: "",
-  //       name: "Collection",
-  //       ads: [],
-  //       start: "",
-  //       end: ""
-  //     }
-  //   });
+    const { wrapper, button } = prepareElementsToTests<PropsType>({
+      collection: {
+        uid: "",
+        name: "Collection",
+        ads: [],
+        start: "",
+        end: ""
+      } as AdSetsType
+    });
 
-  //   await button.trigger("click");
-  //   expect(wrapper.emitted().close).toBeTruthy();
-  // });
+    await button.trigger("click");
+    expect(wrapper.emitted().close).toBeTruthy();
+  });
 });

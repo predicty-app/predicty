@@ -1,4 +1,4 @@
-import { hFirstAndLastDate } from "@/helpers/utils";
+import { hFirstAndLastAdsetDate } from "@/helpers/utils";
 import type {
   AmountNumberType,
   CampaignType,
@@ -52,6 +52,7 @@ class CollectionService {
 
     campaigns.unshift({
       uid: uniqueId,
+      isCollection: true,
       externalId: `external-id-${uniqueId}`,
       adsets: this.#setAdSetsList(collections, provider),
       name: "Collections list",
@@ -59,6 +60,20 @@ class CollectionService {
       dataProvider: provider
     } as CampaignType);
 
+    campaigns = campaigns.map((campaign: CampaignType) => {
+      campaign.adsets = campaign.adsets
+        .filter((adset: AdSetsType) => adset.ads.length > 0)
+        .map((adset: AdSetsType) => {
+          const { first, last } = hFirstAndLastAdsetDate(adset.ads);
+          adset.start = first;
+          adset.end = last;
+
+          adset.isActive = this.#checkIsActiveElement(first, last);
+          return adset;
+        });
+
+      return campaign;
+    });
     return campaigns;
   }
 
@@ -81,16 +96,14 @@ class CollectionService {
           (ad: AdNonParsedType) => ad.adStats.length > 0
         );
 
-        const { first, last } = hFirstAndLastDate(collection.ads);
-
         return {
           uid: collection.id,
           name: collection.name,
           externalId: `adset-external-id-${collection.id}`,
-          start: first,
+          start: "",
           campaignId: this.#checkCollectionWithinCampaign(collection.ads),
-          isActive: this.#checkIsActiveElement(first, last),
-          end: last,
+          isActive: false,
+          end: "",
           ads: this.#setAdsList(collection.ads, provider)
         };
       });
@@ -110,12 +123,12 @@ class CollectionService {
           creation: "",
           name: ad.name,
           status: ad.adStats,
-          end: ad.adStats.at(-1).date,
-          start: ad.adStats.at(0).date,
+          end: ad.adStats.at(0).date,
+          start: ad.adStats.at(-1).date,
           dataProvider: provider,
           isActive: this.#checkIsActiveElement(
-            ad.adStats.at(0).date,
-            ad.adStats.at(-1).date
+            ad.adStats.at(-1).date,
+            ad.adStats.at(0).date
           )
         } as AdsType)
     );

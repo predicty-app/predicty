@@ -11,6 +11,7 @@ const globalStore = useGlobalStore();
       :key="`${Math.random()}_${item}_${index}`"
       class="col-start-dynamic col-end-dynamic"
       v-for="(item, index) in globalStore.currentsCountWeeks"
+      :fisrt-day-week="globalStore.dictionaryFirstDaysWeek[item - 1]"
       :style="{ '--start': index + 1, '--end': index + 2 }"
     />
   </div>

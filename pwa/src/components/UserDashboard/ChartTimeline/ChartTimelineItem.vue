@@ -30,6 +30,13 @@ const isSelectedElement = computed<boolean>(() =>
   userStore.selectedAdsList.ads.includes(props.element.uid)
 );
 
+const parseStart = computed<number>(() =>
+  props.start > props.end ? props.end : props.start
+);
+const parseEnd = computed<number>(() =>
+  props.start < props.end ? props.end : props.start
+);
+
 const isElementAssignCheckedCollection = computed<boolean>(() => {
   return (
     userStore.selectedAdsList.campaignUid !== props.campaingUid &&
@@ -128,11 +135,15 @@ defineEmits<{
         ? { click: () => $emit('collectionSelected', props.element) }
         : {}
     "
-    :style="{ '--start': start, '--end': end, '--color': currentColor }"
+    :style="{
+      '--start': parseStart,
+      '--end': parseEnd - parseStart < 2 ? parseEnd + 5 : parseEnd,
+      '--color': currentColor
+    }"
   >
     <div
       :class="[
-        'p-2 text-xs cursor-pointer rounded-[5px] shadow-sm flex gap-x-1 items-center text-text-white font-semibold bg-timeline-item-background',
+        'p-2 text-xs overflow-hidden cursor-pointer rounded-[5px] shadow-sm text-text-white font-semibold bg-timeline-item-background',
         {
           'shadow-lg shadow-timeline-shadow': isSelectedElement
         }
@@ -140,19 +151,38 @@ defineEmits<{
       @click="handleToogleSelectAd"
       :style="{ '--color': currentColor }"
     >
-      <CheckboxForm
-        v-if="type === 'ad'"
-        :color="currentColor"
-        :is-checked="isSelectedElement"
-      />
-      <IconSvg v-if="type === 'collection'" name="bars" class-name="w-4 h-4" />
-      <div
-        v-if="type === 'collection'"
-        class="rounded font-semibold text-xs w-[14px] py-[1px] bg-timeline-collection-count flex items-center justify-center"
-      >
-        {{ (element as AdSetsType).ads.length }}
+      <div class="pr-4 flex gap-x-1 items-center">
+        <CheckboxForm
+          v-if="type === 'ad'"
+          :color="currentColor"
+          :is-checked="isSelectedElement"
+        />
+        <svg
+          v-if="type === 'collection'"
+          class="min-w-[16px] w-[16px]"
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect x="1" y="1" width="7" height="3" rx="1" fill="white" />
+          <rect y="11" width="12" height="3" rx="1" fill="white" />
+          <rect x="3" y="6" width="12" height="3" rx="1" fill="white" />
+        </svg>
+        <div
+          v-if="type === 'collection'"
+          class="rounded font-semibold text-xs min-w-[14px] w-[14px] py-[1px] bg-timeline-collection-count flex items-center justify-center"
+        >
+          {{ (element as AdSetsType).ads.length }}
+        </div>
+        <span v-if="parseEnd - parseStart < 5">
+          {{ element.name.slice(0, 2) }}...
+        </span>
+        <span v-else>
+          {{ element.name }}
+        </span>
       </div>
-      {{ element.name }}
     </div>
   </div>
 </template>

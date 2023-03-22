@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import { computed, ref } from "vue";
-import type { CampaignType, AdSetsType } from "@/stores/userDashboard";
+import { computed, ref, nextTick } from "vue";
+import { handleGetCampaigns } from "@/services/api/userDashboard";
+import type { AdSetsType } from "@/stores/userDashboard";
 import { useUserDashboardStore, OptionsName } from "@/stores/userDashboard";
 import {
   handleCreateCollection,
@@ -13,8 +14,20 @@ type OptionsType = {
   label: string;
 };
 
+type NotificationMessageType = {
+  visible: boolean;
+  type: "success" | "error";
+  message: string;
+};
+
 const { t } = useI18n();
 const campaignModelValue = ref<string>("");
+const isSpinnerVisible = ref<boolean>(false);
+const notificationMessageModel = ref<NotificationMessageType>({
+  visible: false,
+  type: "success",
+  message: ""
+});
 const userDashboardStore = useUserDashboardStore();
 const optionsCollectionList = computed<OptionsType[]>(() => {
   return userDashboardStore.campaigns[0].adsets.map((adsets: AdSetsType) => ({
@@ -52,29 +65,64 @@ const optionsButtons = computed<OptionsType[]>(() => {
 });
 
 /**
+ * Function to set response after one of actions - assign or create collection.
+ * @param {'create-collection' | 'assign-ads-to-collection'} type
+ * @param {any} response
+ */
+async function setResponseFiredAction(
+  type: "create-collection" | "assign-ads-to-collection",
+  response: any
+) {
+  notificationMessageModel.value.visible = true;
+  notificationMessageModel.value.type = response ? "success" : "error";
+  notificationMessageModel.value.message = t(
+    `components.user-dashboard.floating-switch-view-form.notifications.${type}.${
+      response ? "success" : "error"
+    }`
+  );
+
+  if (response) {
+    const campaigns = await handleGetCampaigns();
+    userDashboardStore.setCampaignsList(campaigns);
+    nextTick(() => {
+      userDashboardStore.handleVirtualizeCampaignsList();
+      isSpinnerVisible.value = false;
+    });
+  }
+
+  isSpinnerVisible.value = false;
+
+  userDashboardStore.selectedAdsList.ads = [];
+  userDashboardStore.selectedAdsList.campaignUid = null;
+}
+
+/**
  * Function to start action.
  * @param {OptionsName} optionName
  */
-function handleFiredAction(actionName: OptionsName) {
+async function handleFiredAction(actionName: OptionsName) {
   switch (actionName) {
     case "create_new_collection":
       {
-        handleCreateCollection({
+        isSpinnerVisible.value = true;
+        const response = await handleCreateCollection({
           campaignUid: userDashboardStore.selectedAdsList.campaignUid,
           ads: userDashboardStore.selectedAdsList.ads
         });
 
-        userDashboardStore.selectedAdsList.ads = [];
-        userDashboardStore.selectedAdsList.campaignUid = null;
+        await setResponseFiredAction("create-collection", response);
       }
       break;
     case "add_to_collection":
       {
-        handleAssignAdToCollection({
+        isSpinnerVisible.value = true;
+        const response = await handleAssignAdToCollection({
           campaignUid: userDashboardStore.selectedAdsList.campaignUid,
           collectionUid: campaignModelValue.value,
           ads: userDashboardStore.selectedAdsList.ads
         });
+
+        await setResponseFiredAction("assign-ads-to-collection", response);
       }
       break;
     case "hide_element":
@@ -92,6 +140,12 @@ function handleFiredAction(actionName: OptionsName) {
 </script>
 
 <template>
+  <SpinnerBar :is-visible="isSpinnerVisible" :is-global="true" />
+  <NotificationMessage
+    v-model="notificationMessageModel.visible"
+    :message="notificationMessageModel.message"
+    :type="notificationMessageModel.type"
+  />
   <FloatingPanel
     class="absolute bottom-3 right-3 m-auto animate-fade-in z-20"
     :selected-elements="userDashboardStore.selectedAdsList.ads.length"

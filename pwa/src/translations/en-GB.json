@@ -81,7 +81,17 @@
         "create-new-collection": "Create New Collection",
         "add-to-collection": "Add to Collection",
         "hide-element": "Show/Hide element",
-        "select-placeholder": "Select campaning..."
+        "select-placeholder": "Select campaning...",
+        "notifications": {
+          "create-collection" :{
+            "success": "Successfully created a collection.",
+            "error": "An error occurred while creating the collection. Please try again in a moment."
+          },
+          "assign-ads-to-collection" :{
+            "success": "Correctly assigned adverts to collections.",
+            "error": "An error occurred when assigning adverts to a collection. Please try again in a moment."
+          }
+        }
       },
       "header-dashboard": {
         "menu-list": {

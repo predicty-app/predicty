@@ -1,5 +1,6 @@
 import { computed } from "vue";
 import { useGlobalStore } from "@/stores/global";
+import { hCheckIsCollectionExist } from "@/helpers/utils";
 import { useUserDashboardStore } from "@/stores/userDashboard";
 import type { CampaignType, AdSetsType } from "@/stores/userDashboard";
 
@@ -47,9 +48,15 @@ export const gapGrid = computed<string>(
 
 export const heightContent = computed<string>(() => {
   let height = 0;
-  userDashboardStore.campaigns.forEach((campaign: CampaignType) => {
-    height += calculateItemHeight(campaign);
-  });
+  if (userDashboardStore.campaigns.length === 0) {
+    return `0px`;
+  }
+  hCheckIsCollectionExist(userDashboardStore.campaigns).forEach(
+    (campaign: CampaignType) => {
+      height += calculateItemHeight(campaign, 10);
+    }
+  );
+
   return `${height + 50}px`;
 });
 
@@ -58,14 +65,16 @@ export const heightContent = computed<string>(() => {
  * @param {CampaignType} campaign
  * @return {number}
  */
-export function calculateItemHeight(campaign: CampaignType): number {
-  const adsets = campaign.adsets.filter(
-    (adset: AdSetsType) => !adset.campaignId
-  );
+export function calculateItemHeight(
+  campaign: CampaignType,
+  modifierHeight: number = 0
+): number {
   let height = 0;
 
-  adsets.forEach((adset: AdSetsType) => {
-    height += adset.ads.length * 36 + adset.ads.length * 5;
+  campaign.adsets.forEach((adset: AdSetsType) => {
+    height += campaign.isCollection
+      ? 41
+      : adset.ads.length * 36 + adset.ads.length * 5 + modifierHeight;
   });
 
   return height;
@@ -108,19 +117,19 @@ export function calculateItemPosition(
   campaign: CampaignType,
   modifierHeight: number
 ): number {
-  const previousHeightElement = 0;
-  const index = userDashboardStore.campaigns.findIndex(
+  let previousHeightElement = 0;
+  const campaigns = hCheckIsCollectionExist(userDashboardStore.campaigns);
+
+  const index = campaigns.findIndex(
     (item: CampaignType) => item.uid === campaign.uid
   );
 
   for (let i = 0; i < index; i++) {
-    let previousHeightElement = 0;
-    for (let i = 0; i < index; i++) {
-      userDashboardStore.campaigns[0].adsets.forEach((adset: AdSetsType) => {
-        previousHeightElement +=
-          adset.ads.length * 36 + adset.ads.length * 5 + modifierHeight;
-      });
-    }
+    campaigns[i].adsets.forEach((adset: AdSetsType) => {
+      previousHeightElement += campaigns[i].isCollection
+        ? 41 + 4
+        : adset.ads.length * 36 + adset.ads.length * 5 + modifierHeight;
+    });
   }
 
   return previousHeightElement;

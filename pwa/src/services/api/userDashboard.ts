@@ -1,12 +1,7 @@
 import apiService from "@/services/api/api";
-import { useGlobalStore } from "@/stores/global";
-// import type {
-//   CampaignType,
-//   AdsType,
-//   AdsCollection
-// } from "@/stores/userDashboard";
 import CampaignsService from "@/services/campaigns";
 import CollectionService from "@/services/collections";
+import { useUserDashboardStore } from "@/stores/userDashboard";
 import type { CampaignNonParsedType } from "@/services/campaigns";
 
 type ManagementCollectionPayloadType = {
@@ -48,6 +43,10 @@ async function handleGetCampaigns() {
                 amount
                 currency
               }
+              revenueShare {
+                amount
+                currency
+              }
               date
               id
             }
@@ -70,6 +69,10 @@ async function handleGetCampaigns() {
             }
             results
             costPerResult {
+              amount
+              currency
+            }
+            revenueShare {
               amount
               currency
             }
@@ -99,6 +102,7 @@ async function handleGetCampaigns() {
 
     return response.errors ? null : campaigns;
   } catch (error) {
+    console.log(error);
     return null;
   }
 }
@@ -107,53 +111,77 @@ async function handleGetCampaigns() {
  * Function to create new collection.
  * @param {ManagementCollectionPayloadType} payload
  */
-function handleCreateCollection(
+async function handleCreateCollection(
   payload: Pick<ManagementCollectionPayloadType, "ads" | "campaignUid">
 ) {
-  // list.value = list.value.map((campaign: CampaignType) => {
-  //   if (campaign.uid === payload.campaignUid) {
-  //     const ads = campaign.ads.filter((ad: AdsType) =>
-  //       payload.ads.includes(ad.uid)
-  //     );
-  //     const { first, last } = hFirstAndLastDate([{ ads } as CampaignType]);
-  //     campaign.collection.push({
-  //       uid: `${Math.random()}`,
-  //       name: `Collection ${campaign.collection.length + 1}`,
-  //       ads: payload.ads,
-  //       start: first,
-  //       end: last
-  //     });
-  //   }
-  //   return campaign;
-  // });
+  type CreateAdCollectionType = {
+    name: string;
+  };
+
+  const query = `mutation createAdCollection($name: String) {
+    createAdCollection(name: $name) {
+      id
+    }
+  }`;
+
+  const userDashboardStore = useUserDashboardStore();
+
+  try {
+    const response = await apiService.request<CreateAdCollectionType, any>(
+      query,
+      {
+        name: `Collection ${
+          userDashboardStore.campaigns[0].isCollection
+            ? userDashboardStore.campaigns[0].adsets.length + 1
+            : 1
+        }`
+      }
+    );
+
+    if (!response.errors) {
+      await handleAssignAdToCollection({
+        collectionUid: response.data.createAdCollection.id,
+        ...payload
+      });
+    }
+
+    return response.errors ? null : true;
+  } catch (error) {
+    return null;
+  }
 }
 
 /**
  * Function to assign ad to existing collection.
  * @param {ManagementCollectionPayloadType} payload
  */
-function handleAssignAdToCollection(payload: ManagementCollectionPayloadType) {
-  // list.value = list.value.map((campaign: CampaignType) => {
-  //   if (campaign.uid === payload.campaignUid) {
-  //     campaign.collection = campaign.collection.map(
-  //       (collection: AdsCollection) => {
-  //         if (collection.uid === payload.collectionUid) {
-  //           collection.ads = collection.ads.concat(payload.ads);
-  //           const ads = campaign.ads.filter((ad: AdsType) =>
-  //             collection.ads.includes(ad.uid)
-  //           );
-  //           const { first, last } = hFirstAndLastDate([
-  //             { ads } as CampaignType
-  //           ]);
-  //           collection.start = first;
-  //           collection.end = last;
-  //         }
-  //         return collection;
-  //       }
-  //     );
-  //   }
-  //   return campaign;
-  // });
+async function handleAssignAdToCollection(
+  payload: ManagementCollectionPayloadType
+) {
+  type AssignAdsCollectionType = {
+    adCollectionId: string;
+    adsIds: string[];
+  };
+
+  const query = `mutation addToAdCollection($adCollectionId: ID!, $adsIds: [ID]!){
+    addToAdCollection(adCollectionId: $adCollectionId, adsIds: $adsIds) {
+      id
+    }
+  }`;
+
+  try {
+    const response = await apiService.request<AssignAdsCollectionType, any>(
+      query,
+      {
+        adCollectionId: payload.collectionUid,
+        adsIds: payload.ads
+      }
+    );
+
+    return response.errors ? null : true;
+  } catch (error) {
+    return null;
+  }
 }
 
 export {

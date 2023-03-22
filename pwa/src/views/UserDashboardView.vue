@@ -62,9 +62,15 @@ function checkIsAdInCollection(adUid: string): boolean {
     : true;
 }
 
-function toggleCollection(value?: AdsType) {
+/**
+ * Function to toogle collection.
+ * @param {AdsType | AdSetsType} value
+ */
+function toggleCollection(value?: AdsType | AdSetsType) {
   state.isCollectionSelected = value ? true : false;
   state.currentCollection = value ? value : null;
+
+  userDashboardStore.selectedCollection = value ? value : null;
 }
 </script>
 
@@ -107,67 +113,37 @@ function toggleCollection(value?: AdsType) {
           :key="campaign.uid"
           v-for="campaign in userDashboardStore.parsedCampaignsList"
         >
-          <ChartTimelineItem
-            :element="adset"
-            type="collection"
-            :is-visible="true"
-            :uid="adset.uid"
-            :color="campaign.color"
-            :key="`${adset.uid}_${Math.random()}`"
-            v-for="adset in userDashboardStore.campaigns[0].adsets.filter((adsSet: AdSetsType) => adsSet.campaignId === campaign.uid)"
-            :start="globalStore.dictionaryTimeline[adset.start]"
-            :campaing-uid="campaign.uid"
-            :end="globalStore.dictionaryTimeline[adset.end]"
-          />
-          <template
-            :key="adsSet.uid"
-            v-for="adsSet in campaign.adsets.filter((adsSet: AdSetsType) => !adsSet.campaignId)"
-          >
+          <template v-if="campaign.isCollection">
             <ChartTimelineItem
-              :element="ad"
-              type="ad"
-              :is-visible="checkIsAdInCollection(ad.uid)"
-              :uid="ad.uid"
+              :element="adset"
+              type="collection"
+              :is-visible="true"
+              :uid="adset.uid"
               :color="campaign.color"
-              :key="`${ad.uid}_${Math.random()}`"
-              v-for="ad in adsSet.ads"
-              :start="globalStore.dictionaryTimeline[ad.start]"
+              :key="`${adset.uid}_${Math.random()}`"
+              v-for="adset in userDashboardStore.campaigns[0].adsets"
+              :start="globalStore.dictionaryTimeline[adset.start]"
               :campaing-uid="campaign.uid"
-              :end="globalStore.dictionaryTimeline[ad.end]"
+              :end="globalStore.dictionaryTimeline[adset.end]"
             />
           </template>
+          <template v-if="!campaign.isCollection">
+            <template :key="adsSet.uid" v-for="adsSet in campaign.adsets">
+              <ChartTimelineItem
+                :element="ad"
+                type="ad"
+                :is-visible="checkIsAdInCollection(ad.uid)"
+                :uid="ad.uid"
+                :color="campaign.color"
+                :key="`${ad.uid}_${Math.random()}`"
+                v-for="ad in adsSet.ads"
+                :start="globalStore.dictionaryTimeline[ad.start]"
+                :campaing-uid="campaign.uid"
+                :end="globalStore.dictionaryTimeline[ad.end]"
+              />
+            </template>
+          </template>
         </ChartTimelineContent>
-
-        <!-- <ChartTimelineContent
-            :campaign="campaign"
-            :key="campaign.uid"
-            v-for="campaign in userDashboardStore.parsedCampaignsList"
-          >
-            <ChartTimelineItem
-              :element="adElement"
-              type="ad"
-              :is-visible="
-                checkIsAdInCollection(campaign.collection, adElement.uid)
-              "
-              :uid="adElement.uid"
-              :color="campaign.color"
-              :key="`${adElement.uid}_${Math.random()}`"
-              v-for="adElement in campaign.ads"
-              :start="globalStore.dictionaryTimeline[adElement.start]"
-              :campaing-uid="campaign.uid"
-              :end="globalStore.dictionaryTimeline[adElement.end]"
-            />
-            <ChartTimelineItem
-              :element="collection"
-              type="collection"
-              :color="campaign.color"
-              :key="collection.uid"
-              v-for="collection in campaign.collection"
-              :start="globalStore.dictionaryTimeline[collection.start]"
-              :end="globalStore.dictionaryTimeline[collection.end]"
-              @collection-selected="(value) => toggleCollection(value)"
-            />
-          </ChartTimelineContent> -->
       </ChartTimelineWrapper>
       <CollectionBottomBar
         :collection="state.currentCollection"

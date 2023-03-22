@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import { onMounted, nextTick } from "vue";
-import { useUserDashboardStore, type AdSetsType } from "@/stores/userDashboard";
+import { onMounted, nextTick, ref } from "vue";
 import { handleGetCampaigns } from "@/services/api/userDashboard";
 import type { CampaignType, AdsType } from "@/stores/userDashboard";
+import { useUserDashboardStore, type AdSetsType } from "@/stores/userDashboard";
 import {
   heightContent,
   calculateItemHeight,
@@ -11,13 +11,16 @@ import {
 } from "@/helpers/timeline";
 
 const { t } = useI18n();
+const isSpinnerVisible = ref<boolean>(false);
 const userDashboardStore = useUserDashboardStore();
 
 onMounted(async () => {
+  isSpinnerVisible.value = true;
   const response = await handleGetCampaigns();
   userDashboardStore.setCampaignsList(response);
   nextTick(() => {
     userDashboardStore.handleVirtualizeCampaignsList();
+    isSpinnerVisible.value = false;
   });
 });
 
@@ -38,6 +41,7 @@ function calculateActiveCurrentAds(campaign: CampaignType): number {
 </script>
 
 <template>
+  <SpinnerBar :is-visible="isSpinnerVisible" :is-global="true" />
   <div class="px-9 h-dynamic relative" :style="{ '--height': heightContent }">
     <CampaningListItem
       class="campaign-list-item h-dynamic absolute animate-fade-in"
@@ -50,13 +54,13 @@ function calculateActiveCurrentAds(campaign: CampaignType): number {
       :key="campaign.uid"
       v-for="campaign in userDashboardStore.parsedCampaignsList"
     >
-      <div>
+      <div v-if="campaign.isCollection">
         {{
           t(
             "components.user-dashboard.campaning-list-form.active_ad_collection",
             {
-              count: userDashboardStore.parsedCampaignsList[0].adsets.filter(
-                (adset: AdSetsType) => adset.campaignId === campaign.uid
+              count: campaign.adsets.filter(
+                (adset: AdSetsType) => adset.isActive
               ).length
             }
           )

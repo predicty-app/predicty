@@ -1,5 +1,5 @@
-import type { CampaignType, AdSetsType } from "@/stores/userDashboard";
-import type { AdNonParsedType, AdsStatType } from "@/services/collections";
+import type { AdNonParsedType } from "@/services/collections";
+import type { CampaignType, AdSetsType, AdsType } from "@/stores/userDashboard";
 
 type FirstLastDateType = {
   first: string;
@@ -9,6 +9,49 @@ type FirstLastDateType = {
 type NextDayDictionary = {
   [key: string]: number;
 };
+
+/**
+ * Function to check is collection exist.
+ * @param {CampaignType[]} list
+ * @returns {CampaignType[]}
+ */
+export function hCheckIsCollectionExist(list: CampaignType[]): CampaignType[] {
+  if (list[0].isCollection && list[0].adsets.length === 0) {
+    return list.filter((_, index) => index > 0);
+  } else {
+    return list;
+  }
+}
+
+/**
+ * Function to get first and last date from list.
+ * @param {AdsType[]} list
+ * @returns {FirstLastDateType}
+ */
+export function hFirstAndLastAdsetDate(list: AdsType[]): FirstLastDateType {
+  let firstDate = Date.parse(list[0].start) / 1000;
+  let lastDate = Date.parse(list[0].end) / 1000;
+
+  let firstDateString = list[0].start;
+  let lastDateString = list[0].end;
+
+  list.forEach((ad: AdsType) => {
+    const start = Date.parse(ad.start) / 1000;
+    const end = Date.parse(ad.end) / 1000;
+
+    if (start < firstDate) {
+      firstDate = start;
+      firstDateString = ad.start;
+    }
+
+    if (end > lastDate) {
+      lastDate = end;
+      lastDateString = ad.end;
+    }
+  });
+
+  return { first: firstDateString, last: lastDateString };
+}
 
 /**
  * Function to get first and last date from list.

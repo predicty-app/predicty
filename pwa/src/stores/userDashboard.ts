@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { useGlobalStore } from "@/stores/global";
+import { hCheckIsCollectionExist } from "@/helpers/utils";
 
 export enum OptionsName {
   "CREATE_NEW_COLLECTION" = "create_new_collection",
@@ -26,6 +27,7 @@ export type AdStatusType = {
   results: number;
   amountSpent: AmountNumberType;
   costPerResult: AmountNumberType;
+  revenueShare: AmountNumberType;
   date: string;
   id: string;
 };
@@ -57,6 +59,7 @@ export type CampaignType = {
   name: string;
   adsets: AdSetsType[];
   color?: string;
+  isCollection?: boolean;
   campaignId?: string;
   externalId: string;
   dataProvider: string[];
@@ -77,6 +80,7 @@ type StateType = {
   hiddenAds: string[];
   campaigns: CampaignType[];
   activeProviders: string[];
+  selectedCollection: AdSetsType | AdsType;
   parsedCampaignsList: CampaignType[];
   selectedAdsList: CheckedAdsToCollectionType;
   authenticatedUserParams: AuthenticatedUserParamsType;
@@ -164,26 +168,22 @@ export const useUserDashboardStore = defineStore({
      */
     handleVirtualizeCampaignsList() {
       const globalStore = useGlobalStore();
-
-      this.parsedCampaignsList = this.campaigns
-        .filter(
-          (campaign: CampaignType) =>
-            campaign.adsets.filter((adset: AdSetsType) => !adset.campaignId)
-              .length > 0
-        )
-        .filter((campaign: CampaignType, index: number) => {
+      this.parsedCampaignsList = hCheckIsCollectionExist(this.campaigns).filter(
+        (campaign: CampaignType, index: number) => {
           let currentHeightElement = 0;
 
           campaign.adsets.forEach((adset: AdSetsType) => {
-            currentHeightElement +=
-              adset.ads.length * 36 + adset.ads.length * 5;
+            currentHeightElement += campaign.isCollection
+              ? 51
+              : adset.ads.length * 36 + adset.ads.length * 5 + 10;
           });
 
           let previousHeightElement = 0;
           for (let i = 0; i < index; i++) {
-            this.campaigns[0].adsets.forEach((adset: AdSetsType) => {
-              previousHeightElement +=
-                adset.ads.length * 36 + adset.ads.length * 5;
+            this.campaigns[i].adsets.forEach((adset: AdSetsType) => {
+              previousHeightElement += this.campaigns[i].isCollection
+                ? 51
+                : adset.ads.length * 36 + adset.ads.length * 5 + 12;
             });
           }
 
@@ -195,7 +195,8 @@ export const useUserDashboardStore = defineStore({
             currentTopPosition + currentHeightElement >
               globalStore.scrollCampaignList.scrollTop
           );
-        });
+        }
+      );
     }
   }
 });

@@ -120,12 +120,12 @@ class CampaignsService {
             creation: "",
             name: ad.name,
             status: ad.adStats,
-            end: ad.adStats.at(-1).date,
-            start: ad.adStats.at(0).date,
+            end: ad.adStats.at(0).date,
+            start: ad.adStats.at(-1).date,
             dataProvider: [campaign.dataProvider.id],
             isActive: this.#checkIsActiveElement(
-              ad.adStats.at(0).date,
-              ad.adStats.at(-1).date
+              ad.adStats.at(-1).date,
+              ad.adStats.at(0).date
             )
           } as AdsType)
       );
