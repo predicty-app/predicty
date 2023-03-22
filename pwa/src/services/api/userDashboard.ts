@@ -17,6 +17,18 @@ async function handleGetCampaigns() {
   const query = `query Dashboard {
     dashboard {
       name
+      dailyRevenue {
+        id
+        revenue {
+          amount
+          currency
+        }
+        averageOrderValue {
+          amount
+          currency
+        }
+        date
+      }
       campaigns {
         id
         externalId

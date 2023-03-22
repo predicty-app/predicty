@@ -258,7 +258,7 @@ export function hFirstDaysWeeks(firstDay: Date, range: number): string[] {
     firstDay.getMonth() + 1 < 10
       ? `0${firstDay.getMonth() + 1}`
       : firstDay.getMonth() + 1
-  }`;
+  }.${firstDay.getFullYear()}`;
 
   for (let i = 1; i <= range; i++) {
     const nextMonday = new Date(firstDateParsed);
@@ -282,7 +282,7 @@ export function hFirstDaysWeeks(firstDay: Date, range: number): string[] {
       nextMonday.getMonth() + 1 < 10
         ? `0${nextMonday.getMonth() + 1}`
         : nextMonday.getMonth() + 1
-    }`;
+    }.${nextMonday.getFullYear()}`;
 
     firstDateParsed = parsedDay;
   }

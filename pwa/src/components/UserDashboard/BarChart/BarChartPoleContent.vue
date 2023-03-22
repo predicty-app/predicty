@@ -1,7 +1,7 @@
 unction to handle scale down.
 <script setup lang="ts">
-import { ref, onMounted, watch } from "vue";
 import { useGlobalStore } from "@/stores/global";
+import { ref, onMounted, watch, computed } from "vue";
 import {
   useUserDashboardStore,
   type AdSetsType,
@@ -24,6 +24,7 @@ const props = withDefaults(defineProps<PropsType>(), {
   fisrtDayWeek: ""
 });
 
+const scaleChart = 6000;
 const globalStore = useGlobalStore();
 const resultNumber = ref<number[]>([0, 0, 0, 0, 0, 0, 0]);
 const isElementVisible = ref<boolean>(true);
@@ -69,6 +70,10 @@ watch(
   }
 );
 
+function setScale(): number {
+  return globalStore.wrapperPole.getBoundingClientRect().height / scaleChart;
+}
+
 /**
  * Function to parse ads.
  * @param {string[]} ads
@@ -102,7 +107,7 @@ function addingResults(status: AdStatusType[]) {
     parsedDate.setDate(parsedDate.getDate() + i);
 
     const createdDate = `${parsedDate.getFullYear()}-${
-      parsedDate.getMonth() < 10
+      parsedDate.getMonth() + 1 < 10
         ? `0${parsedDate.getMonth() + 1}`
         : parsedDate.getMonth() + 1
     }-${
@@ -140,9 +145,9 @@ function concatResultsPerDay() {
 <template>
   <div ref="barChartPoleContentInstance" class="bar-chart-pole-content w-full">
     <BarChartPoleItem
-      :height="250"
+      :height="200"
       :key="`${Math.random()}_${item}`"
-      :result="resultNumber[item - 1]"
+      :result="resultNumber[item - 1] * setScale()"
       v-for="item in 7"
     />
   </div>

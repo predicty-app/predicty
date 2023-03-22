@@ -11,6 +11,7 @@ const globalStore = useGlobalStore();
 
 <template>
   <div
+    v-if="Object.keys(globalStore.dictionaryFirstDaysWeek).length > 0"
     class="chart-timeline-weeks pb-5 pt-1 px-2 text-sm font-bold text-timeline-lines-text"
   >
     <ChartTimelineWeeksItem
@@ -19,7 +20,7 @@ const globalStore = useGlobalStore();
       v-for="(item, index) in globalStore.currentsCountWeeks"
       :style="{ '--start': index + 1, '--end': index + 2 }"
     >
-      {{ globalStore.dictionaryFirstDaysWeek[item - 1] }}
+      {{ globalStore.dictionaryFirstDaysWeek[item - 1].slice(0, -5) }}
     </ChartTimelineWeeksItem>
   </div>
 </template>

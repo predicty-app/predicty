@@ -39,8 +39,8 @@ const parseEnd = computed<number>(() =>
 
 const isElementAssignCheckedCollection = computed<boolean>(() => {
   return (
-    userStore.selectedAdsList.campaignUid !== props.campaingUid &&
-    userStore.selectedAdsList.ads.length > 0
+    userStore.selectedAdsList.ads.length > 0 &&
+    !userStore.selectedAdsList.ads.includes(props.element.uid)
   );
 });
 
@@ -62,6 +62,10 @@ watch(
     handleVisibleElement();
   }
 );
+
+const emit = defineEmits<{
+  (e: "collectionSelected", value: AdSetsType): void;
+}>();
 
 /**
  * Function to handle visible element.
@@ -98,24 +102,21 @@ function handleToogleSelectAd() {
     return;
   }
 
-  if (
-    !(
-      userStore.selectedAdsList.campaignUid !== props.campaingUid &&
-      userStore.selectedAdsList.ads.length > 0
-    )
-  ) {
-    userStore.toogleAssignAdsAction(props.campaingUid, props.element.uid);
-  } else {
-    userStore.selectedAdsList.ads = [];
-    userStore.selectedAdsList.campaignUid = null;
-
-    userStore.toogleAssignAdsAction(props.campaingUid, props.element.uid);
-  }
+  emit("collectionSelected", null);
+  userStore.toogleAssignAdsAction(props.campaingUid, props.element.uid);
 }
 
-defineEmits<{
-  (e: "collectionSelected", value: AdsType): void;
-}>();
+/**
+ * Function handle select collection.
+ */
+function handleSelectCollection() {
+  userStore.selectedAdsList.ads = [];
+  userStore.selectedAdsList.campaignUid = null;
+
+  userStore.selectedCollection = null;
+
+  emit("collectionSelected", props.element as AdSetsType);
+}
 </script>
 
 <template>
@@ -131,9 +132,7 @@ defineEmits<{
       }
     ]"
     v-on="
-      type === 'collection'
-        ? { click: () => $emit('collectionSelected', props.element) }
-        : {}
+      type === 'collection' ? { click: () => handleSelectCollection() } : {}
     "
     :style="{
       '--start': parseStart,

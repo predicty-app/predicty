@@ -11,6 +11,7 @@ type StateType = {
   scrollParams: ScrollType;
   isSpinnerVisible: boolean;
   currentsCountWeeks: number;
+  wrapperPole: HTMLDivElement | null;
   dictionaryFirstDaysWeek: string[];
   scrollTimeline: HTMLDivElement | null;
   scrollCampaignList: HTMLDivElement | null;
@@ -28,6 +29,7 @@ export const useGlobalStore = defineStore({
       isSpinnerVisible: false,
       currentScale: 100,
       numberFirstWeek: 0,
+      wrapperPole: null,
       scrollTimeline: null,
       scrollCampaignList: null,
       dictionaryTimeline: {},

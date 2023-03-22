@@ -67,11 +67,14 @@ module.exports = {
       charBarPole: {
         background: {
           primary: "#89B3FF",
-          secondary: "#E3E7FF"
+          secondary: "#E3E7FF",
+          disabled: "#ebebeb",
+          active: "#5cd070"
         },
         hover: {
           background: "#4184FF",
-          shadow: "#4184FF"
+          shadow: "#4184FF",
+          disabled: "#C5C5C5"
         }
       },
       chartBar: {
