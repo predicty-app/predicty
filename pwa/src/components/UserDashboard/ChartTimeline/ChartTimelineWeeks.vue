@@ -6,6 +6,12 @@ import {
   mainWidthGrid
 } from "@/helpers/timeline";
 
+type PropsType = {
+  hasWeekdays?: boolean;
+};
+
+defineProps<PropsType>();
+
 const globalStore = useGlobalStore();
 </script>
 
@@ -38,5 +44,9 @@ const globalStore = useGlobalStore();
     #f4f4f6 v-bind(scaleLines),
     #f4f4f6 v-bind(scaleLinesGradient)
   );
+
+  &--weekdays {
+    @apply bg-one;
+  }
 }
 </style>

@@ -11,6 +11,12 @@ import {
   scaleLinesGradient
 } from "@/helpers/timeline";
 
+type PropsType = {
+  hasWeekdays?: boolean;
+};
+
+defineProps<PropsType>();
+
 const globalStore = useGlobalStore();
 const timelineContent = ref<HTMLElement | null>(null);
 const timelineGridInstance = ref<HTMLDivElement | null>(null);
@@ -68,6 +74,7 @@ function handleChangeScale(eventWheel: WheelEvent) {
   <div
     @wheel.prevent="handleChangeScale"
     class="chart-timeline-wrapper bg-timeline-background grid grid-rows-[1fr] w-fit h-full whitespace-nowrap relative"
+    :class="{ 'chart-timeline-wrapper--weekdays': hasWeekdays }"
   >
     <div
       ref="timelineGridInstance"
@@ -91,6 +98,10 @@ function handleChangeScale(eventWheel: WheelEvent) {
     #f4f4f6 v-bind(scaleLines),
     #f4f4f6 v-bind(scaleLinesGradient)
   );
+
+  &--weekdays {
+    @apply bg-one;
+  }
 
   &__grid {
     width: v-bind(mainWidthGrid);
