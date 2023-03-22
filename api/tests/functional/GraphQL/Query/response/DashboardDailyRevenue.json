@@ -1,0 +1,18 @@
+{
+  "data": {
+    "dashboard": {
+      "dailyRevenue": [
+        {
+          "date": "2023-01-18",
+          "revenue": {
+            "amount": 166.96
+          },
+          "averageOrderValue": {
+            "amount": 18.12
+          }
+        },
+        "@...@"
+      ]
+    }
+  }
+}

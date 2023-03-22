@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Service\Clock\Clock;
 use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -24,5 +25,10 @@ trait TimestampableTrait
     public function getCreatedAt(): DateTimeInterface
     {
         return $this->createdAt;
+    }
+
+    protected function updateChangedAt(): void
+    {
+        $this->changedAt = Clock::now();
     }
 }
