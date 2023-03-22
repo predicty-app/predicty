@@ -21,23 +21,23 @@ type OptionsLegendType = {
 const legendOptions: OptionsLegendType[] = [
   {
     label: t("views.user-dashboard-view.legend-description.options.sales"),
-    color: "#4184FF",
+    color: "#4184FF"
   },
   {
     label: t("views.user-dashboard-view.legend-description.options.investment"),
-    color: "#FFAE4F",
-  },
+    color: "#FFAE4F"
+  }
 ];
 
 const chartTypeOptions: TypesOptionsChart[] = [
   {
     key: TypeOptionsChart.WEEKS,
-    label: t("views.user-dashboard-view.legend-description.chart-types.weeks"),
+    label: t("views.user-dashboard-view.legend-description.chart-types.weeks")
   },
   {
     key: TypeOptionsChart.DAYS,
-    label: t("views.user-dashboard-view.legend-description.chart-types.days"),
-  },
+    label: t("views.user-dashboard-view.legend-description.chart-types.days")
+  }
 ];
 
 const globalStore = useGlobalStore();
@@ -45,7 +45,7 @@ const userDashboardStore = useUserDashboardStore();
 
 let state = reactive({
   isCollectionSelected: false,
-  currentCollection: null,
+  currentCollection: null
 });
 
 /**
@@ -74,6 +74,7 @@ function toggleCollection(value?: AdsType | AdsCollection) {
 <template>
   <FloatingSwitchViewForm
     v-if="userDashboardStore.selectedAdsList.ads.length > 0"
+    :isCollection="userDashboardStore.selectedAdsList"
   />
   <UserDashboardLayout :singleRow="false">
     <template #header>

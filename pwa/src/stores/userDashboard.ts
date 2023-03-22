@@ -46,6 +46,7 @@ export type CampaignType = {
 type CheckedAdsToCollectionType = {
   campaignUid: string;
   ads: string[];
+  isCollection?: boolean;
 };
 
 type AuthenticatedUserParamsType = {
@@ -105,7 +106,11 @@ export const useUserDashboardStore = defineStore({
      * @param {string} campaignUid
      * @param {string} adUid
      */
-    toogleAssignAdsAction(campaignUid: string, adUid: string) {
+    toogleAssignAdsAction(
+      campaignUid: string,
+      adUid: string,
+      isCollection?: boolean
+    ) {
       if (this.selectedAdsList.ads.includes(adUid)) {
         this.selectedAdsList.ads = this.selectedAdsList.ads.filter(
           (item: string) => item !== adUid
@@ -118,6 +123,7 @@ export const useUserDashboardStore = defineStore({
         this.selectedAdsList.campaignUid = null;
       } else {
         this.selectedAdsList.campaignUid = campaignUid;
+        this.selectedAdsList.isCollection = isCollection || false;
       }
     },
 

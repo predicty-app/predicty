@@ -14,7 +14,7 @@ const globalStore = useGlobalStore();
 const userStore = useUserDashboardStore();
 
 let state = reactive({
-  ads: [],
+  ads: []
 });
 
 onMounted(() => {
@@ -53,6 +53,7 @@ onMounted(() => {
               :start="globalStore.dictionaryTimeline[ad.start]"
               :end="globalStore.dictionaryTimeline[ad.end]"
               :noName="true"
+              :isCollection="true"
             />
           </ChartTimelineContent>
         </ChartTimelineWrapper>

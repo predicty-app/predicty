@@ -3,7 +3,7 @@ import { useGlobalStore } from "@/stores/global";
 import {
   scaleLines,
   scaleLinesGradient,
-  mainWidthGrid,
+  mainWidthGrid
 } from "@/helpers/timeline";
 
 type PropsType = {
@@ -19,7 +19,7 @@ const globalStore = useGlobalStore();
   <div
     class="chart-timeline-weeks text-sm font-bold text-timeline-lines-text pb-5 pt-1 px-2"
     :class="{
-      'chart-timeline-weeks--weekdays': hasWeekdays,
+      'chart-timeline-weeks--weekdays': hasWeekdays
     }"
   >
     <ChartTimelineWeeksItem

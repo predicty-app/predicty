@@ -20,7 +20,7 @@ const imagesPath = "/assets/images";
 const provider = ref<ProviderType>({
   name: "Meta Ads",
   logoPath: "meta-ads-provider",
-  status: false,
+  status: false
 });
 
 const formatDate = (date: string) => {
@@ -38,8 +38,8 @@ const formatDate = (date: string) => {
       'h-[52px] flex items-center',
       {
         'bg-bottombar-background-light': index % 2 !== 0,
-        'bg-bottombar-dark_grey': index % 2 === 0,
-      },
+        'bg-bottombar-dark_grey': index % 2 === 0
+      }
     ]"
   >
     <img
@@ -49,8 +49,8 @@ const formatDate = (date: string) => {
       :class="[
         'w-6 ml-4',
         {
-          'opacity-70': provider.status,
-        },
+          'opacity-70': provider.status
+        }
       ]"
       :alt="provider.name"
     />
@@ -59,8 +59,8 @@ const formatDate = (date: string) => {
       :class="[
         'w-10 ml-2 rounded',
         {
-          'opacity-70': provider.status,
-        },
+          'opacity-70': provider.status
+        }
       ]"
     />
     <div class="ml-2">

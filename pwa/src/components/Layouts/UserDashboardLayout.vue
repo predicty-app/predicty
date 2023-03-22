@@ -32,7 +32,7 @@ function handleChangeScrollParams(params: ScrollType) {
   <div
     :class="[
       'select-none grid grid-cols-[336px_auto]',
-      { 'h-calc': !singleRow },
+      { 'h-calc': !singleRow }
     ]"
   >
     <div
@@ -41,8 +41,8 @@ function handleChangeScrollParams(params: ScrollType) {
         {
           'h-calc select-none grid grid-cols-[auto] grid-rows-[320px_auto]':
             !singleRow,
-          'pt-[44px]': singleRow,
-        },
+          'pt-[44px]': singleRow
+        }
       ]"
     >
       <div>
@@ -62,8 +62,8 @@ function handleChangeScrollParams(params: ScrollType) {
       :class="[
         {
           'h-calc select-none grid grid-cols-[auto] grid-rows-[50px_270px_30px_30px_auto]':
-            !singleRow,
-        },
+            !singleRow
+        }
       ]"
     >
       <ScrollbarPanel :scroll-x="globalStore.scrollParams.x">

@@ -14,6 +14,7 @@ type PropsType = {
   type?: "ad" | "collection";
   element: AdsType | AdsCollection;
   noName?: boolean;
+  isCollection?: boolean;
 };
 
 const props = withDefaults(defineProps<PropsType>(), {
@@ -98,12 +99,20 @@ function handleToogleSelectAd() {
       userStore.selectedAdsList.ads.length > 0
     )
   ) {
-    userStore.toogleAssignAdsAction(props.campaingUid, props.element.uid);
+    userStore.toogleAssignAdsAction(
+      props.campaingUid,
+      props.element.uid,
+      props.isCollection
+    );
   } else {
     userStore.selectedAdsList.ads = [];
     userStore.selectedAdsList.campaignUid = null;
 
-    userStore.toogleAssignAdsAction(props.campaingUid, props.element.uid);
+    userStore.toogleAssignAdsAction(
+      props.campaingUid,
+      props.element.uid,
+      props.isCollection
+    );
   }
 }
 

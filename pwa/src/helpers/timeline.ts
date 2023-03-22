@@ -11,7 +11,7 @@ enum timelineParams {
   LINE_WIDTH = 150,
   COLUMN_WIDTH = 16.4,
   GRADIENT_WIDTH = 300,
-  FIREST_COLUMN_WIDTH = 16,
+  FIREST_COLUMN_WIDTH = 16
 }
 
 export const scaleLines = computed<string>(

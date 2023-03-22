@@ -32,7 +32,7 @@ const optionsCollectionList = computed<OptionsType[]>(() => {
 
 const optionsButtons = computed<OptionsType[]>(() => {
   const options: OptionsType[] = [
-    {
+    !userDashboardStore.selectedAdsList.isCollection && {
       key: OptionsName.CREATE_NEW_COLLECTION,
       label: t(
         "components.user-dashboard.floating-switch-view-form.create-new-collection"
@@ -44,7 +44,7 @@ const optionsButtons = computed<OptionsType[]>(() => {
         "components.user-dashboard.floating-switch-view-form.hide-element"
       )
     }
-  ];
+  ].filter(Boolean);
 
   const campaign = userDashboardStore.campaigns.find(
     (campaing: CampaignType) =>

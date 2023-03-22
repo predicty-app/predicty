@@ -24,18 +24,18 @@ const providersList = ref<ProviderType[]>([
   {
     name: "Google Analytics",
     logoPath: "google-analytics-provider",
-    status: false,
+    status: false
   },
   {
     name: "Google Ads",
     logoPath: "google-ads-provider",
-    status: false,
+    status: false
   },
   {
     name: "Meta Ads",
     logoPath: "meta-ads-provider",
-    status: false,
-  },
+    status: false
+  }
 ]);
 </script>
 
@@ -67,8 +67,8 @@ const providersList = ref<ProviderType[]>([
           :class="[
             'w-6',
             {
-              'opacity-70': provider.status,
-            },
+              'opacity-70': provider.status
+            }
           ]"
           :alt="provider.name"
         />

@@ -10,19 +10,19 @@ export default {
       control: { type: "object" },
       description: "Ad's data",
       name: "ads",
-      type: { name: "object[]", required: false },
-    },
+      type: { name: "object[]", required: false }
+    }
   },
   parameters: {
     status: {
-      type: "todo",
+      type: "todo"
     },
     docs: {
       description: {
-        component: "Component for ad's content display",
-      },
-    },
-  },
+        component: "Component for ad's content display"
+      }
+    }
+  }
 };
 
 export const CollectionSideItems = (args: ComponentPropsType) => ({
@@ -32,7 +32,7 @@ export const CollectionSideItems = (args: ComponentPropsType) => ({
   },
   template: `
   <CollectionSideItemsComponent v-bind="args" />
-  `,
+  `
 });
 
 CollectionSideItems.args = {
@@ -44,7 +44,7 @@ CollectionSideItems.args = {
       end: "2023-05-01",
       creation: "",
       cost_total: 0,
-      cost_per_day: 0,
-    },
-  ],
+      cost_per_day: 0
+    }
+  ]
 };

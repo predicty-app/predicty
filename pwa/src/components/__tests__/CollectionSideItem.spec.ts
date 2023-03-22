@@ -10,7 +10,7 @@ describe("Tests for CollectionSideItems component", () => {
    */
   function prepareElementsToTests<T>(props?: T) {
     const wrapper = mount(CollectionSideItems, {
-      props,
+      props
     });
 
     const dateRange = wrapper.find<HTMLParagraphElement>(
@@ -18,7 +18,7 @@ describe("Tests for CollectionSideItems component", () => {
     );
 
     return {
-      dateRange,
+      dateRange
     };
   }
 
@@ -36,9 +36,9 @@ describe("Tests for CollectionSideItems component", () => {
           end: "2023-05-01",
           creation: "",
           cost_total: 0,
-          cost_per_day: 0,
-        },
-      ],
+          cost_per_day: 0
+        }
+      ]
     });
 
     expect(dateRange.text()).toBe("01.01 - 01.05");

@@ -1,10 +1,10 @@
 import apiService from "@/services/api/api";
 
 export type ProviderType = {
-  id: string
-  name: string
-  fileImportTypes: string[]
-} 
+  id: string;
+  name: string;
+  fileImportTypes: string[];
+};
 
 /**
  * Function to handle providers list.
@@ -20,14 +20,12 @@ async function handleGetProvidersList() {
 
   type ProvidersType = {
     data: {
-      dataProviders: ProviderType[]
-    }
+      dataProviders: ProviderType[];
+    };
   };
 
   try {
-    const response = await apiService.request<ProvidersType, any>(
-      query
-    );
+    const response = await apiService.request<ProvidersType, any>(query);
 
     return response.errors ? null : response.data.dataProviders;
   } catch (error) {
