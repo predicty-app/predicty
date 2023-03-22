@@ -1,7 +1,7 @@
 unction to handle scale down.
 <script setup lang="ts">
 import { useGlobalStore } from "@/stores/global";
-import { ref, onMounted, watch, computed } from "vue";
+import { ref, onMounted, watch } from "vue";
 import {
   useUserDashboardStore,
   type AdSetsType,

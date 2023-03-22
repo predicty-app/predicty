@@ -12,12 +12,20 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="wrapperPoleInstance" class="bar-chart-pole-wrapper flex items-end relative z-[2]">
-    <template v-if="Object.keys(globalStore.dictionaryFirstDaysWeek).length > 0">
-      <BarChartPoleContent :key="`${Math.random()}_${item}_${index}`" class="col-start-dynamic col-end-dynamic"
+  <div
+    ref="wrapperPoleInstance"
+    class="bar-chart-pole-wrapper flex items-end relative z-[2]"
+  >
+    <template
+      v-if="Object.keys(globalStore.dictionaryFirstDaysWeek).length > 0"
+    >
+      <BarChartPoleContent
+        :key="`${Math.random()}_${item}_${index}`"
+        class="col-start-dynamic col-end-dynamic"
         v-for="(item, index) in globalStore.currentsCountWeeks"
         :fisrt-day-week="globalStore.dictionaryFirstDaysWeek[item - 1]"
-        :style="{ '--start': index + 1, '--end': index + 2 }" />
+        :style="{ '--start': index + 1, '--end': index + 2 }"
+      />
     </template>
   </div>
 </template>
