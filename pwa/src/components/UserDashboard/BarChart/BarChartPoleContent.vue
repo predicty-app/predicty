@@ -49,9 +49,9 @@ watch(
     globalStore.currentScale
   ],
   () =>
-  (isElementVisible.value = handleVirtualizationElement(
-    boundingBoxElement.value
-  ))
+    (isElementVisible.value = handleVirtualizationElement(
+      boundingBoxElement.value
+    ))
 );
 
 watch(isElementVisible, () => {
@@ -72,17 +72,26 @@ watch(
   }
 );
 
-watch(() => userDashboardStore.dailyRevenue, () => {
-  setDailyRevenue();
-})
+watch(
+  () => userDashboardStore.dailyRevenue,
+  () => {
+    setDailyRevenue();
+  }
+);
 
-watch(() => userDashboardStore.campaigns, () => {
-  setDailyRevenue();
-})
+watch(
+  () => userDashboardStore.campaigns,
+  () => {
+    setDailyRevenue();
+  }
+);
 
-watch(() => userDashboardStore.hiddenAds, () => {
-  concatResultsPerDay();
-})
+watch(
+  () => userDashboardStore.hiddenAds,
+  () => {
+    concatResultsPerDay();
+  }
+);
 
 function setScale(): number {
   return globalStore.wrapperPole.getBoundingClientRect().height / scaleChart;
@@ -101,7 +110,10 @@ function parseDateforAd(ads: string[]) {
 
       campaign.adsets.forEach((adsets: AdSetsType) => {
         adsets.ads.forEach((ad: AdsType) => {
-          if (ad.uid === adSelected && !userDashboardStore.hiddenAds.includes(ad.uid)) {
+          if (
+            ad.uid === adSelected &&
+            !userDashboardStore.hiddenAds.includes(ad.uid)
+          ) {
             addingResults(ad.status);
           }
         });
@@ -116,7 +128,7 @@ function parseDateforAd(ads: string[]) {
  */
 function addingResults(status: AdStatusType[]) {
   for (let i = 0; i < 7; i++) {
-    const createdDate = parseCurrentDate(i)
+    const createdDate = parseCurrentDate(i);
 
     status.forEach((stat: AdStatusType) => {
       if (stat.date === createdDate) {
@@ -131,13 +143,15 @@ function parseCurrentDate(index: number): string {
   const parsedDate = new Date(`${date[2]}-${date[1]}-${date[0]}`);
   parsedDate.setDate(parsedDate.getDate() + index);
 
-  return `${parsedDate.getFullYear()}-${parsedDate.getMonth() + 1 < 10
+  return `${parsedDate.getFullYear()}-${
+    parsedDate.getMonth() + 1 < 10
       ? `0${parsedDate.getMonth() + 1}`
       : parsedDate.getMonth() + 1
-    }-${parsedDate.getDate() < 10
+  }-${
+    parsedDate.getDate() < 10
       ? `0${parsedDate.getDate()}`
       : parsedDate.getDate()
-    }`;
+  }`;
 }
 
 /**
@@ -167,23 +181,29 @@ function setDailyRevenue() {
       if (daily.date === createdDate) {
         dailyReveneuNumber.value[i] = daily.revenue.amount;
       }
-    })
+    });
   }
 }
 </script>
 
 <template>
   <div ref="barChartPoleContentInstance" class="bar-chart-pole-content w-full">
-    <BarChartPoleItem :height="dailyReveneuNumber[item - 1] * setScale()" :key="`${Math.random()}_${item}`"
-      :result="resultNumber[item - 1] * setScale()" v-for="item in 7" />
+    <BarChartPoleItem
+      :height="dailyReveneuNumber[item - 1] * setScale()"
+      :key="`${Math.random()}_${item}`"
+      :result="resultNumber[item - 1] * setScale()"
+      v-for="item in 7"
+    />
   </div>
 </template>
 
 <style scoped lang="scss">
 .bar-chart-pole-content {
   display: grid;
-  grid-template-columns: v-bind(scaleFirstGrid) repeat(auto-fill,
-      v-bind(scaleGrid));
+  grid-template-columns: v-bind(scaleFirstGrid) repeat(
+      auto-fill,
+      v-bind(scaleGrid)
+    );
   grid-column-gap: v-bind(gapGrid);
 }
 </style>

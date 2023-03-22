@@ -44,11 +44,17 @@ function calculateActiveCurrentAds(campaign: CampaignType): number {
 <template>
   <SpinnerBar :is-visible="isSpinnerVisible" :is-global="true" />
   <div class="px-9 h-dynamic relative" :style="{ '--height': heightContent }">
-    <CampaningListItem class="campaign-list-item h-dynamic absolute animate-fade-in" :style="{
-      '--height': `${calculateItemHeight(campaign)}px`,
-      '--top': `${calculateItemPosition(campaign, 10)}px`
-    }" :header="campaign.name" :color="campaign.color" :key="campaign.uid"
-      v-for="campaign in userDashboardStore.parsedCampaignsList">
+    <CampaningListItem
+      class="campaign-list-item h-dynamic absolute animate-fade-in"
+      :style="{
+        '--height': `${calculateItemHeight(campaign)}px`,
+        '--top': `${calculateItemPosition(campaign, 10)}px`
+      }"
+      :header="campaign.name"
+      :color="campaign.color"
+      :key="campaign.uid"
+      v-for="campaign in userDashboardStore.parsedCampaignsList"
+    >
       <div v-if="campaign.isCollection">
         {{
           t(

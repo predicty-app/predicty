@@ -81,7 +81,7 @@ export type DailyRevenueType = {
   revenue: AmountNumberType;
   averageOrderValue: AmountNumberType;
   date: string;
-}
+};
 
 type StateType = {
   hiddenAds: string[];

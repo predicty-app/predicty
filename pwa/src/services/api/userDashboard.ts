@@ -112,7 +112,9 @@ async function handleGetCampaigns() {
       campaigns
     );
 
-    return response.errors ? null : { campaigns , dailyRevenue: response.data.dashboard.dailyRevenue };
+    return response.errors
+      ? null
+      : { campaigns, dailyRevenue: response.data.dashboard.dailyRevenue };
   } catch (error) {
     console.log(error);
     return null;

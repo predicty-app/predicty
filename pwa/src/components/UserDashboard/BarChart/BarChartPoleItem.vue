@@ -16,8 +16,6 @@ const props = withDefaults(defineProps<PropsType>(), {
   result: 0
 });
 
-
-
 // const currentHeightActive = computed<number>(() => props.result ? props.result : 0)
 
 const isHoverElement = ref<boolean>(false);
@@ -26,9 +24,9 @@ const currentHeightActive = ref<number>(0);
 
 onMounted(() => {
   setTimeout(() => {
-    currentHeightActive.value = props.result
-  }, 100)
-})
+    currentHeightActive.value = props.result;
+  }, 100);
+});
 </script>
 
 <template>
@@ -62,12 +60,11 @@ onMounted(() => {
           'w-[80%] h-dynamic absolute hover:shadow-md hover:bg-charBarPole-hover-disabled bg-charBarPole-background-disabled rounded-3xl'
         ]"
         :style="{ '--height': `${height}px` }"
-      >
-      </div>
+      ></div>
       <div
-          class="w-[80%] bottom-0 h-dynamic absolute transition-all bg-charBarPole-background-active rounded-b-3xl"
-          :style="{ '--height': `${currentHeightActive}px` }"
-        ></div>
+        class="w-[80%] bottom-0 h-dynamic absolute transition-all bg-charBarPole-background-active rounded-b-3xl"
+        :style="{ '--height': `${currentHeightActive}px` }"
+      ></div>
     </div>
     <template #overlayer>
       <SalesNumber
