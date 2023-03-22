@@ -13,6 +13,8 @@ type PropsType = {
   campaingUid?: string;
   type?: "ad" | "collection";
   element: AdsType | AdsCollection;
+  noName?: boolean;
+  isCollection?: boolean;
 };
 
 const props = withDefaults(defineProps<PropsType>(), {
@@ -97,12 +99,20 @@ function handleToogleSelectAd() {
       userStore.selectedAdsList.ads.length > 0
     )
   ) {
-    userStore.toogleAssignAdsAction(props.campaingUid, props.element.uid);
+    userStore.toogleAssignAdsAction(
+      props.campaingUid,
+      props.element.uid,
+      props.isCollection
+    );
   } else {
     userStore.selectedAdsList.ads = [];
     userStore.selectedAdsList.campaignUid = null;
 
-    userStore.toogleAssignAdsAction(props.campaingUid, props.element.uid);
+    userStore.toogleAssignAdsAction(
+      props.campaingUid,
+      props.element.uid,
+      props.isCollection
+    );
   }
 }
 
@@ -116,7 +126,7 @@ defineEmits<{
     ref="timelineItemInstance"
     v-if="isElementVisible"
     :class="[
-      `col-start-dynamic col-end-dynamic p-[1.5px] rounded-[6px] h-fit`,
+      `col-start-dynamic col-end-dynamic p-[1.5px] rounded-[6px] h-fit my-auto`,
       {
         'border-[2px] border-timeline-item-border cursor-pointer':
           type === 'collection',
@@ -152,7 +162,7 @@ defineEmits<{
       >
         {{ (element as AdsCollection).ads.length }}
       </div>
-      {{ element.name }}
+      <p v-if="!noName">{{ element.name }}</p>
     </div>
   </div>
 </template>

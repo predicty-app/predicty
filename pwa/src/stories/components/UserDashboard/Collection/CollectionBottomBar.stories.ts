@@ -15,7 +15,7 @@ export default {
   },
   parameters: {
     status: {
-      type: "wip"
+      type: "todo"
     },
     docs: {
       description: {

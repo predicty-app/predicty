@@ -6,12 +6,21 @@ import {
   mainWidthGrid
 } from "@/helpers/timeline";
 
+type PropsType = {
+  hasWeekdays?: boolean;
+};
+
+defineProps<PropsType>();
+
 const globalStore = useGlobalStore();
 </script>
 
 <template>
   <div
-    class="chart-timeline-weeks pb-5 pt-1 px-2 text-sm font-bold text-timeline-lines-text"
+    class="chart-timeline-weeks text-sm font-bold text-timeline-lines-text pb-5 pt-1 px-2"
+    :class="{
+      'chart-timeline-weeks--weekdays': hasWeekdays
+    }"
   >
     <ChartTimelineWeeksItem
       :key="`week_${item}`"
@@ -37,5 +46,9 @@ const globalStore = useGlobalStore();
     #f4f4f6 v-bind(scaleLines),
     #f4f4f6 v-bind(scaleLinesGradient)
   );
+
+  &--weekdays {
+    @apply bg-one;
+  }
 }
 </style>

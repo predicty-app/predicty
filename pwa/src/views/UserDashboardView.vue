@@ -74,8 +74,9 @@ function toggleCollection(value?: AdsType | AdsCollection) {
 <template>
   <FloatingSwitchViewForm
     v-if="userDashboardStore.selectedAdsList.ads.length > 0"
+    :isCollection="userDashboardStore.selectedAdsList"
   />
-  <UserDashboardLayout>
+  <UserDashboardLayout :singleRow="false">
     <template #header>
       <HeaderDashboard />
     </template>
@@ -136,10 +137,10 @@ function toggleCollection(value?: AdsType | AdsCollection) {
           />
         </ChartTimelineContent>
       </ChartTimelineWrapper>
-      <CollectionBottomBar
-        :collection="state.currentCollection"
-        @close="toggleCollection()"
-      />
     </template>
   </UserDashboardLayout>
+  <CollectionBottomBar
+    :collection="state.currentCollection"
+    @close="toggleCollection()"
+  />
 </template>

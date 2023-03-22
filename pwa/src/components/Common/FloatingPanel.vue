@@ -63,6 +63,7 @@ const emit = defineEmits<{
 
 <style scoped lang="scss">
 .floating-panel {
+  z-index: 60;
   :deep(button) {
     @apply py-2 rounded;
   }

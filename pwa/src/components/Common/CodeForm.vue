@@ -56,9 +56,9 @@ function handleFocusElement(indexElement: number) {
 
 /**
  * Function to handle change value input.
- * @param {string} type 
- * @param {string} value 
- * @param {number} index 
+ * @param {string} type
+ * @param {string} value
+ * @param {number} index
  */
 function handleChangeValue(type: string, value: string, index: number) {
   currentSelectedElement.value = index + 1;
@@ -66,17 +66,17 @@ function handleChangeValue(type: string, value: string, index: number) {
   const inputElement =
     elementCodeInstance.value.querySelectorAll("input")[index + 1];
 
-    if (index < 6) {
-      const valueModel = currentModelValue.value.split("");
-      valueModel[index] = modelCodeNumbers[type];
+  if (index < 6) {
+    const valueModel = currentModelValue.value.split("");
+    valueModel[index] = modelCodeNumbers[type];
 
-      emit("update:modelValue", valueModel.slice(0, 6).join(""));
-    }
+    emit("update:modelValue", valueModel.slice(0, 6).join(""));
+  }
 
-    if (inputElement) {
-      inputElement.focus();
-      inputElement.setSelectionRange(0, 1);
-    }
+  if (inputElement) {
+    inputElement.focus();
+    inputElement.setSelectionRange(0, 1);
+  }
 }
 
 watch(

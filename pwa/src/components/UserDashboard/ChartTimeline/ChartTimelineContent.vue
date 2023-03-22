@@ -3,7 +3,8 @@ import type { CampaignType } from "@/stores/userDashboard";
 import { calculateItemPosition, calculateItemHeight } from "@/helpers/timeline";
 
 type PropsType = {
-  campaign: CampaignType;
+  fixedHeight?: boolean;
+  campaign?: CampaignType;
 };
 
 defineProps<PropsType>();
@@ -11,13 +12,23 @@ defineProps<PropsType>();
 
 <template>
   <div
-    class="chart-timeline-content-main h-dynamic absolute"
-    :style="{
-      '--height': `${calculateItemHeight(campaign)}px`,
-      '--top': `${calculateItemPosition(campaign, 12)}px`
-    }"
+    :class="[
+      'chart-timeline-content-main',
+      {
+        'h-dynamic absolute': !fixedHeight,
+        'h-[52px]': fixedHeight
+      }
+    ]"
+    :style="[
+      !fixedHeight
+        ? {
+            '--height': `${calculateItemHeight(campaign)}px`,
+            '--top': `${calculateItemPosition(campaign, 12)}px`
+          }
+        : ''
+    ]"
   >
-    <div class="chart-timeline-content animate-fade-in">
+    <div class="chart-timeline-content animate-fade-in h-full">
       <slot />
     </div>
   </div>

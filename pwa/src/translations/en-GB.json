@@ -42,7 +42,7 @@
           "next": "Next"
         }
       },
-      "connect-more-services-file-settings-form" : {
+      "connect-more-services-file-settings-form": {
         "data-type": {
           "label": "Data type",
           "placeholder": "Choose data type....",
@@ -120,7 +120,8 @@
         }
       },
       "bottom-bar": {
-        "close": "Close"
+        "close": "Close",
+        "source": "Source"
       },
       "providers-list-form": {
         "google-analytics": "Google Analytics",
