@@ -6,7 +6,8 @@ import {
   useUserDashboardStore,
   type AdSetsType,
   type AdsType,
-  type CampaignType
+  type CampaignType,
+  type DailyRevenueType
 } from "@/stores/userDashboard";
 import {
   gapGrid,
@@ -30,6 +31,7 @@ const resultNumber = ref<number[]>([0, 0, 0, 0, 0, 0, 0]);
 const isElementVisible = ref<boolean>(true);
 const userDashboardStore = useUserDashboardStore();
 const boundingBoxElement = ref<DOMRect | null>(null);
+const dailyReveneuNumber = ref<number[]>([0, 0, 0, 0, 0, 0, 0]);
 const barChartPoleContentInstance = ref<HTMLDivElement | null>(null);
 
 onMounted(() => {
@@ -47,9 +49,9 @@ watch(
     globalStore.currentScale
   ],
   () =>
-    (isElementVisible.value = handleVirtualizationElement(
-      boundingBoxElement.value
-    ))
+  (isElementVisible.value = handleVirtualizationElement(
+    boundingBoxElement.value
+  ))
 );
 
 watch(isElementVisible, () => {
@@ -70,6 +72,18 @@ watch(
   }
 );
 
+watch(() => userDashboardStore.dailyRevenue, () => {
+  setDailyRevenue();
+})
+
+watch(() => userDashboardStore.campaigns, () => {
+  setDailyRevenue();
+})
+
+watch(() => userDashboardStore.hiddenAds, () => {
+  concatResultsPerDay();
+})
+
 function setScale(): number {
   return globalStore.wrapperPole.getBoundingClientRect().height / scaleChart;
 }
@@ -87,7 +101,7 @@ function parseDateforAd(ads: string[]) {
 
       campaign.adsets.forEach((adsets: AdSetsType) => {
         adsets.ads.forEach((ad: AdsType) => {
-          if (ad.uid === adSelected) {
+          if (ad.uid === adSelected && !userDashboardStore.hiddenAds.includes(ad.uid)) {
             addingResults(ad.status);
           }
         });
@@ -102,19 +116,7 @@ function parseDateforAd(ads: string[]) {
  */
 function addingResults(status: AdStatusType[]) {
   for (let i = 0; i < 7; i++) {
-    const date = props.fisrtDayWeek.split(".");
-    const parsedDate = new Date(`${date[2]}-${date[1]}-${date[0]}`);
-    parsedDate.setDate(parsedDate.getDate() + i);
-
-    const createdDate = `${parsedDate.getFullYear()}-${
-      parsedDate.getMonth() + 1 < 10
-        ? `0${parsedDate.getMonth() + 1}`
-        : parsedDate.getMonth() + 1
-    }-${
-      parsedDate.getDate() < 10
-        ? `0${parsedDate.getDate()}`
-        : parsedDate.getDate()
-    }`;
+    const createdDate = parseCurrentDate(i)
 
     status.forEach((stat: AdStatusType) => {
       if (stat.date === createdDate) {
@@ -122,6 +124,20 @@ function addingResults(status: AdStatusType[]) {
       }
     });
   }
+}
+
+function parseCurrentDate(index: number): string {
+  const date = props.fisrtDayWeek.split(".");
+  const parsedDate = new Date(`${date[2]}-${date[1]}-${date[0]}`);
+  parsedDate.setDate(parsedDate.getDate() + index);
+
+  return `${parsedDate.getFullYear()}-${parsedDate.getMonth() + 1 < 10
+      ? `0${parsedDate.getMonth() + 1}`
+      : parsedDate.getMonth() + 1
+    }-${parsedDate.getDate() < 10
+      ? `0${parsedDate.getDate()}`
+      : parsedDate.getDate()
+    }`;
 }
 
 /**
@@ -140,26 +156,34 @@ function concatResultsPerDay() {
     parseDateforAd(ads);
   }
 }
+
+/**
+ * Function to set daily revenue;
+ */
+function setDailyRevenue() {
+  for (let i = 0; i < 7; i++) {
+    userDashboardStore.dailyRevenue.forEach((daily: DailyRevenueType) => {
+      const createdDate = parseCurrentDate(i);
+      if (daily.date === createdDate) {
+        dailyReveneuNumber.value[i] = daily.revenue.amount;
+      }
+    })
+  }
+}
 </script>
 
 <template>
   <div ref="barChartPoleContentInstance" class="bar-chart-pole-content w-full">
-    <BarChartPoleItem
-      :height="200"
-      :key="`${Math.random()}_${item}`"
-      :result="resultNumber[item - 1] * setScale()"
-      v-for="item in 7"
-    />
+    <BarChartPoleItem :height="dailyReveneuNumber[item - 1] * setScale()" :key="`${Math.random()}_${item}`"
+      :result="resultNumber[item - 1] * setScale()" v-for="item in 7" />
   </div>
 </template>
 
 <style scoped lang="scss">
 .bar-chart-pole-content {
   display: grid;
-  grid-template-columns: v-bind(scaleFirstGrid) repeat(
-      auto-fill,
-      v-bind(scaleGrid)
-    );
+  grid-template-columns: v-bind(scaleFirstGrid) repeat(auto-fill,
+      v-bind(scaleGrid));
   grid-column-gap: v-bind(gapGrid);
 }
 </style>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useUserDashboardStore } from "@/stores/userDashboard";
 
 type PropsType = {
@@ -11,12 +11,24 @@ type PropsType = {
   investment?: string | number;
 };
 
-withDefaults(defineProps<PropsType>(), {
-  height: 0
+const props = withDefaults(defineProps<PropsType>(), {
+  height: 0,
+  result: 0
 });
+
+
+
+// const currentHeightActive = computed<number>(() => props.result ? props.result : 0)
 
 const isHoverElement = ref<boolean>(false);
 const userDashboardStore = useUserDashboardStore();
+const currentHeightActive = ref<number>(0);
+
+onMounted(() => {
+  setTimeout(() => {
+    currentHeightActive.value = props.result
+  }, 100)
+})
 </script>
 
 <template>
@@ -51,15 +63,15 @@ const userDashboardStore = useUserDashboardStore();
         ]"
         :style="{ '--height': `${height}px` }"
       >
-        <div
-          class="w-full bottom-0 h-dynamic absolute transition-all bg-charBarPole-background-active rounded-b-3xl"
-          :style="{ '--height': `${result}px` }"
-        ></div>
       </div>
+      <div
+          class="w-[80%] bottom-0 h-dynamic absolute transition-all bg-charBarPole-background-active rounded-b-3xl"
+          :style="{ '--height': `${currentHeightActive}px` }"
+        ></div>
     </div>
     <template #overlayer>
       <SalesNumber
-        sales="$5,345"
+        :sales="`$${height.toFixed(2)}`"
         :investment="result"
         date="2023.03.01"
         day="wednesday"

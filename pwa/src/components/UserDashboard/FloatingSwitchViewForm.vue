@@ -82,8 +82,9 @@ async function setResponseFiredAction(
   );
 
   if (response) {
-    const campaigns = await handleGetCampaigns();
+    const { campaigns, dailyRevenue } = await handleGetCampaigns();
     userDashboardStore.setCampaignsList(campaigns);
+    userDashboardStore.setDailyReveneu(dailyRevenue);
     nextTick(() => {
       userDashboardStore.handleVirtualizeCampaignsList();
       isSpinnerVisible.value = false;
@@ -133,9 +134,6 @@ async function handleFiredAction(actionName: OptionsName) {
       }
       break;
   }
-
-  userDashboardStore.selectedAdsList.ads = [];
-  userDashboardStore.selectedAdsList.campaignUid = null;
 }
 </script>
 

@@ -76,10 +76,18 @@ type AuthenticatedUserParamsType = {
   isEmailVerified: boolean;
 };
 
+export type DailyRevenueType = {
+  id: string;
+  revenue: AmountNumberType;
+  averageOrderValue: AmountNumberType;
+  date: string;
+}
+
 type StateType = {
   hiddenAds: string[];
   campaigns: CampaignType[];
   activeProviders: string[];
+  dailyRevenue: DailyRevenueType[];
   selectedCollection: AdSetsType | AdsType;
   parsedCampaignsList: CampaignType[];
   selectedAdsList: CheckedAdsToCollectionType;
@@ -90,6 +98,7 @@ export const useUserDashboardStore = defineStore({
   id: "userDashboard",
   state: () =>
     ({
+      dailyRevenue: [],
       authenticatedUserParams: null,
       campaigns: [],
       parsedCampaignsList: [],
@@ -114,6 +123,14 @@ export const useUserDashboardStore = defineStore({
      */
     setCampaignsList(list: CampaignType[]) {
       this.campaigns = list;
+    },
+
+    /**
+     * Function to set daily reveneu list to store.
+     * @param {DailyRevenueType[]} list
+     */
+    setDailyReveneu(list: DailyRevenueType[]) {
+      this.dailyRevenue = list;
     },
 
     /**
