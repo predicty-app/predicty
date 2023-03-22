@@ -1,0 +1,30 @@
+{
+  "data": {
+    "dashboard": {
+      "campaigns": [
+        {
+          "adSets": [
+            {
+              "ads": [
+                {
+                  "adStats": [
+                    {
+                      "revenueShare": {
+                        "amount": 588.96,
+                        "currency": "PLN"
+                      }
+                    },
+                    "@...@"
+                  ]
+                },
+                "@...@"
+              ]
+            },
+            "@...@"
+          ]
+        },
+        "@...@"
+      ]
+    }
+  }
+}

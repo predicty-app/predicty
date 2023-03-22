@@ -6,11 +6,12 @@ namespace App\GraphQL\Type;
 
 use App\Entity\AdStats;
 use App\GraphQL\TypeRegistry;
+use App\Repository\DailyRevenueRepository;
 use GraphQL\Type\Definition\ObjectType;
 
 class AdStatsType extends ObjectType
 {
-    public function __construct(TypeRegistry $type)
+    public function __construct(TypeRegistry $type, DailyRevenueRepository $dailyRevenueRepository)
     {
         parent::__construct([
             'name' => 'AdStats',
@@ -26,6 +27,10 @@ class AdStatsType extends ObjectType
                 ],
                 'amountSpent' => [
                     'type' => $type->money(),
+                ],
+                'revenueShare' => [
+                    'type' => $type->money(),
+                    'resolve' => fn (AdStats $adStats) => $dailyRevenueRepository->getDailyRevenueFor($adStats),
                 ],
                 'date' => [
                     'type' => $type->string(),
