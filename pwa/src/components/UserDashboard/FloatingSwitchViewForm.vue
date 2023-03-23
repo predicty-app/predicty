@@ -6,7 +6,8 @@ import type { AdSetsType } from "@/stores/userDashboard";
 import { useUserDashboardStore, OptionsName } from "@/stores/userDashboard";
 import {
   handleCreateCollection,
-  handleAssignAdToCollection
+  handleAssignAdToCollection,
+  handleUnAssignAdFromCollection
 } from "@/services/api/userDashboard";
 
 type OptionsType = {
@@ -82,7 +83,10 @@ const optionsButtons = computed<OptionsType[]>(() => {
  * @param {any} response
  */
 async function setResponseFiredAction(
-  type: "create-collection" | "assign-ads-to-collection",
+  type:
+    | "create-collection"
+    | "assign-ads-to-collection"
+    | "unassign-ads-from-collection",
   response: any
 ) {
   notificationMessageModel.value.visible = true;
@@ -100,12 +104,21 @@ async function setResponseFiredAction(
     nextTick(() => {
       userDashboardStore.handleVirtualizeCampaignsList();
       isSpinnerVisible.value = false;
+
+      if (userDashboardStore.selectedCollection) {
+        userDashboardStore.selectedCollection =
+          userDashboardStore.campaigns[0].adsets.find(
+            (adset: AdSetsType) =>
+              adset.uid === userDashboardStore.selectedCollection.uid
+          );
+      }
     });
   }
 
   isSpinnerVisible.value = false;
 
   userDashboardStore.selectedAdsList.ads = [];
+  userDashboardStore.selectedCollectionAdsList.ads = [];
   userDashboardStore.selectedAdsList.campaignUid = null;
 }
 
@@ -115,7 +128,7 @@ async function setResponseFiredAction(
  */
 async function handleFiredAction(actionName: OptionsName) {
   switch (actionName) {
-    case "create_new_collection":
+    case OptionsName.CREATE_NEW_COLLECTION:
       {
         isSpinnerVisible.value = true;
         const response = await handleCreateCollection({
@@ -126,7 +139,7 @@ async function handleFiredAction(actionName: OptionsName) {
         await setResponseFiredAction("create-collection", response);
       }
       break;
-    case "add_to_collection":
+    case OptionsName.ADD_TO_COLLECTION:
       {
         isSpinnerVisible.value = true;
         const response = await handleAssignAdToCollection({
@@ -138,7 +151,19 @@ async function handleFiredAction(actionName: OptionsName) {
         await setResponseFiredAction("assign-ads-to-collection", response);
       }
       break;
-    case "hide_element":
+    case OptionsName.REMOVE_FROM_COLLECTION:
+      {
+        isSpinnerVisible.value = true;
+        const response = await handleUnAssignAdFromCollection({
+          campaignUid: null,
+          collectionUid: userDashboardStore.selectedCollection.uid,
+          ads: userDashboardStore.selectedCollectionAdsList.ads
+        });
+
+        await setResponseFiredAction("unassign-ads-from-collection", response);
+      }
+      break;
+    case OptionsName.HIDE_ELEMENT:
       {
         userDashboardStore.toogleVisibilityAds(
           userDashboardStore.selectedAdsList.ads.length > 0

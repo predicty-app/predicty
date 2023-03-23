@@ -91,6 +91,10 @@
           "assign-ads-to-collection" :{
             "success": "Correctly assigned adverts to collections.",
             "error": "An error occurred when assigning adverts to a collection. Please try again in a moment."
+          },
+          "unassign-ads-from-collection": {
+            "success": "Correctly unassigned adverts from collections.",
+            "error": "An error occurred when unassigning adverts from a collection. Please try again in a moment."
           }
         }
       },

@@ -198,8 +198,42 @@ async function handleAssignAdToCollection(
   }
 }
 
+/**
+ * Function to un assign ad from existing collection.
+ * @param {ManagementCollectionPayloadType} payload
+ */
+async function handleUnAssignAdFromCollection(
+  payload: ManagementCollectionPayloadType
+) {
+  type AssignAdsCollectionType = {
+    adCollectionId: string;
+    adsIds: string[];
+  };
+
+  const query = `mutation removeAdFromCollection($adsIds: [ID]!, $adCollectionId: ID!) {
+    removeAdFromCollection(adsIds: $adsIds, adCollectionId: $adCollectionId) {
+      id
+    }
+  }`;
+
+  try {
+    const response = await apiService.request<AssignAdsCollectionType, any>(
+      query,
+      {
+        adCollectionId: payload.collectionUid,
+        adsIds: payload.ads
+      }
+    );
+
+    return response.errors ? null : true;
+  } catch (error) {
+    return null;
+  }
+}
+
 export {
   handleGetCampaigns,
   handleCreateCollection,
-  handleAssignAdToCollection
+  handleAssignAdToCollection,
+  handleUnAssignAdFromCollection
 };
