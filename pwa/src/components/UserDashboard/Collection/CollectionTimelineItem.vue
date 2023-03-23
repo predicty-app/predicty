@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
-import { useGlobalStore } from "@/stores/global";
 import { hLightenDarkenColor } from "@/helpers/utils";
 import { useUserDashboardStore } from "@/stores/userDashboard";
 import type { AdsType, AdSetsType } from "@/stores/userDashboard";
@@ -22,7 +21,7 @@ const props = withDefaults(defineProps<PropsType>(), {
 
 const userStore = useUserDashboardStore();
 const isSelectedElement = computed<boolean>(() =>
-  userStore.selectedAdsList.ads.includes(props.element.uid)
+  userStore.selectedCollectionAdsList.ads.includes(props.element.uid)
 );
 const timelineItemInstance = ref<HTMLDivElement | null>(null);
 
@@ -35,8 +34,8 @@ const parseEnd = computed<number>(() =>
 
 const isElementAssignCheckedCollection = computed<boolean>(() => {
   return (
-    userStore.selectedAdsList.ads.length > 0 &&
-    !userStore.selectedAdsList.ads.includes(props.element.uid)
+    userStore.selectedCollectionAdsList.ads.length > 0 &&
+    !userStore.selectedCollectionAdsList.ads.includes(props.element.uid)
   );
 });
 
@@ -47,35 +46,39 @@ const currentColor = computed<string>(() =>
   )
 );
 
-const emit = defineEmits<{
-  (e: "collectionSelected", value: AdSetsType): void;
-}>();
-
 /**
  * Function to handle select ad.
  */
 function handleToogleSelectAd() {
-  console.log('Collection item select.')
+  userStore.toogleAssignAdsCollectionAction(props.element.uid);
 }
 </script>
 
 <template>
-  <div ref="timelineItemInstance" :class="[
-    `col-start-dynamic col-end-dynamic p-[1.5px] rounded-[6px] h-fit my-auto`,
-    {
-      'opacity-50': isElementAssignCheckedCollection
-    }
-  ]" :style="{
-  '--start': parseStart,
-  '--end': parseEnd - parseStart < 2 ? parseEnd + 5 : parseEnd,
-  '--color': currentColor
-}">
-    <div :class="[
-      'p-2 text-xs overflow-hidden cursor-pointer rounded-[5px] shadow-sm text-text-white font-semibold bg-timeline-item-background',
+  <div
+    ref="timelineItemInstance"
+    :class="[
+      `col-start-dynamic col-end-dynamic p-[1.5px] rounded-[6px] h-fit my-auto`,
       {
-        'shadow-lg shadow-timeline-shadow': isSelectedElement
+        'opacity-50': isElementAssignCheckedCollection
       }
-    ]" @click="handleToogleSelectAd" :style="{ '--color': currentColor }">
+    ]"
+    :style="{
+      '--start': parseStart,
+      '--end': parseEnd - parseStart < 2 ? parseEnd + 5 : parseEnd,
+      '--color': currentColor
+    }"
+  >
+    <div
+      :class="[
+        'p-2 text-xs overflow-hidden cursor-pointer rounded-[5px] shadow-sm text-text-white font-semibold bg-timeline-item-background',
+        {
+          'shadow-lg shadow-timeline-shadow': isSelectedElement
+        }
+      ]"
+      @click="handleToogleSelectAd"
+      :style="{ '--color': currentColor }"
+    >
       <div class="pr-4 flex gap-x-1 items-center">
         <CheckboxForm :color="currentColor" :is-checked="isSelectedElement" />
       </div>

@@ -98,7 +98,10 @@ function handleVisibleElement() {
  * Function to handle select ad.
  */
 function handleToogleSelectAd() {
-  if (props.type !== "ad") {
+  if (
+    props.type !== "ad" ||
+    !userStore.activeProviders.includes(props.element.dataProvider[0])
+  ) {
     return;
   }
 
@@ -124,11 +127,17 @@ function handleSelectCollection() {
     ref="timelineItemInstance"
     v-if="isElementVisible"
     :class="[
-      `col-start-dynamic col-end-dynamic p-[1.5px] rounded-[6px] h-fit my-auto`,
+      `col-start-dynamic col-end-dynamic p-[1.5px] rounded-[6px] h-fit my-auto transition-all`,
       {
-        'border-[2px] border-timeline-item-border cursor-pointer':
-          type === 'collection',
-        'opacity-50': isElementAssignCheckedCollection
+        'border-[2px] border-timeline-item-border': type === 'collection',
+        'opacity-50': isElementAssignCheckedCollection,
+        'blur-[0.5px] opacity-20 grayscale cursor-default':
+          !userStore.activeProviders.includes(element.dataProvider[0]) &&
+          type === 'ad',
+        'cursor-pointer':
+          type === 'collection' ||
+          (userStore.activeProviders.includes(element.dataProvider[0]) &&
+            type === 'ad')
       }
     ]"
     v-on="
@@ -142,7 +151,7 @@ function handleSelectCollection() {
   >
     <div
       :class="[
-        'p-2 text-xs overflow-hidden cursor-pointer rounded-[5px] shadow-sm text-text-white font-semibold bg-timeline-item-background',
+        'p-2 text-xs overflow-hidden rounded-[5px] shadow-sm text-text-white font-semibold bg-timeline-item-background',
         {
           'shadow-lg shadow-timeline-shadow': isSelectedElement
         }

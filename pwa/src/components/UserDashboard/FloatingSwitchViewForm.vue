@@ -38,7 +38,7 @@ const optionsCollectionList = computed<OptionsType[]>(() => {
 
 const optionsButtons = computed<OptionsType[]>(() => {
   const options: OptionsType[] = [
-    !userDashboardStore.selectedAdsList.isCollection && {
+    !userDashboardStore.selectedCollection && {
       key: OptionsName.CREATE_NEW_COLLECTION,
       label: t(
         "components.user-dashboard.floating-switch-view-form.create-new-collection"
@@ -52,11 +52,23 @@ const optionsButtons = computed<OptionsType[]>(() => {
     }
   ].filter(Boolean);
 
-  if (userDashboardStore.campaigns[0].adsets.length > 0) {
+  if (
+    userDashboardStore.campaigns[0].adsets.length > 0 &&
+    !userDashboardStore.selectedCollection
+  ) {
     options.push({
       key: OptionsName.ADD_TO_COLLECTION,
       label: t(
         "components.user-dashboard.floating-switch-view-form.add-to-collection"
+      )
+    });
+  }
+
+  if (userDashboardStore.selectedCollection) {
+    options.push({
+      key: OptionsName.REMOVE_FROM_COLLECTION,
+      label: t(
+        "components.user-dashboard.floating-switch-view-form.remove-from-collection"
       )
     });
   }
@@ -129,8 +141,11 @@ async function handleFiredAction(actionName: OptionsName) {
     case "hide_element":
       {
         userDashboardStore.toogleVisibilityAds(
-          userDashboardStore.selectedAdsList.ads
+          userDashboardStore.selectedAdsList.ads.length > 0
+            ? userDashboardStore.selectedAdsList.ads
+            : userDashboardStore.selectedCollectionAdsList.ads
         );
+        userDashboardStore.selectedCollectionAdsList.ads = [];
       }
       break;
   }

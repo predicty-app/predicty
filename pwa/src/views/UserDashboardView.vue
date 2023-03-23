@@ -66,7 +66,7 @@ function checkIsAdInCollection(adUid: string): boolean {
  * Function to toogle collection.
  * @param {AdsType | AdSetsType} value
  */
-function toggleCollection(value?: AdsType | AdSetsType) {
+function toggleCollection(value?: AdSetsType) {
   state.isCollectionSelected = value ? true : false;
   state.currentCollection = value ? value : null;
 
@@ -76,10 +76,12 @@ function toggleCollection(value?: AdsType | AdSetsType) {
 
 <template>
   <FloatingSwitchViewForm
-    v-if="userDashboardStore.selectedAdsList.ads.length > 0"
-    :isCollection="userDashboardStore.selectedAdsList"
+    v-if="
+      userDashboardStore.selectedAdsList.ads.length > 0 ||
+      userDashboardStore.selectedCollectionAdsList.ads.length > 0
+    "
   />
-  <UserDashboardLayout :singleRow="false">
+  <UserDashboardLayout>
     <template #header>
       <HeaderDashboard />
     </template>
@@ -152,6 +154,6 @@ function toggleCollection(value?: AdsType | AdSetsType) {
   </UserDashboardLayout>
   <CollectionBottomBar
     :collection="state.currentCollection"
-    @close="toggleCollection()"
+    @handleCloseDetials="toggleCollection()"
   />
 </template>

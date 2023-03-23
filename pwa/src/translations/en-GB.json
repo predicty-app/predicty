@@ -80,6 +80,7 @@
       "floating-switch-view-form": {
         "create-new-collection": "Create New Collection",
         "add-to-collection": "Add to Collection",
+        "remove-from-collection": "Remove from Collection",
         "hide-element": "Show/Hide element",
         "select-placeholder": "Select campaning...",
         "notifications": {

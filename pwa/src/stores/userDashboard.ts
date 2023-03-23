@@ -5,7 +5,8 @@ import { hCheckIsCollectionExist } from "@/helpers/utils";
 export enum OptionsName {
   "CREATE_NEW_COLLECTION" = "create_new_collection",
   "ADD_TO_COLLECTION" = "add_to_collection",
-  "HIDE_ELEMENT" = "hide_element"
+  "HIDE_ELEMENT" = "hide_element",
+  "REMOVE_FROM_COLLECTION" = "remove_from_collection"
 }
 
 export enum TypeOptionsChart {
@@ -90,11 +91,12 @@ type StateType = {
   hiddenAds: string[];
   campaigns: CampaignType[];
   activeProviders: string[];
+  selectedCollection: AdSetsType;
   dailyRevenue: DailyRevenueType[];
-  selectedCollection: AdSetsType | AdsType;
   parsedCampaignsList: CampaignType[];
   selectedAdsList: CheckedAdsToCollectionType;
   authenticatedUserParams: AuthenticatedUserParamsType;
+  selectedCollectionAdsList: Pick<CheckedAdsToCollectionType, "ads">;
 };
 
 export const useUserDashboardStore = defineStore({
@@ -113,6 +115,9 @@ export const useUserDashboardStore = defineStore({
         "TIK_TOK",
         "OTHER"
       ],
+      selectedCollectionAdsList: {
+        ads: []
+      },
       selectedAdsList: {
         campaignUid: null,
         ads: []
@@ -142,6 +147,21 @@ export const useUserDashboardStore = defineStore({
      */
     setAuthenticatedUserParams(user: AuthenticatedUserParamsType) {
       this.authenticatedUserParams = user;
+    },
+
+    /**
+     * Function to toogle select ads in collection.
+     * @param {string} adUid
+     */
+    toogleAssignAdsCollectionAction(adUid: string) {
+      if (this.selectedCollectionAdsList.ads.includes(adUid)) {
+        this.selectedCollectionAdsList.ads =
+          this.selectedCollectionAdsList.ads.filter(
+            (item: string) => item !== adUid
+          );
+      } else {
+        this.selectedCollectionAdsList.ads.push(adUid);
+      }
     },
 
     /**
@@ -177,6 +197,14 @@ export const useUserDashboardStore = defineStore({
       this.hiddenAds = adsList
         .filter((x) => !this.hiddenAds.includes(x))
         .concat(this.hiddenAds.filter((x) => !adsList.includes(x)));
+    },
+
+    /**
+     * Function to change state of ads visibility
+     * @param {string[]} adsList
+     */
+    removeVisibilityAds(adsList: string[]) {
+      this.hiddenAds = this.hiddenAds.filter((x) => !adsList.includes(x));
     },
 
     /**

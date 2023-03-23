@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import { useGlobalStore } from "@/stores/global";
-import type { AdSetsType } from "@/stores/userDashboard";
+import { useUserDashboardStore } from "@/stores/userDashboard";
+import type { AdSetsType, AdsType } from "@/stores/userDashboard";
 
 type PropsType = {
   collection?: AdSetsType;
@@ -10,9 +11,10 @@ type PropsType = {
 const props = defineProps<PropsType>();
 const globalStore = useGlobalStore();
 const heightContent = ref<string>("0px");
+const userDashboardStore = useUserDashboardStore();
 
-defineEmits<{
-  (e: "close"): void;
+const emit = defineEmits<{
+  (e: "handleCloseDetials"): void;
 }>();
 
 watch(
@@ -22,6 +24,19 @@ watch(
     heightContent.value = `${height + 23}px`;
   }
 );
+
+/**
+ * Function to handle cloe detials collection.
+ */
+function handleCloseDetialcCollection() {
+  userDashboardStore.removeVisibilityAds(
+    userDashboardStore.selectedCollection.ads.map((ad: AdsType) => ad.uid)
+  );
+  userDashboardStore.selectedCollectionAdsList.ads = [];
+  emit("handleCloseDetials");
+
+  globalStore.scrollTimeline.scrollLeft = globalStore.scrollParams.x;
+}
 </script>
 
 <template>
@@ -59,31 +74,14 @@ watch(
         </CollectionTimeline>
       </template>
     </UserDashboardDetialsLayout>
-
     <button
       class="p-2 focus:bg-bottombar-hover/50 hover:bg-bottombar-hover/50 absolute right-4 z-10 top-2 rounded-md m-l-auto self-baseline"
-      @click="$emit('close')"
+      @click="() => handleCloseDetialcCollection()"
       data-testid="collection-bottom-bar__close"
     >
       <IconSvg name="close" class="w-[12px] h-[12px]" />
     </button>
   </div>
-  <!-- <div class="collection-bottom-bar__header p-5 flex justify-between">
-        <CollectionHeader :collection="collection" />
-        <button
-          class="collection-bottom-bar__close p-2 focus:bg-bottombar-hover/50 hover:bg-bottombar-hover/50 rounded-md m-l-auto self-baseline"
-          @click="$emit('close')"
-          :aria-label="t('components.user-dashboard.bottom-bar.close')"
-          data-testid="collection-bottom-bar__close"
-        >
-          <IconSvg name="close" class="w-[12px] h-[12px]" />
-        </button>
-      </div>
-      <div
-        class="collection-bottom-bar__content max-h-[50vh] max-w-full scroll-bar whitespace-nowrap overflow-y-scroll overflow-x-hidden"
-      >
-        <CollectionTimeline :collection="collection" />
-      </div> -->
 </template>
 
 <style scoped lang="scss">

@@ -61,6 +61,7 @@ function handleChangeScrollParams(params: ScrollType) {
         class="collection-timeline-content"
         @onChange="handleChangeScrollParams"
         :is-vertical-scroll-visible="true"
+        :static-scroll-x="globalStore.scrollParams.x"
       >
         <slot name="collection-ads-timeline" />
       </ScrollbarPanel>
