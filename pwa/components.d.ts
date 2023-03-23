@@ -34,7 +34,16 @@ declare module "@vue/runtime-core" {
     ChartTimelineWrapper: typeof import("./src/components/UserDashboard/ChartTimeline/ChartTimelineWrapper.vue")["default"];
     CheckboxForm: typeof import("./src/components/Common/CheckboxForm.vue")["default"];
     CodeForm: typeof import("./src/components/Common/CodeForm.vue")["default"];
+    CollectionAdsList: typeof import("./src/components/UserDashboard/Collection/CollectionAdsList.vue")["default"];
     CollectionBottomBar: typeof import("./src/components/UserDashboard/Collection/CollectionBottomBar.vue")["default"];
+    CollectionHeader: typeof import("./src/components/UserDashboard/Collection/CollectionHeader.vue")["default"];
+    CollectionProvidersList: typeof import("./src/components/UserDashboard/Collection/CollectionProvidersList.vue")["default"];
+    CollectionSideItems: typeof import("./src/components/UserDashboard/Collection/CollectionSideItems.vue")["default"];
+    CollectionTimeline: typeof import("./src/components/UserDashboard/Collection/CollectionTimeline.vue")["default"];
+    CollectionTimelineContent: typeof import("./src/components/UserDashboard/Collection/CollectionTimelineContent.vue")["default"];
+    CollectionTimelineItem: typeof import("./src/components/UserDashboard/Collection/CollectionTimelineItem.vue")["default"];
+    CollectionWeeks: typeof import("./src/components/UserDashboard/Collection/CollectionWeeks.vue")["default"];
+    CollectionWeeksItem: typeof import("./src/components/UserDashboard/Collection/CollectionWeeksItem.vue")["default"];
     ConnectAccountForm: typeof import("./src/components/OnBoarding/ConnectAccountForm.vue")["default"];
     ConnectMoreServicesFileSettingsForm: typeof import("./src/components/OnBoarding/ConnectMoreServicesFileSettingsForm.vue")["default"];
     ConnectMoreServicesForm: typeof import("./src/components/OnBoarding/ConnectMoreServicesForm.vue")["default"];
@@ -66,6 +75,7 @@ declare module "@vue/runtime-core" {
     TimelineItem: typeof import("./src/components/UserDashboard/ChartTimeline/TimelineItem.vue")["default"];
     TimelineWrapper: typeof import("./src/components/UserDashboard/ChartTimeline/TimelineWrapper.vue")["default"];
     UploadFile: typeof import("./src/components/Common/UploadFile.vue")["default"];
+    UserDashboardDetialsLayout: typeof import("./src/components/Layouts/UserDashboardDetialsLayout.vue")["default"];
     UserDashboardLayout: typeof import("./src/components/Layouts/UserDashboardLayout.vue")["default"];
   }
 }

@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
 
 type ScrollType = {
-  x: number;
-  y: number;
+  x?: number;
+  y?: number;
 };
 
 type StateType = {
@@ -54,7 +54,9 @@ export const useGlobalStore = defineStore({
      * @param {ScrollType} params
      */
     handleChangeScrollParams(params: ScrollType) {
-      this.scrollParams = params;
+      this.scrollParams = {
+        ...params
+      };
     },
 
     /**

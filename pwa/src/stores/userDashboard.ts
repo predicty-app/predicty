@@ -46,11 +46,13 @@ export type AdsType = {
 export type AdSetsType = {
   uid: string;
   name: string;
+  color?: string;
   externalId: string;
   start: string;
   campaignId?: string;
   isActive: boolean;
   end: string;
+  dataProvider?: string[];
   ads: AdsType[];
 };
 
@@ -161,9 +163,8 @@ export const useUserDashboardStore = defineStore({
       }
 
       if (this.selectedAdsList.ads.length === 0) {
-        this.selectedAdsList.campaignUid = null;
+        // ...
       } else {
-        this.selectedAdsList.campaignUid = campaignUid;
         this.selectedAdsList.isCollection = isCollection || false;
       }
     },

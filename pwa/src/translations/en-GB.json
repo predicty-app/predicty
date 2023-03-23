@@ -129,9 +129,8 @@
           "sun": "sun"
         }
       },
-      "bottom-bar": {
-        "close": "Close",
-        "source": "Source"
+      "collection-providers-list": {
+        "source": "Source:"
       },
       "providers-list-form": {
         "provider": {

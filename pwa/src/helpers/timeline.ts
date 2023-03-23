@@ -46,6 +46,19 @@ export const gapGrid = computed<string>(
   () => `${timelineParams.GAP_GRID * (globalStore.currentScale * 0.01)}px`
 );
 
+export const heightCollectionContent = computed<string>(() => {
+  let height = 0;
+  if (!userDashboardStore.selectedCollection) {
+    return `0px`;
+  }
+
+  (userDashboardStore.selectedCollection as AdSetsType).ads.forEach(() => {
+    height += 57;
+  });
+
+  return `${height + 10}px`;
+});
+
 export const heightContent = computed<string>(() => {
   let height = 0;
   if (userDashboardStore.campaigns.length === 0) {
@@ -91,7 +104,6 @@ export function handleVirtualizationElement(
   if (!globalStore.scrollTimeline) {
     return;
   }
-
   const currentLeftPosition =
     (boundingBoxElement.left -
       globalStore.scrollTimeline.getBoundingClientRect().left) *

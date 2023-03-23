@@ -2,12 +2,6 @@
 import { useGlobalStore } from "@/stores/global";
 import { useUserDashboardStore } from "@/stores/userDashboard";
 
-type PropsType = {
-  singleRow?: boolean;
-};
-
-defineProps<PropsType>();
-
 type ScrollType = {
   x: number;
   y: number;
@@ -29,21 +23,9 @@ function handleChangeScrollParams(params: ScrollType) {
 
 <template>
   <slot name="header" />
-  <div
-    :class="[
-      'select-none grid grid-cols-[336px_auto]',
-      { 'h-calc': !singleRow }
-    ]"
-  >
+  <div class="select-none grid grid-cols-[336px_auto]">
     <div
-      class=""
-      :class="[
-        {
-          'h-calc select-none grid grid-cols-[auto] grid-rows-[320px_80px_auto]':
-            !singleRow,
-          'pt-[44px]': singleRow
-        }
-      ]"
+      class="h-calc select-none grid grid-cols-[auto] grid-rows-[320px_80px_auto]"
     >
       <div>
         <slot name="chart-legend" />
@@ -59,12 +41,7 @@ function handleChangeScrollParams(params: ScrollType) {
       </ScrollbarPanel>
     </div>
     <div
-      :class="[
-        {
-          'h-calc select-none grid grid-cols-[auto] grid-rows-[50px_270px_30px_30px_auto]':
-            !singleRow
-        }
-      ]"
+      class="h-calc select-none grid grid-cols-[auto] grid-rows-[50px_270px_30px_30px_auto]"
     >
       <ScrollbarPanel :scroll-x="globalStore.scrollParams.x">
         <slot name="chart-weeks" />

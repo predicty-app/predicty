@@ -268,6 +268,18 @@ module.exports = {
         },
       },
       bottombar: {
+        providers: {
+          text: "#5E5E5E",
+          border: "#EDF0F3",
+          background: "#FFFFFF",
+          hover: {
+            border: "#19BE34",
+          },
+          disabled: {
+            border: "#EDF0F3",
+            background: "#EDF0F3"
+          }
+        },
         hover: "#D9D9D980",
         text: "#4E5B72",
         grey: "#EDF0F3",
@@ -278,6 +290,7 @@ module.exports = {
         },
         side: {
           grey: "#9B9B9B",
+          background: "#f7f7f7",
           dark_grey: "#5E5E5E",
         },
       },

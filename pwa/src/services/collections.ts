@@ -50,13 +50,14 @@ class CollectionService {
     ).toString();
     const provider = this.#setProvidersList(collections, campaigns);
 
+    const color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
     campaigns.unshift({
       uid: uniqueId,
       isCollection: true,
       externalId: `external-id-${uniqueId}`,
-      adsets: this.#setAdSetsList(collections, provider),
+      adsets: this.#setAdSetsList(collections, provider, campaigns, color),
       name: "Collections list",
-      color: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
+      color,
       dataProvider: provider
     } as CampaignType);
 
@@ -85,7 +86,9 @@ class CollectionService {
    */
   #setAdSetsList(
     collections: CollectionNonParsedType[],
-    provider: string[]
+    provider: string[],
+    campaigns: CampaignType[],
+    color: string
   ): AdSetsType[] {
     return collections
       .filter(
@@ -101,9 +104,14 @@ class CollectionService {
           name: collection.name,
           externalId: `adset-external-id-${collection.id}`,
           start: "",
+          color,
           campaignId: this.#checkCollectionWithinCampaign(collection.ads),
           isActive: false,
           end: "",
+          dataProvider: this.#setProvidersListCollection(
+            collection.ads,
+            campaigns
+          ),
           ads: this.#setAdsList(collection.ads, provider)
         };
       });
@@ -165,6 +173,31 @@ class CollectionService {
     const maxDate = new Date(endDate);
 
     return currentDate > minDate && currentDate < maxDate;
+  }
+
+  /**
+   * Function to set providers for collection.
+   * @param {AdNonParsedType[]} ads
+   * @param {CampaignType[]} campaigns
+   * @returns {string[]}
+   */
+  #setProvidersListCollection(
+    ads: AdNonParsedType[],
+    campaigns: CampaignType[]
+  ): string[] {
+    let providers = [];
+    ads.forEach((ad: AdNonParsedType) => {
+      providers = [
+        ...new Set([
+          ...providers,
+          ...campaigns.find(
+            (campaign: CampaignType) => campaign.uid === ad.campaignId
+          ).dataProvider
+        ])
+      ];
+    });
+
+    return providers;
   }
 
   /**
