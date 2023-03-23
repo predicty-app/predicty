@@ -33,7 +33,7 @@ fix:
 	@$(PHP_EXEC) ./vendor/bin/phpcbf
 
 phpstan:
-	@$(PHP_EXEC) ./vendor/bin/phpstan analyze
+	@$(PHP_EXEC) ./vendor/bin/phpstan analyze --memory-limit=1G
 
 fixtures:
 	@$(PHP_EXEC) ./bin/console doctrine:fixtures:load --no-interaction
