@@ -50,12 +50,6 @@ class AdCollection
         return $this->name;
     }
 
-    public function addAdId(int $adId): void
-    {
-        $this->adsIds[] = $adId;
-        $this->adsIds = array_unique($this->adsIds);
-    }
-
     /**
      * @return array<int>
      */
@@ -64,15 +58,13 @@ class AdCollection
         return $this->adsIds;
     }
 
-    public function setAdsIds(array $adsIds): self
-    {
-        $this->adsIds = $adsIds;
-
-        return $this;
-    }
-
     public function addAdsIds(array $adsIds): void
     {
         $this->adsIds = array_unique(array_merge($this->adsIds, $adsIds));
+    }
+
+    public function removeAdsIds(array $adsIds): void
+    {
+        $this->adsIds = array_diff($this->adsIds, $adsIds);
     }
 }

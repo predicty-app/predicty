@@ -9,7 +9,7 @@ use App\Entity\AdCollection;
 use App\Validator\EntityExists;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class AddToAdCollection
+class RemoveAdFromCollection
 {
     #[Assert\All([new EntityExists(Ad::class)])]
     public readonly array $adsIds;

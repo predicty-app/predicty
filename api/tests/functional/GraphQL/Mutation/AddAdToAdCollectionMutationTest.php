@@ -11,10 +11,10 @@ use App\Entity\AdCollection;
 use App\Test\GraphQLTestCase;
 
 /**
- * @covers \App\GraphQL\Mutation\AddToAdCollectionMutation
- * @covers \App\Message\CommandHandler\AddToAdCollectionHandler
+ * @covers \App\GraphQL\Mutation\AddAdToCollectionMutation
+ * @covers \App\Message\CommandHandler\AddAdToCollectionHandler
  */
-class AddToAdCollectionMutationTest extends GraphQLTestCase
+class AddAdToAdCollectionMutationTest extends GraphQLTestCase
 {
     private int $adCollectionId;
     private array $adsIds;

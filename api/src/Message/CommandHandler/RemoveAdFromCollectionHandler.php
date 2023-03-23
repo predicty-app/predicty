@@ -5,26 +5,24 @@ declare(strict_types=1);
 namespace App\Message\CommandHandler;
 
 use App\Entity\AdCollection;
-use App\Message\Command\AddToAdCollection;
+use App\Message\Command\RemoveAdFromCollection;
 use App\Repository\AdCollectionRepository;
-use App\Service\User\CurrentUserService;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-class AddToAdCollectionHandler
+class RemoveAdFromCollectionHandler
 {
     public function __construct(
-        private CurrentUserService $currentUserService,
         private AdCollectionRepository $adCollectionRepository,
     ) {
     }
 
-    public function __invoke(AddToAdCollection $message): AdCollection
+    public function __invoke(RemoveAdFromCollection $command): AdCollection
     {
-        $adCollection = $this->adCollectionRepository->findById($message->adCollectionId);
+        $adCollection = $this->adCollectionRepository->findById($command->adCollectionId);
         assert($adCollection !== null);
 
-        $adCollection->addAdsIds($message->adsIds);
+        $adCollection->removeAdsIds($command->adsIds);
         $this->adCollectionRepository->save($adCollection);
 
         return $adCollection;
