@@ -23,13 +23,15 @@ trait FixturesTrait
     }
 
     /**
-     * @template T of object
+     * @template T
      *
      * @param class-string<T> $className
      *
-     * @return T
+     * @return object|T
+     *
+     * @phpstan-return ($className is not null ? T : object)
      */
-    public function getReference(string $name, ?string $className = null): object
+    public function getReference(string $name, ?string $className = null)
     {
         if ($this->referenceRepository === null) {
             self::fail('Unable to retrieve the reference repository. Make sure to load fixtures first.');

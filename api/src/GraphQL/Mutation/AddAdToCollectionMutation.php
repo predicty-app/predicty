@@ -7,10 +7,10 @@ namespace App\GraphQL\Mutation;
 use App\Entity\AdCollection;
 use App\Extension\Messenger\HandleTrait;
 use App\GraphQL\TypeRegistry;
-use App\Message\Command\AddToAdCollection;
+use App\Message\Command\AddAdToCollection;
 use GraphQL\Type\Definition\FieldDefinition;
 
-class AddToAdCollectionMutation extends FieldDefinition
+class AddAdToCollectionMutation extends FieldDefinition
 {
     use HandleTrait;
 
@@ -30,7 +30,7 @@ class AddToAdCollectionMutation extends FieldDefinition
 
     private function resolve(array $args): AdCollection
     {
-        return $this->handle(new AddToAdCollection(
+        return $this->handle(new AddAdToCollection(
             (int) $args['adCollectionId'],
             array_map(fn (string $id) => (int) $id, $args['adsIds'])
         ));

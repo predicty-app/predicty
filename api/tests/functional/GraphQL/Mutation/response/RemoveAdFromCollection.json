@@ -1,0 +1,13 @@
+{
+  "data": {
+    "removeAdFromCollection": {
+      "id": "@integer@",
+      "ads": [
+        {
+          "id": "@integer@",
+          "name": "Dummy Ad 2"
+        }
+      ]
+    }
+  }
+}
