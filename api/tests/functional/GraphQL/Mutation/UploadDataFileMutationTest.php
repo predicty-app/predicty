@@ -36,7 +36,7 @@ class UploadDataFileMutationTest extends GraphQLTestCase
                 ]),
                 'map' => json_encode([0 => ['variables.file']]),
             ],
-            files: [new UploadedFile(__DIR__.'/data/uploaded-file.txt', 'uploaded-file.txt')],
+            files: [new UploadedFile(__DIR__.'/data/facebook-csv.txt', 'facebook-csv.txt')],
             server: ['CONTENT_TYPE' => 'multipart/form-data']
         );
 
@@ -73,7 +73,7 @@ class UploadDataFileMutationTest extends GraphQLTestCase
                 ]),
                 'map' => json_encode([0 => ['variables.file']]),
             ],
-            files: [new UploadedFile(__DIR__.'/data/uploaded-file.txt', 'uploaded-file.txt')],
+            files: [new UploadedFile(__DIR__.'/data/facebook-csv.txt', 'facebook-csv.txt')],
             server: ['CONTENT_TYPE' => 'multipart/form-data']
         );
 

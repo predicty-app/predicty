@@ -42,13 +42,12 @@ class Import
     public function __construct(
         int $userId,
         DataProvider $dataProvider,
-        ?DateTimeImmutable $createdAt = null
     ) {
         $this->userId = $userId;
         $this->status = ImportStatus::WAITING;
         $this->dataProvider = $dataProvider;
-        $this->createdAt = $createdAt ?? Clock::now();
-        $this->changedAt = $createdAt ?? Clock::now();
+        $this->createdAt = Clock::now();
+        $this->changedAt = Clock::now();
     }
 
     public function getUserId(): int
@@ -71,7 +70,7 @@ class Import
         return $this->dataProvider;
     }
 
-    public function success(): void
+    public function complete(): void
     {
         $this->status = ImportStatus::COMPLETE;
         $this->completedAt = Clock::now();

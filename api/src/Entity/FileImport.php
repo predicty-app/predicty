@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -21,9 +20,8 @@ class FileImport extends Import
         string $filename,
         DataProvider $dataProvider,
         FileImportType $fileImportType = FileImportType::OTHER,
-        ?DateTimeImmutable $createdAt = null
     ) {
-        parent::__construct($userId, $dataProvider, $createdAt);
+        parent::__construct($userId, $dataProvider);
         $this->filename = $filename;
         $this->fileImportType = $fileImportType;
     }
