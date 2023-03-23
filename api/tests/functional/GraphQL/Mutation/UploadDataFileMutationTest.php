@@ -17,8 +17,8 @@ class UploadDataFileMutationTest extends GraphQLTestCase
         $this->authenticate();
 
         $mutation = <<<'EOF'
-                mutation($file: Upload, $type: FileImportType!, $dataProvider: DataProviderId!) {
-                  uploadDataFile(file: $file, type: $type, dataProvider: $dataProvider)
+                mutation($file: Upload, $type: FileImportType!) {
+                  uploadDataFile(file: $file, type: $type)
                 }
             EOF;
 
@@ -31,7 +31,7 @@ class UploadDataFileMutationTest extends GraphQLTestCase
             parameters: [
                 'operations' => json_encode([
                     'query' => $mutation,
-                    'variables' => ['file' => null, 'type' => 'FACEBOOK_CSV', 'dataProvider' => 'FACEBOOK_ADS'],
+                    'variables' => ['file' => null, 'type' => 'FACEBOOK_CSV'],
                     'operationName' => null,
                 ]),
                 'map' => json_encode([0 => ['variables.file']]),
@@ -50,8 +50,8 @@ class UploadDataFileMutationTest extends GraphQLTestCase
         $this->authenticate();
 
         $mutation = <<<'EOF'
-                mutation($file: Upload, $type: FileImportType!, $dataProvider: DataProviderId!) {
-                  uploadDataFile(file: $file, type: $type, dataProvider: $dataProvider)
+                mutation($file: Upload, $type: FileImportType!) {
+                  uploadDataFile(file: $file, type: $type)
                 }
             EOF;
 
@@ -67,7 +67,6 @@ class UploadDataFileMutationTest extends GraphQLTestCase
                     'variables' => [
                         'file' => null,
                         'type' => 'FACEBOOK_CSV',
-                        'dataProvider' => 'FACEBOOK_ADS',
                         'campaignName' => 'Test campaign',
                     ],
                     'operationName' => null,

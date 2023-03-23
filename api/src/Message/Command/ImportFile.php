@@ -14,7 +14,7 @@ class ImportFile
         public DataProvider $dataProvider,
         public FileImportType $fileImportType,
         public string $filename,
-        public string $campaignName = '',
+        public ?string $campaignName = null,
     ) {
     }
 }
