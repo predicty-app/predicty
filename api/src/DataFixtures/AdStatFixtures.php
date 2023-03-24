@@ -103,6 +103,7 @@ class AdStatFixtures extends Fixture implements DependentFixtureInterface
             $date = DateTimeHelper::createFromFormat('Y-m-d', $row[1]);
 
             $entity = new AdStats(
+                userId: $row[0]->getUserId(),
                 adId: $row[0]->getId(),
                 results: $row[2],
                 costPerResult: $costPerResult,

@@ -20,6 +20,9 @@ class AdStats
     use TimestampableTrait;
 
     #[ORM\Column]
+    private int $userId;
+
+    #[ORM\Column]
     private int $adId;
 
     #[ORM\Column]
@@ -38,6 +41,7 @@ class AdStats
     private DateTimeInterface $date;
 
     public function __construct(
+        int $userId,
         int $adId,
         int $results,
         Money $costPerResult,
@@ -46,6 +50,7 @@ class AdStats
         DateTimeInterface $createdAt,
         DateTimeInterface $changedAt,
     ) {
+        $this->userId = $userId;
         $this->adId = $adId;
         $this->results = $results;
         $this->costPerResult = $costPerResult->getMinorAmount()->toInt();
@@ -54,6 +59,11 @@ class AdStats
         $this->date = $date;
         $this->createdAt = $createdAt;
         $this->changedAt = $changedAt;
+    }
+
+    public function getUserId(): int
+    {
+        return $this->userId;
     }
 
     public function getAdId(): int
