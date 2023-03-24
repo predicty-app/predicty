@@ -195,9 +195,10 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpstan/phpdoc-parser" />
       <excludeFolder url="file://$MODULE_DIR$/api/var/cache/test" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/phpstan/phpstan-webmozart-assert" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/spatie/regex" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/thecodingmachine/safe" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/mll-lab/graphql-php-scalars" />
-      <excludeFolder url="file://$MODULE_DIR$/api/vendor/spatie/regex" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/mailgun-mailer" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
