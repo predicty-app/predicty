@@ -216,6 +216,7 @@
       <path value="$PROJECT_DIR$/api/vendor/thecodingmachine/safe" />
       <path value="$PROJECT_DIR$/api/vendor/mll-lab/graphql-php-scalars" />
       <path value="$PROJECT_DIR$/api/vendor/spatie/regex" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/mailgun-mailer" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

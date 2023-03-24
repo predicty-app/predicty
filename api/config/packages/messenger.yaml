@@ -23,8 +23,7 @@ framework:
             async: '%env(MESSENGER_TRANSPORT_DSN)%'
 
         routing:
-            # Route your messages to the transports
-            # 'App\Message\YourMessage': async
+            # Symfony\Component\Mailer\Messenger\SendEmailMessage: async
             # App\Message\AsyncMessage: async
 
 when@test:
