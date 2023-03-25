@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import {
+  TypeOptionsChart,
+  useUserDashboardStore
+} from "@/stores/userDashboard";
 
 type OptionsType = {
   label: string;
@@ -17,11 +21,23 @@ type PropsType = {
   typeChartOptions: ChartOptionsType[];
 };
 
-const currentTypeChart = ref<string>("weeks");
+const userDashboardStore = useUserDashboardStore();
+const currentTypeChart = ref<TypeOptionsChart>(userDashboardStore.typeChart);
 
 withDefaults(defineProps<PropsType>(), {
   amountScale: () => ["$ 1,000", "$ 500", "$ 250"]
 });
+
+watch(currentTypeChart, () => {
+  userDashboardStore.typeChart = currentTypeChart.value;
+});
+
+watch(
+  () => userDashboardStore.typeChart,
+  () => {
+    currentTypeChart.value = userDashboardStore.typeChart;
+  }
+);
 </script>
 
 <template>

@@ -19,6 +19,7 @@ onMounted(() => {
     <template
       v-if="Object.keys(globalStore.dictionaryFirstDaysWeek).length > 0"
     >
+      <BarChartPoleLines />
       <BarChartPoleContent
         :key="`${Math.random()}_${item}_${index}`"
         class="col-start-dynamic col-end-dynamic"

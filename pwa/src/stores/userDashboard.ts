@@ -88,9 +88,11 @@ export type DailyRevenueType = {
 };
 
 type StateType = {
+  scaleChart: number;
   hiddenAds: string[];
   campaigns: CampaignType[];
   activeProviders: string[];
+  typeChart: TypeOptionsChart;
   selectedCollection: AdSetsType;
   dailyRevenue: DailyRevenueType[];
   parsedCampaignsList: CampaignType[];
@@ -103,6 +105,8 @@ export const useUserDashboardStore = defineStore({
   id: "userDashboard",
   state: () =>
     ({
+      scaleChart: 0,
+      typeChart: TypeOptionsChart.DAYS,
       dailyRevenue: [],
       authenticatedUserParams: null,
       campaigns: [],

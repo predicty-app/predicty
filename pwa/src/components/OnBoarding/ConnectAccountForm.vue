@@ -143,20 +143,27 @@ async function handleToogleConnecttoProvider(provider: ProviderType) {
       </TagPin>
     </CardPanel>
     <Teleport to="#next-button">
-      <!-- :type="providersList.find((provider: ProviderType) => provider.status) ? 'success' : 'disabled'" -->
-      <ButtonForm
-        @click="router.push(nextStepPath)"
-        type="success"
-        class="w-full"
-      >
-        <div class="relative">
-          {{ t("components.on-boarding.connect-account-form.button") }}
-          <IconSvg
-            name="arrownext"
-            class-name="absolute right-5 top-0 bottom-0 m-auto h-3 w-3"
-          />
+      <div class="flex items-center gap-x-[27px]">
+        <div
+          class="text-base font-normal w-[200px] cursor-pointer"
+          @click="router.push(nextStepPath)"
+        >
+          {{ t("views.basic-media-integration.skip") }}
         </div>
-      </ButtonForm>
+        <ButtonForm
+          @click="router.push(nextStepPath)"
+          :type="providersList.find((provider: ProviderType) => provider.status) ? 'success' : 'disabled'"
+          class="w-full"
+        >
+          <div class="relative">
+            {{ t("components.on-boarding.connect-account-form.button") }}
+            <IconSvg
+              name="arrownext"
+              class-name="absolute right-5 top-0 bottom-0 m-auto h-3 w-3"
+            />
+          </div>
+        </ButtonForm>
+      </div>
     </Teleport>
   </div>
 </template>

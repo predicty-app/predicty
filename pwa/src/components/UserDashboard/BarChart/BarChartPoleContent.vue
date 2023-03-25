@@ -3,6 +3,7 @@ unction to handle scale down.
 import { useGlobalStore } from "@/stores/global";
 import { ref, onMounted, watch } from "vue";
 import {
+  TypeOptionsChart,
   useUserDashboardStore,
   type AdSetsType,
   type AdsType,
@@ -11,6 +12,7 @@ import {
 } from "@/stores/userDashboard";
 import {
   gapGrid,
+  getScale,
   scaleGrid,
   scaleFirstGrid,
   handleVirtualizationElement
@@ -25,12 +27,15 @@ const props = withDefaults(defineProps<PropsType>(), {
   fisrtDayWeek: ""
 });
 
-const scaleChart = 6000;
 const globalStore = useGlobalStore();
-const resultNumber = ref<number[]>([0, 0, 0, 0, 0, 0, 0]);
+const resultWeekNumber = ref<number>(0);
 const isElementVisible = ref<boolean>(true);
+const investmentWeekNumber = ref<number>(0);
+const dailyReveneuWeekNumber = ref<number>(0);
 const userDashboardStore = useUserDashboardStore();
 const boundingBoxElement = ref<DOMRect | null>(null);
+const resultNumber = ref<number[]>([0, 0, 0, 0, 0, 0, 0]);
+const investmentNumber = ref<number[]>([0, 0, 0, 0, 0, 0, 0]);
 const dailyReveneuNumber = ref<number[]>([0, 0, 0, 0, 0, 0, 0]);
 const barChartPoleContentInstance = ref<HTMLDivElement | null>(null);
 
@@ -83,6 +88,7 @@ watch(
   () => userDashboardStore.campaigns,
   () => {
     setDailyRevenue();
+    setSpentInvestment();
   }
 );
 
@@ -90,12 +96,18 @@ watch(
   () => userDashboardStore.hiddenAds,
   () => {
     concatResultsPerDay();
+    setSpentInvestment();
   }
 );
 
-function setScale(): number {
-  return globalStore.wrapperPole.getBoundingClientRect().height / scaleChart;
-}
+watch(
+  () => userDashboardStore.typeChart,
+  () => {
+    concatResultsPerDay();
+    setDailyRevenue();
+    setSpentInvestment();
+  }
+);
 
 /**
  * Function to parse ads.
@@ -132,7 +144,11 @@ function addingResults(status: AdStatusType[]) {
 
     status.forEach((stat: AdStatusType) => {
       if (stat.date === createdDate) {
-        resultNumber.value[i] += stat.revenueShare.amount;
+        if (userDashboardStore.typeChart === TypeOptionsChart.WEEKS) {
+          resultWeekNumber.value += stat.revenueShare.amount;
+        } else {
+          resultNumber.value[i] += stat.revenueShare.amount;
+        }
       }
     });
   }
@@ -158,6 +174,7 @@ function parseCurrentDate(index: number): string {
  * Function to concat results.
  */
 function concatResultsPerDay() {
+  resultWeekNumber.value = 0;
   resultNumber.value = [0, 0, 0, 0, 0, 0, 0];
   if (userDashboardStore.selectedAdsList.ads.length > 0) {
     parseDateforAd(userDashboardStore.selectedAdsList.ads);
@@ -175,25 +192,89 @@ function concatResultsPerDay() {
  * Function to set daily revenue;
  */
 function setDailyRevenue() {
+  dailyReveneuWeekNumber.value = 0;
+  dailyReveneuNumber.value = [0, 0, 0, 0, 0, 0, 0];
+
   for (let i = 0; i < 7; i++) {
     userDashboardStore.dailyRevenue.forEach((daily: DailyRevenueType) => {
       const createdDate = parseCurrentDate(i);
       if (daily.date === createdDate) {
-        dailyReveneuNumber.value[i] = daily.revenue.amount;
+        if (userDashboardStore.typeChart === TypeOptionsChart.WEEKS) {
+          dailyReveneuWeekNumber.value += daily.revenue.amount;
+        } else {
+          dailyReveneuNumber.value[i] = daily.revenue.amount;
+        }
       }
     });
+  }
+}
+
+/**
+ * Function to count the investment amount.
+ */
+function setSpentInvestment() {
+  investmentWeekNumber.value = 0;
+  investmentNumber.value = [0, 0, 0, 0, 0, 0, 0];
+
+  for (let i = 0; i < 7; i++) {
+    userDashboardStore.campaigns
+      .filter((campaign: CampaignType) =>
+        userDashboardStore.activeProviders.includes(campaign.dataProvider[0])
+      )
+      .forEach((campaign: CampaignType) => {
+        campaign.adsets.forEach((adset: AdSetsType) => {
+          adset.ads
+            .filter(
+              (ad: AdsType) => !userDashboardStore.hiddenAds.includes(ad.uid)
+            )
+            .forEach((ad: AdsType) => {
+              ad.status.forEach((adStat: AdStatusType) => {
+                const createdDate = parseCurrentDate(i);
+                if (adStat.date === createdDate) {
+                  if (userDashboardStore.typeChart === TypeOptionsChart.WEEKS) {
+                    investmentWeekNumber.value += adStat.amountSpent.amount;
+                  } else {
+                    investmentNumber.value[i] = adStat.amountSpent.amount;
+                  }
+                }
+              });
+            });
+        });
+      });
   }
 }
 </script>
 
 <template>
-  <div ref="barChartPoleContentInstance" class="bar-chart-pole-content w-full">
-    <BarChartPoleItem
-      :height="dailyReveneuNumber[item - 1] * setScale()"
-      :key="`${Math.random()}_${item}`"
-      :result="resultNumber[item - 1] * setScale()"
-      v-for="item in 7"
-    />
+  <div
+    v-if="isElementVisible"
+    ref="barChartPoleContentInstance"
+    :class="[
+      'bar-chart-pole-content w-full',
+      {
+        'bar-chart-pole-content--weeks':
+          userDashboardStore.typeChart === TypeOptionsChart.WEEKS
+      }
+    ]"
+  >
+    <template v-if="userDashboardStore.typeChart === TypeOptionsChart.DAYS">
+      <BarChartPoleItem
+        :height="dailyReveneuNumber[item - 1] * getScale()"
+        :key="`${Math.random()}_${item}`"
+        :investment="investmentNumber[item - 1] * getScale()"
+        :result="resultNumber[item - 1] * getScale()"
+        v-for="item in 7"
+      />
+    </template>
+    <template v-else>
+      <BarChartPoleItem
+        :type="TypeOptionsChart.WEEKS"
+        :investment="investmentWeekNumber * getScale()"
+        :height="dailyReveneuWeekNumber * getScale()"
+        :key="`${Math.random()}_${props.fisrtDayWeek}`"
+        :result="resultWeekNumber * getScale()"
+      />
+    </template>
   </div>
 </template>
 
@@ -205,5 +286,9 @@ function setDailyRevenue() {
       v-bind(scaleGrid)
     );
   grid-column-gap: v-bind(gapGrid);
+
+  &--weeks {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

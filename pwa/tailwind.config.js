@@ -74,7 +74,8 @@ module.exports = {
         hover: {
           background: "#4184FF",
           shadow: "#4184FF",
-          disabled: "#C5C5C5"
+          disabled: "#C5C5C5",
+          active: "#88ef9a"
         }
       },
       chartBar: {

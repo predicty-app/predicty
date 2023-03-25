@@ -3,8 +3,9 @@ import { ref } from "vue";
 import { useGlobalStore } from "@/stores/global";
 import {
   scaleLines,
+  mainWidthGrid,
   scaleLinesGradient,
-  mainWidthGrid
+  changeDynamicalTypeChart
 } from "@/helpers/timeline";
 
 const globalStore = useGlobalStore();
@@ -56,6 +57,8 @@ function handleChangeScale(eventWheel: WheelEvent) {
   } else {
     handleScaleUp();
   }
+
+  changeDynamicalTypeChart();
 }
 </script>
 

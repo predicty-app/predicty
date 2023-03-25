@@ -170,6 +170,7 @@ async function handleFiredAction(actionName: OptionsName) {
             ? userDashboardStore.selectedAdsList.ads
             : userDashboardStore.selectedCollectionAdsList.ads
         );
+        userDashboardStore.selectedAdsList.ads = [];
         userDashboardStore.selectedCollectionAdsList.ads = [];
       }
       break;

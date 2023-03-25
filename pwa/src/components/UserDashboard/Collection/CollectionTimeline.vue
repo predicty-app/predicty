@@ -8,7 +8,8 @@ import {
   mainWidthGrid,
   scaleFirstGrid,
   scaleLinesGradient,
-  heightCollectionContent
+  heightCollectionContent,
+  changeDynamicalTypeChart
 } from "@/helpers/timeline";
 
 const globalStore = useGlobalStore();
@@ -61,6 +62,8 @@ function handleChangeScale(eventWheel: WheelEvent) {
   } else {
     handleScaleUp();
   }
+
+  changeDynamicalTypeChart();
 }
 </script>
 

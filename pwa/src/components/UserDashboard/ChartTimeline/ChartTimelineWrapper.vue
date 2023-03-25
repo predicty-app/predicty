@@ -2,13 +2,17 @@
 import { ref } from "vue";
 import { useGlobalStore } from "@/stores/global";
 import {
+  TypeOptionsChart
+} from "@/stores/userDashboard";
+import {
   gapGrid,
   scaleGrid,
   scaleLines,
   heightContent,
   mainWidthGrid,
   scaleFirstGrid,
-  scaleLinesGradient
+  scaleLinesGradient,
+  changeDynamicalTypeChart
 } from "@/helpers/timeline";
 
 type PropsType = {
@@ -67,6 +71,8 @@ function handleChangeScale(eventWheel: WheelEvent) {
   } else {
     handleScaleUp();
   }
+
+  changeDynamicalTypeChart();
 }
 </script>
 

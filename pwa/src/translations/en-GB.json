@@ -170,7 +170,8 @@
     "basic-media-integration": {
       "header-title": "Connect your accounts",
       "header-description": "We are platform that collects data from your websites and apps to create ",
-      "button": "Next"
+      "button": "Next",
+      "skip": "Skip this step"
     },
     "more-media-integration": {
       "header-title": "Connect more services",
@@ -183,6 +184,14 @@
     "preparing-screen": {
       "header-title": "Good job!",
       "header-description": "We are setting up your account"
+    },
+    "add-more-files": {
+      "header-title": "Adding more integrations",
+      "header-description": "The integration went through correctly. You can add another file or go to the dashboard.",
+      "buttons": {
+        "next": "Start",
+        "more": "Add next file"
+      }
     },
     "user-dashboard-view": {
       "legend-description": {

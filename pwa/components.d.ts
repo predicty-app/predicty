@@ -19,6 +19,7 @@ declare module "@vue/runtime-core" {
     BarChartPole: typeof import("./src/components/UserDashboard/BarChart/BarChartPole.vue")["default"];
     BarChartPoleContent: typeof import("./src/components/UserDashboard/BarChart/BarChartPoleContent.vue")["default"];
     BarChartPoleItem: typeof import("./src/components/UserDashboard/BarChart/BarChartPoleItem.vue")["default"];
+    BarChartPoleLines: typeof import("./src/components/UserDashboard/BarChart/BarChartPoleLines.vue")["default"];
     BarChartPoleWrapper: typeof import("./src/components/UserDashboard/BarChart/BarChartPoleWrapper.vue")["default"];
     BarChartWeeks: typeof import("./src/components/UserDashboard/BarChart/BarChartWeeks.vue")["default"];
     BarChartWeeksItem: typeof import("./src/components/UserDashboard/BarChart/BarChartWeeksItem.vue")["default"];

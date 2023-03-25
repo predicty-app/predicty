@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import { reactive, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useGlobalStore } from "@/stores/global";
-import { TypeOptionsChart, type AdSetsType } from "@/stores/userDashboard";
 import type { AdsType } from "@/stores/userDashboard";
 import { useUserDashboardStore } from "@/stores/userDashboard";
-import { reactive } from "vue";
+import { TypeOptionsChart, type AdSetsType } from "@/stores/userDashboard";
 
 const { t } = useI18n();
 
@@ -42,6 +42,11 @@ const chartTypeOptions: TypesOptionsChart[] = [
 
 const globalStore = useGlobalStore();
 const userDashboardStore = useUserDashboardStore();
+const amountScale = computed<string[]>(() => [
+  `$${userDashboardStore.scaleChart.toFixed(2)}`,
+  `$${(userDashboardStore.scaleChart / 2).toFixed(2)}`,
+  `$${(userDashboardStore.scaleChart / 3).toFixed(2)}`
+]);
 
 let state = reactive({
   isCollectionSelected: false,
@@ -88,6 +93,7 @@ function toggleCollection(value?: AdSetsType) {
     <template #chart-legend>
       <LegendDescription
         :options="legendOptions"
+        :amount-scale="amountScale"
         :typeChartOptions="chartTypeOptions"
       />
     </template>

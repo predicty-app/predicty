@@ -1,8 +1,11 @@
 import { computed } from "vue";
 import { useGlobalStore } from "@/stores/global";
 import { hCheckIsCollectionExist } from "@/helpers/utils";
-import { useUserDashboardStore } from "@/stores/userDashboard";
 import type { CampaignType, AdSetsType } from "@/stores/userDashboard";
+import {
+  useUserDashboardStore,
+  TypeOptionsChart
+} from "@/stores/userDashboard";
 
 const globalStore = useGlobalStore();
 const userDashboardStore = useUserDashboardStore();
@@ -11,12 +14,26 @@ enum timelineParams {
   GAP_GRID = 5,
   LINE_WIDTH = 150,
   COLUMN_WIDTH = 16.4,
+  LINES_POSITION_DAYS_WIDTH = 16.4,
+  LINES_POSITION_WEEKS_WIDTH = 144.8,
   GRADIENT_WIDTH = 300,
+  SCALE_CHART = 50000,
   FIREST_COLUMN_WIDTH = 16
 }
 
 export const scaleLines = computed<string>(
   () => `${timelineParams.LINE_WIDTH * (globalStore.currentScale * 0.01)}px`
+);
+
+export const scaleCharDaystLines = computed<number>(
+  () =>
+    timelineParams.LINES_POSITION_DAYS_WIDTH * (globalStore.currentScale * 0.01)
+);
+
+export const scaleCharWeekstLines = computed<number>(
+  () =>
+    timelineParams.LINES_POSITION_WEEKS_WIDTH *
+    (globalStore.currentScale * 0.01)
 );
 
 export const scaleLinesGradient = computed<string>(
@@ -145,4 +162,24 @@ export function calculateItemPosition(
   }
 
   return previousHeightElement;
+}
+
+/**
+ * Function to change dynamical
+ */
+export function changeDynamicalTypeChart() {
+  if (globalStore.currentScale <= 80) {
+    userDashboardStore.typeChart = TypeOptionsChart.WEEKS;
+  } else {
+    if (userDashboardStore.typeChart === TypeOptionsChart.WEEKS) {
+      userDashboardStore.typeChart = TypeOptionsChart.DAYS;
+    }
+  }
+}
+
+export function getScale(): number {
+  return (
+    globalStore.wrapperPole.getBoundingClientRect().height /
+    userDashboardStore.scaleChart
+  );
 }
