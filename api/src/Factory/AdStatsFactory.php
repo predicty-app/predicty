@@ -28,6 +28,7 @@ class AdStatsFactory
         $adStats = $this->adStatsRepository->findByAdIdAndDay($ad->getId(), $date);
         if ($adStats === null) {
             $adStats = new AdStats(
+                userId: $ad->getUserId(),
                 adId: $ad->getId(),
                 results: $results,
                 costPerResult: $costPerResult,

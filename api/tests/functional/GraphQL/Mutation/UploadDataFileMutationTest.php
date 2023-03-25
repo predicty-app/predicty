@@ -36,7 +36,44 @@ class UploadDataFileMutationTest extends GraphQLTestCase
                 ]),
                 'map' => json_encode([0 => ['variables.file']]),
             ],
-            files: [new UploadedFile(__DIR__.'/data/uploaded-file.txt', 'uploaded-file.txt')],
+            files: [new UploadedFile(__DIR__.'/data/facebook-csv.txt', 'facebook-csv.txt')],
+            server: ['CONTENT_TYPE' => 'multipart/form-data']
+        );
+
+        $this->assertResponseIsSuccessful();
+        $this->assertResponseMatchesJsonFile(__DIR__.'/response/UploadDataFileSuccess.json');
+        $this->assertCount(1, $filesystem->listContents('uploads')->toArray());
+    }
+
+    public function test_upload_allows_sending_campaign_name(): void
+    {
+        $this->authenticate();
+
+        $mutation = <<<'EOF'
+                mutation($file: Upload, $type: FileImportType!) {
+                  uploadDataFile(file: $file, type: $type)
+                }
+            EOF;
+
+        $client = static::getClient();
+        $filesystem = $client->getContainer()->get('default.storage');
+
+        $client->request(
+            method: 'POST',
+            uri: '/graphql',
+            parameters: [
+                'operations' => json_encode([
+                    'query' => $mutation,
+                    'variables' => [
+                        'file' => null,
+                        'type' => 'FACEBOOK_CSV',
+                        'campaignName' => 'Test campaign',
+                    ],
+                    'operationName' => null,
+                ]),
+                'map' => json_encode([0 => ['variables.file']]),
+            ],
+            files: [new UploadedFile(__DIR__.'/data/facebook-csv.txt', 'facebook-csv.txt')],
             server: ['CONTENT_TYPE' => 'multipart/form-data']
         );
 

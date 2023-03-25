@@ -11,11 +11,15 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
+#[ORM\Index(fields: ['userId'])]
 #[ORM\Index(fields: ['date'])]
 class DailyRevenue
 {
     use IdTrait;
     use TimestampableTrait;
+
+    #[ORM\Column]
+    private int $userId;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private DateTimeImmutable $date;
@@ -29,14 +33,25 @@ class DailyRevenue
     #[ORM\Column(length: 3)]
     private string $currency;
 
-    public function __construct(DateTimeImmutable $date, Money $revenue, Money $averageOrderValue)
+    public function __construct(int $userId, DateTimeImmutable $date, Money $revenue, Money $averageOrderValue)
     {
+        assert(
+            $revenue->getCurrency() === $averageOrderValue->getCurrency(),
+            'Revenue and average order value must be the same currency'
+        );
+
+        $this->userId = $userId;
         $this->date = $date;
         $this->revenue = $revenue->getMinorAmount()->toInt();
         $this->averageOrderValue = $averageOrderValue->getMinorAmount()->toInt();
         $this->currency = $averageOrderValue->getCurrency()->getCurrencyCode();
         $this->createdAt = Clock::now();
         $this->changedAt = Clock::now();
+    }
+
+    public function getUserId(): int
+    {
+        return $this->userId;
     }
 
     public function getDate(): DateTimeImmutable

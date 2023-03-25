@@ -9,14 +9,12 @@ use RuntimeException;
 
 class DateHelper
 {
-    private const FORMAT = 'Y-m-d';
-
-    public static function fromString(string $date): DateTimeImmutable
+    public static function fromString(string $date, string $format = 'Y-m-d'): DateTimeImmutable
     {
-        $datetime = DateTimeImmutable::createFromFormat(self::FORMAT, $date);
+        $datetime = DateTimeImmutable::createFromFormat($format, $date);
 
         if ($datetime === false) {
-            throw new RuntimeException(sprintf('Invalid date format given: "%s" (expecting %s)', $date, self::FORMAT));
+            throw new RuntimeException(sprintf('Invalid date format given: "%s" (expecting %s)', $date, $format));
         }
 
         return $datetime;
