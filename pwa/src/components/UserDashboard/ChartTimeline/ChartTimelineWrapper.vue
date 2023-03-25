@@ -2,9 +2,6 @@
 import { ref } from "vue";
 import { useGlobalStore } from "@/stores/global";
 import {
-  TypeOptionsChart
-} from "@/stores/userDashboard";
-import {
   gapGrid,
   scaleGrid,
   scaleLines,
