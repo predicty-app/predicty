@@ -80,8 +80,23 @@
       "floating-switch-view-form": {
         "create-new-collection": "Create New Collection",
         "add-to-collection": "Add to Collection",
+        "remove-from-collection": "Remove from Collection",
         "hide-element": "Show/Hide element",
-        "select-placeholder": "Select campaning..."
+        "select-placeholder": "Select campaning...",
+        "notifications": {
+          "create-collection" :{
+            "success": "Successfully created a collection.",
+            "error": "An error occurred while creating the collection. Please try again in a moment."
+          },
+          "assign-ads-to-collection" :{
+            "success": "Correctly assigned adverts to collections.",
+            "error": "An error occurred when assigning adverts to a collection. Please try again in a moment."
+          },
+          "unassign-ads-from-collection": {
+            "success": "Correctly unassigned adverts from collections.",
+            "error": "An error occurred when unassigning adverts from a collection. Please try again in a moment."
+          }
+        }
       },
       "header-dashboard": {
         "menu-list": {
@@ -119,15 +134,23 @@
           "sun": "sun"
         }
       },
-      "bottom-bar": {
-        "close": "Close",
-        "source": "Source"
+      "collection-providers-list": {
+        "source": "Source:"
       },
       "providers-list-form": {
-        "google-analytics": "Google Analytics",
-        "google-ads": "Google Ads",
-        "meta": "Meta"
+        "provider": {
+          "GOOGLE_ADS": "Google Ads",
+          "FACEBOOK_ADS": "Facebook Ads (Meta)",
+          "GOOGLE_ANALYTICS": "Google Analytics",
+          "TIK_TOK": "TikTok",
+          "OTHER": "Other (internal)"
+        }
       }
+    }
+  },
+  "services": {
+    "collections": {
+      "title": "External collection"
     }
   },
   "views": {
@@ -147,7 +170,8 @@
     "basic-media-integration": {
       "header-title": "Connect your accounts",
       "header-description": "We are platform that collects data from your websites and apps to create ",
-      "button": "Next"
+      "button": "Next",
+      "skip": "Skip this step"
     },
     "more-media-integration": {
       "header-title": "Connect more services",
@@ -160,6 +184,14 @@
     "preparing-screen": {
       "header-title": "Good job!",
       "header-description": "We are setting up your account"
+    },
+    "add-more-files": {
+      "header-title": "Adding more integrations",
+      "header-description": "The integration went through correctly. You can add another file or go to the dashboard.",
+      "buttons": {
+        "next": "Start",
+        "more": "Add next file"
+      }
     },
     "user-dashboard-view": {
       "legend-description": {

@@ -1,20 +1,8 @@
-import {
-  hWeeksBetween,
-  hFirstDayWeek,
-  hFirstDaysWeeks,
-  hFirstAndLastDate,
-  hNumberWeekFromDate,
-  hNextDaysDictionary
-} from "@/helpers/utils";
-import { ref } from "vue";
-import { useGlobalStore } from "@/stores/global";
-import type {
-  CampaignType,
-  AdsType,
-  AdsCollection
-} from "@/stores/userDashboard";
-
-const list = ref<any>([]);
+import apiService from "@/services/api/api";
+import CampaignsService from "@/services/campaigns";
+import CollectionService from "@/services/collections";
+import { useUserDashboardStore } from "@/stores/userDashboard";
+import type { CampaignNonParsedType } from "@/services/campaigns";
 
 type ManagementCollectionPayloadType = {
   campaignUid: string;
@@ -26,234 +14,226 @@ type ManagementCollectionPayloadType = {
  * Function to get all campaigns user.
  */
 async function handleGetCampaigns() {
-  list.value = [
-    {
-      uid: "23852953378710492",
-      name: "9K | V3 | A",
-      ads: [
-        {
-          uid: "23852953378790492",
-          name: "Static | REM | Certyfikat - Luty",
-          start: "2023-01-01",
-          end: "2023-08-14",
-          creation: null,
-          cost_total: 3496.68,
-          cost_per_day: 40.191724137931
-        },
-        {
-          uid: "23852953378890495",
-          name: "Static | Kreatywnosc 10",
-          start: "2023-01-08",
-          end: "2023-03-03",
-          creation: null,
-          cost_total: 3496.68,
-          cost_per_day: 40.191724137931
-        },
-        {
-          uid: "23852953378790497",
-          name: "9K | Książka UX ręka 0zł",
-          start: "2023-02-15",
-          end: "2023-05-03",
-          creation: null,
-          cost_total: 3496.68,
-          cost_per_day: 40.191724137931
+  const query = `query Dashboard {
+    dashboard {
+      name
+      dailyRevenue {
+        id
+        revenue {
+          amount
+          currency
         }
-      ],
-      collection: [
-        {
-          uid: "23852952378790497",
-          name: "Collection 1",
-          start: "2023-01-08",
-          end: "2023-05-03",
-          ads: ["23852953378790497", "23852953378890495"]
+        averageOrderValue {
+          amount
+          currency
         }
-      ]
-    },
-    {
-      uid: "23852953378710495",
-      name: "9K | V3 | B",
-      ads: [
-        {
-          uid: "23852953378290492",
-          name: "Static | REM | Certyfikat - Luty",
-          start: "2023-01-01",
-          end: "2023-03-03",
-          creation: null,
-          cost_total: 3496.68,
-          cost_per_day: 40.191724137931
-        },
-        {
-          uid: "23852953373790495",
-          name: "Static | Kreatywnosc 100",
-          start: "2023-01-08",
-          end: "2023-03-03",
-          creation: null,
-          cost_total: 3496.68,
-          cost_per_day: 40.191724137931
-        },
-        {
-          uid: "23852953378790498",
-          name: "9K | Książka UX ręka 0zł",
-          start: "2023-02-08",
-          end: "2023-05-03",
-          creation: null,
-          cost_total: 3496.68,
-          cost_per_day: 40.191724137931
+        date
+      }
+      campaigns {
+        id
+        externalId
+        dataProvider {
+          id
         }
-      ],
-      collection: []
-    },
-    {
-      uid: "23852953378710499",
-      name: "9K | V3 | C",
-      ads: [
-        {
-          uid: "22852953378790492",
-          name: "Static | REM | Certyfikat - Luty",
-          start: "2023-01-15",
-          end: "2023-03-03",
-          creation: null,
-          cost_total: 3496.68,
-          cost_per_day: 40.191724137931
-        },
-        {
-          uid: "23852953478790495",
-          name: "Static | Kreatywnosc 1000",
-          start: "2023-01-08",
-          end: "2023-04-03",
-          creation: null,
-          cost_total: 3496.68,
-          cost_per_day: 40.191724137931
-        },
-        {
-          uid: "23252953378790497",
-          name: "9K | Książka UX ręka 0zł",
-          start: "2023-02-08",
-          end: "2023-05-03",
-          creation: null,
-          cost_total: 3496.68,
-          cost_per_day: 40.191724137931
+        name
+        adSets {
+          name
+          id
+          endedAt
+          startedAt
+          externalId
+          ads {
+            id
+            name
+            adStats {
+              amountSpent {
+                currency
+                amount
+              }
+              results
+              costPerResult {
+                amount
+                currency
+              }
+              revenueShare {
+                amount
+                currency
+              }
+              date
+              id
+            }
+            externalId
+          }
         }
-      ],
-      collection: []
-    },
-    {
-      uid: "23852953378710493",
-      name: "9K | V3 | D",
-      ads: [
-        {
-          uid: "22852953378790492",
-          name: "Static | REM | Certyfikat - Luty",
-          start: "2023-01-15",
-          end: "2023-03-03",
-          creation: null,
-          cost_total: 3496.68,
-          cost_per_day: 40.191724137931
-        },
-        {
-          uid: "23852953478790495",
-          name: "Static | Kreatywnosc 1000",
-          start: "2023-01-08",
-          end: "2023-04-03",
-          creation: null,
-          cost_total: 3496.68,
-          cost_per_day: 40.191724137931
-        },
-        {
-          uid: "23252953378790497",
-          name: "9K | Książka UX ręka 0zł",
-          start: "2023-02-08",
-          end: "2023-05-03",
-          creation: null,
-          cost_total: 3496.68,
-          cost_per_day: 40.191724137931
+      }
+      collections{
+        id
+        name
+        ads {
+          id
+          name
+          externalId
+          campaignId
+          adStats {
+            amountSpent {
+              currency
+              amount
+            }
+            results
+            costPerResult {
+              amount
+              currency
+            }
+            revenueShare {
+              amount
+              currency
+            }
+            date
+            id
+          }
         }
-      ],
-      collection: []
+      }
     }
-  ];
+  }`;
 
-  const globalStore = useGlobalStore();
+  type ProvidersType = {
+    data: {
+      dashboard: CampaignNonParsedType[];
+    };
+  };
 
-  const { first, last } = hFirstAndLastDate(list.value);
-  const weekdBetween = hWeeksBetween(first, last) + 2;
+  try {
+    const response = await apiService.request<ProvidersType, any>(query);
+    let campaigns = CampaignsService.parseCampaignsList(
+      response.data.dashboard.campaigns
+    );
+    campaigns = CollectionService.parseCollectionList(
+      response.data.dashboard.collections,
+      campaigns
+    );
 
-  globalStore.setCurrentWeeks(weekdBetween);
-  globalStore.setFirstWeeks(hNumberWeekFromDate(first));
-
-  globalStore.setDictionaryTimeline(
-    hNextDaysDictionary(hFirstDayWeek(first), weekdBetween)
-  );
-
-  globalStore.setDictionaryDaysWeeks(
-    hFirstDaysWeeks(hFirstDayWeek(first), weekdBetween)
-  );
-
-  return list.value;
+    return response.errors
+      ? null
+      : { campaigns, dailyRevenue: response.data.dashboard.dailyRevenue };
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
 }
 
 /**
  * Function to create new collection.
  * @param {ManagementCollectionPayloadType} payload
  */
-function handleCreateCollection(
+async function handleCreateCollection(
   payload: Pick<ManagementCollectionPayloadType, "ads" | "campaignUid">
 ) {
-  list.value = list.value.map((campaign: CampaignType) => {
-    if (campaign.uid === payload.campaignUid) {
-      const ads = campaign.ads.filter((ad: AdsType) =>
-        payload.ads.includes(ad.uid)
-      );
+  type CreateAdCollectionType = {
+    name: string;
+  };
 
-      const { first, last } = hFirstAndLastDate([{ ads } as CampaignType]);
+  const query = `mutation createAdCollection($name: String) {
+    createAdCollection(name: $name) {
+      id
+    }
+  }`;
 
-      campaign.collection.push({
-        uid: `${Math.random()}`,
-        name: `Collection ${campaign.collection.length + 1}`,
-        ads: payload.ads,
-        start: first,
-        end: last
+  const userDashboardStore = useUserDashboardStore();
+
+  try {
+    const response = await apiService.request<CreateAdCollectionType, any>(
+      query,
+      {
+        name: `Collection ${
+          userDashboardStore.campaigns[0].isCollection
+            ? userDashboardStore.campaigns[0].adsets.length + 1
+            : 1
+        }`
+      }
+    );
+
+    if (!response.errors) {
+      await handleAssignAdToCollection({
+        collectionUid: response.data.createAdCollection.id,
+        ...payload
       });
     }
 
-    return campaign;
-  });
+    return response.errors ? null : true;
+  } catch (error) {
+    return null;
+  }
 }
 
 /**
  * Function to assign ad to existing collection.
  * @param {ManagementCollectionPayloadType} payload
  */
-function handleAssignAdToCollection(payload: ManagementCollectionPayloadType) {
-  list.value = list.value.map((campaign: CampaignType) => {
-    if (campaign.uid === payload.campaignUid) {
-      campaign.collection = campaign.collection.map(
-        (collection: AdsCollection) => {
-          if (collection.uid === payload.collectionUid) {
-            collection.ads = collection.ads.concat(payload.ads);
+async function handleAssignAdToCollection(
+  payload: ManagementCollectionPayloadType
+) {
+  type AssignAdsCollectionType = {
+    adCollectionId: string;
+    adsIds: string[];
+  };
 
-            const ads = campaign.ads.filter((ad: AdsType) =>
-              collection.ads.includes(ad.uid)
-            );
-
-            const { first, last } = hFirstAndLastDate([
-              { ads } as CampaignType
-            ]);
-            collection.start = first;
-            collection.end = last;
-          }
-
-          return collection;
-        }
-      );
+  const query = `mutation addToAdCollection($adCollectionId: ID!, $adsIds: [ID]!){
+    addToAdCollection(adCollectionId: $adCollectionId, adsIds: $adsIds) {
+      id
     }
+  }`;
 
-    return campaign;
-  });
+  try {
+    const response = await apiService.request<AssignAdsCollectionType, any>(
+      query,
+      {
+        adCollectionId: payload.collectionUid,
+        adsIds: payload.ads
+      }
+    );
+
+    return response.errors ? null : true;
+  } catch (error) {
+    return null;
+  }
+}
+
+/**
+ * Function to un assign ad from existing collection.
+ * @param {ManagementCollectionPayloadType} payload
+ */
+async function handleUnAssignAdFromCollection(
+  payload: ManagementCollectionPayloadType
+) {
+  type AssignAdsCollectionType = {
+    adCollectionId: string;
+    adsIds: string[];
+  };
+
+  const query = `mutation removeAdFromCollection($adsIds: [ID]!, $adCollectionId: ID!) {
+    removeAdFromCollection(adsIds: $adsIds, adCollectionId: $adCollectionId) {
+      id
+    }
+  }`;
+
+  try {
+    const response = await apiService.request<AssignAdsCollectionType, any>(
+      query,
+      {
+        adCollectionId: payload.collectionUid,
+        adsIds: payload.ads
+      }
+    );
+
+    return response.errors ? null : true;
+  } catch (error) {
+    return null;
+  }
 }
 
 export {
   handleGetCampaigns,
   handleCreateCollection,
-  handleAssignAdToCollection
+  handleAssignAdToCollection,
+  handleUnAssignAdFromCollection
 };

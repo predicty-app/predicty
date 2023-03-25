@@ -13,6 +13,7 @@ type ScrollType = {
 type PropsType = {
   scrollX?: number;
   scrollY?: number;
+  staticScrollX?: number;
   isHorizontalScrollVisible?: boolean;
   isVerticalScrollVisible?: boolean;
 };
@@ -33,6 +34,7 @@ const emit = defineEmits<{
 
 onMounted(() => {
   emit("onMounted", scrollInstance.value);
+  x.value = props.staticScrollX;
 });
 
 watch(

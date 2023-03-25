@@ -97,6 +97,14 @@ const routes: Array<RouteRecordRaw> = [
             return { path: "/" };
           }
         }
+      },
+      {
+        path: "/onboarding/add-more-files",
+        name: "add-more-files",
+        meta: {
+          authentication: true
+        },
+        component: () => import("@/views/AddMoreFiles.vue")
       }
     ]
   },

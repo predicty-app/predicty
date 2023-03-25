@@ -1,10 +1,10 @@
 <script setup lang="ts">
+import { reactive, computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useGlobalStore } from "@/stores/global";
-import { TypeOptionsChart } from "@/stores/userDashboard";
-import type { AdsCollection, AdsType } from "@/stores/userDashboard";
+import type { AdsType } from "@/stores/userDashboard";
 import { useUserDashboardStore } from "@/stores/userDashboard";
-import { reactive } from "vue";
+import { TypeOptionsChart, type AdSetsType } from "@/stores/userDashboard";
 
 const { t } = useI18n();
 
@@ -42,6 +42,11 @@ const chartTypeOptions: TypesOptionsChart[] = [
 
 const globalStore = useGlobalStore();
 const userDashboardStore = useUserDashboardStore();
+const amountScale = computed<string[]>(() => [
+  `$${userDashboardStore.scaleChart.toFixed(2)}`,
+  `$${(userDashboardStore.scaleChart / 2).toFixed(2)}`,
+  `$${(userDashboardStore.scaleChart / 3).toFixed(2)}`
+]);
 
 let state = reactive({
   isCollectionSelected: false,
@@ -54,35 +59,41 @@ let state = reactive({
  * @param {string} adUid
  * @return {boolean}
  */
-function checkIsAdInCollection(
-  collections: AdsCollection[],
-  adUid: string
-): boolean {
-  return collections.find((collection: AdsCollection) =>
-    collection.ads.includes(adUid)
+function checkIsAdInCollection(adUid: string): boolean {
+  return userDashboardStore.campaigns[0].adsets.find((adsSet: AdSetsType) =>
+    adsSet.ads.find((ad: AdsType) => ad.uid === adUid)
   )
     ? false
     : true;
 }
 
-function toggleCollection(value?: AdsType | AdsCollection) {
+/**
+ * Function to toogle collection.
+ * @param {AdsType | AdSetsType} value
+ */
+function toggleCollection(value?: AdSetsType) {
   state.isCollectionSelected = value ? true : false;
   state.currentCollection = value ? value : null;
+
+  userDashboardStore.selectedCollection = value ? value : null;
 }
 </script>
 
 <template>
   <FloatingSwitchViewForm
-    v-if="userDashboardStore.selectedAdsList.ads.length > 0"
-    :isCollection="userDashboardStore.selectedAdsList"
+    v-if="
+      userDashboardStore.selectedAdsList.ads.length > 0 ||
+      userDashboardStore.selectedCollectionAdsList.ads.length > 0
+    "
   />
-  <UserDashboardLayout :singleRow="false">
+  <UserDashboardLayout>
     <template #header>
       <HeaderDashboard />
     </template>
     <template #chart-legend>
       <LegendDescription
         :options="legendOptions"
+        :amount-scale="amountScale"
         :typeChartOptions="chartTypeOptions"
       />
     </template>
@@ -111,36 +122,44 @@ function toggleCollection(value?: AdsType | AdsCollection) {
           :key="campaign.uid"
           v-for="campaign in userDashboardStore.parsedCampaignsList"
         >
-          <ChartTimelineItem
-            :element="adElement"
-            type="ad"
-            :is-visible="
-              checkIsAdInCollection(campaign.collection, adElement.uid)
-            "
-            :uid="adElement.uid"
-            :color="campaign.color"
-            :key="`${adElement.uid}_${Math.random()}`"
-            v-for="adElement in campaign.ads"
-            :start="globalStore.dictionaryTimeline[adElement.start]"
-            :campaing-uid="campaign.uid"
-            :end="globalStore.dictionaryTimeline[adElement.end]"
-          />
-          <ChartTimelineItem
-            :element="collection"
-            type="collection"
-            :color="campaign.color"
-            :key="collection.uid"
-            v-for="collection in campaign.collection"
-            :start="globalStore.dictionaryTimeline[collection.start]"
-            :end="globalStore.dictionaryTimeline[collection.end]"
-            @collection-selected="(value) => toggleCollection(value)"
-          />
+          <template v-if="campaign.isCollection">
+            <ChartTimelineItem
+              :element="adset"
+              type="collection"
+              :is-visible="true"
+              :uid="adset.uid"
+              :color="campaign.color"
+              :key="`${adset.uid}_${Math.random()}`"
+              @collectionSelected="toggleCollection"
+              v-for="adset in userDashboardStore.campaigns[0].adsets"
+              :start="globalStore.dictionaryTimeline[adset.start]"
+              :campaing-uid="campaign.uid"
+              :end="globalStore.dictionaryTimeline[adset.end]"
+            />
+          </template>
+          <template v-if="!campaign.isCollection">
+            <template :key="adsSet.uid" v-for="adsSet in campaign.adsets">
+              <ChartTimelineItem
+                :element="ad"
+                type="ad"
+                :is-visible="checkIsAdInCollection(ad.uid)"
+                :uid="ad.uid"
+                :color="campaign.color"
+                :key="`${ad.uid}_${Math.random()}`"
+                v-for="ad in adsSet.ads"
+                @collectionSelected="toggleCollection"
+                :start="globalStore.dictionaryTimeline[ad.start]"
+                :campaing-uid="campaign.uid"
+                :end="globalStore.dictionaryTimeline[ad.end]"
+              />
+            </template>
+          </template>
         </ChartTimelineContent>
       </ChartTimelineWrapper>
     </template>
   </UserDashboardLayout>
   <CollectionBottomBar
     :collection="state.currentCollection"
-    @close="toggleCollection()"
+    @handleCloseDetials="toggleCollection()"
   />
 </template>

@@ -3,7 +3,7 @@ import { useGlobalStore } from "@/stores/global";
 import { ref, onMounted, watch, computed } from "vue";
 import { hLightenDarkenColor } from "@/helpers/utils";
 import { useUserDashboardStore } from "@/stores/userDashboard";
-import type { AdsType, AdsCollection } from "@/stores/userDashboard";
+import type { AdsType, AdSetsType } from "@/stores/userDashboard";
 
 type PropsType = {
   end: number;
@@ -12,9 +12,7 @@ type PropsType = {
   isVisible?: boolean;
   campaingUid?: string;
   type?: "ad" | "collection";
-  element: AdsType | AdsCollection;
-  noName?: boolean;
-  isCollection?: boolean;
+  element: AdsType | AdSetsType;
 };
 
 const props = withDefaults(defineProps<PropsType>(), {
@@ -32,10 +30,17 @@ const isSelectedElement = computed<boolean>(() =>
   userStore.selectedAdsList.ads.includes(props.element.uid)
 );
 
+const parseStart = computed<number>(() =>
+  props.start > props.end ? props.end : props.start
+);
+const parseEnd = computed<number>(() =>
+  props.start < props.end ? props.end : props.start
+);
+
 const isElementAssignCheckedCollection = computed<boolean>(() => {
   return (
-    userStore.selectedAdsList.campaignUid !== props.campaingUid &&
-    userStore.selectedAdsList.ads.length > 0
+    userStore.selectedAdsList.ads.length > 0 &&
+    !userStore.selectedAdsList.ads.includes(props.element.uid)
   );
 });
 
@@ -57,6 +62,10 @@ watch(
     handleVisibleElement();
   }
 );
+
+const emit = defineEmits<{
+  (e: "collectionSelected", value: AdSetsType): void;
+}>();
 
 /**
  * Function to handle visible element.
@@ -89,36 +98,28 @@ function handleVisibleElement() {
  * Function to handle select ad.
  */
 function handleToogleSelectAd() {
-  if (props.type !== "ad") {
+  if (
+    props.type !== "ad" ||
+    !userStore.activeProviders.includes(props.element.dataProvider[0])
+  ) {
     return;
   }
 
-  if (
-    !(
-      userStore.selectedAdsList.campaignUid !== props.campaingUid &&
-      userStore.selectedAdsList.ads.length > 0
-    )
-  ) {
-    userStore.toogleAssignAdsAction(
-      props.campaingUid,
-      props.element.uid,
-      props.isCollection
-    );
-  } else {
-    userStore.selectedAdsList.ads = [];
-    userStore.selectedAdsList.campaignUid = null;
-
-    userStore.toogleAssignAdsAction(
-      props.campaingUid,
-      props.element.uid,
-      props.isCollection
-    );
-  }
+  emit("collectionSelected", null);
+  userStore.toogleAssignAdsAction(props.campaingUid, props.element.uid);
 }
 
-defineEmits<{
-  (e: "collectionSelected", value: AdsType | AdsCollection): void;
-}>();
+/**
+ * Function handle select collection.
+ */
+function handleSelectCollection() {
+  userStore.selectedAdsList.ads = [];
+  userStore.selectedAdsList.campaignUid = null;
+
+  userStore.selectedCollection = null;
+
+  emit("collectionSelected", props.element as AdSetsType);
+}
 </script>
 
 <template>
@@ -126,23 +127,31 @@ defineEmits<{
     ref="timelineItemInstance"
     v-if="isElementVisible"
     :class="[
-      `col-start-dynamic col-end-dynamic p-[1.5px] rounded-[6px] h-fit my-auto`,
+      `col-start-dynamic col-end-dynamic p-[1.5px] rounded-[6px] h-fit my-auto transition-all`,
       {
-        'border-[2px] border-timeline-item-border cursor-pointer':
-          type === 'collection',
-        'opacity-50': isElementAssignCheckedCollection
+        'border-[2px] border-timeline-item-border': type === 'collection',
+        'opacity-50': isElementAssignCheckedCollection,
+        'blur-[0.5px] opacity-20 grayscale cursor-default':
+          !userStore.activeProviders.includes(element.dataProvider[0]) &&
+          type === 'ad',
+        'cursor-pointer':
+          type === 'collection' ||
+          (userStore.activeProviders.includes(element.dataProvider[0]) &&
+            type === 'ad')
       }
     ]"
     v-on="
-      type === 'collection'
-        ? { click: () => $emit('collectionSelected', props.element) }
-        : {}
+      type === 'collection' ? { click: () => handleSelectCollection() } : {}
     "
-    :style="{ '--start': start, '--end': end, '--color': currentColor }"
+    :style="{
+      '--start': parseStart,
+      '--end': parseEnd - parseStart < 2 ? parseEnd + 5 : parseEnd,
+      '--color': currentColor
+    }"
   >
     <div
       :class="[
-        'p-2 text-xs cursor-pointer rounded-[5px] shadow-sm flex gap-x-1 items-center text-text-white font-semibold bg-timeline-item-background',
+        'p-2 text-xs overflow-hidden rounded-[5px] shadow-sm text-text-white font-semibold bg-timeline-item-background',
         {
           'shadow-lg shadow-timeline-shadow': isSelectedElement
         }
@@ -150,19 +159,38 @@ defineEmits<{
       @click="handleToogleSelectAd"
       :style="{ '--color': currentColor }"
     >
-      <CheckboxForm
-        v-if="type === 'ad'"
-        :color="currentColor"
-        :is-checked="isSelectedElement"
-      />
-      <IconSvg v-if="type === 'collection'" name="bars" class-name="w-4 h-4" />
-      <div
-        v-if="type === 'collection'"
-        class="rounded font-semibold text-xs w-[14px] py-[1px] bg-timeline-collection-count flex items-center justify-center"
-      >
-        {{ (element as AdsCollection).ads.length }}
+      <div class="pr-4 flex gap-x-1 items-center">
+        <CheckboxForm
+          v-if="type === 'ad'"
+          :color="currentColor"
+          :is-checked="isSelectedElement"
+        />
+        <svg
+          v-if="type === 'collection'"
+          class="min-w-[16px] w-[16px]"
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect x="1" y="1" width="7" height="3" rx="1" fill="white" />
+          <rect y="11" width="12" height="3" rx="1" fill="white" />
+          <rect x="3" y="6" width="12" height="3" rx="1" fill="white" />
+        </svg>
+        <div
+          v-if="type === 'collection'"
+          class="rounded font-semibold text-xs min-w-[14px] w-[14px] py-[1px] bg-timeline-collection-count flex items-center justify-center"
+        >
+          {{ (element as AdSetsType).ads.length }}
+        </div>
+        <span v-if="parseEnd - parseStart < 5">
+          {{ element.name.slice(0, 2) }}...
+        </span>
+        <span v-else>
+          {{ element.name }}
+        </span>
       </div>
-      <p v-if="!noName">{{ element.name }}</p>
     </div>
   </div>
 </template>

@@ -1,7 +1,11 @@
 import { computed } from "vue";
 import { useGlobalStore } from "@/stores/global";
-import type { CampaignType } from "@/stores/userDashboard";
-import { useUserDashboardStore } from "@/stores/userDashboard";
+import { hCheckIsCollectionExist } from "@/helpers/utils";
+import type { CampaignType, AdSetsType } from "@/stores/userDashboard";
+import {
+  useUserDashboardStore,
+  TypeOptionsChart
+} from "@/stores/userDashboard";
 
 const globalStore = useGlobalStore();
 const userDashboardStore = useUserDashboardStore();
@@ -10,12 +14,26 @@ enum timelineParams {
   GAP_GRID = 5,
   LINE_WIDTH = 150,
   COLUMN_WIDTH = 16.4,
+  LINES_POSITION_DAYS_WIDTH = 16.4,
+  LINES_POSITION_WEEKS_WIDTH = 144.8,
   GRADIENT_WIDTH = 300,
+  SCALE_CHART = 50000,
   FIREST_COLUMN_WIDTH = 16
 }
 
 export const scaleLines = computed<string>(
   () => `${timelineParams.LINE_WIDTH * (globalStore.currentScale * 0.01)}px`
+);
+
+export const scaleCharDaystLines = computed<number>(
+  () =>
+    timelineParams.LINES_POSITION_DAYS_WIDTH * (globalStore.currentScale * 0.01)
+);
+
+export const scaleCharWeekstLines = computed<number>(
+  () =>
+    timelineParams.LINES_POSITION_WEEKS_WIDTH *
+    (globalStore.currentScale * 0.01)
 );
 
 export const scaleLinesGradient = computed<string>(
@@ -45,11 +63,30 @@ export const gapGrid = computed<string>(
   () => `${timelineParams.GAP_GRID * (globalStore.currentScale * 0.01)}px`
 );
 
+export const heightCollectionContent = computed<string>(() => {
+  let height = 0;
+  if (!userDashboardStore.selectedCollection) {
+    return `0px`;
+  }
+
+  (userDashboardStore.selectedCollection as AdSetsType).ads.forEach(() => {
+    height += 57;
+  });
+
+  return `${height + 10}px`;
+});
+
 export const heightContent = computed<string>(() => {
   let height = 0;
-  userDashboardStore.campaigns.forEach((campaign: CampaignType) => {
-    height += calculateItemHeight(campaign);
-  });
+  if (userDashboardStore.campaigns.length === 0) {
+    return `0px`;
+  }
+  hCheckIsCollectionExist(userDashboardStore.campaigns).forEach(
+    (campaign: CampaignType) => {
+      height += calculateItemHeight(campaign, 10);
+    }
+  );
+
   return `${height + 50}px`;
 });
 
@@ -58,11 +95,19 @@ export const heightContent = computed<string>(() => {
  * @param {CampaignType} campaign
  * @return {number}
  */
-export function calculateItemHeight(campaign: CampaignType): number {
-  return (
-    (campaign.ads.length + campaign.collection.length) * 36 +
-    (campaign.ads.length + campaign.collection.length) * 5
-  );
+export function calculateItemHeight(
+  campaign: CampaignType,
+  modifierHeight: number = 0
+): number {
+  let height = 0;
+
+  campaign.adsets.forEach((adset: AdSetsType) => {
+    height += campaign.isCollection
+      ? 41
+      : adset.ads.length * 36 + adset.ads.length * 5 + modifierHeight;
+  });
+
+  return height;
 }
 
 /**
@@ -76,7 +121,6 @@ export function handleVirtualizationElement(
   if (!globalStore.scrollTimeline) {
     return;
   }
-
   const currentLeftPosition =
     (boundingBoxElement.left -
       globalStore.scrollTimeline.getBoundingClientRect().left) *
@@ -103,20 +147,39 @@ export function calculateItemPosition(
   modifierHeight: number
 ): number {
   let previousHeightElement = 0;
-  const index = userDashboardStore.campaigns.findIndex(
+  const campaigns = hCheckIsCollectionExist(userDashboardStore.campaigns);
+
+  const index = campaigns.findIndex(
     (item: CampaignType) => item.uid === campaign.uid
   );
 
   for (let i = 0; i < index; i++) {
-    previousHeightElement +=
-      (userDashboardStore.campaigns[i].ads.length +
-        userDashboardStore.campaigns[i].collection.length) *
-        36 +
-      (userDashboardStore.campaigns[i].ads.length +
-        userDashboardStore.campaigns[i].collection.length) *
-        5 +
-      modifierHeight;
+    campaigns[i].adsets.forEach((adset: AdSetsType) => {
+      previousHeightElement += campaigns[i].isCollection
+        ? 41 + 4
+        : adset.ads.length * 36 + adset.ads.length * 5 + modifierHeight;
+    });
   }
 
   return previousHeightElement;
+}
+
+/**
+ * Function to change dynamical
+ */
+export function changeDynamicalTypeChart() {
+  if (globalStore.currentScale <= 80) {
+    userDashboardStore.typeChart = TypeOptionsChart.WEEKS;
+  } else {
+    if (userDashboardStore.typeChart === TypeOptionsChart.WEEKS) {
+      userDashboardStore.typeChart = TypeOptionsChart.DAYS;
+    }
+  }
+}
+
+export function getScale(): number {
+  return (
+    globalStore.wrapperPole.getBoundingClientRect().height /
+    userDashboardStore.scaleChart
+  );
 }

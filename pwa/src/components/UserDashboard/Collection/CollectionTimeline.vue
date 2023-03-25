@@ -1,63 +1,111 @@
 <script setup lang="ts">
-import type { AdsCollection } from "@/stores/userDashboard";
+import { ref } from "vue";
 import { useGlobalStore } from "@/stores/global";
-import { onMounted, reactive } from "vue";
-import { useUserDashboardStore } from "@/stores/userDashboard";
-import CollectionSideItems from "./CollectionSideItems.vue";
+import {
+  gapGrid,
+  scaleGrid,
+  scaleLines,
+  mainWidthGrid,
+  scaleFirstGrid,
+  scaleLinesGradient,
+  heightCollectionContent,
+  changeDynamicalTypeChart
+} from "@/helpers/timeline";
 
-type PropsType = {
-  collection?: AdsCollection;
-};
-
-const props = defineProps<PropsType>();
 const globalStore = useGlobalStore();
-const userStore = useUserDashboardStore();
+const timelineContent = ref<HTMLElement | null>(null);
+const timelineGridInstance = ref<HTMLDivElement | null>(null);
 
-let state = reactive({
-  ads: []
-});
+/**
+ * Function to handle scale up.
+ */
+function handleScaleUp() {
+  if (globalStore.currentScale >= 200) {
+    globalStore.handleChangeScale(200);
+    return;
+  }
 
-onMounted(() => {
-  (props.collection as AdsCollection).ads.forEach((ad) =>
-    userStore.campaigns.map((campaign) =>
-      campaign.ads.find((a) => {
-        a.uid === ad ? state.ads.push(a) : "";
-      })
-    )
-  );
-});
+  globalStore.handleChangeScale(globalStore.currentScale + 10);
+}
+
+/**
+ * Function to handle scale down.
+ */
+function handleScaleDown() {
+  if (globalStore.currentScale <= 60) {
+    globalStore.handleChangeScale(60);
+    return;
+  }
+
+  globalStore.handleChangeScale(globalStore.currentScale - 10);
+}
+
+/**
+ * Function to check is scroll bar visible.
+ * @return {boolean}
+ */
+function isScrollBarVisible(): boolean {
+  return timelineContent.value
+    ? timelineContent.value?.scrollWidth > timelineContent.value?.clientWidth
+    : true;
+}
+
+/**
+ * Function to handle change scale.
+ * @param {WheelEvent} eventWheel
+ */
+function handleChangeScale(eventWheel: WheelEvent) {
+  if (eventWheel.deltaY > 0) {
+    if (isScrollBarVisible()) {
+      handleScaleDown();
+    }
+  } else {
+    handleScaleUp();
+  }
+
+  changeDynamicalTypeChart();
+}
 </script>
 
 <template>
-  <div class="collection-timeline">
-    <UserDashboardLayout :singleRow="true">
-      <template #ads-campaigns>
-        <CollectionSideItems :ads="state.ads" />
-      </template>
-      <template #ads-weeks>
-        <ChartTimelineWeeks :hasWeekdays="true" />
-      </template>
-      <template #ads-chart>
-        <ChartTimelineWrapper :hasWeekdays="true">
-          <ChartTimelineContent
-            :count-elements="state.ads.length"
-            :fixedHeight="true"
-            :key="index"
-            v-for="(ad, index) in state.ads"
-          >
-            <ChartTimelineItem
-              :element="ad"
-              type="ad"
-              :uid="ad.uid"
-              :key="`${ad.uid}_${Math.random()}`"
-              :start="globalStore.dictionaryTimeline[ad.start]"
-              :end="globalStore.dictionaryTimeline[ad.end]"
-              :noName="true"
-              :isCollection="true"
-            />
-          </ChartTimelineContent>
-        </ChartTimelineWrapper>
-      </template>
-    </UserDashboardLayout>
+  <div
+    @wheel.prevent="handleChangeScale"
+    class="collection-timeline bg-timeline-background grid grid-rows-[1fr] w-fit h-full whitespace-nowrap relative"
+  >
+    <div
+      ref="timelineGridInstance"
+      class="collection-timeline__grid absolute top-4 left-0 z-10 animate-fade-in"
+    >
+      <slot />
+    </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.collection-timeline {
+  width: v-bind(mainWidthGrid);
+  min-height: v-bind(heightCollectionContent);
+  grid-template-columns: repeat(auto-fill, v-bind(scaleLines));
+
+  background: repeating-linear-gradient(
+    90deg,
+    #f9f9fb 0px,
+    #f9f9fb v-bind(scaleLines),
+    #f4f4f6 v-bind(scaleLines),
+    #f4f4f6 v-bind(scaleLinesGradient)
+  );
+
+  @apply bg-one;
+
+  &__grid {
+    display: grid;
+    width: v-bind(mainWidthGrid);
+    grid-template-columns: v-bind(scaleFirstGrid) repeat(
+        auto-fill,
+        v-bind(scaleGrid)
+      );
+    grid-column-gap: v-bind(gapGrid);
+    grid-row-gap: 16px;
+  }
+}
+</style>

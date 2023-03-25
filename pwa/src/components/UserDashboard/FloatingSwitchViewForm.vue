@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import { computed, ref } from "vue";
-import type { CampaignType, AdsCollection } from "@/stores/userDashboard";
+import { computed, ref, nextTick } from "vue";
+import { handleGetCampaigns } from "@/services/api/userDashboard";
+import type { AdSetsType } from "@/stores/userDashboard";
 import { useUserDashboardStore, OptionsName } from "@/stores/userDashboard";
 import {
   handleCreateCollection,
-  handleAssignAdToCollection
+  handleAssignAdToCollection,
+  handleUnAssignAdFromCollection
 } from "@/services/api/userDashboard";
 
 type OptionsType = {
@@ -13,26 +15,31 @@ type OptionsType = {
   label: string;
 };
 
+type NotificationMessageType = {
+  visible: boolean;
+  type: "success" | "error";
+  message: string;
+};
+
 const { t } = useI18n();
 const campaignModelValue = ref<string>("");
+const isSpinnerVisible = ref<boolean>(false);
+const notificationMessageModel = ref<NotificationMessageType>({
+  visible: false,
+  type: "success",
+  message: ""
+});
 const userDashboardStore = useUserDashboardStore();
 const optionsCollectionList = computed<OptionsType[]>(() => {
-  const campaigns = userDashboardStore.campaigns.find(
-    (campaign: CampaignType) =>
-      campaign.uid === userDashboardStore.selectedAdsList.campaignUid
-  );
-  if (!campaigns) {
-    return [];
-  }
-  return campaigns.collection.map((collection: AdsCollection) => ({
-    key: collection.uid,
-    label: collection.name
+  return userDashboardStore.campaigns[0].adsets.map((adsets: AdSetsType) => ({
+    key: adsets.uid,
+    label: adsets.name
   }));
 });
 
 const optionsButtons = computed<OptionsType[]>(() => {
   const options: OptionsType[] = [
-    !userDashboardStore.selectedAdsList.isCollection && {
+    !userDashboardStore.selectedCollection && {
       key: OptionsName.CREATE_NEW_COLLECTION,
       label: t(
         "components.user-dashboard.floating-switch-view-form.create-new-collection"
@@ -46,12 +53,10 @@ const optionsButtons = computed<OptionsType[]>(() => {
     }
   ].filter(Boolean);
 
-  const campaign = userDashboardStore.campaigns.find(
-    (campaing: CampaignType) =>
-      campaing.uid === userDashboardStore.selectedAdsList.campaignUid
-  );
-
-  if (campaign && campaign.collection.length > 0) {
+  if (
+    userDashboardStore.campaigns[0].adsets.length > 0 &&
+    !userDashboardStore.selectedCollection
+  ) {
     options.push({
       key: OptionsName.ADD_TO_COLLECTION,
       label: t(
@@ -60,50 +65,126 @@ const optionsButtons = computed<OptionsType[]>(() => {
     });
   }
 
+  if (userDashboardStore.selectedCollection) {
+    options.push({
+      key: OptionsName.REMOVE_FROM_COLLECTION,
+      label: t(
+        "components.user-dashboard.floating-switch-view-form.remove-from-collection"
+      )
+    });
+  }
+
   return options;
 });
+
+/**
+ * Function to set response after one of actions - assign or create collection.
+ * @param {'create-collection' | 'assign-ads-to-collection'} type
+ * @param {any} response
+ */
+async function setResponseFiredAction(
+  type:
+    | "create-collection"
+    | "assign-ads-to-collection"
+    | "unassign-ads-from-collection",
+  response: any
+) {
+  notificationMessageModel.value.visible = true;
+  notificationMessageModel.value.type = response ? "success" : "error";
+  notificationMessageModel.value.message = t(
+    `components.user-dashboard.floating-switch-view-form.notifications.${type}.${
+      response ? "success" : "error"
+    }`
+  );
+
+  if (response) {
+    const { campaigns, dailyRevenue } = await handleGetCampaigns();
+    userDashboardStore.setCampaignsList(campaigns);
+    userDashboardStore.setDailyReveneu(dailyRevenue);
+    nextTick(() => {
+      userDashboardStore.handleVirtualizeCampaignsList();
+      isSpinnerVisible.value = false;
+
+      if (userDashboardStore.selectedCollection) {
+        userDashboardStore.selectedCollection =
+          userDashboardStore.campaigns[0].adsets.find(
+            (adset: AdSetsType) =>
+              adset.uid === userDashboardStore.selectedCollection.uid
+          );
+      }
+    });
+  }
+
+  isSpinnerVisible.value = false;
+
+  userDashboardStore.selectedAdsList.ads = [];
+  userDashboardStore.selectedCollectionAdsList.ads = [];
+  userDashboardStore.selectedAdsList.campaignUid = null;
+}
 
 /**
  * Function to start action.
  * @param {OptionsName} optionName
  */
-function handleFiredAction(actionName: OptionsName) {
+async function handleFiredAction(actionName: OptionsName) {
   switch (actionName) {
-    case "create_new_collection":
+    case OptionsName.CREATE_NEW_COLLECTION:
       {
-        handleCreateCollection({
+        isSpinnerVisible.value = true;
+        const response = await handleCreateCollection({
           campaignUid: userDashboardStore.selectedAdsList.campaignUid,
           ads: userDashboardStore.selectedAdsList.ads
         });
 
-        userDashboardStore.selectedAdsList.ads = [];
-        userDashboardStore.selectedAdsList.campaignUid = null;
+        await setResponseFiredAction("create-collection", response);
       }
       break;
-    case "add_to_collection":
+    case OptionsName.ADD_TO_COLLECTION:
       {
-        handleAssignAdToCollection({
+        isSpinnerVisible.value = true;
+        const response = await handleAssignAdToCollection({
           campaignUid: userDashboardStore.selectedAdsList.campaignUid,
           collectionUid: campaignModelValue.value,
           ads: userDashboardStore.selectedAdsList.ads
         });
+
+        await setResponseFiredAction("assign-ads-to-collection", response);
       }
       break;
-    case "hide_element":
+    case OptionsName.REMOVE_FROM_COLLECTION:
+      {
+        isSpinnerVisible.value = true;
+        const response = await handleUnAssignAdFromCollection({
+          campaignUid: null,
+          collectionUid: userDashboardStore.selectedCollection.uid,
+          ads: userDashboardStore.selectedCollectionAdsList.ads
+        });
+
+        await setResponseFiredAction("unassign-ads-from-collection", response);
+      }
+      break;
+    case OptionsName.HIDE_ELEMENT:
       {
         userDashboardStore.toogleVisibilityAds(
-          userDashboardStore.selectedAdsList.ads
+          userDashboardStore.selectedAdsList.ads.length > 0
+            ? userDashboardStore.selectedAdsList.ads
+            : userDashboardStore.selectedCollectionAdsList.ads
         );
+        userDashboardStore.selectedAdsList.ads = [];
+        userDashboardStore.selectedCollectionAdsList.ads = [];
       }
       break;
   }
-
-  userDashboardStore.selectedAdsList.ads = [];
-  userDashboardStore.selectedAdsList.campaignUid = null;
 }
 </script>
 
 <template>
+  <SpinnerBar :is-visible="isSpinnerVisible" :is-global="true" />
+  <NotificationMessage
+    v-model="notificationMessageModel.visible"
+    :message="notificationMessageModel.message"
+    :type="notificationMessageModel.type"
+  />
   <FloatingPanel
     class="absolute bottom-3 right-3 m-auto animate-fade-in z-20"
     :selected-elements="userDashboardStore.selectedAdsList.ads.length"

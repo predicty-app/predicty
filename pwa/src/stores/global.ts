@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
 
 type ScrollType = {
-  x: number;
-  y: number;
+  x?: number;
+  y?: number;
 };
 
 type StateType = {
@@ -11,6 +11,7 @@ type StateType = {
   scrollParams: ScrollType;
   isSpinnerVisible: boolean;
   currentsCountWeeks: number;
+  wrapperPole: HTMLDivElement | null;
   dictionaryFirstDaysWeek: string[];
   scrollTimeline: HTMLDivElement | null;
   scrollCampaignList: HTMLDivElement | null;
@@ -28,6 +29,7 @@ export const useGlobalStore = defineStore({
       isSpinnerVisible: false,
       currentScale: 100,
       numberFirstWeek: 0,
+      wrapperPole: null,
       scrollTimeline: null,
       scrollCampaignList: null,
       dictionaryTimeline: {},
@@ -52,7 +54,9 @@ export const useGlobalStore = defineStore({
      * @param {ScrollType} params
      */
     handleChangeScrollParams(params: ScrollType) {
-      this.scrollParams = params;
+      this.scrollParams = {
+        ...params
+      };
     },
 
     /**

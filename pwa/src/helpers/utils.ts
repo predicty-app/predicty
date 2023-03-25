@@ -1,4 +1,5 @@
-import type { CampaignType } from "@/stores/userDashboard";
+import type { AdNonParsedType } from "@/services/collections";
+import type { CampaignType, AdSetsType, AdsType } from "@/stores/userDashboard";
 
 type FirstLastDateType = {
   first: string;
@@ -10,32 +11,112 @@ type NextDayDictionary = {
 };
 
 /**
+ * Function to check is collection exist.
+ * @param {CampaignType[]} list
+ * @returns {CampaignType[]}
+ */
+export function hCheckIsCollectionExist(list: CampaignType[]): CampaignType[] {
+  if (list[0].isCollection && list[0].adsets.length === 0) {
+    return list.filter((_, index) => index > 0);
+  } else {
+    return list;
+  }
+}
+
+/**
  * Function to get first and last date from list.
- * @param {}CampaignType[]} list
+ * @param {AdsType[]} list
  * @returns {FirstLastDateType}
  */
-export function hFirstAndLastDate(list: CampaignType[]): FirstLastDateType {
-  let firstDate = Date.parse(list[0].ads[0].start) / 1000;
-  let lastDate = Date.parse(list[0].ads[0].end) / 1000;
+export function hFirstAndLastAdsetDate(list: AdsType[]): FirstLastDateType {
+  let firstDate = Date.parse(list[0].start) / 1000;
+  let lastDate = Date.parse(list[0].end) / 1000;
 
-  let firstDateString = list[0].ads[0].start;
-  let lastDateString = list[0].ads[0].end;
+  let firstDateString = list[0].start;
+  let lastDateString = list[0].end;
 
-  list.forEach((campaing) => {
-    campaing.ads.forEach((ad) => {
-      const start = Date.parse(ad.start) / 1000;
-      const end = Date.parse(ad.end) / 1000;
+  list.forEach((ad: AdsType) => {
+    const start = Date.parse(ad.start) / 1000;
+    const end = Date.parse(ad.end) / 1000;
+
+    if (start < firstDate) {
+      firstDate = start;
+      firstDateString = ad.start;
+    }
+
+    if (end > lastDate) {
+      lastDate = end;
+      lastDateString = ad.end;
+    }
+  });
+
+  return { first: firstDateString, last: lastDateString };
+}
+
+/**
+ * Function to get first and last date from list.
+ * @param {CampaignType[] | AdNonParsedType[]} list
+ * @returns {FirstLastDateType}
+ */
+export function hFirstAndLastDate(
+  list: CampaignType[] | AdNonParsedType[]
+): FirstLastDateType {
+  let firstDate =
+    Date.parse(
+      (<CampaignType[]>list)[0].adsets
+        ? (<CampaignType[]>list)[0].adsets[0].start
+        : (<AdNonParsedType[]>list)[0].adStats[0].date
+    ) / 1000;
+  let lastDate =
+    Date.parse(
+      (<CampaignType[]>list)[0].adsets
+        ? (<CampaignType[]>list)[0].adsets[0].end
+        : (<AdNonParsedType[]>list)[0].adStats[
+            (<AdNonParsedType[]>list)[0].adStats.length - 1
+          ].date
+    ) / 1000;
+
+  let firstDateString = (<CampaignType[]>list)[0].adsets
+    ? (<CampaignType[]>list)[0].adsets[0].start
+    : (<AdNonParsedType[]>list)[0].adStats[0].date;
+  let lastDateString = (<CampaignType[]>list)[0].adsets
+    ? (<CampaignType[]>list)[0].adsets[0].end
+    : (<AdNonParsedType[]>list)[0].adStats[
+        (<AdNonParsedType[]>list)[0].adStats.length - 1
+      ].date;
+
+  list.forEach((element: CampaignType | AdNonParsedType) => {
+    if ((<CampaignType>element).adsets) {
+      (<CampaignType>element).adsets.forEach((adset: AdSetsType) => {
+        const start = Date.parse(adset.start) / 1000;
+        const end = Date.parse(adset.end) / 1000;
+
+        if (start < firstDate) {
+          firstDate = start;
+          firstDateString = adset.start;
+        }
+
+        if (end > lastDate) {
+          lastDate = end;
+          lastDateString = adset.end;
+        }
+      });
+    } else {
+      const parsed = (<AdNonParsedType>element).adStats;
+
+      const start = Date.parse(parsed[0].date) / 1000;
+      const end = Date.parse(parsed[parsed.length - 1].date) / 1000;
 
       if (start < firstDate) {
         firstDate = start;
-        firstDateString = ad.start;
+        firstDateString = parsed[0].date;
       }
 
       if (end > lastDate) {
         lastDate = end;
-        lastDateString = ad.end;
+        lastDateString = parsed[parsed.length - 1].date;
       }
-    });
+    }
   });
 
   return { first: firstDateString, last: lastDateString };
@@ -177,7 +258,7 @@ export function hFirstDaysWeeks(firstDay: Date, range: number): string[] {
     firstDay.getMonth() + 1 < 10
       ? `0${firstDay.getMonth() + 1}`
       : firstDay.getMonth() + 1
-  }`;
+  }.${firstDay.getFullYear()}`;
 
   for (let i = 1; i <= range; i++) {
     const nextMonday = new Date(firstDateParsed);
@@ -201,7 +282,7 @@ export function hFirstDaysWeeks(firstDay: Date, range: number): string[] {
       nextMonday.getMonth() + 1 < 10
         ? `0${nextMonday.getMonth() + 1}`
         : nextMonday.getMonth() + 1
-    }`;
+    }.${nextMonday.getFullYear()}`;
 
     firstDateParsed = parsedDay;
   }

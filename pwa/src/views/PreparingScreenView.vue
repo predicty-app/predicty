@@ -17,7 +17,7 @@ onMounted(async () => {
     });
   }
 
-  router.push("/");
+  router.push("/onboarding/add-more-files");
 });
 </script>
 

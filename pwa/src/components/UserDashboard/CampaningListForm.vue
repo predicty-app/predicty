@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import { onMounted, nextTick } from "vue";
-import { useUserDashboardStore } from "@/stores/userDashboard";
+import { onMounted, nextTick, ref } from "vue";
 import { handleGetCampaigns } from "@/services/api/userDashboard";
 import type { CampaignType, AdsType } from "@/stores/userDashboard";
+import { useUserDashboardStore, type AdSetsType } from "@/stores/userDashboard";
 import {
   heightContent,
   calculateItemHeight,
@@ -11,13 +11,17 @@ import {
 } from "@/helpers/timeline";
 
 const { t } = useI18n();
+const isSpinnerVisible = ref<boolean>(false);
 const userDashboardStore = useUserDashboardStore();
 
 onMounted(async () => {
-  const response = await handleGetCampaigns();
-  userDashboardStore.setCampaignsList(response);
+  isSpinnerVisible.value = true;
+  const { campaigns, dailyRevenue } = await handleGetCampaigns();
+  userDashboardStore.setCampaignsList(campaigns);
+  userDashboardStore.setDailyReveneu(dailyRevenue);
   nextTick(() => {
     userDashboardStore.handleVirtualizeCampaignsList();
+    isSpinnerVisible.value = false;
   });
 });
 
@@ -27,16 +31,10 @@ onMounted(async () => {
  * @return {number}
  */
 function calculateActiveCurrentAds(campaign: CampaignType): number {
-  const currentTimestamp = Math.floor(Date.now() / 1000);
   let count = 0;
-
-  campaign.ads.forEach((ad: AdsType) => {
-    if (
-      Date.parse(ad.start) / 1000 < currentTimestamp &&
-      Date.parse(ad.end) / 1000 > currentTimestamp
-    ) {
-      count++;
-    }
+  const adsets = campaign.adsets.filter((adset: AdSetsType) => adset.isActive);
+  adsets.forEach((adset: AdSetsType) => {
+    count += adset.ads.filter((ad: AdsType) => ad.isActive).length;
   });
 
   return count;
@@ -44,6 +42,7 @@ function calculateActiveCurrentAds(campaign: CampaignType): number {
 </script>
 
 <template>
+  <SpinnerBar :is-visible="isSpinnerVisible" :is-global="true" />
   <div class="px-9 h-dynamic relative" :style="{ '--height': heightContent }">
     <CampaningListItem
       class="campaign-list-item h-dynamic absolute animate-fade-in"
@@ -56,12 +55,14 @@ function calculateActiveCurrentAds(campaign: CampaignType): number {
       :key="campaign.uid"
       v-for="campaign in userDashboardStore.parsedCampaignsList"
     >
-      <div>
+      <div v-if="campaign.isCollection">
         {{
           t(
             "components.user-dashboard.campaning-list-form.active_ad_collection",
             {
-              count: campaign.collection.length
+              count: campaign.adsets.filter(
+                (adset: AdSetsType) => adset.isActive
+              ).length
             }
           )
         }}
@@ -69,7 +70,8 @@ function calculateActiveCurrentAds(campaign: CampaignType): number {
       <div>
         {{
           t("components.user-dashboard.campaning-list-form.active_ad_sets", {
-            count: 0
+            count: campaign.adsets.filter((adset: AdSetsType) => adset.isActive)
+              .length
           })
         }}
       </div>

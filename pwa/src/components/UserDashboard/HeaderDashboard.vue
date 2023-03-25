@@ -21,11 +21,6 @@ const isSpinnerLoadingVisible = ref<boolean>(false);
 
 const optionsMenu: OptionsType[] = [
   {
-    key: MenuNames.SETTINGS,
-    icon: "cogs",
-    label: t("components.user-dashboard.header-dashboard.menu-list.settings")
-  },
-  {
     key: MenuNames.LOGOUT,
     icon: "logout",
     color: "#E24963",
