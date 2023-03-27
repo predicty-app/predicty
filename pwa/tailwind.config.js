@@ -67,6 +67,10 @@ module.exports = {
       tooltipMessage: {
         background: '#BFBFBFB2'
       },
+      zoomScale: {
+        text: "#FFFFFF",
+        background: "#404040",
+      },
       charBarPole: {
         background: {
           primary: "#89B3FF",
@@ -188,6 +192,7 @@ module.exports = {
       floatingPanel: {
         background: "#404040",
         text: "#FFFFFF",
+        close: '#da2f2f',
         button: {
           active: {
             background: "#000000",

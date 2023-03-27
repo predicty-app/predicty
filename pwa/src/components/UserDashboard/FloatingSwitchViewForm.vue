@@ -116,6 +116,15 @@ async function setResponseFiredAction(
 }
 
 /**
+ * Function to handle selected remove ads.
+ */
+function handleRemoveSelectedAds() {
+  userDashboardStore.selectedAdsList.ads = [];
+  userDashboardStore.selectedCollectionAdsList.ads = [];
+  userDashboardStore.selectedAdsList.campaignUid = null;
+}
+
+/**
  * Function to start action.
  * @param {OptionsName} optionName
  */
@@ -190,9 +199,10 @@ async function handleFiredAction(actionName: OptionsName) {
     :type="notificationMessageModel.type"
   />
   <FloatingPanel
-    class="absolute bottom-3 right-3 m-auto animate-fade-in z-20"
-    :selected-elements="userDashboardStore.selectedAdsList.ads.length"
+    class="absolute bottom-3 right-3 m-auto animate-fade-in-up z-20"
+    :selected-elements="userDashboardStore.selectedCollection ? userDashboardStore.selectedCollectionAdsList.ads.length : userDashboardStore.selectedAdsList.ads.length"
     :options="optionsButtons"
+    @on-remove="handleRemoveSelectedAds"
     @on-click="handleFiredAction"
   >
     <template #additional>

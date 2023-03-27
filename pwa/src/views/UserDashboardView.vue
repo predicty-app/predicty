@@ -73,6 +73,7 @@ function toggleCollection(value?: AdSetsType) {
 </script>
 
 <template>
+  <ZoomScale v-if="globalStore.isZoomActive"/>
   <FloatingSwitchViewForm
     v-if="
       userDashboardStore.selectedAdsList.ads.length > 0 ||

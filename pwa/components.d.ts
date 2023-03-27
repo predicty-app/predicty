@@ -49,7 +49,10 @@ declare module '@vue/runtime-core' {
     ConnectMoreServicesFileSettingsForm: typeof import('./src/components/OnBoarding/ConnectMoreServicesFileSettingsForm.vue')['default']
     ConnectMoreServicesForm: typeof import('./src/components/OnBoarding/ConnectMoreServicesForm.vue')['default']
     DividerLine: typeof import('./src/components/Common/DividerLine.vue')['default']
+    DragDropElement: typeof import('./src/components/Common/DragDropElement.vue')['default']
+    DragElement: typeof import('./src/components/Common/DragElement.vue')['default']
     DropdownMenu: typeof import('./src/components/Common/DropdownMenu.vue')['default']
+    DummyDragElement: typeof import('./src/components/Common/DummyDragElement.vue')['default']
     FloatingPanel: typeof import('./src/components/Common/FloatingPanel.vue')['default']
     FloatingSwitchViewForm: typeof import('./src/components/UserDashboard/FloatingSwitchViewForm.vue')['default']
     HeaderDashboard: typeof import('./src/components/UserDashboard/HeaderDashboard.vue')['default']
@@ -79,5 +82,6 @@ declare module '@vue/runtime-core' {
     UploadFile: typeof import('./src/components/Common/UploadFile.vue')['default']
     UserDashboardDetialsLayout: typeof import('./src/components/Layouts/UserDashboardDetialsLayout.vue')['default']
     UserDashboardLayout: typeof import('./src/components/Layouts/UserDashboardLayout.vue')['default']
+    ZoomScale: typeof import('./src/components/UserDashboard/ZoomScale.vue')['default']
   }
 }
