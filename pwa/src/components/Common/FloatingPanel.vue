@@ -29,7 +29,9 @@ const emit = defineEmits<{
   <div
     class="bg-floatingPanel-background text- rounded-lg px-3 py-2 shadow-lg flex items-center max-w-max gap-x-[10px] floating-panel transition-all"
   >
-    <div class="text-floatingPanel-text items-center gap-x-1 flex font-bold text-sm">
+    <div
+      class="text-floatingPanel-text items-center gap-x-1 flex font-bold text-sm"
+    >
       {{ selectedElements }}
       {{
         t("components.common.foating-panel.count-elements", {
@@ -37,7 +39,11 @@ const emit = defineEmits<{
         })
       }}
       <span class="block h-4 border-r w-1 mr-1"></span>
-      <IconSvg @click="emit('onRemove')" name="remove" class-name="w-6 h-6 fill-floatingPanel-close cursor-pointer"/>
+      <IconSvg
+        @click="emit('onRemove')"
+        name="remove"
+        class-name="w-6 h-6 fill-floatingPanel-close cursor-pointer"
+      />
     </div>
     <div class="flex gap-x-2">
       <SelectForm

@@ -9,7 +9,7 @@ import {
 import {
   useUserDashboardStore,
   TypeOptionsChart,
-type DailyRevenueType
+  type DailyRevenueType
 } from "@/stores/userDashboard";
 import type {
   CampaignType,
@@ -45,7 +45,9 @@ async function calcualteAll() {
   await insertInvestmentArray();
   setSpentInvestment();
 
-  const dailyRevenue = userDashboardStore.dailyRevenue.map((current: DailyRevenueType) => current.revenue.amount);
+  // const dailyRevenue = userDashboardStore.dailyRevenue.map(
+  //   (current: DailyRevenueType) => current.revenue.amount
+  // );
   if (userDashboardStore.typeChart === TypeOptionsChart.WEEKS) {
     userDashboardStore.scaleChart = Math.max(...investmentWeekNumber.value);
   } else {

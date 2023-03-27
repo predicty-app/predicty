@@ -24,19 +24,29 @@ function handleChangeScrollParams(params: ScrollType) {
 <template>
   <DummyDragElement />
   <slot name="header" />
-  <div class="select-none grid grid-cols-[336px_auto]" @mouseup="globalStore.isActiveActionDrag = false">
-    <div class="h-calc select-none grid grid-cols-[auto] grid-rows-[320px_80px_auto]">
+  <div
+    class="select-none grid grid-cols-[336px_auto]"
+    @mouseup="globalStore.isActiveActionDrag = false"
+  >
+    <div
+      class="h-calc select-none grid grid-cols-[auto] grid-rows-[320px_80px_auto]"
+    >
       <div>
         <slot name="chart-legend" />
       </div>
       <div>
         <slot name="providers-list" />
       </div>
-      <ScrollbarPanel @onMounted="globalStore.setInstanceScrollCampaignsList" :scroll-y="globalStore.scrollParams.y">
+      <ScrollbarPanel
+        @onMounted="globalStore.setInstanceScrollCampaignsList"
+        :scroll-y="globalStore.scrollParams.y"
+      >
         <slot name="ads-campaigns" />
       </ScrollbarPanel>
     </div>
-    <div class="h-calc select-none grid grid-cols-[auto] grid-rows-[50px_270px_30px_30px_auto]">
+    <div
+      class="h-calc select-none grid grid-cols-[auto] grid-rows-[50px_270px_30px_30px_auto]"
+    >
       <ScrollbarPanel :scroll-x="globalStore.scrollParams.x">
         <slot name="chart-weeks" />
       </ScrollbarPanel>
@@ -49,8 +59,11 @@ function handleChangeScrollParams(params: ScrollType) {
       <ScrollbarPanel :scroll-x="globalStore.scrollParams.x">
         <slot name="ads-weeks" />
       </ScrollbarPanel>
-      <ScrollbarPanel @onMounted="globalStore.setInstanceScrollTimeline" @onChange="handleChangeScrollParams"
-        :is-vertical-scroll-visible="true">
+      <ScrollbarPanel
+        @onMounted="globalStore.setInstanceScrollTimeline"
+        @onChange="handleChangeScrollParams"
+        :is-vertical-scroll-visible="true"
+      >
         <slot name="ads-chart" />
       </ScrollbarPanel>
     </div>

@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import { ref, nextTick, watch } from 'vue';
+import { ref, nextTick } from "vue";
 import { useGlobalStore } from "@/stores/global";
 import { useUserDashboardStore } from "@/stores/userDashboard";
-import type { AdSetsType, AdsType } from '@/stores/userDashboard';
-import { handleGetCampaigns, handleAssignAdToCollection } from "@/services/api/userDashboard";
+import type { AdSetsType, AdsType } from "@/stores/userDashboard";
+import {
+  handleGetCampaigns,
+  handleAssignAdToCollection
+} from "@/services/api/userDashboard";
 
 type PropsType = {
   isActiveDrag: boolean;
@@ -37,7 +40,7 @@ const notificationMessageModel = ref<NotificationMessageType>({
  * @param {'create-collection' | 'assign-ads-to-collection'} type
  * @param {any} response
  */
- async function setResponseFiredAction(
+async function setResponseFiredAction(
   type: "assign-ads-to-collection",
   response: any
 ) {
@@ -68,28 +71,36 @@ const notificationMessageModel = ref<NotificationMessageType>({
 
 /**
  * Function to handle active action.
- * @param {'drag' | 'drop'} action 
+ * @param {'drag' | 'drop'} action
  */
-async function toggleActiveAction(action: 'drag' | 'drop') {
-
+async function toggleActiveAction(action: "drag" | "drop") {
   switch (action) {
-    case 'drag': {
-      if (
-        !userDashboardStore.activeProviders.includes(props.element.dataProvider[0])
-        || !props.isActiveDrag
-      ) {
-        return;
-      }
+    case "drag":
+      {
+        if (
+          !userDashboardStore.activeProviders.includes(
+            props.element.dataProvider[0]
+          ) ||
+          !props.isActiveDrag
+        ) {
+          return;
+        }
 
-      globalStore.isActiveActionDrag = true;
-      userDashboardStore.toogleAssignAdsAction(null, props.element.uid);
-    } break;
-    case 'drop': {
-      if(!props.isActiveDrop || !globalStore.isActiveActionDrag || userDashboardStore.selectedAdsList.ads.length === 0) {
-        return;
+        globalStore.isActiveActionDrag = true;
+        userDashboardStore.toogleAssignAdsAction(null, props.element.uid);
       }
-      globalStore.isActiveActionDrag = false;
-      isSpinnerVisible.value = true;
+      break;
+    case "drop":
+      {
+        if (
+          !props.isActiveDrop ||
+          !globalStore.isActiveActionDrag ||
+          userDashboardStore.selectedAdsList.ads.length === 0
+        ) {
+          return;
+        }
+        globalStore.isActiveActionDrag = false;
+        isSpinnerVisible.value = true;
         const response = await handleAssignAdToCollection({
           campaignUid: userDashboardStore.selectedAdsList.campaignUid,
           collectionUid: props.element.uid,
@@ -97,7 +108,8 @@ async function toggleActiveAction(action: 'drag' | 'drop') {
         });
 
         await setResponseFiredAction("assign-ads-to-collection", response);
-    } break;
+      }
+      break;
   }
 }
 </script>
@@ -109,7 +121,10 @@ async function toggleActiveAction(action: 'drag' | 'drop') {
     :message="notificationMessageModel.message"
     :type="notificationMessageModel.type"
   />
-  <div @mousedown="toggleActiveAction('drag')" @mouseup="toggleActiveAction('drop')">
+  <div
+    @mousedown="toggleActiveAction('drag')"
+    @mouseup="toggleActiveAction('drop')"
+  >
     <slot />
   </div>
 </template>

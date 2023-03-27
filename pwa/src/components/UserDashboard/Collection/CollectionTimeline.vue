@@ -44,7 +44,7 @@ function handleScaleDown() {
  * @param {WheelEvent} eventWheel
  */
 function handleChangeScale(eventWheel: WheelEvent) {
-  if(!globalStore.isZoomActive) {
+  if (!globalStore.isZoomActive) {
     return;
   }
 
@@ -60,11 +60,11 @@ function handleChangeScale(eventWheel: WheelEvent) {
 /**
  * Set active zoom state.
  */
- function handleActiveZoomState(e: KeyboardEvent) {
-  if(e.key !== 'Shift') {
+function handleActiveZoomState(e: KeyboardEvent) {
+  if (e.key !== "Shift") {
     return;
   }
-  if(!globalStore.isZoomActive) {
+  if (!globalStore.isZoomActive) {
     globalStore.isZoomActive = true;
   }
 }
@@ -73,10 +73,10 @@ function handleChangeScale(eventWheel: WheelEvent) {
  * Set deactive zoom state.
  */
 function handleDeActiveZoomState(e: KeyboardEvent) {
-  if(e.key !== 'Shift') {
+  if (e.key !== "Shift") {
     return;
   }
-  if(globalStore.isZoomActive) {
+  if (globalStore.isZoomActive) {
     globalStore.isZoomActive = false;
   }
 }

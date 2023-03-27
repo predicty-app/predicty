@@ -200,7 +200,11 @@ async function handleFiredAction(actionName: OptionsName) {
   />
   <FloatingPanel
     class="absolute bottom-3 right-3 m-auto animate-fade-in-up z-20"
-    :selected-elements="userDashboardStore.selectedCollection ? userDashboardStore.selectedCollectionAdsList.ads.length : userDashboardStore.selectedAdsList.ads.length"
+    :selected-elements="
+      userDashboardStore.selectedCollection
+        ? userDashboardStore.selectedCollectionAdsList.ads.length
+        : userDashboardStore.selectedAdsList.ads.length
+    "
     :options="optionsButtons"
     @on-remove="handleRemoveSelectedAds"
     @on-click="handleFiredAction"
