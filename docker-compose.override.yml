@@ -10,7 +10,7 @@ services:
       - ./api/docker/php/conf.d/app.dev.ini:/usr/local/etc/php/conf.d/app.dev.ini:ro
       # If you develop on Mac or Windows you can remove the vendor/ directory
       #  from the bind-mount for better performance by enabling the next line:
-      - /app/vendor
+      # - /app/vendor
     environment:
       XDEBUG_MODE: "${XDEBUG_MODE:-off}"
       MAILER_DSN: ${MAILER_DSN:-smtp://mailhog:1025}

@@ -8,8 +8,9 @@ use App\Factory\AdFactory;
 use App\Factory\AdSetFactory;
 use App\Factory\AdStatsFactory;
 use App\Factory\CampaignFactory;
+use App\Service\Util\DateHelper;
+use App\Service\Util\MoneyHelper;
 use Brick\Money\Currency;
-use Closure;
 use Doctrine\ORM\EntityManagerInterface;
 use League\Csv\Reader;
 use League\Csv\Statement;
@@ -45,7 +46,7 @@ class FacebookCsvImporter
     ) {
     }
 
-    public function import(int $userId, mixed $stream, ?Closure $callback = null): void
+    public function import(int $userId, mixed $stream): void
     {
         $csv = Reader::createFromStream($stream);
         $csv->setHeaderOffset(0);
@@ -85,10 +86,6 @@ class FacebookCsvImporter
                     amountSpent: MoneyHelper::amount((float) $record[self::HEADER_AMOUNT_SPENT_PLN], $currency)
                 );
             };
-
-            if ($callback !== null) {
-                $callback($record);
-            }
 
             $this->flush();
         }

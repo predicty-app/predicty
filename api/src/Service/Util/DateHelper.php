@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Facebook\CsvImporter;
+namespace App\Service\Util;
 
 use DateTimeImmutable;
 use RuntimeException;

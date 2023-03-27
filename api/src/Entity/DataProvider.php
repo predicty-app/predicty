@@ -40,6 +40,9 @@ enum DataProvider: string
             self::GOOGLE_ANALYTICS => [
                 FileImportType::GOOGLE_ANALYTICS_REVENUE,
             ],
+            self::OTHER => [
+                FileImportType::OTHER_SIMPLIFIED_CSV,
+            ],
             default => []
         };
     }
