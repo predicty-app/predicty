@@ -11,6 +11,7 @@ use Doctrine\Persistence\ObjectManager;
 class UserFixtures extends Fixture
 {
     public const JOHN = 'john.doe@example.com';
+    public const JANE = 'jane.doe@example.com';
 
     public function __construct(private UserFactory $userFactory)
     {
@@ -18,11 +19,14 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $user = $this->userFactory->create('john.doe@example.com', '123456');
+        $user1 = $this->userFactory->create(self::JOHN, '123456');
+        $user2 = $this->userFactory->create(self::JANE, '123456');
 
-        $manager->persist($user);
+        $manager->persist($user1);
+        $manager->persist($user2);
         $manager->flush();
 
-        $this->addReference(self::JOHN, $user);
+        $this->addReference(self::JOHN, $user1);
+        $this->addReference(self::JANE, $user2);
     }
 }

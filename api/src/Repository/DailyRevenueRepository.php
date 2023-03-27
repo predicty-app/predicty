@@ -47,6 +47,14 @@ class DailyRevenueRepository
         return $this->repository->findBy([], ['date' => 'DESC']);
     }
 
+    /**
+     * @return array<DailyRevenue>
+     */
+    public function findAllByUserId(int $userId): array
+    {
+        return $this->repository->findBy(['userId' => $userId], ['date' => 'DESC']);
+    }
+
     public function save(DailyRevenue $revenue): void
     {
         $this->em->persist($revenue);
