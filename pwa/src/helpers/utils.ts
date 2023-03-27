@@ -17,7 +17,8 @@ type NextDayDictionary = {
  */
 export function hCheckIsCollectionExist(list: CampaignType[]): CampaignType[] {
   if (list[0].isCollection && list[0].adsets.length === 0) {
-    return list.filter((_, index) => index > 0);
+    list.shift();
+    return list;
   } else {
     return list;
   }

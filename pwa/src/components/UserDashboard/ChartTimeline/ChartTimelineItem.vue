@@ -52,8 +52,11 @@ const currentColor = computed<string>(() =>
 );
 
 onMounted(() => {
-  boundingBoxElement.value = timelineItemInstance.value.getBoundingClientRect();
-  handleVisibleElement();
+  if (timelineItemInstance.value) {
+    boundingBoxElement.value =
+      timelineItemInstance.value.getBoundingClientRect();
+    handleVisibleElement();
+  }
 });
 
 watch(
@@ -125,7 +128,7 @@ function handleSelectCollection() {
 <template>
   <div
     ref="timelineItemInstance"
-    v-if="isElementVisible"
+    v-if="isElementVisible && element.dataProvider"
     :class="[
       `col-start-dynamic col-end-dynamic p-[1.5px] rounded-[6px] h-fit my-auto transition-all`,
       {
@@ -149,48 +152,53 @@ function handleSelectCollection() {
       '--color': currentColor
     }"
   >
-    <div
-      :class="[
-        'p-2 text-xs overflow-hidden rounded-[5px] shadow-sm text-text-white font-semibold bg-timeline-item-background',
-        {
-          'shadow-lg shadow-timeline-shadow': isSelectedElement
-        }
-      ]"
-      @click="handleToogleSelectAd"
-      :style="{ '--color': currentColor }"
+    <TooltipMessage
+      :message="element.name"
+      :is-active="parseEnd - parseStart < 5"
     >
-      <div class="pr-4 flex gap-x-1 items-center">
-        <CheckboxForm
-          v-if="type === 'ad'"
-          :color="currentColor"
-          :is-checked="isSelectedElement"
-        />
-        <svg
-          v-if="type === 'collection'"
-          class="min-w-[16px] w-[16px]"
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <rect x="1" y="1" width="7" height="3" rx="1" fill="white" />
-          <rect y="11" width="12" height="3" rx="1" fill="white" />
-          <rect x="3" y="6" width="12" height="3" rx="1" fill="white" />
-        </svg>
-        <div
-          v-if="type === 'collection'"
-          class="rounded font-semibold text-xs min-w-[14px] w-[14px] py-[1px] bg-timeline-collection-count flex items-center justify-center"
-        >
-          {{ (element as AdSetsType).ads.length }}
+      <div
+        :class="[
+          'p-2 text-xs overflow-hidden rounded-[5px] shadow-sm text-text-white font-semibold bg-timeline-item-background',
+          {
+            'shadow-lg shadow-timeline-shadow': isSelectedElement
+          }
+        ]"
+        @click="handleToogleSelectAd"
+        :style="{ '--color': currentColor }"
+      >
+        <div class="pr-4 flex gap-x-1 items-center">
+          <CheckboxForm
+            v-if="type === 'ad'"
+            :color="currentColor"
+            :is-checked="isSelectedElement"
+          />
+          <svg
+            v-if="type === 'collection'"
+            class="min-w-[16px] w-[16px]"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect x="1" y="1" width="7" height="3" rx="1" fill="white" />
+            <rect y="11" width="12" height="3" rx="1" fill="white" />
+            <rect x="3" y="6" width="12" height="3" rx="1" fill="white" />
+          </svg>
+          <div
+            v-if="type === 'collection'"
+            class="rounded font-semibold text-xs min-w-[14px] w-[14px] py-[1px] bg-timeline-collection-count flex items-center justify-center"
+          >
+            {{ (element as AdSetsType).ads.length }}
+          </div>
+          <span v-if="parseEnd - parseStart < 5">
+            {{ element.name.slice(0, 2) }}...
+          </span>
+          <span v-else>
+            {{ element.name }}
+          </span>
         </div>
-        <span v-if="parseEnd - parseStart < 5">
-          {{ element.name.slice(0, 2) }}...
-        </span>
-        <span v-else>
-          {{ element.name }}
-        </span>
       </div>
-    </div>
+    </TooltipMessage>
   </div>
 </template>

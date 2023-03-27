@@ -64,6 +64,9 @@ module.exports = {
         info: "#1881c7",
         text: "#FFFFFF",
       },
+      tooltipMessage: {
+        background: '#BFBFBFB2'
+      },
       charBarPole: {
         background: {
           primary: "#89B3FF",

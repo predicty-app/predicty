@@ -101,6 +101,7 @@
       "header-dashboard": {
         "menu-list": {
           "settings": "Settings",
+          "files": "Add another file",
           "logout": "Logout"
         },
         "logout-modal": {

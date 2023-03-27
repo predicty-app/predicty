@@ -21,6 +21,12 @@ const isSpinnerLoadingVisible = ref<boolean>(false);
 
 const optionsMenu: OptionsType[] = [
   {
+    key: MenuNames.FILES,
+    icon: "files",
+    color: "#4E5B72",
+    label: t("components.user-dashboard.header-dashboard.menu-list.files")
+  },
+  {
     key: MenuNames.LOGOUT,
     icon: "logout",
     color: "#E24963",
@@ -34,9 +40,14 @@ const optionsMenu: OptionsType[] = [
  */
 function handleFiredAction(menuName: MenuNames) {
   switch (menuName) {
-    case "logout":
+    case MenuNames.LOGOUT:
       {
         isModalWindowVisible.value = true;
+      }
+      break;
+    case MenuNames.FILES:
+      {
+        router.push("/onboarding/more-media-integration");
       }
       break;
   }
