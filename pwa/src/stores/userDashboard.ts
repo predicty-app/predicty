@@ -16,6 +16,7 @@ export enum TypeOptionsChart {
 
 export enum MenuNames {
   "SETTINGS" = "settings",
+  "FILES" = "files",
   "LOGOUT" = "logout"
 }
 
@@ -230,7 +231,7 @@ export const useUserDashboardStore = defineStore({
 
           campaign.adsets.forEach((adset: AdSetsType) => {
             currentHeightElement += campaign.isCollection
-              ? 51
+              ? 110
               : adset.ads.length * 36 + adset.ads.length * 5 + 10;
           });
 
@@ -238,7 +239,7 @@ export const useUserDashboardStore = defineStore({
           for (let i = 0; i < index; i++) {
             this.campaigns[i].adsets.forEach((adset: AdSetsType) => {
               previousHeightElement += this.campaigns[i].isCollection
-                ? 51
+                ? 110
                 : adset.ads.length * 36 + adset.ads.length * 5 + 12;
             });
           }

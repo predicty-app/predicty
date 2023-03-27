@@ -61,20 +61,18 @@ class CollectionService {
       dataProvider: provider
     } as CampaignType);
 
-    campaigns = campaigns.map((campaign: CampaignType) => {
-      campaign.adsets = campaign.adsets
-        .filter((adset: AdSetsType) => adset.ads.length > 0)
-        .map((adset: AdSetsType) => {
-          const { first, last } = hFirstAndLastAdsetDate(adset.ads);
-          adset.start = first;
-          adset.end = last;
+    campaigns[0].adsets = campaigns[0].adsets.map((adset: AdSetsType) => {
+      const { first, last } = hFirstAndLastAdsetDate(adset.ads);
+      adset.start = first;
+      adset.end = last;
 
-          adset.isActive = this.#checkIsActiveElement(first, last);
-          return adset;
-        });
-
-      return campaign;
+      adset.isActive = this.#checkIsActiveElement(first, last);
+      return adset;
     });
+
+    campaigns = campaigns.filter(
+      (campaigns: CampaignType) => campaigns.adsets.length > 0
+    );
     return campaigns;
   }
 
@@ -91,6 +89,13 @@ class CollectionService {
     color: string
   ): AdSetsType[] {
     return collections
+      .map((collection: CollectionNonParsedType) => {
+        collection.ads = collection.ads.filter(
+          (ad: AdNonParsedType) => ad.adStats.length > 0
+        );
+
+        return collection;
+      })
       .filter(
         (collection: CollectionNonParsedType) => collection.ads.length > 0
       )

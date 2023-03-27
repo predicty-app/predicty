@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, computed } from "vue";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useGlobalStore } from "@/stores/global";
 import type { AdsType } from "@/stores/userDashboard";
@@ -48,11 +48,6 @@ const amountScale = computed<string[]>(() => [
   `$${(userDashboardStore.scaleChart / 3).toFixed(2)}`
 ]);
 
-let state = reactive({
-  isCollectionSelected: false,
-  currentCollection: null
-});
-
 /**
  * Function to check is ad in collection.
  * @param {AdsCollection[]} collections
@@ -60,9 +55,10 @@ let state = reactive({
  * @return {boolean}
  */
 function checkIsAdInCollection(adUid: string): boolean {
-  return userDashboardStore.campaigns[0].adsets.find((adsSet: AdSetsType) =>
-    adsSet.ads.find((ad: AdsType) => ad.uid === adUid)
-  )
+  return userDashboardStore.campaigns[0].isCollection &&
+    userDashboardStore.campaigns[0].adsets.find((adsSet: AdSetsType) =>
+      adsSet.ads.find((ad: AdsType) => ad.uid === adUid)
+    )
     ? false
     : true;
 }
@@ -72,9 +68,6 @@ function checkIsAdInCollection(adUid: string): boolean {
  * @param {AdsType | AdSetsType} value
  */
 function toggleCollection(value?: AdSetsType) {
-  state.isCollectionSelected = value ? true : false;
-  state.currentCollection = value ? value : null;
-
   userDashboardStore.selectedCollection = value ? value : null;
 }
 </script>
@@ -122,7 +115,7 @@ function toggleCollection(value?: AdSetsType) {
           :key="campaign.uid"
           v-for="campaign in userDashboardStore.parsedCampaignsList"
         >
-          <template v-if="campaign.isCollection">
+          <template v-if="campaign.isCollection && campaign.adsets.length > 0">
             <ChartTimelineItem
               :element="adset"
               type="collection"
@@ -159,7 +152,7 @@ function toggleCollection(value?: AdSetsType) {
     </template>
   </UserDashboardLayout>
   <CollectionBottomBar
-    :collection="state.currentCollection"
+    :collection="userDashboardStore.selectedCollection"
     @handleCloseDetials="toggleCollection()"
   />
 </template>

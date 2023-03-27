@@ -75,6 +75,7 @@ declare module "@vue/runtime-core" {
     TimelineContent: typeof import("./src/components/UserDashboard/ChartTimeline/TimelineContent.vue")["default"];
     TimelineItem: typeof import("./src/components/UserDashboard/ChartTimeline/TimelineItem.vue")["default"];
     TimelineWrapper: typeof import("./src/components/UserDashboard/ChartTimeline/TimelineWrapper.vue")["default"];
+    TooltipMessage: typeof import("./src/components/Common/TooltipMessage.vue")["default"];
     UploadFile: typeof import("./src/components/Common/UploadFile.vue")["default"];
     UserDashboardDetialsLayout: typeof import("./src/components/Layouts/UserDashboardDetialsLayout.vue")["default"];
     UserDashboardLayout: typeof import("./src/components/Layouts/UserDashboardLayout.vue")["default"];

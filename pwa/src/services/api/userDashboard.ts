@@ -107,6 +107,7 @@ async function handleGetCampaigns() {
     let campaigns = CampaignsService.parseCampaignsList(
       response.data.dashboard.campaigns
     );
+
     campaigns = CollectionService.parseCollectionList(
       response.data.dashboard.collections,
       campaigns
@@ -116,7 +117,6 @@ async function handleGetCampaigns() {
       ? null
       : { campaigns, dailyRevenue: response.data.dashboard.dailyRevenue };
   } catch (error) {
-    console.log(error);
     return null;
   }
 }

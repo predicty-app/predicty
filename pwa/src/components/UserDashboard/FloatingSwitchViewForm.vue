@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { computed, ref, nextTick } from "vue";
-import { handleGetCampaigns } from "@/services/api/userDashboard";
 import type { AdSetsType } from "@/stores/userDashboard";
+import { handleGetCampaigns } from "@/services/api/userDashboard";
 import { useUserDashboardStore, OptionsName } from "@/stores/userDashboard";
 import {
   handleCreateCollection,
@@ -54,6 +54,7 @@ const optionsButtons = computed<OptionsType[]>(() => {
   ].filter(Boolean);
 
   if (
+    userDashboardStore.campaigns[0].isCollection &&
     userDashboardStore.campaigns[0].adsets.length > 0 &&
     !userDashboardStore.selectedCollection
   ) {
@@ -104,14 +105,6 @@ async function setResponseFiredAction(
     nextTick(() => {
       userDashboardStore.handleVirtualizeCampaignsList();
       isSpinnerVisible.value = false;
-
-      if (userDashboardStore.selectedCollection) {
-        userDashboardStore.selectedCollection =
-          userDashboardStore.campaigns[0].adsets.find(
-            (adset: AdSetsType) =>
-              adset.uid === userDashboardStore.selectedCollection.uid
-          );
-      }
     });
   }
 
@@ -161,6 +154,17 @@ async function handleFiredAction(actionName: OptionsName) {
         });
 
         await setResponseFiredAction("unassign-ads-from-collection", response);
+        const collection = userDashboardStore.campaigns[0].adsets.find(
+          (adsets: AdSetsType) =>
+            adsets.uid === userDashboardStore.selectedCollection.uid
+        );
+        if (collection) {
+          userDashboardStore.selectedCollection = JSON.parse(
+            JSON.stringify(collection)
+          );
+        } else {
+          userDashboardStore.selectedCollection = null;
+        }
       }
       break;
     case OptionsName.HIDE_ELEMENT:
