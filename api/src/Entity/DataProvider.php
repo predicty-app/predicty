@@ -37,6 +37,9 @@ enum DataProvider: string
             self::FACEBOOK_ADS => [
                 FileImportType::FACEBOOK_CSV,
             ],
+            self::GOOGLE_ANALYTICS => [
+                FileImportType::GOOGLE_ANALYTICS_REVENUE,
+            ],
             default => []
         };
     }
