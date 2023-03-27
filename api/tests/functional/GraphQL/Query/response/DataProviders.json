@@ -16,7 +16,9 @@
       {
         "id": "GOOGLE_ANALYTICS",
         "name": "Google Analytics",
-        "fileImportTypes": []
+        "fileImportTypes": [
+          "GOOGLE_ANALYTICS_REVENUE"
+        ]
       },
       {
         "id": "TIK_TOK",
