@@ -22,7 +22,6 @@ function handleChangeScrollParams(params: ScrollType) {
 </script>
 
 <template>
-  <DummyDragElement />
   <slot name="header" />
   <div
     class="select-none grid grid-cols-[336px_auto]"

@@ -218,16 +218,21 @@ class CollectionService {
     let providers = [];
     collections.forEach((collection: CollectionNonParsedType) => {
       collection.ads.forEach((ad: AdNonParsedType) => {
+        const currentCampaign = campaigns.find(
+          (campaign: CampaignType) => campaign.uid === ad.campaignId
+        )
+
+        let dataProviders = currentCampaign? currentCampaign.dataProvider : [];
         providers = [
           ...new Set([
             ...providers,
-            ...campaigns.find(
-              (campaign: CampaignType) => campaign.uid === ad.campaignId
-            ).dataProvider
+            ...dataProviders
           ])
         ];
       });
     });
+
+    console.log(providers)
 
     return providers;
   }
