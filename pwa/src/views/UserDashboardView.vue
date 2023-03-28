@@ -47,8 +47,6 @@ const chartTypeOptions: TypesOptionsChart[] = [
 const globalStore = useGlobalStore();
 const userDashboardStore = useUserDashboardStore();
 
-console.log(userDashboardStore.scaleChart);
-
 const amountScale = computed<string[]>(() => [
   `$${
     userDashboardStore.scaleChart.toString() === "-Infinity"
