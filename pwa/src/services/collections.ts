@@ -196,16 +196,9 @@ class CollectionService {
         (campaign: CampaignType) => campaign.uid === ad.campaignId
       );
 
-      const dataProviders = currentCampaign
-        ? currentCampaign.dataProvider
-        : [];
+      const dataProviders = currentCampaign ? currentCampaign.dataProvider : [];
 
-      providers = [
-        ...new Set([
-          ...providers,
-          ...dataProviders
-        ])
-      ];
+      providers = [...new Set([...providers, ...dataProviders])];
     });
 
     return providers;
