@@ -247,7 +247,6 @@ function setSpentInvestment() {
 
 <template>
   <div
-    v-if="isElementVisible"
     ref="barChartPoleContentInstance"
     :class="[
       'bar-chart-pole-content w-full',

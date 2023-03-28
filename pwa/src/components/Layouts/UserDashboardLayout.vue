@@ -22,8 +22,12 @@ function handleChangeScrollParams(params: ScrollType) {
 </script>
 
 <template>
+  <DummyDragElement />
   <slot name="header" />
-  <div class="select-none grid grid-cols-[336px_auto]">
+  <div
+    class="select-none grid grid-cols-[336px_auto]"
+    @mouseup="globalStore.isActiveActionDrag = false"
+  >
     <div
       class="h-calc select-none grid grid-cols-[auto] grid-rows-[320px_80px_auto]"
     >

@@ -77,6 +77,9 @@
       }
     },
     "user-dashboard": {
+      "zoom-scale": {
+        "title": "current zoom: "
+      },
       "floating-switch-view-form": {
         "create-new-collection": "Create New Collection",
         "add-to-collection": "Add to Collection",
@@ -101,6 +104,7 @@
       "header-dashboard": {
         "menu-list": {
           "settings": "Settings",
+          "files": "Add another file",
           "logout": "Logout"
         },
         "logout-modal": {

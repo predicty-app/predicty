@@ -25,20 +25,17 @@ class CampaignRepository
         return $this->repository->find($id);
     }
 
-    public function findByUserIdAndName(int $userId, string $name): ?Campaign
+    /**
+     * @return array<Campaign>
+     */
+    public function findAllByUserId(int $userId): array
     {
-        return $this->repository->findOneBy(['userId' => $userId, 'name' => $name]);
+        return $this->repository->findBy(['userId' => $userId]);
     }
 
     public function findByUserIdAndExternalId(int $userId, string $externalId): ?Campaign
     {
         return $this->repository->findOneBy(['userId' => $userId, 'externalId' => $externalId]);
-    }
-
-    public function save(Campaign $campaign): void
-    {
-        $this->em->persist($campaign);
-        $this->em->flush();
     }
 
     /**
@@ -47,5 +44,11 @@ class CampaignRepository
     public function findAll(int $limit = 10): array
     {
         return $this->repository->findBy([], null, $limit);
+    }
+
+    public function save(Campaign $campaign): void
+    {
+        $this->em->persist($campaign);
+        $this->em->flush();
     }
 }

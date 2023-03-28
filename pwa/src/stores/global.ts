@@ -7,10 +7,12 @@ type ScrollType = {
 
 type StateType = {
   currentScale: number;
+  isZoomActive: boolean;
   numberFirstWeek: number;
   scrollParams: ScrollType;
   isSpinnerVisible: boolean;
   currentsCountWeeks: number;
+  isActiveActionDrag: boolean;
   wrapperPole: HTMLDivElement | null;
   dictionaryFirstDaysWeek: string[];
   scrollTimeline: HTMLDivElement | null;
@@ -26,10 +28,12 @@ export const useGlobalStore = defineStore({
   id: "global",
   state: () =>
     ({
+      isZoomActive: false,
       isSpinnerVisible: false,
       currentScale: 100,
       numberFirstWeek: 0,
       wrapperPole: null,
+      isActiveActionDrag: false,
       scrollTimeline: null,
       scrollCampaignList: null,
       dictionaryTimeline: {},

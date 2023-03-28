@@ -8,6 +8,7 @@ use App\GraphQL\TypeRegistry;
 use App\Repository\AdCollectionRepository;
 use App\Repository\CampaignRepository;
 use App\Repository\DailyRevenueRepository;
+use App\Service\User\CurrentUserService;
 use GraphQL\Type\Definition\ObjectType;
 
 class DashboardType extends ObjectType
@@ -16,7 +17,8 @@ class DashboardType extends ObjectType
         TypeRegistry $type,
         CampaignRepository $campaignRepository,
         AdCollectionRepository $adCollectionRepository,
-        DailyRevenueRepository $dailyRevenueRepository
+        DailyRevenueRepository $dailyRevenueRepository,
+        private CurrentUserService $currentUserService
     ) {
         parent::__construct([
             'name' => 'Dashboard',
@@ -27,27 +29,11 @@ class DashboardType extends ObjectType
                 ],
                 'dailyRevenue' => [
                     'type' => $type->listOf($type->dailyRevenue()),
-                    'resolve' => fn () => $dailyRevenueRepository->findAll(),
+                    'resolve' => fn () => $dailyRevenueRepository->findAllByUserId($this->currentUserService->getId()),
                 ],
                 'campaigns' => [
                     'type' => $type->listOf($type->campaign()),
-                    'args' => [
-                        'limit' => [
-                            'type' => $type->int(),
-                            'defaultValue' => 10,
-                        ],
-                        'id' => [
-                            'type' => $type->id(),
-                            'defaultValue' => '',
-                        ],
-                    ],
-                    'resolve' => function (mixed $dashboard, array $args) use ($campaignRepository) {
-                        if ($args['id'] !== '') {
-                            return [$campaignRepository->findById((int) $args['id'])];
-                        }
-
-                        return $campaignRepository->findAll((int) $args['limit']);
-                    },
+                    'resolve' => fn () => $campaignRepository->findAllByUserId($this->currentUserService->getId()),
                 ],
                 'collections' => [
                     'type' => $type->listOf($type->adCollection()),
@@ -57,7 +43,7 @@ class DashboardType extends ObjectType
                             'defaultValue' => 10,
                         ],
                     ],
-                    'resolve' => fn () => $adCollectionRepository->findAll(),
+                    'resolve' => fn () => $adCollectionRepository->findAllByUserId($this->currentUserService->getId()),
                 ],
             ],
         ]);

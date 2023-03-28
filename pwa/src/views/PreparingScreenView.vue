@@ -2,8 +2,8 @@
 import { onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import { handleUploadFile } from "@/services/api/onboarding";
 import { useOnBoardingStore } from "@/stores/onboarding";
+import { handleUploadFile } from "@/services/api/onboarding";
 
 const { t } = useI18n();
 const router = useRouter();

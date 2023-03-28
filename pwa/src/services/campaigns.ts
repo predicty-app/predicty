@@ -88,6 +88,14 @@ class CampaignsService {
   #setAdSetsList(campaign: CampaignNonParsedType): AdSetsType[] {
     return campaign.adSets
       .filter((adset: AdSetsNonParsedType) => adset.startedAt)
+      .map((adset: AdSetsNonParsedType) => {
+        adset.ads = adset.ads.filter(
+          (ad: AdsNonParsedType) => ad.adStats.length > 0
+        );
+
+        return adset;
+      })
+      .filter((adset: AdSetsNonParsedType) => adset.ads.length > 0)
       .map(
         (adset: AdSetsNonParsedType) =>
           ({
@@ -112,7 +120,7 @@ class CampaignsService {
     campaign: CampaignNonParsedType
   ): AdsType[] {
     return ads
-      .filter((ad: AdsNonParsedType) => ad.adStats.length > 1)
+      .filter((ad: AdsNonParsedType) => ad.adStats.length >= 1)
       .map(
         (ad: AdsNonParsedType) =>
           ({

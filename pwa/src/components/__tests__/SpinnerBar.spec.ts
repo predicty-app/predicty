@@ -66,6 +66,6 @@ describe("Tests for SpinnerBar component", () => {
       isGlobal: true
     });
 
-    expect(spinner.classes()).contains("absolute");
+    expect(spinner.classes()).contains("fixed");
   });
 });

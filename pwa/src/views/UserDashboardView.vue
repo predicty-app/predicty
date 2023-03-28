@@ -46,16 +46,26 @@ const chartTypeOptions: TypesOptionsChart[] = [
 
 const globalStore = useGlobalStore();
 const userDashboardStore = useUserDashboardStore();
-const amountScale = computed<string[]>(() => [
-  `$${userDashboardStore.scaleChart.toFixed(2)}`,
-  `$${(userDashboardStore.scaleChart / 2).toFixed(2)}`,
-  `$${(userDashboardStore.scaleChart / 3).toFixed(2)}`
-]);
 
-let state = reactive({
-  isCollectionSelected: false,
-  currentCollection: null
-});
+console.log(userDashboardStore.scaleChart);
+
+const amountScale = computed<string[]>(() => [
+  `$${
+    userDashboardStore.scaleChart.toString() === "-Infinity"
+      ? 0
+      : userDashboardStore.scaleChart.toFixed(2)
+  }`,
+  `$${
+    userDashboardStore.scaleChart.toString() === "-Infinity"
+      ? 0
+      : (userDashboardStore.scaleChart / 2).toFixed(2)
+  }`,
+  `$${
+    userDashboardStore.scaleChart.toString() === "-Infinity"
+      ? 0
+      : (userDashboardStore.scaleChart / 3).toFixed(2)
+  }`
+]);
 
 const isSpinnerVisible = ref<boolean>(false);
 const isDropped = ref<boolean>(true);
@@ -67,9 +77,10 @@ const isDropped = ref<boolean>(true);
  * @return {boolean}
  */
 function checkIsAdInCollection(adUid: string): boolean {
-  return userDashboardStore.campaigns[0].adsets.find((adsSet: AdSetsType) =>
-    adsSet.ads.find((ad: AdsType) => ad.uid === adUid)
-  )
+  return userDashboardStore.campaigns[0].isCollection &&
+    userDashboardStore.campaigns[0].adsets.find((adsSet: AdSetsType) =>
+      adsSet.ads.find((ad: AdsType) => ad.uid === adUid)
+    )
     ? false
     : true;
 }
@@ -79,9 +90,6 @@ function checkIsAdInCollection(adUid: string): boolean {
  * @param {AdsType | AdSetsType} value
  */
 function toggleCollection(value?: AdSetsType) {
-  state.isCollectionSelected = value ? true : false;
-  state.currentCollection = value ? value : null;
-
   userDashboardStore.selectedCollection = value ? value : null;
 }
 
@@ -128,6 +136,7 @@ async function setResponseFiredAction() {
 </script>
 
 <template>
+  <ZoomScale v-if="globalStore.isZoomActive" />
   <FloatingSwitchViewForm
     v-if="
       (userDashboardStore.selectedAdsList.ads.length > 0 ||
@@ -173,7 +182,7 @@ async function setResponseFiredAction() {
           :key="campaign.uid"
           v-for="campaign in userDashboardStore.parsedCampaignsList"
         >
-          <template v-if="campaign.isCollection">
+          <template v-if="campaign.isCollection && campaign.adsets.length > 0">
             <ChartTimelineItem
               :element="adset"
               type="collection"
@@ -216,7 +225,7 @@ async function setResponseFiredAction() {
     </template>
   </UserDashboardLayout>
   <CollectionBottomBar
-    :collection="state.currentCollection"
+    :collection="userDashboardStore.selectedCollection"
     @handleCloseDetials="toggleCollection()"
   />
 </template>

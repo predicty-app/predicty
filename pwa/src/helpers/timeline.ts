@@ -103,7 +103,7 @@ export function calculateItemHeight(
 
   campaign.adsets.forEach((adset: AdSetsType) => {
     height += campaign.isCollection
-      ? 41
+      ? 100
       : adset.ads.length * 36 + adset.ads.length * 5 + modifierHeight;
   });
 
@@ -148,7 +148,6 @@ export function calculateItemPosition(
 ): number {
   let previousHeightElement = 0;
   const campaigns = hCheckIsCollectionExist(userDashboardStore.campaigns);
-
   const index = campaigns.findIndex(
     (item: CampaignType) => item.uid === campaign.uid
   );
@@ -156,7 +155,7 @@ export function calculateItemPosition(
   for (let i = 0; i < index; i++) {
     campaigns[i].adsets.forEach((adset: AdSetsType) => {
       previousHeightElement += campaigns[i].isCollection
-        ? 41 + 4
+        ? 110 + 4
         : adset.ads.length * 36 + adset.ads.length * 5 + modifierHeight;
     });
   }
@@ -165,7 +164,7 @@ export function calculateItemPosition(
 }
 
 /**
- * Function to change dynamical
+ * Function to change dynamical type of chart.
  */
 export function changeDynamicalTypeChart() {
   if (globalStore.currentScale <= 80) {
@@ -177,9 +176,13 @@ export function changeDynamicalTypeChart() {
   }
 }
 
+/**
+ * Function to get scale for bars.
+ * @returns {number}
+ */
 export function getScale(): number {
   return (
-    globalStore.wrapperPole.getBoundingClientRect().height /
-    userDashboardStore.scaleChart
+    (globalStore.wrapperPole.parentNode as HTMLElement).getBoundingClientRect()
+      .height / userDashboardStore.scaleChart
   );
 }

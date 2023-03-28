@@ -8,7 +8,8 @@ import {
 } from "@/helpers/timeline";
 import {
   useUserDashboardStore,
-  TypeOptionsChart
+  TypeOptionsChart,
+  type DailyRevenueType
 } from "@/stores/userDashboard";
 import type {
   CampaignType,
@@ -21,35 +22,11 @@ const globalStore = useGlobalStore();
 const investmentWeekNumber = ref<number[]>([]);
 const userDashboardStore = useUserDashboardStore();
 const investmentNumber = ref<number[]>([]);
+const instanceLines = ref<SVGElement | null>(null);
 
 onMounted(async () => {
   await calcualteAll();
 });
-
-async function insertInvestmentArray() {
-  investmentNumber.value = [];
-  return new Promise((resolve) => {
-    for (let i = 0; i < globalStore.dictionaryFirstDaysWeek.length * 7; i++) {
-      investmentNumber.value.push(0);
-    }
-
-    for (let i = 0; i < globalStore.dictionaryFirstDaysWeek.length; i++) {
-      investmentWeekNumber.value.push(0);
-    }
-    resolve(true);
-  });
-}
-
-async function calcualteAll() {
-  await insertInvestmentArray();
-  setSpentInvestment();
-
-  if (userDashboardStore.typeChart === TypeOptionsChart.WEEKS) {
-    userDashboardStore.scaleChart = Math.max(...investmentWeekNumber.value);
-  } else {
-    userDashboardStore.scaleChart = Math.max(...investmentNumber.value);
-  }
-}
 
 watch(
   () => userDashboardStore.activeProviders.length,
@@ -71,6 +48,58 @@ watch(
     await calcualteAll();
   }
 );
+
+/**
+ * Functon to fill array of investments.
+ */
+async function insertInvestmentArray() {
+  investmentNumber.value = [];
+  return new Promise((resolve) => {
+    for (let i = 0; i < globalStore.dictionaryFirstDaysWeek.length * 7; i++) {
+      investmentNumber.value.push(0);
+    }
+
+    for (let i = 0; i < globalStore.dictionaryFirstDaysWeek.length; i++) {
+      investmentWeekNumber.value.push(0);
+    }
+    resolve(true);
+  });
+}
+
+/**
+ * Function calculate height of bars.
+ */
+async function calcualteAll() {
+  await insertInvestmentArray();
+  setSpentInvestment();
+
+  const dailyRevenue = userDashboardStore.dailyRevenue.map(
+    (current: DailyRevenueType) => current.revenue.amount
+  );
+
+  const divider =
+    userDashboardStore.typeChart === TypeOptionsChart.WEEKS ? 4 : 3;
+  const modifier =
+    userDashboardStore.typeChart === TypeOptionsChart.WEEKS
+      ? Math.max(...dailyRevenue) * divider
+      : Math.max(...dailyRevenue) / divider;
+
+  userDashboardStore.scaleChart = Math.max(...dailyRevenue) + modifier;
+  setHeightLinesSvgElement();
+}
+
+/**
+ * Function calculate height lines svg.
+ */
+function setHeightLinesSvgElement() {
+  if (instanceLines.value) {
+    instanceLines.value.style.height = `${
+      (
+        globalStore.wrapperPole.parentNode as HTMLElement
+      ).getBoundingClientRect().height
+    }px`;
+  }
+}
 
 /**
  * Function to parse day week.
@@ -161,8 +190,9 @@ function calculateLinePosition(index: number): number {
   <template v-if="userDashboardStore.scaleChart > 0">
     <template v-if="userDashboardStore.typeChart === TypeOptionsChart.WEEKS">
       <svg
+        ref="instanceLines"
         v-if="userDashboardStore.scaleChart > 0"
-        class="absolute top-0 left-0 w-full h-full scale-x-[1] scale-y-[-1]"
+        class="absolute top-0 left-0 z-[100] w-full h-full scale-x-[1] scale-y-[-1]"
       >
         <line
           class="animate-fade-in"
@@ -183,8 +213,9 @@ function calculateLinePosition(index: number): number {
     </template>
     <template v-else>
       <svg
+        ref="instanceLines"
         v-if="userDashboardStore.scaleChart > 0"
-        class="absolute top-0 left-0 w-full h-full scale-x-[1] scale-y-[-1]"
+        class="absolute top-0 left-0 z-[100] w-full h-full scale-x-[1] scale-y-[-1]"
       >
         <line
           class="animate-fade-in"
