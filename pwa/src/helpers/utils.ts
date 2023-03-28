@@ -66,8 +66,8 @@ export function hFirstAndLastAdsetDate(list: AdsType[]): FirstLastDateType {
 export function hFirstAndLastDate(
   list: CampaignType[] | AdNonParsedType[]
 ): FirstLastDateType {
-  if(list.length === 0) {
-  return { first: '2020-01-01', last: '2020-01-01' };
+  if (list.length === 0) {
+    return { first: "2020-01-01", last: "2020-01-01" };
   }
 
   let firstDate =
