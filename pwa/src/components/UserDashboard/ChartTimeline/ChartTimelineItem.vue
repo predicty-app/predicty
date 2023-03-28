@@ -151,7 +151,6 @@ function handleSelectCollection() {
       '--color': currentColor
     }"
   >
-    <!-- <DragDropElement :element="element" :is-active-drag="type === 'ad'" :is-active-drop="type === 'collection'"> -->
     <TooltipMessage
       :message="element.name"
       :is-active="
@@ -203,6 +202,5 @@ function handleSelectCollection() {
         </div>
       </div>
     </TooltipMessage>
-    <!-- </DragDropElement> -->
   </div>
 </template>
