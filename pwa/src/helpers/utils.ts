@@ -16,7 +16,7 @@ type NextDayDictionary = {
  * @returns {CampaignType[]}
  */
 export function hCheckIsCollectionExist(list: CampaignType[]): CampaignType[] {
-  if(list.length === 0) {
+  if (list.length === 0) {
     return [];
   }
 

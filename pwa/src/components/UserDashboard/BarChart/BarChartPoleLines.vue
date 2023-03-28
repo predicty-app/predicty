@@ -84,7 +84,7 @@ async function calcualteAll() {
       ? Math.max(...dailyRevenue) * divider
       : Math.max(...dailyRevenue) / divider;
 
-  userDashboardStore.scaleChart = Math.max(...dailyRevenue);
+  userDashboardStore.scaleChart = Math.max(...dailyRevenue) + modifier;
   setHeightLinesSvgElement();
 }
 

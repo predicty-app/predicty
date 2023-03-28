@@ -93,7 +93,6 @@ const columnsProvider = {
   [AvalibleProviders.OTHER]: ["ad-name", "spent"]
 };
 
-
 const providersList = ref<ProvidersListType[]>([]);
 
 onMounted(async () => {
