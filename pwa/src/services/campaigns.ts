@@ -160,8 +160,13 @@ class CampaignsService {
    */
   #prepareTimelineParams(campaigns: CampaignType[]) {
     const globalStore = useGlobalStore();
+    
+    let first = '2020-01-01';
+    let last = '2020-01-01';
 
-    const { first, last } = hFirstAndLastDate(campaigns);
+    if(campaigns.length > 0) {
+      let { first, last } = hFirstAndLastDate(campaigns);
+    }
     let weeksBetween = hWeeksBetween(first, last) + 2;
 
     weeksBetween = weeksBetween < 10 ? weeksBetween + 15 : weeksBetween;

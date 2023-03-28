@@ -40,12 +40,16 @@ const chartTypeOptions: TypesOptionsChart[] = [
   }
 ];
 
+
 const globalStore = useGlobalStore();
 const userDashboardStore = useUserDashboardStore();
+
+console.log(userDashboardStore.scaleChart)
+
 const amountScale = computed<string[]>(() => [
-  `$${userDashboardStore.scaleChart.toFixed(2)}`,
-  `$${(userDashboardStore.scaleChart / 2).toFixed(2)}`,
-  `$${(userDashboardStore.scaleChart / 3).toFixed(2)}`
+  `$${userDashboardStore.scaleChart.toString() === '-Infinity' ? 0 : userDashboardStore.scaleChart.toFixed(2)}`,
+  `$${userDashboardStore.scaleChart.toString() === '-Infinity' ? 0 : (userDashboardStore.scaleChart / 2).toFixed(2)}`,
+  `$${userDashboardStore.scaleChart.toString() === '-Infinity' ? 0 :  (userDashboardStore.scaleChart / 3).toFixed(2)}`
 ]);
 
 /**
