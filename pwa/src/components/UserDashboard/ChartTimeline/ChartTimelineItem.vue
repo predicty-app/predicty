@@ -88,8 +88,8 @@ function handleVisibleElement() {
 
   isElementVisible.value =
     currentLeftPosition <
-    globalStore.scrollParams.x +
-    globalStore.scrollTimeline.getBoundingClientRect().width &&
+      globalStore.scrollParams.x +
+        globalStore.scrollTimeline.getBoundingClientRect().width &&
     currentRightPosition > globalStore.scrollParams.x;
 
   if (!props.isVisible) {
@@ -125,55 +125,84 @@ function handleSelectCollection() {
 </script>
 
 <template>
-  <div ref="timelineItemInstance" v-if="isElementVisible && element.dataProvider" :class="[
-    `col-start-dynamic col-end-dynamic p-[1.5px] rounded-[6px] h-fit my-auto transition-all`,
-    {
-      'border-[2px] border-timeline-item-border': type === 'collection',
-      'opacity-50': isElementAssignCheckedCollection,
-      'blur-[0.5px] opacity-20 grayscale cursor-default':
-        !userStore.activeProviders.includes(element.dataProvider[0]) &&
-        type === 'ad',
-      'cursor-pointer':
-        type === 'collection' ||
-        (userStore.activeProviders.includes(element.dataProvider[0]) &&
-          type === 'ad')
-    }
-  ]" v-on="
-  type === 'collection' ? { click: () => handleSelectCollection() } : {}
-" :style="{
-  '--start': parseStart,
-  '--end': parseEnd - parseStart < 2 ? parseEnd + 5 : parseEnd,
-  '--color': currentColor
-}">
+  <div
+    ref="timelineItemInstance"
+    v-if="isElementVisible && element.dataProvider"
+    :class="[
+      `col-start-dynamic col-end-dynamic p-[1.5px] rounded-[6px] h-fit my-auto transition-all`,
+      {
+        'border-[2px] border-timeline-item-border': type === 'collection',
+        'opacity-50': isElementAssignCheckedCollection,
+        'blur-[0.5px] opacity-20 grayscale cursor-default':
+          !userStore.activeProviders.includes(element.dataProvider[0]) &&
+          type === 'ad',
+        'cursor-pointer':
+          type === 'collection' ||
+          (userStore.activeProviders.includes(element.dataProvider[0]) &&
+            type === 'ad')
+      }
+    ]"
+    v-on="
+      type === 'collection' ? { click: () => handleSelectCollection() } : {}
+    "
+    :style="{
+      '--start': parseStart,
+      '--end': parseEnd - parseStart < 2 ? parseEnd + 5 : parseEnd,
+      '--color': currentColor
+    }"
+  >
     <!-- <DragDropElement :element="element" :is-active-drag="type === 'ad'" :is-active-drop="type === 'collection'"> -->
-      <TooltipMessage :message="element.name" :is-active="parseEnd - parseStart < 5 && userStore.activeProviders.includes(element.dataProvider[0])">
-        <div :class="[
+    <TooltipMessage
+      :message="element.name"
+      :is-active="
+        parseEnd - parseStart < 5 &&
+        userStore.activeProviders.includes(element.dataProvider[0])
+      "
+    >
+      <div
+        :class="[
           'p-2 text-xs overflow-hidden rounded-[5px] shadow-sm text-text-white font-semibold bg-timeline-item-background',
           {
             'shadow-lg shadow-timeline-shadow': isSelectedElement
           }
-        ]" @click="handleToogleSelectAd" :style="{ '--color': currentColor }">
-          <div class="pr-4 flex gap-x-1 items-center overflow-hidden">
-            <CheckboxForm v-if="type === 'ad'" :color="currentColor" :is-checked="isSelectedElement" />
-            <svg v-if="type === 'collection'" class="min-w-[16px] w-[16px]" width="16" height="16" viewBox="0 0 16 16"
-              fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="1" y="1" width="7" height="3" rx="1" fill="white" />
-              <rect y="11" width="12" height="3" rx="1" fill="white" />
-              <rect x="3" y="6" width="12" height="3" rx="1" fill="white" />
-            </svg>
-            <div v-if="type === 'collection'"
-              class="rounded font-semibold text-xs min-w-[18px] w-[14px] py-[1px] bg-timeline-collection-count flex items-center justify-center">
-              {{ (element as AdSetsType).ads.length }}
-            </div>
-            <span v-if="parseEnd - parseStart < 5">
-              {{ element.name.slice(0, 2) }}...
-            </span>
-            <span v-else>
-              {{ element.name }}
-            </span>
+        ]"
+        @click="handleToogleSelectAd"
+        :style="{ '--color': currentColor }"
+      >
+        <div class="pr-4 flex gap-x-1 items-center overflow-hidden">
+          <CheckboxForm
+            v-if="type === 'ad'"
+            :color="currentColor"
+            :is-checked="isSelectedElement"
+          />
+          <svg
+            v-if="type === 'collection'"
+            class="min-w-[16px] w-[16px]"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect x="1" y="1" width="7" height="3" rx="1" fill="white" />
+            <rect y="11" width="12" height="3" rx="1" fill="white" />
+            <rect x="3" y="6" width="12" height="3" rx="1" fill="white" />
+          </svg>
+          <div
+            v-if="type === 'collection'"
+            class="rounded font-semibold text-xs min-w-[18px] w-[14px] py-[1px] bg-timeline-collection-count flex items-center justify-center"
+          >
+            {{ (element as AdSetsType).ads.length }}
           </div>
+          <span v-if="parseEnd - parseStart < 5">
+            {{ element.name.slice(0, 2) }}...
+          </span>
+          <span v-else>
+            {{ element.name }}
+          </span>
         </div>
-      </TooltipMessage>
+      </div>
+    </TooltipMessage>
     <!-- </DragDropElement> -->
   </div>
 </template>

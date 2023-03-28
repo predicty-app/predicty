@@ -93,9 +93,7 @@ const columnsProvider = {
   [AvalibleProviders.OTHER]: ["ad-name", "spent"]
 };
 
-const dictionaryFileTypes = {
-  "text/csv": "_CSV"
-};
+
 const providersList = ref<ProvidersListType[]>([]);
 
 onMounted(async () => {

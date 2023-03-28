@@ -16,8 +16,12 @@ const globalStore = useGlobalStore();
 </script>
 
 <template>
-  <div v-if="Object.keys(globalStore.dictionaryFirstDaysWeek).length === 0"
-    class="chart-timeline-weeks pb-5 pt-1">&nbsp;</div>
+  <div
+    v-if="Object.keys(globalStore.dictionaryFirstDaysWeek).length === 0"
+    class="chart-timeline-weeks pb-5 pt-1"
+  >
+    &nbsp;
+  </div>
   <div
     v-if="Object.keys(globalStore.dictionaryFirstDaysWeek).length > 0"
     class="chart-timeline-weeks pb-5 pt-1 px-2 text-sm font-bold text-timeline-lines-text"

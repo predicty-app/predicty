@@ -22,7 +22,7 @@ const globalStore = useGlobalStore();
 const investmentWeekNumber = ref<number[]>([]);
 const userDashboardStore = useUserDashboardStore();
 const investmentNumber = ref<number[]>([]);
-const instanceLines = ref<SVGElement | null>(null)
+const instanceLines = ref<SVGElement | null>(null);
 
 onMounted(async () => {
   await calcualteAll();
@@ -66,11 +66,10 @@ async function insertInvestmentArray() {
   });
 }
 
-
 /**
  * Function calculate height of bars.
  */
- async function calcualteAll() {
+async function calcualteAll() {
   await insertInvestmentArray();
   setSpentInvestment();
 
@@ -78,9 +77,12 @@ async function insertInvestmentArray() {
     (current: DailyRevenueType) => current.revenue.amount
   );
 
-  const divider = userDashboardStore.typeChart === TypeOptionsChart.WEEKS? 4 : 3;
-  const modifier = userDashboardStore.typeChart === TypeOptionsChart.WEEKS? (Math.max(...dailyRevenue) * divider) : 
-    (Math.max(...dailyRevenue) / divider)
+  const divider =
+    userDashboardStore.typeChart === TypeOptionsChart.WEEKS ? 4 : 3;
+  const modifier =
+    userDashboardStore.typeChart === TypeOptionsChart.WEEKS
+      ? Math.max(...dailyRevenue) * divider
+      : Math.max(...dailyRevenue) / divider;
 
   userDashboardStore.scaleChart = Math.max(...dailyRevenue) + modifier;
   setHeightLinesSvgElement();
@@ -90,8 +92,12 @@ async function insertInvestmentArray() {
  * Function calculate height lines svg.
  */
 function setHeightLinesSvgElement() {
-  if(instanceLines.value) {
-    instanceLines.value.style.height = `${(globalStore.wrapperPole.parentNode as HTMLElement).getBoundingClientRect().height}px`;
+  if (instanceLines.value) {
+    instanceLines.value.style.height = `${
+      (
+        globalStore.wrapperPole.parentNode as HTMLElement
+      ).getBoundingClientRect().height
+    }px`;
   }
 }
 

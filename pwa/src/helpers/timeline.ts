@@ -182,7 +182,7 @@ export function changeDynamicalTypeChart() {
  */
 export function getScale(): number {
   return (
-    (globalStore.wrapperPole.parentNode as HTMLElement).getBoundingClientRect().height /
-    userDashboardStore.scaleChart
+    (globalStore.wrapperPole.parentNode as HTMLElement).getBoundingClientRect()
+      .height / userDashboardStore.scaleChart
   );
 }

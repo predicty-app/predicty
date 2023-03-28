@@ -47,7 +47,8 @@ async function setResponseFiredAction(
   notificationMessageModel.value.visible = true;
   notificationMessageModel.value.type = response ? "success" : "error";
   notificationMessageModel.value.message = t(
-    `components.user-dashboard.floating-switch-view-form.notifications.${type}.${response ? "success" : "error"
+    `components.user-dashboard.floating-switch-view-form.notifications.${type}.${
+      response ? "success" : "error"
     }`
   );
 
@@ -129,9 +130,15 @@ async function handleActionForDrop() {
 
 <template>
   <SpinnerBar :is-visible="isSpinnerVisible" :is-global="true" />
-  <NotificationMessage v-model="notificationMessageModel.visible" :message="notificationMessageModel.message"
-    :type="notificationMessageModel.type" />
-  <div @mousedown="toggleActiveAction('drag')" @mouseup="toggleActiveAction('drop')">
+  <NotificationMessage
+    v-model="notificationMessageModel.visible"
+    :message="notificationMessageModel.message"
+    :type="notificationMessageModel.type"
+  />
+  <div
+    @mousedown="toggleActiveAction('drag')"
+    @mouseup="toggleActiveAction('drop')"
+  >
     <slot />
   </div>
 </template>
