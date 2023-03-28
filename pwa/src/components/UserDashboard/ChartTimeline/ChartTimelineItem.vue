@@ -163,7 +163,7 @@ function handleSelectCollection() {
         <CheckboxForm
           v-if="type === 'ad'"
           :color="currentColor"
-          :is-checked="isSelectedElement"
+          :is-checked="isSelectedElement && !userStore.isDragAndDrop"
         />
         <svg
           v-if="type === 'collection'"
