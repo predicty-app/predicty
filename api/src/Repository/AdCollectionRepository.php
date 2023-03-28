@@ -20,12 +20,6 @@ class AdCollectionRepository
         $this->repository = $em->getRepository(AdCollection::class);
     }
 
-    public function save(AdCollection $adCollection): void
-    {
-        $this->em->persist($adCollection);
-        $this->em->flush();
-    }
-
     /**
      * @return array<AdCollection>
      */
@@ -34,8 +28,22 @@ class AdCollectionRepository
         return $this->repository->findAll();
     }
 
+    /**
+     * @return array<AdCollection>
+     */
+    public function findAllByUserId(int $userId): array
+    {
+        return $this->repository->findBy(['userId' => $userId]);
+    }
+
     public function findById(int $adCollectionId): ?AdCollection
     {
         return $this->repository->find($adCollectionId);
+    }
+
+    public function save(AdCollection $adCollection): void
+    {
+        $this->em->persist($adCollection);
+        $this->em->flush();
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\GraphQL\Query;
 
+use App\DataFixtures\UserFixtures;
 use App\Test\GraphQLTestCase;
 
 /**
@@ -163,5 +164,31 @@ class DashboardQueryTest extends GraphQLTestCase
         $this->executeQuery($query);
         $this->assertResponseIsSuccessful();
         $this->assertResponseMatchesJsonFile(__DIR__.'/response/DashboardAdRevenueShare.json');
+    }
+
+    public function test_user_cannot_see_other_users_dashboard_data(): void
+    {
+        $this->authenticate(UserFixtures::JANE);
+
+        $query = <<<'EOF'
+            query {
+                dashboard {
+                name,
+                dailyRevenue {
+                  id
+                }
+                campaigns {
+                  name
+                }
+                collections {
+                  name
+                }
+              }
+            }
+            EOF;
+
+        $this->executeQuery($query);
+        $this->assertResponseIsSuccessful();
+        $this->assertResponseMatchesJsonFile(__DIR__.'/response/EmptyDashboard.json');
     }
 }
