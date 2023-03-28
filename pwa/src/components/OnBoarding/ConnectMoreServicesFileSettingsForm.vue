@@ -116,10 +116,7 @@ watch(selectedProvider, () => {
   const provider = providersList.value.find(
     (provider: ProvidersListType) => provider.key === selectedProvider.value
   );
-  const type = provider.fileImportTypes.find((name: string) =>
-    name.includes(dictionaryFileTypes[onBoardingStore.file.file.type])
-  );
-  onBoardingStore.file.type = type;
+  onBoardingStore.file.type = provider.fileImportTypes[0];
 
   if (onBoardingStore.file.type === AvalibleProviders.OTHER) {
     displayedName.value = "";
