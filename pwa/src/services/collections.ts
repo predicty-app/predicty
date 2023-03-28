@@ -192,12 +192,18 @@ class CollectionService {
   ): string[] {
     let providers = [];
     ads.forEach((ad: AdNonParsedType) => {
+      const currentCampaign = campaigns.find(
+        (campaign: CampaignType) => campaign.uid === ad.campaignId
+      );
+
+      const dataProviders = currentCampaign
+        ? currentCampaign.dataProvider
+        : [];
+
       providers = [
         ...new Set([
           ...providers,
-          ...campaigns.find(
-            (campaign: CampaignType) => campaign.uid === ad.campaignId
-          ).dataProvider
+          ...dataProviders
         ])
       ];
     });
@@ -220,19 +226,14 @@ class CollectionService {
       collection.ads.forEach((ad: AdNonParsedType) => {
         const currentCampaign = campaigns.find(
           (campaign: CampaignType) => campaign.uid === ad.campaignId
-        )
+        );
 
-        let dataProviders = currentCampaign? currentCampaign.dataProvider : [];
-        providers = [
-          ...new Set([
-            ...providers,
-            ...dataProviders
-          ])
-        ];
+        const dataProviders = currentCampaign
+          ? currentCampaign.dataProvider
+          : [];
+        providers = [...new Set([...providers, ...dataProviders])];
       });
     });
-
-    console.log(providers)
 
     return providers;
   }
