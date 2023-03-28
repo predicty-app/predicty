@@ -91,6 +91,7 @@ export type DailyRevenueType = {
 type StateType = {
   scaleChart: number;
   hiddenAds: string[];
+  isDragAndDrop: boolean;
   campaigns: CampaignType[];
   activeProviders: string[];
   typeChart: TypeOptionsChart;
@@ -113,6 +114,7 @@ export const useUserDashboardStore = defineStore({
       campaigns: [],
       parsedCampaignsList: [],
       hiddenAds: [],
+      isDragAndDrop: false,
       activeProviders: [
         "GOOGLE_ADS",
         "FACEBOOK_ADS",
