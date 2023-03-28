@@ -164,7 +164,7 @@ export function calculateItemPosition(
 }
 
 /**
- * Function to change dynamical
+ * Function to change dynamical type of chart.
  */
 export function changeDynamicalTypeChart() {
   if (globalStore.currentScale <= 80) {
@@ -176,9 +176,13 @@ export function changeDynamicalTypeChart() {
   }
 }
 
+/**
+ * Function to get scale for bars.
+ * @returns {number}
+ */
 export function getScale(): number {
   return (
-    globalStore.wrapperPole.getBoundingClientRect().height /
-    userDashboardStore.scaleChart
+    (globalStore.wrapperPole.parentNode as HTMLElement).getBoundingClientRect()
+      .height / userDashboardStore.scaleChart
   );
 }

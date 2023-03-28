@@ -107,7 +107,6 @@ function handleToogleSelectAd() {
   ) {
     return;
   }
-
   emit("collectionSelected", null);
   userStore.toogleAssignAdsAction(props.campaingUid, props.element.uid);
 }
@@ -152,9 +151,13 @@ function handleSelectCollection() {
       '--color': currentColor
     }"
   >
+    <!-- <DragDropElement :element="element" :is-active-drag="type === 'ad'" :is-active-drop="type === 'collection'"> -->
     <TooltipMessage
       :message="element.name"
-      :is-active="parseEnd - parseStart < 5"
+      :is-active="
+        parseEnd - parseStart < 5 &&
+        userStore.activeProviders.includes(element.dataProvider[0])
+      "
     >
       <div
         :class="[
@@ -166,7 +169,7 @@ function handleSelectCollection() {
         @click="handleToogleSelectAd"
         :style="{ '--color': currentColor }"
       >
-        <div class="pr-4 flex gap-x-1 items-center">
+        <div class="pr-4 flex gap-x-1 items-center overflow-hidden">
           <CheckboxForm
             v-if="type === 'ad'"
             :color="currentColor"
@@ -187,7 +190,7 @@ function handleSelectCollection() {
           </svg>
           <div
             v-if="type === 'collection'"
-            class="rounded font-semibold text-xs min-w-[14px] w-[14px] py-[1px] bg-timeline-collection-count flex items-center justify-center"
+            class="rounded font-semibold text-xs min-w-[18px] w-[14px] py-[1px] bg-timeline-collection-count flex items-center justify-center"
           >
             {{ (element as AdSetsType).ads.length }}
           </div>
@@ -200,5 +203,6 @@ function handleSelectCollection() {
         </div>
       </div>
     </TooltipMessage>
+    <!-- </DragDropElement> -->
   </div>
 </template>

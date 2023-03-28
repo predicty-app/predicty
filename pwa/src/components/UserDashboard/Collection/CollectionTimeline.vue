@@ -13,7 +13,6 @@ import {
 } from "@/helpers/timeline";
 
 const globalStore = useGlobalStore();
-const timelineContent = ref<HTMLElement | null>(null);
 const timelineGridInstance = ref<HTMLDivElement | null>(null);
 
 /**
@@ -41,36 +40,55 @@ function handleScaleDown() {
 }
 
 /**
- * Function to check is scroll bar visible.
- * @return {boolean}
- */
-function isScrollBarVisible(): boolean {
-  return timelineContent.value
-    ? timelineContent.value?.scrollWidth > timelineContent.value?.clientWidth
-    : true;
-}
-
-/**
  * Function to handle change scale.
  * @param {WheelEvent} eventWheel
  */
 function handleChangeScale(eventWheel: WheelEvent) {
+  if (!globalStore.isZoomActive) {
+    return;
+  }
+
   if (eventWheel.deltaY > 0) {
-    if (isScrollBarVisible()) {
-      handleScaleDown();
-    }
+    handleScaleDown();
   } else {
     handleScaleUp();
   }
 
   changeDynamicalTypeChart();
 }
+
+/**
+ * Set active zoom state.
+ */
+function handleActiveZoomState(e: KeyboardEvent) {
+  if (e.key !== "Shift") {
+    return;
+  }
+  if (!globalStore.isZoomActive) {
+    globalStore.isZoomActive = true;
+  }
+}
+
+/**
+ * Set deactive zoom state.
+ */
+function handleDeActiveZoomState(e: KeyboardEvent) {
+  if (e.key !== "Shift") {
+    return;
+  }
+  if (globalStore.isZoomActive) {
+    globalStore.isZoomActive = false;
+  }
+}
 </script>
 
 <template>
   <div
-    @wheel.prevent="handleChangeScale"
-    class="collection-timeline bg-timeline-background grid grid-rows-[1fr] w-fit h-full whitespace-nowrap relative"
+    @wheel="handleChangeScale"
+    @keydown="handleActiveZoomState"
+    @keyup="handleDeActiveZoomState"
+    tabindex="0"
+    class="collection-timeline outline-none bg-timeline-background grid grid-rows-[1fr] w-fit h-full whitespace-nowrap relative"
   >
     <div
       ref="timelineGridInstance"
