@@ -49,16 +49,11 @@ CMD ["php-fpm"]
 FROM app_php_base AS app_php_prod
 
 ENV APP_ENV=prod
-
-# prevent the reinstallation of vendors at every changes in the source code
-COPY composer.* symfony.* ./
+COPY --link . .
+RUN rm -Rf docker/
 RUN set -eux; \
 	composer install --prefer-dist --no-dev --no-autoloader --no-scripts --no-progress; \
 	composer clear-cache
-
-# copy sources
-COPY --link . .
-RUN rm -Rf docker/
 
 RUN set -eux; \
 	mkdir -p var/cache var/log; \
