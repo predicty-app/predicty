@@ -73,10 +73,7 @@ class CampaignsService {
             externalId: campaign.externalId,
             adsets: this.#setAdSetsList(campaign),
             dataProvider: [campaign.dataProvider.id],
-            color: hLightenDarkenColor(
-              hRandomColor(),
-              -50
-            )
+            color: hLightenDarkenColor(hRandomColor(), -50)
           } as CampaignType)
       )
       .filter((campaign: CampaignType) => campaign.adsets.length > 0);

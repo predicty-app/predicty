@@ -1,4 +1,8 @@
-import { hFirstAndLastAdsetDate, hLightenDarkenColor, hRandomColor } from "@/helpers/utils";
+import {
+  hFirstAndLastAdsetDate,
+  hLightenDarkenColor,
+  hRandomColor
+} from "@/helpers/utils";
 import type {
   AmountNumberType,
   CampaignType,
