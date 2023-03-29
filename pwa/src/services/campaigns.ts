@@ -1,4 +1,5 @@
 import {
+  hRandomColor,
   hWeeksBetween,
   hFirstDayWeek,
   hFirstDaysWeeks,
@@ -73,7 +74,7 @@ class CampaignsService {
             adsets: this.#setAdSetsList(campaign),
             dataProvider: [campaign.dataProvider.id],
             color: hLightenDarkenColor(
-              `#${Math.floor(Math.random() * 16777215).toString(16)}`,
+              hRandomColor(),
               -50
             )
           } as CampaignType)

@@ -1,4 +1,4 @@
-import { hFirstAndLastAdsetDate } from "@/helpers/utils";
+import { hFirstAndLastAdsetDate, hLightenDarkenColor, hRandomColor } from "@/helpers/utils";
 import type {
   AmountNumberType,
   CampaignType,
@@ -50,7 +50,7 @@ class CollectionService {
     ).toString();
     const provider = this.#setProvidersList(collections, campaigns);
 
-    const color = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+    const color = hLightenDarkenColor(hRandomColor(), -50);
     campaigns.unshift({
       uid: uniqueId,
       isCollection: true,
