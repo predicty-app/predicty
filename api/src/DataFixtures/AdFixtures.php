@@ -9,7 +9,6 @@ use App\Entity\AdSet;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Psr\Clock\ClockInterface;
 
 class AdFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -20,7 +19,7 @@ class AdFixtures extends Fixture implements DependentFixtureInterface
     public const AD_5 = 'AD5';
     public const AD_6 = 'AD6';
 
-    public function __construct(private ClockInterface $clock)
+    public function __construct()
     {
     }
 
@@ -51,11 +50,9 @@ class AdFixtures extends Fixture implements DependentFixtureInterface
             $entity = new Ad(
                 userId: $row[1]->getUserId(),
                 externalId: $row[0],
-                adSetId: $row[1]->getId(),
                 campaignId: $row[1]->getCampaignId(),
                 name: $row[2],
-                createdAt: $this->clock->now(),
-                changedAt: $this->clock->now()
+                adSetId: $row[1]->getId(),
             );
 
             $manager->persist($entity);

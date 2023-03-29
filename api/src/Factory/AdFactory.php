@@ -6,12 +6,12 @@ namespace App\Factory;
 
 use App\Entity\Ad;
 use App\Entity\AdSet;
+use App\Entity\Campaign;
 use App\Repository\AdRepository;
-use Psr\Clock\ClockInterface;
 
 class AdFactory
 {
-    public function __construct(private AdRepository $adRepository, private ClockInterface $clock)
+    public function __construct(private AdRepository $adRepository)
     {
     }
 
@@ -23,11 +23,28 @@ class AdFactory
             $ad = new Ad(
                 userId: $adSet->getUserId(),
                 externalId: $externalId,
-                adSetId: $adSet->getId(),
                 campaignId: $adSet->getCampaignId(),
                 name: $name,
-                createdAt: $this->clock->now(),
-                changedAt: $this->clock->now(),
+                adSetId: $adSet->getId(),
+            );
+
+            $this->adRepository->save($ad);
+        }
+
+        return $ad;
+    }
+
+    public function makeForCampaign(Campaign $campaign, string $name, string $externalId): Ad
+    {
+        $ad = $this->adRepository->findByUserIdAndExternalId($campaign->getUserId(), $externalId);
+
+        if ($ad === null) {
+            $ad = new Ad(
+                userId: $campaign->getUserId(),
+                externalId: $externalId,
+                campaignId: $campaign->getId(),
+                name: $name,
+                adSetId: null
             );
 
             $this->adRepository->save($ad);

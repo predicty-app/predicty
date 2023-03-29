@@ -8,6 +8,8 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 use Coduo\PHPMatcher\Backtrace;
 use Coduo\PHPMatcher\PHPUnit\PHPMatcherConstraint;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -41,6 +43,23 @@ abstract class GraphQLTestCase extends WebTestCase
         $user = $users->findByUsername($user);
         assert($user instanceof UserInterface);
         $client->loginUser($user);
+    }
+
+    /**
+     * @template T of object
+     *
+     * @param class-string<T> $className
+     *
+     * @return EntityRepository<T>
+     */
+    public function getRepository(string $className): EntityRepository
+    {
+        return $this->getEntityManager()->getRepository($className);
+    }
+
+    public function getEntityManager(): EntityManagerInterface
+    {
+        return static::getClient()->getContainer()->get(EntityManagerInterface::class);
     }
 
     public static function createClient(array $options = [], array $server = []): KernelBrowser
