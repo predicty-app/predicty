@@ -55,7 +55,7 @@ reset-database:
 	@echo "Database was restored to its initial state"
 
 reset-test-database:
-	@$(SYMFONY_CONSOLE_EXEC) --env=test doctrine:query:sql "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'app' AND pid <> pg_backend_pid();" --quiet
+	@$(SYMFONY_CONSOLE_EXEC) --env=test doctrine:query:sql "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'app_test' AND pid <> pg_backend_pid();" --quiet
 	@$(SYMFONY_CONSOLE_EXEC) --env=test doctrine:database:drop --if-exists --force --no-interaction -q
 	@$(SYMFONY_CONSOLE_EXEC) --env=test doctrine:database:create --no-interaction -q
 	@$(SYMFONY_CONSOLE_EXEC) --env=test doctrine:migrations:migrate --no-interaction -q

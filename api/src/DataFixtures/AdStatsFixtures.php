@@ -12,11 +12,10 @@ use Brick\Money\Money;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Psr\Clock\ClockInterface;
 
-class AdStatFixtures extends Fixture implements DependentFixtureInterface
+class AdStatsFixtures extends Fixture implements DependentFixtureInterface
 {
-    public function __construct(private ClockInterface $clock)
+    public function __construct()
     {
     }
 
@@ -108,9 +107,7 @@ class AdStatFixtures extends Fixture implements DependentFixtureInterface
                 results: $row[2],
                 costPerResult: $costPerResult,
                 amountSpent: $amountSpent,
-                date: $date,
-                createdAt: $this->clock->now(),
-                changedAt: $this->clock->now()
+                date: $date
             );
 
             $manager->persist($entity);

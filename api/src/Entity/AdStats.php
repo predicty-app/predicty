@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Service\Clock\Clock;
 use Brick\Money\Currency;
 use Brick\Money\Money;
 use DateTimeInterface;
@@ -47,8 +48,6 @@ class AdStats
         Money $costPerResult,
         Money $amountSpent,
         DateTimeInterface $date,
-        DateTimeInterface $createdAt,
-        DateTimeInterface $changedAt,
     ) {
         $this->userId = $userId;
         $this->adId = $adId;
@@ -57,8 +56,8 @@ class AdStats
         $this->currency = $amountSpent->getCurrency()->getCurrencyCode();
         $this->amountSpent = $amountSpent->getMinorAmount()->toInt();
         $this->date = $date;
-        $this->createdAt = $createdAt;
-        $this->changedAt = $changedAt;
+        $this->createdAt = Clock::now();
+        $this->changedAt = Clock::now();
     }
 
     public function getUserId(): int
@@ -78,12 +77,12 @@ class AdStats
 
     public function getCostPerResult(): Money
     {
-        return Money::of($this->costPerResult, $this->getCurrency());
+        return Money::ofMinor($this->costPerResult, $this->getCurrency());
     }
 
     public function getAmountSpent(): Money
     {
-        return Money::of($this->amountSpent, $this->getCurrency());
+        return Money::ofMinor($this->amountSpent, $this->getCurrency());
     }
 
     public function getCurrency(): Currency
