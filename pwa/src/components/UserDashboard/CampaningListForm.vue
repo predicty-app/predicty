@@ -48,7 +48,7 @@ function calculateActiveCurrentAds(campaign: CampaignType): number {
       class="campaign-list-item h-dynamic absolute animate-fade-in"
       :style="{
         '--height': `${calculateItemHeight(campaign)}px`,
-        '--top': `${calculateItemPosition(campaign, 10)}px`
+        '--top': `${calculateItemPosition(campaign, 12)}px`
       }"
       :header="campaign.name"
       :color="campaign.color"

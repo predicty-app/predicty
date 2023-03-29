@@ -46,6 +46,7 @@ const chartTypeOptions: TypesOptionsChart[] = [
 
 const globalStore = useGlobalStore();
 const userDashboardStore = useUserDashboardStore();
+const isZoomVisible = ref<boolean>(false);
 
 const amountScale = computed<string[]>(() => [
   `$${
@@ -134,7 +135,7 @@ async function setResponseFiredAction() {
 </script>
 
 <template>
-  <ZoomScale v-if="globalStore.isZoomActive" />
+  <ZoomScale v-if="isZoomVisible" />
   <FloatingSwitchViewForm
     v-if="
       (userDashboardStore.selectedAdsList.ads.length > 0 ||
@@ -162,7 +163,10 @@ async function setResponseFiredAction() {
       <BarChartWeeks />
     </template>
     <template #chart>
-      <BarChartWrapper />
+      <BarChartWrapper
+        @mouseenter="isZoomVisible = true"
+        @mouseleave="isZoomVisible = false"
+      />
     </template>
     <template #chart-days>
       <BarChartDaysWeek />

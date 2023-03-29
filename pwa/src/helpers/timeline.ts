@@ -14,8 +14,8 @@ enum timelineParams {
   GAP_GRID = 5,
   LINE_WIDTH = 150,
   COLUMN_WIDTH = 16.4,
-  LINES_POSITION_DAYS_WIDTH = 16.4,
-  LINES_POSITION_WEEKS_WIDTH = 144.8,
+  LINES_POSITION_DAYS_WIDTH = 22,
+  LINES_POSITION_WEEKS_WIDTH = 150,
   GRADIENT_WIDTH = 300,
   SCALE_CHART = 50000,
   FIREST_COLUMN_WIDTH = 16
@@ -87,7 +87,7 @@ export const heightContent = computed<string>(() => {
     }
   );
 
-  return `${height + 50}px`;
+  return `${height + 100}px`;
 });
 
 /**
