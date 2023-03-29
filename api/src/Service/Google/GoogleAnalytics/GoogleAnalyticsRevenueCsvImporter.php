@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Google\GoogleAnalytics;
 
 use App\Factory\DailyRevenueFactory;
-use App\Service\Facebook\CsvImporter\DateHelper;
+use App\Service\Util\DateHelper;
 use Brick\Money\Currency;
 use Brick\Money\Money;
 use Doctrine\ORM\EntityManagerInterface;

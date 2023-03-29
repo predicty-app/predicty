@@ -8,6 +8,7 @@ use App\Entity\FileImportType;
 use App\Message\Command\ImportFacebookCsvFile;
 use App\Message\Command\ImportFile;
 use App\Message\Command\ImportGoogleAnalyticsRevenueFile;
+use App\Message\Command\ImportSimplifiedCsvFile;
 use App\Service\DataImport\ImportTrackingService;
 use RuntimeException;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -34,6 +35,7 @@ class ImportFileHandler
         $importCommand = match ($command->fileImportType) {
             FileImportType::FACEBOOK_CSV => new ImportFacebookCsvFile($import->getId(), $command->userId, $command->filename),
             FileImportType::GOOGLE_ANALYTICS_REVENUE => new ImportGoogleAnalyticsRevenueFile($import->getId(), $command->userId, $command->filename),
+            FileImportType::OTHER_SIMPLIFIED_CSV => new ImportSimplifiedCsvFile($import->getId(), $command->userId, $command->filename, $command->campaignName),
             default => throw new RuntimeException(sprintf('Cannot create import - file type is not supported: %s', $command->fileImportType->value)),
         };
 
