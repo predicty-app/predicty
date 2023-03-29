@@ -10,6 +10,7 @@ module.exports = {
       width: {
         calc: "calc(100vw)",
         dynamic: "var(--height)",
+        max: "calc(100vw + 100vw + 100vw)"
       },
       content: {
         dynamic: "var(--content)",

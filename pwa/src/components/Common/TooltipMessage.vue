@@ -12,14 +12,7 @@ withDefaults(defineProps<PropsType>(), {
 </script>
 
 <template>
-  <div
-    :class="[
-      'tooltip-message relative',
-      {
-        'cursor-help': isActive
-      }
-    ]"
-  >
+  <div :class="['tooltip-message relative']">
     <slot />
     <div
       v-if="isActive"

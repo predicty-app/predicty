@@ -195,8 +195,8 @@ function setDailyRevenue() {
   dailyReveneuWeekNumber.value = 0;
   dailyReveneuNumber.value = [0, 0, 0, 0, 0, 0, 0];
 
-  for (let i = 0; i < 7; i++) {
-    userDashboardStore.dailyRevenue.forEach((daily: DailyRevenueType) => {
+  userDashboardStore.dailyRevenue.forEach((daily: DailyRevenueType) => {
+    for (let i = 0; i < 7; i++) {
       const createdDate = parseCurrentDate(i);
       if (daily.date === createdDate) {
         if (userDashboardStore.typeChart === TypeOptionsChart.WEEKS) {
@@ -205,8 +205,18 @@ function setDailyRevenue() {
           dailyReveneuNumber.value[i] = daily.revenue.amount;
         }
       }
-    });
-  }
+    }
+  });
+}
+
+function concatAllAdSetsToOne(): AdsType[] {
+  return userDashboardStore.campaigns
+    .filter((campaign: CampaignType) => !campaign.isCollection)
+    .map((campaign: CampaignType) => campaign.adsets)
+    .flat(1)
+    .map((adset: AdSetsType) => adset.ads)
+    .flat(1)
+    .filter((ad: AdsType) => !userDashboardStore.hiddenAds.includes(ad.uid));
 }
 
 /**
@@ -216,32 +226,21 @@ function setSpentInvestment() {
   investmentWeekNumber.value = 0;
   investmentNumber.value = [0, 0, 0, 0, 0, 0, 0];
 
-  for (let i = 0; i < 7; i++) {
-    userDashboardStore.campaigns
-      .filter((campaign: CampaignType) =>
-        userDashboardStore.activeProviders.includes(campaign.dataProvider[0])
-      )
-      .forEach((campaign: CampaignType) => {
-        campaign.adsets.forEach((adset: AdSetsType) => {
-          adset.ads
-            .filter(
-              (ad: AdsType) => !userDashboardStore.hiddenAds.includes(ad.uid)
-            )
-            .forEach((ad: AdsType) => {
-              ad.status.forEach((adStat: AdStatusType) => {
-                const createdDate = parseCurrentDate(i);
-                if (adStat.date === createdDate) {
-                  if (userDashboardStore.typeChart === TypeOptionsChart.WEEKS) {
-                    investmentWeekNumber.value += adStat.amountSpent.amount;
-                  } else {
-                    investmentNumber.value[i] = adStat.amountSpent.amount;
-                  }
-                }
-              });
-            });
-        });
-      });
-  }
+  const adsList = concatAllAdSetsToOne();
+  adsList.forEach((ad: AdsType) => {
+    ad.status.forEach((adStat: AdStatusType) => {
+      for (let i = 0; i < 7; i++) {
+        const createdDate = parseCurrentDate(i);
+        if (adStat.date === createdDate) {
+          if (userDashboardStore.typeChart === TypeOptionsChart.WEEKS) {
+            investmentWeekNumber.value += adStat.amountSpent.amount;
+          } else {
+            investmentNumber.value[i] += adStat.amountSpent.amount;
+          }
+        }
+      }
+    });
+  });
 }
 </script>
 

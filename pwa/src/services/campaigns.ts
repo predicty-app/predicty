@@ -4,7 +4,8 @@ import {
   hFirstDaysWeeks,
   hFirstAndLastDate,
   hNumberWeekFromDate,
-  hNextDaysDictionary
+  hNextDaysDictionary,
+  hLightenDarkenColor
 } from "@/helpers/utils";
 import { useGlobalStore } from "@/stores/global";
 import type {
@@ -71,7 +72,10 @@ class CampaignsService {
             externalId: campaign.externalId,
             adsets: this.#setAdSetsList(campaign),
             dataProvider: [campaign.dataProvider.id],
-            color: `#${Math.floor(Math.random() * 16777215).toString(16)}`
+            color: hLightenDarkenColor(
+              `#${Math.floor(Math.random() * 16777215).toString(16)}`,
+              -50
+            )
           } as CampaignType)
       )
       .filter((campaign: CampaignType) => campaign.adsets.length > 0);

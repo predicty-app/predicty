@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import { useGlobalStore } from "@/stores/global";
 import {
   gapGrid,
   scaleGrid,
@@ -8,85 +6,12 @@ import {
   mainWidthGrid,
   scaleFirstGrid,
   scaleLinesGradient,
-  heightCollectionContent,
-  changeDynamicalTypeChart
+  heightCollectionContent
 } from "@/helpers/timeline";
-
-const globalStore = useGlobalStore();
-const timelineGridInstance = ref<HTMLDivElement | null>(null);
-
-/**
- * Function to handle scale up.
- */
-function handleScaleUp() {
-  if (globalStore.currentScale >= 200) {
-    globalStore.handleChangeScale(200);
-    return;
-  }
-
-  globalStore.handleChangeScale(globalStore.currentScale + 10);
-}
-
-/**
- * Function to handle scale down.
- */
-function handleScaleDown() {
-  if (globalStore.currentScale <= 60) {
-    globalStore.handleChangeScale(60);
-    return;
-  }
-
-  globalStore.handleChangeScale(globalStore.currentScale - 10);
-}
-
-/**
- * Function to handle change scale.
- * @param {WheelEvent} eventWheel
- */
-function handleChangeScale(eventWheel: WheelEvent) {
-  if (!globalStore.isZoomActive) {
-    return;
-  }
-
-  if (eventWheel.deltaY > 0) {
-    handleScaleDown();
-  } else {
-    handleScaleUp();
-  }
-
-  changeDynamicalTypeChart();
-}
-
-/**
- * Set active zoom state.
- */
-function handleActiveZoomState(e: KeyboardEvent) {
-  if (e.key !== "Shift") {
-    return;
-  }
-  if (!globalStore.isZoomActive) {
-    globalStore.isZoomActive = true;
-  }
-}
-
-/**
- * Set deactive zoom state.
- */
-function handleDeActiveZoomState(e: KeyboardEvent) {
-  if (e.key !== "Shift") {
-    return;
-  }
-  if (globalStore.isZoomActive) {
-    globalStore.isZoomActive = false;
-  }
-}
 </script>
 
 <template>
   <div
-    @wheel="handleChangeScale"
-    @keydown="handleActiveZoomState"
-    @keyup="handleDeActiveZoomState"
     tabindex="0"
     class="collection-timeline outline-none bg-timeline-background grid grid-rows-[1fr] w-fit h-full whitespace-nowrap relative"
   >
