@@ -7,7 +7,7 @@ namespace App\GraphQL\Mutation;
 use App\Entity\FileImportType;
 use App\Extension\Messenger\HandleTrait;
 use App\GraphQL\TypeRegistry;
-use App\Message\Command\ImportFile;
+use App\Message\Command\ScheduleFileImport;
 use App\Service\FileUpload\FileUploadService;
 use App\Service\User\CurrentUserService;
 use GraphQL\Type\Definition\FieldDefinition;
@@ -44,13 +44,14 @@ class UploadDataFileMutation extends FieldDefinition
         /** @var FileImportType $fileImportType */
         $fileImportType = $args['type'];
         $filename = $this->fileUploadService->receive($args['file']);
+
         $this->commandBus->dispatch(
-            new ImportFile(
-                $this->currentUserService->getId(),
-                $fileImportType->getDataProvider(),
-                $fileImportType,
-                $filename,
-                $args['campaignName'] ?? null
+            new ScheduleFileImport(
+                userId: $this->currentUserService->getId(),
+                dataProvider: $fileImportType->getDataProvider(),
+                fileImportType: $fileImportType,
+                filename: $filename,
+                metadata: ['campaignName' => $args['campaignName'] ?? null]
             )
         );
 

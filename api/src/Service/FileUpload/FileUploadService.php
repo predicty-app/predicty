@@ -7,6 +7,9 @@ namespace App\Service\FileUpload;
 use League\Flysystem\FilesystemWriter;
 use Psr\Http\Message\UploadedFileInterface;
 
+/**
+ * Stores uploaded files in the configured storage.
+ */
 class FileUploadService
 {
     public function __construct(private FilesystemWriter $storage)

@@ -28,7 +28,9 @@
       {
         "id": "OTHER",
         "name": "Other",
-        "fileImportTypes": []
+        "fileImportTypes": [
+          "OTHER_SIMPLIFIED_CSV"
+        ]
       }
     ]
   }
