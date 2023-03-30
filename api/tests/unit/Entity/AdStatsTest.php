@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Entity;
 
 use App\Entity\AdStats;
-use App\Service\DateTime\DateTimeHelper;
+use App\Service\Util\DateHelper;
 use App\Service\Util\MoneyHelper;
 use Brick\Money\Currency;
 use PHPUnit\Framework\TestCase;
@@ -36,7 +36,7 @@ class AdStatsTest extends TestCase
 
     private function createAdStats(): AdStats
     {
-        $date = DateTimeHelper::createFromFormat('Y-m-d', '2021-01-01');
+        $date = DateHelper::fromString('2021-01-01', 'Y-m-d');
         $cpr = MoneyHelper::amount(14.567, Currency::of('PLN'));
         $spent = MoneyHelper::amount(203.84, Currency::of('PLN'));
 

@@ -6,7 +6,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Ad;
 use App\Entity\AdStats;
-use App\Service\DateTime\DateTimeHelper;
+use App\Service\Util\DateHelper;
 use Brick\Money\Currency;
 use Brick\Money\Money;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -99,7 +99,7 @@ class AdStatsFixtures extends Fixture implements DependentFixtureInterface
                 $amountSpent = $costPerResult->multipliedBy($row[2]);
             }
 
-            $date = DateTimeHelper::createFromFormat('Y-m-d', $row[1]);
+            $date = DateHelper::fromString($row[1], 'Y-m-d');
 
             $entity = new AdStats(
                 userId: $row[0]->getUserId(),
