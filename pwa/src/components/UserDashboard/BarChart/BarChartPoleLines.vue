@@ -32,7 +32,7 @@ watch(
   () => [
     userDashboardStore.activeProviders.length,
     userDashboardStore.hiddenAds.length,
-    userDashboardStore.typeChart
+    userDashboardStore.typeChart,
   ],
   async () => {
     await calcualteAll();
@@ -125,7 +125,8 @@ function concatAllAdSetsToOne(): AdsType[] {
     .flat(1)
     .map((adset: AdSetsType) => adset.ads)
     .flat(1)
-    .filter((ad: AdsType) => !userDashboardStore.hiddenAds.includes(ad.uid));
+    .filter((ad: AdsType) => !userDashboardStore.hiddenAds.includes(ad.uid))
+    .filter((ad: AdsType) => userDashboardStore.activeProviders.includes(ad.dataProvider[0]))
 }
 
 /**
