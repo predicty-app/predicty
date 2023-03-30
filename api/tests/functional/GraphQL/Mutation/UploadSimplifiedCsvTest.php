@@ -6,6 +6,7 @@ namespace App\Tests\Functional\GraphQL\Mutation;
 
 use App\DataFixtures\UserFixtures;
 use App\Entity\Ad;
+use App\Entity\AdSet;
 use App\Entity\Campaign;
 use App\Entity\DataProvider;
 use App\Test\GraphQLTestCase;
@@ -65,7 +66,12 @@ class UploadSimplifiedCsvTest extends GraphQLTestCase
         $this->assertInstanceOf(Campaign::class, $campaign);
         $this->assertSame('Test campaign', $campaign->getName());
         $this->assertSame(DataProvider::OTHER, $campaign->getDataProvider());
-        $this->assertNotNull($campaign->getExternalId());
+        $this->assertSame('e7593cd7c1d265bd1cbf7d7ae83759b8', $campaign->getExternalId());
+
+        $adSet = $this->getRepository(AdSet::class)->findAll();
+        $this->assertCount(1, $adSet);
+        $this->assertSame('Test campaign ad set', $adSet[0]->getName());
+        $this->assertSame('dad5755afb5b17f677f6e15566b80442', $adSet[0]->getExternalId());
 
         $ads = $this->getRepository(Ad::class)->findAll();
         $this->assertCount(2, $ads);

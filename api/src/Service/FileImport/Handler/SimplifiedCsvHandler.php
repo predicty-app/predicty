@@ -6,6 +6,7 @@ namespace App\Service\FileImport\Handler;
 
 use App\Entity\FileImportType;
 use App\Factory\AdFactory;
+use App\Factory\AdSetFactory;
 use App\Factory\AdStatsFactory;
 use App\Factory\CampaignFactory;
 use App\Service\Clock\Clock;
@@ -25,6 +26,7 @@ class SimplifiedCsvHandler extends AbstractFileImportHandler
 
     public function __construct(
         private CampaignFactory $campaignFactory,
+        private AdSetFactory $adSetFactory,
         private AdFactory $adFactory,
         private AdStatsFactory $adStatsFactory
     ) {
@@ -34,16 +36,23 @@ class SimplifiedCsvHandler extends AbstractFileImportHandler
     public function processRecord(array $record, FileImportContext $context): void
     {
         $campaignName = $context->getMetadata()->get('campaignName') ?? $this->getRandomCampaignName();
-        $externalId = md5($campaignName);
+        $campaignExternalId = md5($campaignName);
+        $adSetExternalId = md5('adset'.$campaignName);
 
         $campaign = $this->campaignFactory->make(
             userId: $context->getUserId(),
             name: $campaignName,
-            externalId: $externalId
+            externalId: $campaignExternalId
         );
 
-        $ad = $this->adFactory->makeForCampaign(
+        $adset = $this->adSetFactory->make(
             campaign: $campaign,
+            name: sprintf('%s ad set', $campaignName),
+            externalId: $adSetExternalId,
+        );
+
+        $ad = $this->adFactory->make(
+            adSet: $adset,
             name: $record[self::HEADER_AD_NAME],
             externalId: md5($record[self::HEADER_AD_NAME]),
         );
