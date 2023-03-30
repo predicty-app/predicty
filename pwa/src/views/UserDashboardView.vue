@@ -188,9 +188,6 @@ async function setResponseFiredAction() {
             <ChartTimelineItem
               :element="adset"
               type="collection"
-              @drop="onDrop($event, adset, campaign)"
-              @dragover.prevent
-              @dragenter.prevent
               :is-visible="true"
               :uid="adset.uid"
               :color="campaign.color"
@@ -207,9 +204,6 @@ async function setResponseFiredAction() {
               <ChartTimelineItem
                 :element="ad"
                 type="ad"
-                draggable="true"
-                @dragstart="startDrag($event, ad, campaign)"
-                @dragend="endDrag"
                 :is-visible="checkIsAdInCollection(ad.uid)"
                 :uid="ad.uid"
                 :color="campaign.color"
