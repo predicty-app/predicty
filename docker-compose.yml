@@ -14,8 +14,8 @@ services:
       retries: 3
       start_period: 30s
     environment:
-      APP_ENV: ${APP_ENV:-dev}
-      APP_SECRET: ${APP_SECRET:-!ChangeMeImNotSoSecret!}
+      APP_ENV: ${SYMFONY_APP_ENV:-dev}
+      APP_SECRET: ${SYMFONY_APP_SECRET:-!ChangeMeImNotSoSecret!}
       MAILER_DSN: ${MAILER_DSN}
       DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@database:5432/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-14}
       TRUSTED_PROXIES: ${TRUSTED_PROXIES:-127.0.0.0/8,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16}
