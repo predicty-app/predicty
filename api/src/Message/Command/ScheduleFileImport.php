@@ -4,16 +4,17 @@ declare(strict_types=1);
 
 namespace App\Message\Command;
 
+use App\Entity\DataProvider;
 use App\Entity\FileImportType;
 
-class ImportFile
+class ScheduleFileImport
 {
     public function __construct(
-        public int $importId,
         public int $userId,
+        public DataProvider $dataProvider,
         public FileImportType $fileImportType,
         public string $filename,
-        public array $metadata = []
+        public array $metadata = [],
     ) {
     }
 }

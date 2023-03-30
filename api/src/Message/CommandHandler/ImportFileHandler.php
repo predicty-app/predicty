@@ -4,43 +4,26 @@ declare(strict_types=1);
 
 namespace App\Message\CommandHandler;
 
-use App\Entity\FileImportType;
-use App\Message\Command\ImportFacebookCsvFile;
 use App\Message\Command\ImportFile;
-use App\Message\Command\ImportGoogleAdsCsvFile;
-use App\Message\Command\ImportGoogleAnalyticsRevenueFile;
-use App\Message\Command\ImportSimplifiedCsvFile;
-use App\Service\DataImport\ImportTrackingService;
-use RuntimeException;
+use App\Service\FileImport\FileImportMetadata;
+use App\Service\FileImport\FileImportService;
+use App\Service\ImportTracking\ImportTrackingService;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
-use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Messenger\Stamp\DispatchAfterCurrentBusStamp;
 
-#[AsMessageHandler]
+#[AsMessageHandler(fromTransport: 'async')]
 class ImportFileHandler
 {
     public function __construct(
-        private ImportTrackingService $importTrackingService,
-        private MessageBusInterface $commandBus,
+        private FileImportService $fileImportService,
+        private ImportTrackingService $importTrackingService
     ) {
     }
 
     public function __invoke(ImportFile $command): void
     {
-        $import = $this->importTrackingService->createNewImport(
-            $command->userId,
-            $command->filename,
-            $command->fileImportType
-        );
-
-        $importCommand = match ($command->fileImportType) {
-            FileImportType::FACEBOOK_CSV => new ImportFacebookCsvFile($import->getId(), $command->userId, $command->filename),
-            FileImportType::GOOGLE_ANALYTICS_REVENUE => new ImportGoogleAnalyticsRevenueFile($import->getId(), $command->userId, $command->filename),
-            FileImportType::OTHER_SIMPLIFIED_CSV => new ImportSimplifiedCsvFile($import->getId(), $command->userId, $command->filename, $command->campaignName),
-            FileImportType::GOOGLE_ADS_CSV => new ImportGoogleAdsCsvFile($import->getId(), $command->userId, $command->filename),
-            default => throw new RuntimeException(sprintf('Cannot create import - file type is not supported: %s', $command->fileImportType->value)),
-        };
-
-        $this->commandBus->dispatch($importCommand, [new DispatchAfterCurrentBusStamp()]);
+        $this->importTrackingService->run($command->importId, function () use ($command): void {
+            $metadata = new FileImportMetadata($command->metadata);
+            $this->fileImportService->import($command->userId, $command->filename, $command->fileImportType, $metadata);
+        });
     }
 }

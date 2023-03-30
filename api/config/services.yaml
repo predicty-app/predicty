@@ -27,10 +27,13 @@ services:
             - '../src/Message/Command'
             - '../src/Kernel.php'
             - '../src/Validator/EntityExists.php'
+            - '../src/Service/FileImport/FileImportContext.php'
 
     _instanceof:
         GraphQL\Type\Definition\Type:
             tags: [ graphql_type ]
+        App\Service\FileImport\FileImportHandler:
+            tags: [ file_import_handler ]
 
     graphql_queries:
         namespace: App\GraphQL\Query\
@@ -50,6 +53,10 @@ services:
 
     App\GraphQL\Type\MutationType:
         arguments: [!tagged_iterator {tag: graphql_mutation}]
+
+    App\Service\FileImport\FileImportService:
+        arguments:
+            $fileImportHandlers: !tagged_iterator { tag: file_import_handler }
 
     GraphQL\Upload\UploadType: ~
     MLL\GraphQLScalars\Date: ~
