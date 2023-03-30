@@ -17,6 +17,10 @@ class DateHelper
             throw new RuntimeException(sprintf('Invalid date format given: "%s" (expecting %s)', $date, $format));
         }
 
+        if ($format === 'Y-m-d') {
+            $datetime = $datetime->setTime(0, 0, 0);
+        }
+
         return $datetime;
     }
 }
