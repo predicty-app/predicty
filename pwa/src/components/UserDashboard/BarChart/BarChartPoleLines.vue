@@ -69,7 +69,7 @@ async function calcualteAll() {
   );
 
   const divider =
-    userDashboardStore.typeChart === TypeOptionsChart.WEEKS ? 9 : 2;
+    userDashboardStore.typeChart === TypeOptionsChart.WEEKS ? 9 : 1;
   const modifier =
     userDashboardStore.typeChart === TypeOptionsChart.WEEKS
       ? Math.max(...dailyRevenue) * divider
