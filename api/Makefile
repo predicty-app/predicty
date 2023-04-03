@@ -40,6 +40,14 @@ fixtures:
 test: reset-test-database # Run tests
 	@$(PHP_EXEC) bin/phpunit
 
+fixer:
+	@$(PHP_EXEC) ./vendor/bin/php-cs-fixer fix --allow-risky yes --dry-run
+
+phpcs:
+	@$(PHP_EXEC) ./vendor/bin/phpcs
+
+qa: fixer phpcs phpstan test # Run all QA tools
+
 paratest:
 	$(PHP_EXEC) vendor/bin/paratest --bootstrap=tests/paratest.php
 

@@ -56,7 +56,7 @@ services:
 
     App\Service\FileImport\FileImportService:
         arguments:
-            $fileImportHandlers: !tagged_iterator { tag: file_import_handler }
+            $fileImportHandlers: !tagged_iterator {tag: file_import_handler}
 
     GraphQL\Upload\UploadType: ~
     MLL\GraphQLScalars\Date: ~

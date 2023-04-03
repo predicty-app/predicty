@@ -62,6 +62,8 @@ class TypeRegistry
      */
     public function __call(string $typeName, array $arguments = []): Type
     {
+        assert($arguments === [], 'No arguments are allowed');
+
         return $this->get($typeName);
     }
 

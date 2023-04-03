@@ -89,10 +89,6 @@ abstract class GraphQLTestCase extends WebTestCase
         self::executeQuery($query, $variables, $operationName);
     }
 
-    public static function assertResponseMatchesPattern(string $pattern): void
-    {
-    }
-
     public static function assertResponseMatchesJsonFile(string $filename, string $message = ''): void
     {
         $responseContent = (string) self::getClient()->getResponse()->getContent();
