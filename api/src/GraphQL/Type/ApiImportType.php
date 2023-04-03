@@ -13,6 +13,7 @@ class ApiImportType extends ObjectType
     {
         parent::__construct([
             'name' => 'ApiImport',
+            'description' => 'Represents an API import',
             'interfaces' => [$type->import()],
             'fields' => $type->import()->getFields(),
         ]);

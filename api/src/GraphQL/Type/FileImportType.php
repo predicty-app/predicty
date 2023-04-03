@@ -14,6 +14,7 @@ class FileImportType extends ObjectType
     {
         parent::__construct([
             'name' => 'FileImport',
+            'description' => 'Represents a file import',
             'interfaces' => [$type->import()],
             'fields' => $type->import()->getFields() + [
                 'filename' => [
