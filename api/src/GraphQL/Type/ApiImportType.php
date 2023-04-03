@@ -14,13 +14,7 @@ class ApiImportType extends ObjectType
         parent::__construct([
             'name' => 'ApiImport',
             'interfaces' => [$type->import()],
-            'fields' => [
-                $type->import()->getField('id'),
-                $type->import()->getField('status'),
-                $type->import()->getField('dataProvider'),
-                $type->import()->getField('startedAt'),
-                $type->import()->getField('completedAt'),
-            ],
+            'fields' => $type->import()->getFields(),
         ]);
     }
 }
