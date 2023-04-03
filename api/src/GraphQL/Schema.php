@@ -18,6 +18,7 @@ class Schema extends GraphQLSchema
             ->setMutation($typeResolver->get(MutationType::class))
             /* @phpstan-ignore-next-line */
             ->setTypeLoader(fn (string $name) => $typeResolver->get($name))
+            ->setTypes([$typeResolver->fileImport(), $typeResolver->apiImport()])
         ;
 
         parent::__construct($config);

@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
     'api' => ApiImport::class,
     'file' => FileImport::class,
 ])]
-class Import
+abstract class Import
 {
     use IdTrait;
     use TimestampableTrait;

@@ -60,6 +60,7 @@ services:
 
     GraphQL\Upload\UploadType: ~
     MLL\GraphQLScalars\Date: ~
+    MLL\GraphQLScalars\DateTime: ~
 
     App\Service\Google\GoogleAdsClient:
         factory: [App\Service\Google\GoogleAdsClientFactory, build]
