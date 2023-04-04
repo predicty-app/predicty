@@ -23,4 +23,19 @@ class NotifierService
 
         $this->notifier->send($notification, $user);
     }
+
+    public function sendPassword(User $user, string $password): void
+    {
+        $text = <<<'EOT'
+            Thank you for creating an account.
+            <br>We generated a new password for your account: %s
+            <br>
+            <strong>Make sure to change your password</strong>
+            EOT;
+
+        $notification = (new Notification('Predicty Account Registration'))
+            ->content(sprintf($text, $password));
+
+        $this->notifier->send($notification, $user);
+    }
 }
