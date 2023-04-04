@@ -1,0 +1,53 @@
+{
+  "data": {
+    "imports": [
+      {
+        "id": "@integer@",
+        "__typename": "ApiImport",
+        "status": "IN_PROGRESS",
+        "message": "",
+        "dataProvider": {
+          "name": "Google Ads"
+        },
+        "startedAt": "@datetime@",
+        "completedAt": null
+      },
+      {
+        "id": "@integer@",
+        "__typename": "FileImport",
+        "status": "FAILED",
+        "message": "Import failed",
+        "dataProvider": {
+          "name": "Google Ads"
+        },
+        "startedAt": "@datetime@",
+        "completedAt": "@datetime@",
+        "filename": "dummy-import-3.csv"
+      },
+      {
+        "id": "@integer@",
+        "__typename": "FileImport",
+        "status": "IN_PROGRESS",
+        "message": "",
+        "dataProvider": {
+          "name": "Google Analytics"
+        },
+        "startedAt": "@datetime@",
+        "completedAt": null,
+        "filename": "dummy-import-2.csv"
+      },
+      {
+        "id": "@integer@",
+        "__typename": "FileImport",
+        "status": "WAITING",
+        "message": "",
+        "dataProvider": {
+          "name": "Facebook Ads (Meta)"
+        },
+        "startedAt": null,
+        "completedAt": null,
+        "filename": "dummy-import-1.csv"
+      }
+    ]
+  }
+}
