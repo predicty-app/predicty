@@ -3,11 +3,39 @@
     "imports": [
       {
         "id": "@integer@",
+        "__typename": "FileImport",
+        "status": "COMPLETE",
+        "message": "",
+        "dataProvider": {
+          "name": "Facebook Ads (Meta)"
+        },
+        "result": {
+          "createdCampaigns": 2,
+          "createdAdSets": 4,
+          "createdAds": 10,
+          "createdAdStats": 50,
+          "createdDailyRevenues": 50,
+          "totalCreated": 116
+        },
+        "startedAt": "@datetime@",
+        "completedAt": "@datetime@",
+        "filename": "dummy-import-1.csv"
+      },
+      {
+        "id": "@integer@",
         "__typename": "ApiImport",
         "status": "IN_PROGRESS",
         "message": "",
         "dataProvider": {
           "name": "Google Ads"
+        },
+        "result": {
+          "createdCampaigns": 0,
+          "createdAdSets": 0,
+          "createdAds": 0,
+          "createdAdStats": 0,
+          "createdDailyRevenues": 0,
+          "totalCreated": 0
         },
         "startedAt": "@datetime@",
         "completedAt": null
@@ -19,6 +47,14 @@
         "message": "Import failed",
         "dataProvider": {
           "name": "Google Ads"
+        },
+        "result": {
+          "createdCampaigns": 0,
+          "createdAdSets": 0,
+          "createdAds": 0,
+          "createdAdStats": 0,
+          "createdDailyRevenues": 0,
+          "totalCreated": 0
         },
         "startedAt": "@datetime@",
         "completedAt": "@datetime@",
@@ -32,6 +68,14 @@
         "dataProvider": {
           "name": "Google Analytics"
         },
+        "result": {
+          "createdCampaigns": 0,
+          "createdAdSets": 0,
+          "createdAds": 0,
+          "createdAdStats": 0,
+          "createdDailyRevenues": 0,
+          "totalCreated": 0
+        },
         "startedAt": "@datetime@",
         "completedAt": null,
         "filename": "dummy-import-2.csv"
@@ -43,6 +87,14 @@
         "message": "",
         "dataProvider": {
           "name": "Facebook Ads (Meta)"
+        },
+        "result": {
+          "createdCampaigns": 0,
+          "createdAdSets": 0,
+          "createdAds": 0,
+          "createdAdStats": 0,
+          "createdDailyRevenues": 0,
+          "totalCreated": 0
         },
         "startedAt": null,
         "completedAt": null,

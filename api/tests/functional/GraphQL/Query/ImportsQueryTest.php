@@ -28,6 +28,14 @@ class ImportsQueryTest extends GraphQLTestCase
                 dataProvider {
                   name
                 }
+                result {
+                  createdCampaigns
+                  createdAdSets
+                  createdAds
+                  createdAdStats
+                  createdDailyRevenues
+                  totalCreated
+                }
                 startedAt
                 completedAt
                 ... on FileImport {

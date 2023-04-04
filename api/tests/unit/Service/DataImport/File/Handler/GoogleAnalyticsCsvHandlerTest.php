@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Service\DataImport\File\Handler;
 
-use App\Factory\DailyRevenueFactory;
+use App\Service\DataImport\DataImportApi;
 use App\Service\DataImport\File\FileImportContext;
 use App\Service\DataImport\File\FileImportMetadata;
 use App\Service\DataImport\File\Handler\GoogleAnalyticsCsvHandler;
@@ -27,15 +27,15 @@ class GoogleAnalyticsCsvHandlerTest extends TestCase
         ];
 
         $context = new FileImportContext(123, new FileImportMetadata());
-        $factory = $this->createMock(DailyRevenueFactory::class);
-        $factory->expects($this->once())->method('make')->with(
-            userId: 123,
-            date: new DateTimeImmutable('2021-01-01'),
-            revenue: Money::of(100, 'PLN'),
-            averageOrderValue: Money::of(100, 'PLN')
+        $dataImportApi = $this->createMock(DataImportApi::class);
+        $dataImportApi->expects($this->once())->method('getOrCreateDailyRevenue')->with(
+            $this->equalTo(123),
+            $this->equalTo(new DateTimeImmutable('2021-01-01')),
+            $this->equalTo(Money::of(100, 'PLN')),
+            $this->equalTo(Money::of(100, 'PLN'))
         );
 
-        $handler = new GoogleAnalyticsCsvHandler($factory);
+        $handler = new GoogleAnalyticsCsvHandler($dataImportApi);
         $handler->processRecord($record, $context);
     }
 
@@ -49,15 +49,15 @@ class GoogleAnalyticsCsvHandlerTest extends TestCase
         ];
 
         $context = new FileImportContext(123, new FileImportMetadata());
-        $factory = $this->createMock(DailyRevenueFactory::class);
-        $factory->expects($this->once())->method('make')->with(
-            userId: 123,
-            date: new DateTimeImmutable('2021-01-01'),
-            revenue: Money::of(100, 'USD'),
-            averageOrderValue: Money::of(100, 'USD')
+        $dataImportApi = $this->createMock(DataImportApi::class);
+        $dataImportApi->expects($this->once())->method('getOrCreateDailyRevenue')->with(
+            $this->equalTo(123),
+            $this->equalTo(new DateTimeImmutable('2021-01-01')),
+            $this->equalTo(Money::of(100, 'USD')),
+            $this->equalTo(Money::of(100, 'USD'))
         );
 
-        $handler = new GoogleAnalyticsCsvHandler($factory);
+        $handler = new GoogleAnalyticsCsvHandler($dataImportApi);
         $handler->processRecord($record, $context);
     }
 }

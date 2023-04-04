@@ -9,7 +9,6 @@ use App\Entity\FileImportType;
 use App\Entity\Import;
 use App\Entity\ImportResult;
 use App\Repository\ImportRepository;
-use Closure;
 use Psr\Log\LoggerInterface;
 use Throwable;
 
@@ -33,14 +32,14 @@ class ImportTrackingService
         return $import;
     }
 
-    public function run(int $importId, Closure $closure): void
+    public function run(int $importId, callable $callback): void
     {
         $this->markImportAsStarted($importId);
         $importResult = ImportResult::empty();
         $this->dataImportApi->track($importId, $importResult);
 
         try {
-            $closure();
+            $callback();
             $this->markImportAsComplete($importId, $importResult);
         } catch (Throwable $e) {
             $this->importLogger->error(sprintf('Import failed: %s', $e->getMessage()), ['exception' => $e]);
@@ -52,28 +51,30 @@ class ImportTrackingService
 
     private function markImportAsStarted(int $id): void
     {
-        $import = $this->importRepository->findById($id);
-        assert($import instanceof Import);
-
+        $import = $this->getImport($id);
         $import->start();
         $this->importRepository->save($import);
     }
 
     private function markImportAsFailed(int $id, string $message = ''): void
     {
-        $import = $this->importRepository->findById($id);
-        assert($import instanceof Import);
-
+        $import = $this->getImport($id);
         $import->fail($message);
         $this->importRepository->save($import);
     }
 
     private function markImportAsComplete(int $id, ImportResult $importResult): void
     {
+        $import = $this->getImport($id);
+        $import->complete($importResult);
+        $this->importRepository->save($import);
+    }
+
+    private function getImport(int $id): Import
+    {
         $import = $this->importRepository->findById($id);
         assert($import instanceof Import);
 
-        $import->complete($importResult);
-        $this->importRepository->save($import);
+        return $import;
     }
 }
