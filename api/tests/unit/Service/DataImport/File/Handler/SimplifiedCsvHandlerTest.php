@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Service\FileImport\Handler;
+namespace App\Tests\Unit\Service\DataImport\File\Handler;
 
 use App\Entity\Ad;
 use App\Entity\AdSet;
@@ -11,15 +11,15 @@ use App\Factory\AdFactory;
 use App\Factory\AdSetFactory;
 use App\Factory\AdStatsFactory;
 use App\Factory\CampaignFactory;
-use App\Service\FileImport\FileImportContext;
-use App\Service\FileImport\FileImportMetadata;
-use App\Service\FileImport\Handler\SimplifiedCsvHandler;
+use App\Service\DataImport\File\FileImportContext;
+use App\Service\DataImport\File\FileImportMetadata;
+use App\Service\DataImport\File\Handler\SimplifiedCsvHandler;
 use Brick\Money\Money;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\Service\FileImport\Handler\SimplifiedCsvHandler
+ * @covers \App\Service\DataImport\File\Handler\SimplifiedCsvHandler
  */
 class SimplifiedCsvHandlerTest extends TestCase
 {

@@ -33,6 +33,9 @@ abstract class Import
     #[ORM\Column(type: Types::TEXT)]
     private string $message = '';
 
+    #[ORM\Column(type: Types::JSON)]
+    private array $result = [];
+
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?DateTimeImmutable $startedAt;
 
@@ -70,10 +73,16 @@ abstract class Import
         return $this->dataProvider;
     }
 
-    public function complete(): void
+    public function getResult(): ImportResult
+    {
+        return ImportResult::fromArray($this->result);
+    }
+
+    public function complete(ImportResult $importResult): void
     {
         assert($this->status === ImportStatus::IN_PROGRESS, 'Import can only be completed when it was previously in progress');
         $this->status = ImportStatus::COMPLETE;
+        $this->result = $importResult->toArray();
         $this->completedAt = Clock::now();
         $this->changedAt = Clock::now();
     }
@@ -88,7 +97,6 @@ abstract class Import
 
     public function fail(string $message): void
     {
-        assert($this->status === ImportStatus::IN_PROGRESS, 'Import can only be failed when it was previously in progress');
         $this->message = $message;
         $this->completedAt = Clock::now();
         $this->changedAt = Clock::now();

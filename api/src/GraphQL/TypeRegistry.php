@@ -16,6 +16,7 @@ use App\GraphQL\Type\DataProviderIdType;
 use App\GraphQL\Type\DataProviderType;
 use App\GraphQL\Type\FileImportType;
 use App\GraphQL\Type\FileImportTypeType;
+use App\GraphQL\Type\ImportResultType;
 use App\GraphQL\Type\ImportStatusType;
 use App\GraphQL\Type\ImportType;
 use App\GraphQL\Type\MoneyType;
@@ -49,6 +50,7 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
  * @method ImportType         import()
  * @method ApiImportType      apiImport()
  * @method FileImportType     fileImport()
+ * @method ImportResultType   importResult()
  */
 class TypeRegistry
 {

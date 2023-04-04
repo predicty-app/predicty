@@ -6,7 +6,7 @@ namespace App\Message\CommandHandler;
 
 use App\Message\Command\ImportFile;
 use App\Message\Command\ScheduleFileImport;
-use App\Service\ImportTracking\ImportTrackingService;
+use App\Service\DataImport\ImportTrackingService;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\DispatchAfterCurrentBusStamp;
@@ -22,7 +22,7 @@ class ScheduleFileImportHandler
 
     public function __invoke(ScheduleFileImport $command): void
     {
-        $import = $this->importTrackingService->createNewImport(
+        $import = $this->importTrackingService->createNewFileImport(
             $command->userId,
             $command->filename,
             $command->fileImportType

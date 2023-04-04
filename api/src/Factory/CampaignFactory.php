@@ -6,11 +6,10 @@ namespace App\Factory;
 
 use App\Entity\Campaign;
 use App\Repository\CampaignRepository;
-use Psr\Clock\ClockInterface;
 
 class CampaignFactory
 {
-    public function __construct(private CampaignRepository $campaignRepository, private ClockInterface $clock)
+    public function __construct(private CampaignRepository $campaignRepository)
     {
     }
 
@@ -23,8 +22,6 @@ class CampaignFactory
                 externalId: $externalId,
                 userId: $userId,
                 name: $name,
-                createdAt: $this->clock->now(),
-                changedAt: $this->clock->now()
             );
 
             $this->campaignRepository->save($campaign);

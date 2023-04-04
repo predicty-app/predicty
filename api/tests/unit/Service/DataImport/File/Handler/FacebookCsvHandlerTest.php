@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Service\FileImport\Handler;
+namespace App\Tests\Unit\Service\DataImport\File\Handler;
 
 use App\Entity\Campaign;
 use App\Factory\AdFactory;
 use App\Factory\AdSetFactory;
 use App\Factory\AdStatsFactory;
 use App\Factory\CampaignFactory;
-use App\Service\FileImport\FileImportContext;
-use App\Service\FileImport\FileImportMetadata;
-use App\Service\FileImport\Handler\FacebookCsvHandler;
+use App\Service\DataImport\File\FileImportContext;
+use App\Service\DataImport\File\FileImportMetadata;
+use App\Service\DataImport\File\Handler\FacebookCsvHandler;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\Service\FileImport\Handler\FacebookCsvHandler
+ * @covers \App\Service\DataImport\File\Handler\FacebookCsvHandler
  */
 class FacebookCsvHandlerTest extends TestCase
 {

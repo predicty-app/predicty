@@ -31,6 +31,9 @@ class ImportType extends InterfaceType
                 'dataProvider' => [
                     'type' => fn () => $type->dataProvider(),
                 ],
+                'result' => [
+                    'type' => fn () => $type->importResult(),
+                ],
                 'startedAt' => [
                     'type' => $type->dateTime(),
                 ],

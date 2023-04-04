@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Service\FileImport\Handler;
+namespace App\Tests\Unit\Service\DataImport\File\Handler;
 
 use App\Factory\DailyRevenueFactory;
-use App\Service\FileImport\FileImportContext;
-use App\Service\FileImport\FileImportMetadata;
-use App\Service\FileImport\Handler\GoogleAnalyticsCsvHandler;
+use App\Service\DataImport\File\FileImportContext;
+use App\Service\DataImport\File\FileImportMetadata;
+use App\Service\DataImport\File\Handler\GoogleAnalyticsCsvHandler;
 use Brick\Money\Money;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\Service\FileImport\Handler\GoogleAnalyticsCsvHandler
+ * @covers \App\Service\DataImport\File\Handler\GoogleAnalyticsCsvHandler
  */
 class GoogleAnalyticsCsvHandlerTest extends TestCase
 {

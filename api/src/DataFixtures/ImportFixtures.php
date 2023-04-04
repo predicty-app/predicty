@@ -8,6 +8,7 @@ use App\Entity\ApiImport;
 use App\Entity\DataProvider;
 use App\Entity\FileImport;
 use App\Entity\FileImportType;
+use App\Entity\ImportResult;
 use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -19,6 +20,7 @@ class ImportFixtures extends Fixture implements DependentFixtureInterface
     public const IMPORT_2 = 'IMPORT2';
     public const IMPORT_3 = 'IMPORT3';
     public const IMPORT_4 = 'IMPORT4';
+    public const IMPORT_5 = 'IMPORT5';
 
     public function __construct()
     {
@@ -45,10 +47,16 @@ class ImportFixtures extends Fixture implements DependentFixtureInterface
         $import4->start();
         $this->addReference(self::IMPORT_4, $import4);
 
+        $import5 = new FileImport($user->getId(), 'dummy-import-1.csv', FileImportType::FACEBOOK_CSV);
+        $import5->start();
+        $import5->complete(new ImportResult(2, 4, 10, 50, 50));
+        $this->addReference(self::IMPORT_5, $import5);
+
         $manager->persist($import1);
         $manager->persist($import2);
         $manager->persist($import3);
         $manager->persist($import4);
+        $manager->persist($import5);
 
         $manager->flush();
     }

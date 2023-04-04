@@ -13,9 +13,10 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity]
 #[ORM\Index(fields: ['userId'])]
 #[ORM\Index(fields: ['date'])]
-class DailyRevenue
+class DailyRevenue implements Importable
 {
     use IdTrait;
+    use ImportableTrait;
     use TimestampableTrait;
 
     #[ORM\Column]

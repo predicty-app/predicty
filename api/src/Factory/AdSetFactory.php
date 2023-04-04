@@ -7,11 +7,10 @@ namespace App\Factory;
 use App\Entity\AdSet;
 use App\Entity\Campaign;
 use App\Repository\AdSetRepository;
-use Psr\Clock\ClockInterface;
 
 class AdSetFactory
 {
-    public function __construct(private AdSetRepository $adSetRepository, private ClockInterface $clock)
+    public function __construct(private AdSetRepository $adSetRepository)
     {
     }
 
@@ -29,8 +28,6 @@ class AdSetFactory
                 userId: $campaign->getUserId(),
                 campaignId: $campaign->getId(),
                 name: $name,
-                createdAt: $this->clock->now(),
-                changedAt: $this->clock->now()
             );
             $this->adSetRepository->save($adSet);
         }

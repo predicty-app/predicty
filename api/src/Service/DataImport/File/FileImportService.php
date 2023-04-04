@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\FileImport;
+namespace App\Service\DataImport\File;
 
 use App\Entity\FileImportType;
 use Doctrine\ORM\EntityManagerInterface;
