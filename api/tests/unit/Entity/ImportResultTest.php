@@ -8,7 +8,7 @@ use App\Entity\ImportResult;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers ImportResult
+ * @covers \ImportResult
  */
 class ImportResultTest extends TestCase
 {

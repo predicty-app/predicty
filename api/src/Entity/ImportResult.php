@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+/**
+ * Represents the result of an import.
+ */
 class ImportResult
 {
     public function __construct(

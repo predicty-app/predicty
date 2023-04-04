@@ -6,6 +6,9 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Represents an entity that can be imported and therefore contains the import id.
+ */
 trait ImportableTrait
 {
     #[ORM\Column(nullable: true)]
