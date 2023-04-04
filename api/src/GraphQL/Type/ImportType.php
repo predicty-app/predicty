@@ -25,6 +25,9 @@ class ImportType extends InterfaceType
                 'status' => [
                     'type' => $type->importStatus(),
                 ],
+                'message' => [
+                    'type' => $type->string(),
+                ],
                 'dataProvider' => [
                     'type' => fn () => $type->dataProvider(),
                 ],

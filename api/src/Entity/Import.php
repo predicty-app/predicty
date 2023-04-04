@@ -72,6 +72,7 @@ abstract class Import
 
     public function complete(): void
     {
+        assert($this->status === ImportStatus::IN_PROGRESS, 'Import can only be completed when it was previously in progress');
         $this->status = ImportStatus::COMPLETE;
         $this->completedAt = Clock::now();
         $this->changedAt = Clock::now();
@@ -79,6 +80,7 @@ abstract class Import
 
     public function start(): void
     {
+        assert($this->status === ImportStatus::WAITING, 'Import can only be started when it is waiting');
         $this->status = ImportStatus::IN_PROGRESS;
         $this->startedAt = Clock::now();
         $this->changedAt = Clock::now();
@@ -86,6 +88,7 @@ abstract class Import
 
     public function fail(string $message): void
     {
+        assert($this->status === ImportStatus::IN_PROGRESS, 'Import can only be failed when it was previously in progress');
         $this->message = $message;
         $this->completedAt = Clock::now();
         $this->changedAt = Clock::now();

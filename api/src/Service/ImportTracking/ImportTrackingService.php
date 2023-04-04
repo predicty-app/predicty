@@ -23,7 +23,6 @@ class ImportTrackingService
         $import = new FileImport(
             userId: $userId,
             filename: $filename,
-            dataProvider: $fileImportType->getDataProvider(),
             fileImportType: $fileImportType,
         );
 
