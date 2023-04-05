@@ -23,8 +23,10 @@ services:
         exclude:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
+            - '../src/Notification/'
             - '../src/Test/'
             - '../src/Message/Command'
+            - '../src/Message/Event'
             - '../src/Kernel.php'
             - '../src/Validator/EntityExists.php'
             - '../src/Service/FileImport/FileImportContext.php'
