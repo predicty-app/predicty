@@ -114,11 +114,11 @@ function startDrag(e: any, ad: AdsType) {
   userDashboardStore.draggedAd = ad.uid;
 }
 
-function endDrag(e) {
+function endDrag() {
   userDashboardStore.isDragAndDrop = false;
 }
 
-async function onDrop(e: any, collection: AdSetsType, campaign: CampaignType) {
+async function onDrop(collection: AdSetsType, campaign: CampaignType) {
   await handleAssignAdToCollection({
     campaignUid: campaign.uid,
     collectionUid: collection.uid,
