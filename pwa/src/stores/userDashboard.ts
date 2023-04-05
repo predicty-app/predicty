@@ -92,6 +92,7 @@ type StateType = {
   scaleChart: number;
   hiddenAds: string[];
   isDragAndDrop: boolean;
+  draggedAd: string;
   campaigns: CampaignType[];
   activeProviders: string[];
   typeChart: TypeOptionsChart;
@@ -115,6 +116,7 @@ export const useUserDashboardStore = defineStore({
       parsedCampaignsList: [],
       hiddenAds: [],
       isDragAndDrop: false,
+      draggedAd: null,
       activeProviders: [
         "GOOGLE_ADS",
         "FACEBOOK_ADS",
