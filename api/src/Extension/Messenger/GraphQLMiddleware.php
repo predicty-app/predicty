@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Extension\Messenger;
 
 use App\GraphQL\Exception\ClientSafeException;
+use DomainException;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\Exception\ValidationFailedException;
@@ -50,6 +51,8 @@ class GraphQLMiddleware implements MiddlewareInterface
     private function isClientSafe(Throwable $throwable): bool
     {
         return
+            $throwable instanceof DomainException ||
+            $throwable instanceof ClientSafeException ||
             $throwable instanceof AuthenticationException ||
             $throwable instanceof ValidationFailedException
         ;

@@ -1,3 +1,6 @@
+app_password_reset:
+    path: /confirm-password-reset/{token}
+
 controllers:
     resource:
         path: ../src/Controller/

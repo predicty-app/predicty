@@ -23,10 +23,10 @@ class UserRegisteredHandler
     ) {
     }
 
-    public function __invoke(UserRegistered $message): void
+    public function __invoke(UserRegistered $event): void
     {
         $password = $this->randomPasswordGenerator->generate();
-        $user = $this->userRepository->getById($message->userId);
+        $user = $this->userRepository->getById($event->userId);
         $user->setPassword($this->userPasswordHasher->hashPassword($user, $password));
         $this->userRepository->save($user);
 

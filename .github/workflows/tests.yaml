@@ -1,8 +1,5 @@
 name: "Tests"
-on:
-  pull_request:
-    branches:
-      - develop
+on: push
 env:
   DOCKER_BUILDKIT: 1
 jobs:
