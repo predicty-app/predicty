@@ -7,12 +7,12 @@ namespace App\Notification;
 use Symfony\Component\Notifier\Notification\Notification;
 use Symfony\Component\Notifier\Recipient\RecipientInterface;
 
-class PasscodeNotification extends Notification
+class PasswordResetNotification extends Notification
 {
-    public function __construct(string $passcode)
+    public function __construct()
     {
-        parent::__construct('Predicty Account Login');
-        $this->content(sprintf('Your passcode is: %s', implode(' ', str_split($passcode, 3))));
+        parent::__construct('Predicty Account Password Reset');
+        $this->content('Your account password was reset successfully.');
     }
 
     public function getChannels(RecipientInterface $recipient): array
