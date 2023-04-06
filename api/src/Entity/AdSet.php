@@ -44,6 +44,7 @@ class AdSet implements Importable
         int $userId,
         int $campaignId,
         string $name,
+        ?int $importId = null,
         ?DateTimeImmutable $startedAt = null,
         ?DateTimeImmutable $endedAt = null,
     ) {
@@ -53,6 +54,7 @@ class AdSet implements Importable
         $this->name = $name;
         $this->createdAt = Clock::now();
         $this->changedAt = Clock::now();
+        $this->importId = $importId;
         $this->startedAt = $startedAt;
         $this->endedAt = $endedAt;
     }

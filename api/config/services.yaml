@@ -32,6 +32,9 @@ services:
             - '../src/Validator/EntityExists.php'
             - '../src/Service/DataImport/File/FileImportContext.php'
 
+    App\Tests\Functional\:
+        resource: '../tests/functional/**/*Fixture.php'
+
     _instanceof:
         GraphQL\Type\Definition\Type:
             tags: [ graphql_type ]

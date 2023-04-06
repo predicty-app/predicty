@@ -10,4 +10,5 @@ enum ImportStatus: string
     case IN_PROGRESS = 'IN_PROGRESS';
     case COMPLETE = 'COMPLETE';
     case FAILED = 'FAILED';
+    case WITHDRAWN = 'WITHDRAWN';
 }
