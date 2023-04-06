@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use App\Entity\FileImport;
 use App\Entity\Import;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -26,9 +25,12 @@ class ImportRepository
         return $this->repository->find($id);
     }
 
-    public function findFileImportById(int $id): ?FileImport
+    /**
+     * @return array<Import>
+     */
+    public function findAllByUserId(int $userId): array
     {
-        return $this->em->getRepository(FileImport::class)->find($id);
+        return $this->repository->findBy(['userId' => $userId], ['id' => 'DESC']);
     }
 
     public function save(Import $import): void

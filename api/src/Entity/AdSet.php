@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use DateTimeImmutable;
+use App\Service\Clock\Clock;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -12,9 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Index(fields: ['campaignId'])]
 #[ORM\Index(fields: ['externalId'])]
 #[ORM\UniqueConstraint(fields: ['userId', 'externalId'])]
-class AdSet
+class AdSet implements Importable
 {
     use IdTrait;
+    use ImportableTrait;
     use TimestampableTrait;
 
     #[ORM\Column]
@@ -29,14 +30,14 @@ class AdSet
     #[ORM\Column(length: 255)]
     private string $name;
 
-    public function __construct(string $externalId, int $userId, int $campaignId, string $name, DateTimeImmutable $createdAt, DateTimeImmutable $changedAt)
+    public function __construct(string $externalId, int $userId, int $campaignId, string $name)
     {
         $this->externalId = $externalId;
         $this->userId = $userId;
         $this->campaignId = $campaignId;
         $this->name = $name;
-        $this->createdAt = $createdAt;
-        $this->changedAt = $changedAt;
+        $this->createdAt = Clock::now();
+        $this->changedAt = Clock::now();
     }
 
     public function getExternalId(): string

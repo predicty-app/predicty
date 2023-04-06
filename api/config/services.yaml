@@ -27,12 +27,12 @@ services:
             - '../src/Message/Command'
             - '../src/Kernel.php'
             - '../src/Validator/EntityExists.php'
-            - '../src/Service/FileImport/FileImportContext.php'
+            - '../src/Service/DataImport/File/FileImportContext.php'
 
     _instanceof:
         GraphQL\Type\Definition\Type:
             tags: [ graphql_type ]
-        App\Service\FileImport\FileImportHandler:
+        App\Service\DataImport\File\FileImportHandler:
             tags: [ file_import_handler ]
 
     graphql_queries:
@@ -54,12 +54,13 @@ services:
     App\GraphQL\Type\MutationType:
         arguments: [!tagged_iterator {tag: graphql_mutation}]
 
-    App\Service\FileImport\FileImportService:
+    App\Service\DataImport\File\FileImportService:
         arguments:
             $fileImportHandlers: !tagged_iterator {tag: file_import_handler}
 
     GraphQL\Upload\UploadType: ~
     MLL\GraphQLScalars\Date: ~
+    MLL\GraphQLScalars\DateTime: ~
 
     App\Service\Google\GoogleAdsClient:
         factory: [App\Service\Google\GoogleAdsClientFactory, build]

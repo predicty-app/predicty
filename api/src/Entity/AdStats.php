@@ -15,9 +15,10 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Index(fields: ['date'])]
 #[ORM\Index(fields: ['adId'])]
 #[ORM\UniqueConstraint(fields: ['adId', 'date'])]
-class AdStats
+class AdStats implements Importable
 {
     use IdTrait;
+    use ImportableTrait;
     use TimestampableTrait;
 
     #[ORM\Column]

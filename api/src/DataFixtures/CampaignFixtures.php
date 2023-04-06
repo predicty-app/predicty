@@ -9,17 +9,12 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Psr\Clock\ClockInterface;
 
 class CampaignFixtures extends Fixture implements DependentFixtureInterface
 {
     public const CAMPAIGN_1 = 'CAMPAIGN1';
     public const CAMPAIGN_2 = 'CAMPAIGN2';
     public const CAMPAIGN_3 = 'CAMPAIGN3';
-
-    public function __construct(private ClockInterface $clock)
-    {
-    }
 
     public function load(ObjectManager $manager): void
     {
@@ -37,8 +32,6 @@ class CampaignFixtures extends Fixture implements DependentFixtureInterface
                 externalId: $campaign[2],
                 userId: $campaign[0],
                 name: $campaign[1],
-                createdAt: $this->clock->now(),
-                changedAt: $this->clock->now()
             );
 
             $manager->persist($entity);

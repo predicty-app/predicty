@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\FileImport;
+namespace App\Service\DataImport\File;
 
 /**
  * Additional metadata supplied to the import handler. Object is immutable.

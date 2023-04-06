@@ -9,7 +9,6 @@ use App\Entity\Campaign;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Psr\Clock\ClockInterface;
 
 class AdSetsFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -17,10 +16,6 @@ class AdSetsFixtures extends Fixture implements DependentFixtureInterface
     public const ADSET_2 = 'ADSET2';
     public const ADSET_3 = 'ADSET3';
     public const ADSET_4 = 'ADSET4';
-
-    public function __construct(private ClockInterface $clock)
-    {
-    }
 
     public function load(ObjectManager $manager): void
     {
@@ -47,8 +42,6 @@ class AdSetsFixtures extends Fixture implements DependentFixtureInterface
                 userId: $row[1],
                 campaignId: $row[2],
                 name: $row[3],
-                createdAt: $this->clock->now(),
-                changedAt: $this->clock->now()
             );
 
             $manager->persist($entity);

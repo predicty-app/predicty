@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Service\Clock\Clock;
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Index(fields: ['userId'])]
 #[ORM\Index(fields: ['externalId'])]
 #[ORM\UniqueConstraint(fields: ['userId', 'externalId'])]
-class Campaign
+class Campaign implements Importable
 {
     use IdTrait;
+    use ImportableTrait;
     use TimestampableTrait;
 
     #[ORM\Column]
@@ -34,15 +34,13 @@ class Campaign
         int $userId,
         string $name,
         DataProvider $dataProvider = DataProvider::OTHER,
-        ?DateTimeInterface $createdAt = null,
-        ?DateTimeInterface $changedAt = null
     ) {
         $this->externalId = $externalId;
         $this->userId = $userId;
         $this->name = $name;
         $this->dataProvider = $dataProvider;
-        $this->createdAt = $createdAt ?? Clock::now();
-        $this->changedAt = $changedAt ?? Clock::now();
+        $this->createdAt = Clock::now();
+        $this->changedAt = Clock::now();
     }
 
     public function getUserId(): int

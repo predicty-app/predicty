@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
     'api' => ApiImport::class,
     'file' => FileImport::class,
 ])]
-class Import
+abstract class Import
 {
     use IdTrait;
     use TimestampableTrait;
@@ -32,6 +32,9 @@ class Import
 
     #[ORM\Column(type: Types::TEXT)]
     private string $message = '';
+
+    #[ORM\Column(type: Types::JSON)]
+    private array $result = [];
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?DateTimeImmutable $startedAt;
@@ -70,15 +73,23 @@ class Import
         return $this->dataProvider;
     }
 
-    public function complete(): void
+    public function getResult(): ImportResult
     {
+        return ImportResult::fromArray($this->result);
+    }
+
+    public function complete(ImportResult $importResult): void
+    {
+        assert($this->status === ImportStatus::IN_PROGRESS, 'Import can only be completed when it was previously in progress');
         $this->status = ImportStatus::COMPLETE;
+        $this->result = $importResult->toArray();
         $this->completedAt = Clock::now();
         $this->changedAt = Clock::now();
     }
 
     public function start(): void
     {
+        assert($this->status === ImportStatus::WAITING, 'Import can only be started when it is waiting');
         $this->status = ImportStatus::IN_PROGRESS;
         $this->startedAt = Clock::now();
         $this->changedAt = Clock::now();

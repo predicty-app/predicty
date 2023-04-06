@@ -2,20 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Unit\Service\FileImport\Handler;
+namespace App\Tests\Unit\Service\DataImport\File\Handler;
 
+use App\Entity\AdSet;
 use App\Entity\Campaign;
-use App\Factory\AdFactory;
-use App\Factory\AdSetFactory;
-use App\Factory\AdStatsFactory;
-use App\Factory\CampaignFactory;
-use App\Service\FileImport\FileImportContext;
-use App\Service\FileImport\FileImportMetadata;
-use App\Service\FileImport\Handler\FacebookCsvHandler;
+use App\Service\DataImport\DataImportApi;
+use App\Service\DataImport\File\FileImportContext;
+use App\Service\DataImport\File\FileImportMetadata;
+use App\Service\DataImport\File\Handler\FacebookCsvHandler;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \App\Service\FileImport\Handler\FacebookCsvHandler
+ * @covers \App\Service\DataImport\File\Handler\FacebookCsvHandler
  */
 class FacebookCsvHandlerTest extends TestCase
 {
@@ -35,17 +33,14 @@ class FacebookCsvHandlerTest extends TestCase
 
         $context = new FileImportContext(123, new FileImportMetadata());
 
-        $adSetFactory = $this->createMock(AdSetFactory::class);
-        $adStatsFactory = $this->createMock(AdStatsFactory::class);
-        $adFactory = $this->createMock(AdFactory::class);
-        $campaignFactory = $this->createMock(CampaignFactory::class);
-        $campaignFactory->expects($this->once())->method('make')->with(
+        $dataImportApi = $this->createMock(DataImportApi::class);
+        $dataImportApi->expects($this->once())->method('getOrCreateCampaign')->with(
             $this->equalTo(123),
             $this->equalTo('Test Campaign'),
             $this->equalTo('campaign-id-100')
         );
 
-        $handler = new FacebookCsvHandler($campaignFactory, $adSetFactory, $adFactory, $adStatsFactory);
+        $handler = new FacebookCsvHandler($dataImportApi);
         $handler->processRecord($record, $context);
     }
 
@@ -64,18 +59,14 @@ class FacebookCsvHandlerTest extends TestCase
         ];
 
         $context = new FileImportContext(123, new FileImportMetadata());
-
-        $adSetFactory = $this->createMock(AdSetFactory::class);
-        $adSetFactory->expects($this->once())->method('make')->with(
+        $dataImportApi = $this->createMock(DataImportApi::class);
+        $dataImportApi->expects($this->once())->method('getOrCreateAdSet')->with(
             $this->isInstanceOf(Campaign::class),
             $this->equalTo(''),
             $this->equalTo('adset-id-100'),
         );
-        $adStatsFactory = $this->createMock(AdStatsFactory::class);
-        $adFactory = $this->createMock(AdFactory::class);
-        $campaignFactory = $this->createMock(CampaignFactory::class);
 
-        $handler = new FacebookCsvHandler($campaignFactory, $adSetFactory, $adFactory, $adStatsFactory);
+        $handler = new FacebookCsvHandler($dataImportApi);
         $handler->processRecord($record, $context);
     }
 
@@ -94,18 +85,14 @@ class FacebookCsvHandlerTest extends TestCase
         ];
 
         $context = new FileImportContext(123, new FileImportMetadata());
-
-        $adSetFactory = $this->createMock(AdSetFactory::class);
-        $adSetFactory->expects($this->once())->method('make')->with(
-            $this->isInstanceOf(Campaign::class),
-            $this->equalTo(''),
-            $this->equalTo('adset-id-100'),
+        $dataImportApi = $this->createMock(DataImportApi::class);
+        $dataImportApi->expects($this->once())->method('getOrCreateAd')->with(
+            $this->isInstanceOf(AdSet::class),
+            $this->equalTo('Test Ad'),
+            $this->equalTo('ad-id-100'),
         );
-        $adStatsFactory = $this->createMock(AdStatsFactory::class);
-        $adFactory = $this->createMock(AdFactory::class);
-        $campaignFactory = $this->createMock(CampaignFactory::class);
 
-        $handler = new FacebookCsvHandler($campaignFactory, $adSetFactory, $adFactory, $adStatsFactory);
+        $handler = new FacebookCsvHandler($dataImportApi);
         $handler->processRecord($record, $context);
     }
 }

@@ -8,12 +8,17 @@ use App\GraphQL\Type\AdCollectionType;
 use App\GraphQL\Type\AdSetType;
 use App\GraphQL\Type\AdStatsType;
 use App\GraphQL\Type\AdType;
+use App\GraphQL\Type\ApiImportType;
 use App\GraphQL\Type\CampaignType;
 use App\GraphQL\Type\DailyRevenueType;
 use App\GraphQL\Type\DashboardType;
 use App\GraphQL\Type\DataProviderIdType;
 use App\GraphQL\Type\DataProviderType;
+use App\GraphQL\Type\FileImportType;
 use App\GraphQL\Type\FileImportTypeType;
+use App\GraphQL\Type\ImportResultType;
+use App\GraphQL\Type\ImportStatusType;
+use App\GraphQL\Type\ImportType;
 use App\GraphQL\Type\MoneyType;
 use App\GraphQL\Type\UserType;
 use GraphQL\Type\Definition\ListOfType;
@@ -22,6 +27,7 @@ use GraphQL\Type\Definition\ScalarType;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Upload\UploadType;
 use MLL\GraphQLScalars\Date;
+use MLL\GraphQLScalars\DateTime;
 use RuntimeException;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 
@@ -38,7 +44,13 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
  * @method DataProviderIdType dataProviderId()
  * @method DataProviderType   dataProvider()
  * @method Date               date()
+ * @method DateTime           dateTime()
  * @method DailyRevenueType   dailyRevenue()
+ * @method ImportStatusType   importStatus()
+ * @method ImportType         import()
+ * @method ApiImportType      apiImport()
+ * @method FileImportType     fileImport()
+ * @method ImportResultType   importResult()
  */
 class TypeRegistry
 {
