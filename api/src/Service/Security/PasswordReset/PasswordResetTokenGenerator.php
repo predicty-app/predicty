@@ -6,7 +6,7 @@ namespace App\Service\Security\PasswordReset;
 
 use App\Entity\User;
 
-interface ResetPasswordTokenGenerator
+interface PasswordResetTokenGenerator
 {
     public function createToken(User $user): string;
 }

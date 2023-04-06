@@ -7,7 +7,7 @@ namespace App\Notification;
 use Symfony\Component\Notifier\Notification\Notification;
 use Symfony\Component\Notifier\Recipient\RecipientInterface;
 
-class PasscodeNotification extends Notification
+class PasscodeIssuedNotification extends Notification
 {
     public function __construct(string $passcode)
     {

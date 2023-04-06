@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\GraphQL\Mutation\RequestPasswordReset;
+namespace App\Tests\Functional\GraphQL\Mutation\RequestPasswordResetToken;
 
-use App\Message\Event\UserRequestedPasswordReset;
+use App\Message\Event\UserRequestedPasswordResetToken;
 use App\Test\GraphQLTestCase;
 use Symfony\Component\Mime\RawMessage;
 use Zenstruck\Messenger\Test\InteractsWithMessenger;
@@ -40,7 +40,7 @@ class RequestPasswordResetTest extends GraphQLTestCase
 
         $this->executeMutation($mutation);
         $this->assertResponseIsSuccessful();
-        $this->bus('event.bus')->dispatched()->assertContains(UserRequestedPasswordReset::class);
+        $this->bus('event.bus')->dispatched()->assertContains(UserRequestedPasswordResetToken::class);
     }
 
     public function test_request_password_reset_sends_email_with_link(): void

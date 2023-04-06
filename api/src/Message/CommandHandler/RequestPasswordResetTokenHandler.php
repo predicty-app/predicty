@@ -6,10 +6,10 @@ namespace App\Message\CommandHandler;
 
 use App\Extension\Messenger\EmitEventTrait;
 use App\Message\Command\RequestPasswordResetToken;
-use App\Message\Event\UserRequestedPasswordReset;
-use App\Notification\UserRequestedPasswordResetNotification;
+use App\Message\Event\UserRequestedPasswordResetToken;
+use App\Notification\PasswordResetTokenIssuedNotification;
 use App\Repository\UserRepository;
-use App\Service\Security\PasswordReset\ResetPasswordTokenGenerator;
+use App\Service\Security\PasswordReset\PasswordResetTokenGenerator;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Notifier\NotifierInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -20,7 +20,7 @@ class RequestPasswordResetTokenHandler
     use EmitEventTrait;
 
     public function __construct(
-        private ResetPasswordTokenGenerator $resetPasswordTokenGenerator,
+        private PasswordResetTokenGenerator $resetPasswordTokenGenerator,
         private UrlGeneratorInterface $urlGenerator,
         private UserRepository $userRepository,
         private NotifierInterface $notifier
@@ -34,8 +34,8 @@ class RequestPasswordResetTokenHandler
         if ($user !== null) {
             $token = $this->resetPasswordTokenGenerator->createToken($user);
             $url = $this->urlGenerator->generate('app_password_reset', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
-            $this->notifier->send(new UserRequestedPasswordResetNotification($url), $user);
-            $this->emit(new UserRequestedPasswordReset($user->getId()));
+            $this->notifier->send(new PasswordResetTokenIssuedNotification($url), $user);
+            $this->emit(new UserRequestedPasswordResetToken($user->getId()));
         }
     }
 }

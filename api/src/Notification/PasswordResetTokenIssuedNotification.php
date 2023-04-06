@@ -11,7 +11,7 @@ use Symfony\Component\Notifier\Notification\Notification;
 use Symfony\Component\Notifier\Recipient\EmailRecipientInterface;
 use Symfony\Component\Notifier\Recipient\RecipientInterface;
 
-class UserRequestedPasswordResetNotification extends Notification implements EmailNotificationInterface
+class PasswordResetTokenIssuedNotification extends Notification implements EmailNotificationInterface
 {
     public function __construct(private string $passwordResetLink)
     {

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Message\EventHandler;
 
 use App\Message\Event\UserResetPassword;
-use App\Notification\UserResetPasswordNotification;
+use App\Notification\PasswordResetNotification;
 use App\Repository\UserRepository;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Notifier\NotifierInterface;
@@ -20,6 +20,6 @@ class UserResetPasswordHandler
     public function __invoke(UserResetPassword $event): void
     {
         $user = $this->userRepository->getById($event->userId);
-        $this->notifier->send(new UserResetPasswordNotification(), $user);
+        $this->notifier->send(new PasswordResetNotification(), $user);
     }
 }

@@ -9,7 +9,7 @@ use App\GraphQL\Exception\ClientSafeException;
 use App\Message\Command\ResetPassword;
 use App\Message\Event\UserResetPassword;
 use App\Repository\UserRepository;
-use App\Service\Security\PasswordReset\ResetPasswordTokenValidator;
+use App\Service\Security\PasswordReset\PasswordResetTokenValidator;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -19,7 +19,7 @@ class ResetPasswordHandler
     use EmitEventTrait;
 
     public function __construct(
-        private ResetPasswordTokenValidator $resetPasswordTokenValidator,
+        private PasswordResetTokenValidator $resetPasswordTokenValidator,
         private UserPasswordHasherInterface $userPasswordHasher,
         private UserRepository $userRepository,
     ) {

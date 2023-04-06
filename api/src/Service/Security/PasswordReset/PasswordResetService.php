@@ -7,7 +7,10 @@ namespace App\Service\Security\PasswordReset;
 use App\Entity\User;
 use Psr\SimpleCache\CacheInterface;
 
-class PasswordResetService implements ResetPasswordTokenValidator, ResetPasswordTokenGenerator
+/**
+ * @internal
+ */
+class PasswordResetService implements PasswordResetTokenValidator, PasswordResetTokenGenerator
 {
     private const CACHE_PREFIX = 'PasswordResetService_';
     private const CACHE_TTL = 3600;

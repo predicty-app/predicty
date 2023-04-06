@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Message\EventHandler;
 
 use App\Message\Event\UserRegistered;
-use App\Notification\RegistrationNotification;
+use App\Notification\UserRegisteredNotification;
 use App\Repository\UserRepository;
 use App\Service\User\RandomPasswordGenerator;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -30,6 +30,6 @@ class UserRegisteredHandler
         $user->setPassword($this->userPasswordHasher->hashPassword($user, $password));
         $this->userRepository->save($user);
 
-        $this->notifier->send(new RegistrationNotification($password), $user);
+        $this->notifier->send(new UserRegisteredNotification($password), $user);
     }
 }
