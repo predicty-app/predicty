@@ -25,6 +25,7 @@ framework:
         routing:
             # Symfony\Component\Mailer\Messenger\SendEmailMessage: async
             # App\Message\AsyncMessage: async
+            # App\Message\Event: async
 
 when@test:
     framework:
@@ -32,4 +33,5 @@ when@test:
             transports:
                 # replace with your transport name here (e.g., my_transport: 'in-memory://')
                 # For more Messenger testing tools, see https://github.com/zenstruck/messenger-test
-                async: 'in-memory://'
+#                async: 'in-memory://'
+                async: 'test://'
