@@ -76,7 +76,6 @@ class DummyAuthenticator extends AbstractAuthenticator implements Authenticator
             $isValid = match ($type) {
                 self::SECRET_PASSCODE => $this->passcodeVerifier->isPasscodeValid($user, $secret),
                 self::SECRET_PASSWORD => $this->userPasswordHasher->isPasswordValid($user, $secret),
-                default => false
             };
 
             if (!$isValid) {
