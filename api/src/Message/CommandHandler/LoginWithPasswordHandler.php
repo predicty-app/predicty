@@ -39,7 +39,7 @@ class LoginWithPasswordHandler
         try {
             $user = $this->userProvider->loadUserByIdentifier($message->username);
         } catch (UserNotFoundException $e) {
-            throw new BadCredentialsException('Invalid username or passcode', 0, $e);
+            throw new BadCredentialsException('Invalid username or password', 0, $e);
         }
 
         if (!$user instanceof User) {
