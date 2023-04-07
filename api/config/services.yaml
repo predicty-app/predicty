@@ -90,3 +90,5 @@ services:
     App\Extension\Doctrine\MigrationEventSubscriber:
         tags:
             - { name: doctrine.event_subscriber, connection: default }
+
+    Symfony\Component\Security\Http\Authentication\AuthenticatorManagerInterface: '@security.authenticator.manager.main'

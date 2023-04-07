@@ -17,7 +17,8 @@ security:
             lazy: true
             provider: app_user_provider
             custom_authenticators:
-                - App\Service\Security\DummyAuthenticator
+                - App\Service\Security\PasscodeAuthenticator
+                - App\Service\Security\PasswordAuthenticator
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
