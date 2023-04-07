@@ -7,7 +7,7 @@ namespace App\GraphQL\Mutation;
 use App\Entity\User;
 use App\Extension\Messenger\HandleTrait;
 use App\GraphQL\TypeRegistry;
-use App\Message\Command\Login;
+use App\Message\Command\LoginWithPassword;
 use GraphQL\Type\Definition\FieldDefinition;
 
 class LoginWithPasswordMutation extends FieldDefinition
@@ -30,6 +30,6 @@ class LoginWithPasswordMutation extends FieldDefinition
 
     private function resolve(array $args): User
     {
-        return $this->handle(new Login($args['username'], $args['password']));
+        return $this->handle(new LoginWithPassword($args['username'], $args['password']));
     }
 }
