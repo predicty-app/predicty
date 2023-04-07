@@ -18,12 +18,13 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
+use Symfony\Component\Security\Http\Authenticator\InteractiveAuthenticatorInterface;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 
 /**
  * @todo login throttling
  */
-class DummyAuthenticator extends AbstractAuthenticator implements Authenticator
+class DummyAuthenticator extends AbstractAuthenticator implements Authenticator, InteractiveAuthenticatorInterface
 {
     private const SECRET_PASSCODE = 0;
     private const SECRET_PASSWORD = 1;
@@ -64,6 +65,11 @@ class DummyAuthenticator extends AbstractAuthenticator implements Authenticator
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
         return null;
+    }
+
+    public function isInteractive(): bool
+    {
+        return true;
     }
 
     private function verifyCredentialsAndLogin(string $username, string $secret, int $type, ?callable $onSuccess = null): User
