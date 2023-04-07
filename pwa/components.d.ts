@@ -10,6 +10,7 @@ declare module '@vue/runtime-core' {
     AccountCreationEmailForm: typeof import('./src/components/OnBoarding/AccountCreationEmailForm.vue')['default']
     AccountCreationPasswordForm: typeof import('./src/components/OnBoarding/AccountCreationPasswordForm.vue')['default']
     AppLogo: typeof import('./src/components/Common/AppLogo.vue')['default']
+    AuthenticationConfirmResetPasswordForm: typeof import('./src/components/OnBoarding/AuthenticationConfirmResetPasswordForm.vue')['default']
     AuthenticationLoginForm: typeof import('./src/components/OnBoarding/AuthenticationLoginForm.vue')['default']
     AuthenticationResetPasswordForm: typeof import('./src/components/OnBoarding/AuthenticationResetPasswordForm.vue')['default']
     AvatarUser: typeof import('./src/components/Common/AvatarUser.vue')['default']

@@ -23,6 +23,11 @@ export type UploadFilePayloadType = {
   file: File;
 };
 
+export type ConfirmResetPasswordPayloadType = {
+  token: string;
+  password: string;
+}
+
 /**
  * Function to handle register user.
  * @param {RegisterUserPayloadType} payload
@@ -74,6 +79,34 @@ async function handleResetPassword(payload: ResetPasswordPayloadType) {
     return (error as Error).message;
   }
 }
+
+/**
+ * Function to handle confirm reset password.
+ * @param {ConfirmResetPasswordPayloadType} payload
+ */
+async function handleConfirmResetPassword(payload: ConfirmResetPasswordPayloadType) {
+  type ConfirmResetPasswordParamsType = {
+    token: string;
+    password: string;
+  };
+
+  const query = `mutation resetPassword($token: String!, $password: String!) {
+    resetPassword(token: $token, password: $password)
+  }`;
+
+  try {
+    const response = await apiService.request<ConfirmResetPasswordParamsType, any>(query, {
+      ...payload
+    });
+
+    return response.errors
+      ? response.errors[0].message
+      : response.data.resetPassword;
+  } catch (error) {
+    return (error as Error).message;
+  }
+}
+
 
 /**
  * Function to handle login user.
@@ -158,4 +191,11 @@ async function handleUploadFile(payload: UploadFilePayloadType) {
   }
 }
 
-export { handleRegisterUser, handleLoginUser, handleUploadFile, handleResetPassword, handleAuthLoginUser };
+export {
+  handleRegisterUser,
+  handleLoginUser,
+  handleUploadFile,
+  handleResetPassword,
+  handleConfirmResetPassword,
+  handleAuthLoginUser
+};

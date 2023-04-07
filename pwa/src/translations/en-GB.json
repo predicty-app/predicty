@@ -50,6 +50,12 @@
           }
         }
       },
+      "authentication-confirm-reset-password-form": {
+        "input-label": "Password:",
+        "input-placeholder": "Please enter your new password...",
+        "button": "Next",
+        "success": "Correct password reminder attempt. Correct password change. You will be redirected in a moment."
+      },
       "connect-account-form": {
         "pin": {
           "connected": "Connected",
@@ -210,6 +216,11 @@
       "header-title": "Reset password",
       "header-description": "Tell us your email adress and we’ll share with you temporary access to the account."
     },
+    "authentication-confirm-reset-password": {
+      "header-title": "Confirm reset password",
+      "header-description": "Reset your password and next login to platform."
+    }
+    ,
     "basic-media-integration": {
       "header-title": "Connect your accounts",
       "header-description": "We are platform that collects data from your websites and apps to create ",

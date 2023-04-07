@@ -46,6 +46,21 @@ const routes: Array<RouteRecordRaw> = [
             component: () =>
               import("@/views/Authentication/AuthenticationResetPasswordView.vue")
           },
+          {
+            path: "/onboarding/authentication/confirm-password-reset/:token",
+            name: "on-boarding-authentication-confirm-password-reset",
+            meta: {
+              authentication: false,
+              authorizationType: "dashboard"
+            },
+            component: () =>
+              import("@/views/Authentication/AuthenticationConfirmResetPasswordView.vue"),
+            beforeEnter: (route) => {
+              if(!route.params.token) {
+                return { path: "/onboarding/start-screen" };
+              }
+            }
+          },
         ]
       },
       {
@@ -145,6 +160,10 @@ const routes: Array<RouteRecordRaw> = [
       authorizationType: "after"
     },
     component: () => import("@/views/UserDashboardView.vue")
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    redirect: () => "/onboarding/start-screen",
   }
 ];
 
