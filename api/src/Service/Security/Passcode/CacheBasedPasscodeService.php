@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Service\Security;
+namespace App\Service\Security\Passcode;
 
 use App\Entity\User;
 use Psr\SimpleCache\CacheInterface;
@@ -27,7 +27,7 @@ class CacheBasedPasscodeService implements PasscodeVerifier, PasscodeGenerator
         return $code;
     }
 
-    public function verify(User $user, string $code): bool
+    public function isPasscodeValid(User $user, string $code): bool
     {
         if ($this->env === self::ENV_DEV && $code === '111111') {
             return true;

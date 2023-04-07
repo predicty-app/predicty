@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Functional\GraphQL\Mutation;
 
 use App\Repository\UserRepository;
-use App\Service\Security\CacheBasedPasscodeService;
+use App\Service\Security\Passcode\CacheBasedPasscodeService;
 use App\Test\GraphQLTestCase;
 
 /**

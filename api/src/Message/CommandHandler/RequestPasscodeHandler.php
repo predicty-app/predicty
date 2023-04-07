@@ -9,7 +9,7 @@ use App\Message\Command\RequestPasscode;
 use App\Message\Event\UserRequestedPasscode;
 use App\Notification\PasscodeIssuedNotification;
 use App\Repository\UserRepository;
-use App\Service\Security\PasscodeGenerator;
+use App\Service\Security\Passcode\PasscodeGenerator;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Notifier\NotifierInterface;
 
