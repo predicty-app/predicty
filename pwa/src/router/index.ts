@@ -20,6 +20,35 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/StartScreenView.vue")
       },
       {
+        path: "/onboarding/authentication",
+        name: "on-boarding-authentication",
+        redirect: () => "/onboarding/authentication/login",
+        component: () =>
+          import("@/views/Authentication/AuthenticationView.vue"),
+        children: [
+          {
+            path: "/onboarding/authentication/login",
+            name: "on-boarding-authentication-login",
+            meta: {
+              authentication: false,
+              authorizationType: "dashboard"
+            },
+            component: () =>
+              import("@/views/Authentication/AuthenticationLoginView.vue")
+          },
+          {
+            path: "/onboarding/authentication/reset-password",
+            name: "on-boarding-authentication-reset-password",
+            meta: {
+              authentication: false,
+              authorizationType: "dashboard"
+            },
+            component: () =>
+              import("@/views/Authentication/AuthenticationResetPasswordView.vue")
+          },
+        ]
+      },
+      {
         path: "/onboarding/account-creation",
         name: "on-boarding-account-creation",
         redirect: () => "/onboarding/account-creation/email",

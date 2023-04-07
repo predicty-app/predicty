@@ -4,9 +4,18 @@ export type RegisterUserPayloadType = {
   email: string;
 };
 
+export type ResetPasswordPayloadType = {
+  email: string;
+}
+
 export type LoginUserPayloadType = {
   username: string;
   passcode: string;
+};
+
+export type AuthLoginUserPayloadType = {
+  username: string;
+  password: string;
 };
 
 export type UploadFilePayloadType = {
@@ -41,6 +50,32 @@ async function handleRegisterUser(payload: RegisterUserPayloadType) {
 }
 
 /**
+ * Function to handle reset password.
+ * @param {ResetPasswordPayloadType} payload
+ */
+async function handleResetPassword(payload: ResetPasswordPayloadType) {
+  type ResetPasswordParamsType = {
+    username: string;
+  };
+
+  const query = `mutation requestPasswordResetToken($username: String!) {
+    requestPasswordResetToken(username: $username)
+  }`;
+
+  try {
+    const response = await apiService.request<ResetPasswordParamsType, any>(query, {
+      username: payload.email
+    });
+
+    return response.errors
+      ? response.errors[0].message
+      : response.data.requestPasswordResetToken;
+  } catch (error) {
+    return (error as Error).message;
+  }
+}
+
+/**
  * Function to handle login user.
  * @param {LoginUserPayloadType} payload
  */
@@ -55,6 +90,36 @@ async function handleLoginUser(payload: LoginUserPayloadType) {
   const query = `mutation login($username: String!, $passcode: String!) {
     login(username: $username, passcode: $passcode) {
       ${variables?.map((variable) => `${variable}`)}
+    }
+  }`;
+
+  try {
+    const response = await apiService.request<LoginParamsType, any>(query, {
+      ...payload
+    });
+
+    return response.errors ? response.errors[0].message : "OK";
+  } catch (error) {
+    return (error as Error).message;
+  }
+}
+
+/**
+ * Function to handle login user.
+ * @param {AuthLoginUserPayloadType} payload
+ */
+async function handleAuthLoginUser(payload: AuthLoginUserPayloadType) {
+  type LoginParamsType = {
+    username: string;
+    password: string;
+  };
+
+  const query = `mutation loginWithPassword($username: String!, $password: String!) {
+    loginWithPassword(username: $username, password: $password) {
+      uid
+      email
+      isEmailVerified
+      isOnboardingComplete
     }
   }`;
 
@@ -93,4 +158,4 @@ async function handleUploadFile(payload: UploadFilePayloadType) {
   }
 }
 
-export { handleRegisterUser, handleLoginUser, handleUploadFile };
+export { handleRegisterUser, handleLoginUser, handleUploadFile, handleResetPassword, handleAuthLoginUser };

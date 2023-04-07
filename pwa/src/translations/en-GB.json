@@ -30,6 +30,26 @@
           "next": "Next"
         }
       },
+      "authentication-reset-password-form": {
+        "input-label": "E-mail:",
+        "input-placeholder": "Email on which you signed up with",
+        "button": "Next",
+        "success": "Correct password reminder attempt. In a while, information with the next steps will come to the email provided."
+      },
+      "authentication-login-form": {
+        "button": "Next",
+        "success": "Correct login to the panel. A redirect will take place in a moment.",
+        "inputs": {
+          "email": {
+            "placeholder": "Please enter your email...",
+            "label": "E-mail:"
+          },
+          "password": {
+            "placeholder": "Please enter your password...",
+            "label": "Password:"
+          }
+        }
+      },
       "connect-account-form": {
         "pin": {
           "connected": "Connected",
@@ -161,7 +181,11 @@
     "start-screen": {
       "header-title": "Welcome",
       "header-description": "We are platform that collects data from your websites and apps to create reports that provide insights into your business. Measuring a website To measure a website, you first...",
-      "button": "Start for free"
+      "button": "Start for free",
+      "login": {
+        "description": "Already have an account?",
+        "button": "Log In"
+      }
     },
     "account-creation-email": {
       "header-title": "Welcome",
@@ -170,6 +194,21 @@
     "account-creation-pasword": {
       "header-title": "We’ve sent you a passcode",
       "header-description": "Check your email address: {email}"
+    },
+    "authentication-login": {
+      "header-title": "Welcome back!",
+      "header-description": "We are platform that collects data from your websites and apps to create ",
+      "buttons": {
+        "forgot": "Forgot password",
+        "sign-up": {
+          "description": "Don’t have an account?",
+          "button": "Sign up"
+        }
+      }
+    },
+    "authentication-reset-password": {
+      "header-title": "Reset password",
+      "header-description": "Tell us your email adress and we’ll share with you temporary access to the account."
     },
     "basic-media-integration": {
       "header-title": "Connect your accounts",
