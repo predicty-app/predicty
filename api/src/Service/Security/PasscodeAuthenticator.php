@@ -24,7 +24,7 @@ class PasscodeAuthenticator extends GraphQLAuthenticator
 
     public function authenticate(Request $request): Passport
     {
-        ['username' => $username, 'passcode' => $passcode] = $this->getCredentials($request);
+        list('username' => $username, 'passcode' => $passcode) = $this->getCredentials($request);
         $credentialsBadge = new CustomCredentials(fn (string $passcode, User $user) => $this->passcodeVerifier->isPasscodeValid($user, $passcode), $passcode);
 
         return new Passport(new UserBadge($username), $credentialsBadge);

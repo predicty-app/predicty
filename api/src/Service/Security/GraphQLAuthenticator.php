@@ -18,12 +18,14 @@ abstract class GraphQLAuthenticator extends AbstractAuthenticator implements Int
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         $this->clearCredentials($request);
+
         return null;
     }
 
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
         $this->clearCredentials($request);
+
         return null;
     }
 
