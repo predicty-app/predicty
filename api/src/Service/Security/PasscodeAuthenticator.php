@@ -11,6 +11,9 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\CustomCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 
+/**
+ * @internal
+ */
 class PasscodeAuthenticator extends GraphQLAuthenticator
 {
     public function __construct(private PasscodeVerifier $passcodeVerifier)

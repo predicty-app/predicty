@@ -12,6 +12,7 @@ use Symfony\Component\Messenger\Exception\ValidationFailedException;
 use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
 use Symfony\Component\Messenger\Middleware\StackInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Throwable;
 
 /**
@@ -19,6 +20,10 @@ use Throwable;
  */
 class GraphQLMiddleware implements MiddlewareInterface
 {
+    public function __construct(private TranslatorInterface $translator)
+    {
+    }
+
     public function handle(Envelope $envelope, StackInterface $stack): Envelope
     {
         try {
@@ -38,7 +43,13 @@ class GraphQLMiddleware implements MiddlewareInterface
             if ($this->isClientSafe($exception)) {
                 $message = $exception->getMessage();
                 if ($exception instanceof ValidationFailedException) {
-                    $message = (string) $exception->getViolations()->get(0)->getMessage();
+                    $template = (string) $exception->getViolations()->get(0)->getMessageTemplate();
+                    $params = $exception->getViolations()->get(0)->getParameters();
+                    $message = $this->translator->trans($template, $params);
+                }
+
+                if ($exception instanceof AuthenticationException) {
+                    $message = $this->translator->trans($exception->getMessageKey(), $exception->getMessageData());
                 }
 
                 throw new ClientSafeException($message, 0, $exception);

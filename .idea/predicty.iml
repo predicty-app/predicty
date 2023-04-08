@@ -197,6 +197,8 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/league/flysystem" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/dealerdirect/phpcodesniffer-composer-installer" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/league/mime-type-detection" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/rate-limiter" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/translation" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

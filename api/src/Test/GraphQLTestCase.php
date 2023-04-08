@@ -77,7 +77,7 @@ abstract class GraphQLTestCase extends WebTestCase
             'variables' => $variables,
         ];
 
-        self::getClient()->jsonRequest(
+        static::getClient()->jsonRequest(
             method: 'POST',
             uri: '/graphql',
             parameters: $parameters
@@ -91,7 +91,7 @@ abstract class GraphQLTestCase extends WebTestCase
 
     public static function assertResponseMatchesJsonFile(string $filename, string $message = ''): void
     {
-        $responseContent = (string) self::getClient()->getResponse()->getContent();
+        $responseContent = (string) static::getClient()->getResponse()->getContent();
 
         $dirname = dirname($filename);
 

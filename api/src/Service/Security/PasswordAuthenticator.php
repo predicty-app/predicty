@@ -9,12 +9,11 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\PasswordCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 
+/**
+ * @internal
+ */
 class PasswordAuthenticator extends GraphQLAuthenticator
 {
-    public function __construct()
-    {
-    }
-
     public function supports(Request $request): ?bool
     {
         return isset($this->getCredentials($request)['password']);

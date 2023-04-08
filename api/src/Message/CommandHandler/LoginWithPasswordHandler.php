@@ -6,18 +6,18 @@ namespace App\Message\CommandHandler;
 
 use App\Entity\User;
 use App\Message\Command\LoginWithPassword;
-use App\Service\Security\AuthenticatorProxy;
+use App\Service\Security\Authenticator;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
 class LoginWithPasswordHandler
 {
-    public function __construct(private AuthenticatorProxy $authenticatorProxy)
+    public function __construct(private Authenticator $authenticator)
     {
     }
 
     public function __invoke(LoginWithPassword $message): User
     {
-        return $this->authenticatorProxy->authenticateWithPassword($message->username, $message->password);
+        return $this->authenticator->authenticateWithPassword($message->username, $message->password);
     }
 }

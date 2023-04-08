@@ -11,6 +11,9 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\InteractiveAuthenticatorInterface;
 
+/**
+ * @internal
+ */
 abstract class GraphQLAuthenticator extends AbstractAuthenticator implements InteractiveAuthenticatorInterface
 {
     public const GRAPHQL_CREDENTIALS_ATTRIBUTE_NAME = '_graphql_credentials';

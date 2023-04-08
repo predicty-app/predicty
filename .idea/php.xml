@@ -216,6 +216,9 @@
       <path value="$PROJECT_DIR$/api/vendor/mll-lab/graphql-php-scalars" />
       <path value="$PROJECT_DIR$/api/vendor/spatie/regex" />
       <path value="$PROJECT_DIR$/api/vendor/symfony/mailgun-mailer" />
+      <path value="$PROJECT_DIR$/api/vendor/lcobucci/clock" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/rate-limiter" />
+      <path value="$PROJECT_DIR$/api/vendor/symfony/translation" />
     </include_path>
   </component>
   <component name="PhpInterpreters">
