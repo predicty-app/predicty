@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Tests\Unit\Service\Security;
 
 use App\Entity\User;
-use App\Service\Security\CacheBasedPasscodeService;
+use App\Service\Security\Passcode\CacheBasedPasscodeService;
 use PHPUnit\Framework\TestCase;
 use Psr\SimpleCache\CacheInterface;
 use Symfony\Component\Uid\Uuid;
 
 /**
- * @covers \App\Service\Security\CacheBasedPasscodeService
+ * @covers \App\Service\Security\Passcode\CacheBasedPasscodeService
  */
 class CacheBasedPasscodeServiceTest extends TestCase
 {
@@ -51,7 +51,7 @@ class CacheBasedPasscodeServiceTest extends TestCase
         $cache->expects($this->once())->method('get')->with($storedKey)->willReturn($storedValue);
         $cache->expects($this->once())->method('delete')->with($storedKey);
 
-        $this->assertTrue($service->verify($user, $code));
+        $this->assertTrue($service->isPasscodeValid($user, $code));
     }
 
     public function test_verify_default_passcode_on_dev_environment(): void
@@ -60,6 +60,6 @@ class CacheBasedPasscodeServiceTest extends TestCase
         $cache = $this->createMock(CacheInterface::class);
         $service = new CacheBasedPasscodeService($cache, 'dev');
 
-        $this->assertTrue($service->verify($user, '111111'));
+        $this->assertTrue($service->isPasscodeValid($user, '111111'));
     }
 }
