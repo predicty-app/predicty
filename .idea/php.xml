@@ -223,14 +223,15 @@
   </component>
   <component name="PhpInterpreters">
     <interpreters>
-      <interpreter id="23fb3da4-6b93-4e83-b324-a17288f6414f" name="php" home="docker-compose://DATA" debugger_id="php.debugger.XDebug">
-        <remote_data INTERPRETER_PATH="php" HELPERS_PATH="/opt/.phpstorm_helpers" INITIALIZED="false" VALID="true" RUN_AS_ROOT_VIA_SUDO="false" DOCKER_ACCOUNT_NAME="Docker" DOCKER_COMPOSE_SERVICE_NAME="php" DOCKER_REMOTE_PROJECT_PATH="/opt/project">
+      <interpreter id="23fb3da4-6b93-4e83-b324-a17288f6414f" name="php" home="docker-compose://DATA" false="false" debugger_id="php.debugger.XDebug">
+        <remote_data INTERPRETER_PATH="php" HELPERS_PATH="/opt/.phpstorm_helpers" VALID="true" RUN_AS_ROOT_VIA_SUDO="false" DOCKER_ACCOUNT_NAME="Docker" DOCKER_COMPOSE_SERVICE_NAME="php" DOCKER_REMOTE_PROJECT_PATH="/opt/project">
           <type_data command="EXEC" />
           <dockerComposeConfigurationPaths>
             <item value="$PROJECT_DIR$/docker-compose.yml" />
             <item value="$PROJECT_DIR$/docker-compose.override.yml" />
           </dockerComposeConfigurationPaths>
           <envs>
+            <env name="COMPOSE_INTERACTIVE_NO_CLI" value="1" />
             <env name="PHP_CS_FIXER_IGNORE_ENV" value="1" />
             <env name="XDEBUG_MODE" value="debug,coverage" />
           </envs>
@@ -242,12 +243,16 @@
     <phpInfoCache>
       <interpreter name="php">
         <phpinfo binary_type="PHP" php_cli="/usr/local/bin/php" path_separator=":" version="8.2.2">
-          <additional_php_ini>/usr/local/etc/php/conf.d/app.dev.ini, /usr/local/etc/php/conf.d/app.ini, /usr/local/etc/php/conf.d/app.prod.ini, /usr/local/etc/php/conf.d/docker-fpm.ini, /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini, /usr/local/etc/php/conf.d/docker-php-ext-intl.ini, /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini, /usr/local/etc/php/conf.d/docker-php-ext-pdo_pgsql.ini, /usr/local/etc/php/conf.d/docker-php-ext-sodium.ini, /usr/local/etc/php/conf.d/docker-php-ext-xsl.ini, /usr/local/etc/php/conf.d/docker-php-ext-zip.ini</additional_php_ini>
+          <additional_php_ini>/usr/local/etc/php/conf.d/app.dev.ini, /usr/local/etc/php/conf.d/app.ini, /usr/local/etc/php/conf.d/docker-fpm.ini, /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini, /usr/local/etc/php/conf.d/docker-php-ext-intl.ini, /usr/local/etc/php/conf.d/docker-php-ext-opcache.ini, /usr/local/etc/php/conf.d/docker-php-ext-pdo_pgsql.ini, /usr/local/etc/php/conf.d/docker-php-ext-sodium.ini, /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini, /usr/local/etc/php/conf.d/docker-php-ext-xsl.ini, /usr/local/etc/php/conf.d/docker-php-ext-zip.ini</additional_php_ini>
           <configuration_file>/usr/local/etc/php/php.ini</configuration_file>
           <configuration_options>
             <configuration_option name="include_path" value=".:/usr/local/lib/php" />
           </configuration_options>
-          <debuggers />
+          <debuggers>
+            <debugger_info debugger="xdebug" debugger_version="3.2.1">
+              <debug_extensions />
+            </debugger_info>
+          </debuggers>
           <loaded_extensions>
             <extension name="Core" />
             <extension name="PDO" />
@@ -283,6 +288,7 @@
             <extension name="sqlite3" />
             <extension name="standard" />
             <extension name="tokenizer" />
+            <extension name="xdebug" />
             <extension name="xml" />
             <extension name="xmlreader" />
             <extension name="xmlwriter" />

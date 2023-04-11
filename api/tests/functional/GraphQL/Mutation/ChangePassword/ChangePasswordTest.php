@@ -115,6 +115,15 @@ class ChangePasswordTest extends GraphQLTestCase
 
         $mutation = <<<'EOF'
                 mutation {
+                  logout
+                }
+            EOF;
+
+        $this->executeMutation($mutation);
+        $this->assertResponseIsSuccessful();
+
+        $mutation = <<<'EOF'
+                mutation {
                   loginWithPassword(username: "john.doe@example.com", password: "new_password") {
                     email
                   }
