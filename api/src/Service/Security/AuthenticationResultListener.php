@@ -16,31 +16,26 @@ use Throwable;
  */
 class AuthenticationResultListener
 {
-    private ?User $user = null;
-    private ?Throwable $exception = null;
+    private User|Throwable|null $result = null;
 
     #[AsEventListener]
     public function onLoginSuccess(LoginSuccessEvent $event): void
     {
         $user = $event->getUser();
         assert($user instanceof User);
-        $this->user = $user;
+        $this->result = $user;
     }
 
     #[AsEventListener]
     public function onLoginFailure(LoginFailureEvent $event): void
     {
-        $this->exception = $event->getException();
+        $this->result = $event->getException();
     }
 
     public function getResult(): User|Throwable
     {
-        if ($this->user !== null) {
-            return $this->user;
-        }
-
-        if ($this->exception !== null) {
-            return $this->exception;
+        if ($this->result instanceof User || $this->result instanceof Throwable) {
+            return $this->result;
         }
 
         throw new LogicException('No authentication result available - make sure that the authenticator is configured correctly');
