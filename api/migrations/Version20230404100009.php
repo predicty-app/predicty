@@ -25,7 +25,7 @@ final class Version20230404100009 extends AbstractMigration
         $this->addSql('ALTER TABLE ad_stats ADD import_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE campaign ADD import_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE daily_revenue ADD import_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE import ADD result JSON NOT NULL');
+        $this->addSql('ALTER TABLE import ADD result JSON DEFAULT NULL');
     }
 
     public function down(Schema $schema): void

@@ -33,7 +33,7 @@ abstract class Import
     #[ORM\Column(type: Types::TEXT)]
     private string $message = '';
 
-    #[ORM\Column(type: Types::JSON)]
+    #[ORM\Column(type: Types::JSON, nullable: true)]
     private array $result = [];
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
