@@ -30,7 +30,7 @@ class CampaignRepository
      */
     public function findAllByUserId(int $userId): array
     {
-        return $this->repository->findBy(['userId' => $userId]);
+        return $this->repository->findBy(['userId' => $userId], ['startedAt' => 'ASC']);
     }
 
     public function findByUserIdAndExternalId(int $userId, string $externalId): ?Campaign

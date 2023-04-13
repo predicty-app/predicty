@@ -23,20 +23,16 @@ class AdCollectionFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        /** @var Ad $ad1 */
-        $ad1 = $this->getReference(AdFixtures::AD_1);
-
-        /** @var Ad $ad2 */
-        $ad2 = $this->getReference(AdFixtures::AD_2);
-
-        /** @var Ad $ad3 */
-        $ad3 = $this->getReference(AdFixtures::AD_3);
+        $ad1 = $this->getReference(AdFixtures::AD_1, Ad::class);
+        $ad2 = $this->getReference(AdFixtures::AD_2, Ad::class);
+        $ad3 = $this->getReference(AdFixtures::AD_3, Ad::class);
+        $ad4 = $this->getReference(AdFixtures::AD_4, Ad::class);
 
         // all adds belong to the same user
-        $userId = $ad1->getId();
+        $userId = $ad1->getUserId();
         $data = [
             ['Red Collection', $userId, [$ad1->getId(), $ad2->getId()], self::AD_COLLECTION_1],
-            ['Green Collection', $userId, [$ad2->getId(), $ad3->getId()], self::AD_COLLECTION_2],
+            ['Green Collection', $userId, [$ad2->getId(), $ad3->getId(), $ad4->getId()], self::AD_COLLECTION_2],
             ['Blue Collection', $userId, [], self::EMPTY_COLLECTION],
         ];
 

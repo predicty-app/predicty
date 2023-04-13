@@ -22,6 +22,12 @@ class AdCollectionType extends ObjectType
                 'name' => [
                     'type' => $type->string(),
                 ],
+                'startedAt' => [
+                    'type' => $type->date(),
+                ],
+                'endedAt' => [
+                    'type' => $type->date(),
+                ],
                 'ads' => [
                     'type' => $type->listOf($type->ad()),
                     'resolve' => fn (AdCollection $adCollection) => $adRepository->findAllByIds($adCollection->getAdsIds()),

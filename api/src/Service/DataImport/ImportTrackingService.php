@@ -8,8 +8,12 @@ use App\Entity\FileImport;
 use App\Entity\FileImportType;
 use App\Entity\Import;
 use App\Entity\ImportResult;
+use App\Message\Event\ImportCompleted;
+use App\Message\Event\ImportFailed;
 use App\Repository\ImportRepository;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Stamp\DispatchAfterCurrentBusStamp;
 use Throwable;
 
 /**
@@ -20,6 +24,7 @@ class ImportTrackingService
     public function __construct(
         private ImportRepository $importRepository,
         private TrackableDataImportApi $dataImportApi,
+        private MessageBusInterface $eventBus,
         private LoggerInterface $importLogger
     ) {
     }
@@ -61,6 +66,7 @@ class ImportTrackingService
         $import = $this->getImport($id);
         $import->fail($message);
         $this->importRepository->save($import);
+        $this->eventBus->dispatch(new ImportFailed($id), [new DispatchAfterCurrentBusStamp()]);
     }
 
     private function markImportAsComplete(int $id, ImportResult $importResult): void
@@ -68,6 +74,7 @@ class ImportTrackingService
         $import = $this->getImport($id);
         $import->complete($importResult);
         $this->importRepository->save($import);
+        $this->eventBus->dispatch(new ImportCompleted($id), [new DispatchAfterCurrentBusStamp()]);
     }
 
     private function getImport(int $id): Import

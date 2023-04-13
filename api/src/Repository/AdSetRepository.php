@@ -24,9 +24,17 @@ class AdSetRepository
     /**
      * @return array<AdSet>
      */
+    public function findAllByUserId(int $userId): array
+    {
+        return $this->repository->findBy(['userId' => $userId]);
+    }
+
+    /**
+     * @return array<AdSet>
+     */
     public function findAllByCampaignId(int $campaignId): array
     {
-        return $this->repository->findBy(['campaignId' => $campaignId]);
+        return $this->repository->findBy(['campaignId' => $campaignId], ['startedAt' => 'ASC']);
     }
 
     public function findByCampaignIdAndExternalId(int $userId, int $campaignId, mixed $externalId): ?AdSet
