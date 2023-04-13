@@ -34,7 +34,7 @@ abstract class Import
     private string $message = '';
 
     #[ORM\Column(type: Types::JSON, nullable: true)]
-    private array $result = [];
+    private ?array $result = [];
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?DateTimeImmutable $startedAt;
@@ -75,7 +75,7 @@ abstract class Import
 
     public function getResult(): ImportResult
     {
-        return ImportResult::fromArray($this->result);
+        return ImportResult::fromArray($this->result ?? []);
     }
 
     public function complete(ImportResult $importResult): void
