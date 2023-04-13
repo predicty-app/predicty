@@ -9,7 +9,6 @@ import {
   isPasswordValidation
 } from "@/helpers/rulesValidation";
 
-
 type NotificationMessageType = {
   visible: boolean;
   type: "success" | "error";
@@ -42,7 +41,10 @@ async function handleSubmitForm() {
 
   if (!errorMessage.value) {
     globalStore.toogleSpinnerState();
-    const response = await handleConfirmResetPassword({ password: modelValue.value, token: route.params.token as string });
+    const response = await handleConfirmResetPassword({
+      password: modelValue.value,
+      token: route.params.token as string
+    });
 
     if (response !== "OK") {
       setErrorFormResponse(response);
@@ -50,8 +52,10 @@ async function handleSubmitForm() {
     }
 
     notificationMessageModel.value.visible = true;
-    notificationMessageModel.value.message = t('components.on-boarding.authentication-confirm-reset-password-form.success');
-    notificationMessageModel.value.type = 'success';
+    notificationMessageModel.value.message = t(
+      "components.on-boarding.authentication-confirm-reset-password-form.success"
+    );
+    notificationMessageModel.value.type = "success";
 
     setTimeout(() => {
       globalStore.toogleSpinnerState();
@@ -73,22 +77,40 @@ onMounted(() => nextTick(() => (isComponentMounted.value = true)));
 </script>
 
 <template>
-  <NotificationMessage v-model="notificationMessageModel.visible" :message="notificationMessageModel.message"
-    :type="notificationMessageModel.type" />
+  <NotificationMessage
+    v-model="notificationMessageModel.visible"
+    :message="notificationMessageModel.message"
+    :type="notificationMessageModel.type"
+  />
   <div v-if="isComponentMounted" class="flex flex-col gap-y-6">
-    <PasswordForm v-model="modelValue" :error-message="errorMessage" v-on:keyup.enter="handleSubmitForm" :required="true"
+    <PasswordForm
+      v-model="modelValue"
+      :error-message="errorMessage"
+      v-on:keyup.enter="handleSubmitForm"
+      :required="true"
       :placeholder="
         t(
           'components.on-boarding.authentication-confirm-reset-password-form.input-placeholder'
         )
-      " :label="
-  t('components.on-boarding.authentication-confirm-reset-password-form.input-label')
-" />
+      "
+      :label="
+        t(
+          'components.on-boarding.authentication-confirm-reset-password-form.input-label'
+        )
+      "
+    />
     <Teleport to="#next-button">
       <ButtonForm type="success" class="w-full" @click="handleSubmitForm">
         <div class="relative">
-          {{ t("components.on-boarding.authentication-confirm-reset-password-form.button") }}
-          <IconSvg name="arrownext" class-name="absolute right-5 top-0 bottom-0 m-auto h-3 w-3" />
+          {{
+            t(
+              "components.on-boarding.authentication-confirm-reset-password-form.button"
+            )
+          }}
+          <IconSvg
+            name="arrownext"
+            class-name="absolute right-5 top-0 bottom-0 m-auto h-3 w-3"
+          />
         </div>
       </ButtonForm>
     </Teleport>

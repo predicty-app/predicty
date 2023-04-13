@@ -158,7 +158,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("@/views/UserDashboardView.vue"),
     beforeEnter: () => {
       const userDashboardStore = useUserDashboardStore();
-      if (!userDashboardStore.authenticatedUserParams.isOnboardingComplete) {
+      if (userDashboardStore.authenticatedUserParams && !userDashboardStore.authenticatedUserParams?.isOnboardingComplete) {
         return { path: "/onboarding/basic-media-integration" };
       }
     }
