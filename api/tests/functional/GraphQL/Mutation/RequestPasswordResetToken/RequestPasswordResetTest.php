@@ -59,7 +59,7 @@ class RequestPasswordResetTest extends GraphQLTestCase
         $this->assertEmailHeaderSame($email, 'subject', 'Predicty Account Password Reset Requested');
         $this->assertEmailAddressContains($email, 'to', 'john.doe@example.com');
         $this->assertEmailTextBodyContains($email, 'Use link below to reset your password');
-        $this->assertEmailTextBodyContains($email, '/onboarding/authentication/confirm-password-reset/');
+        $this->assertEmailTextBodyContains($email, '/authentication/confirm-password-reset/');
     }
 
     public function test_request_password_fails_when_empty_username_is_provided(): void

@@ -1,5 +1,5 @@
 app_password_reset:
-    path: /onboarding/authentication/confirm-password-reset/{token}
+    path: /authentication/confirm-password-reset/{token}
 
 controllers:
     resource:
