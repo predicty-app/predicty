@@ -23,7 +23,7 @@ watch(
     }
   }
 );
-</script> 
+</script>
 
 <template>
   <div

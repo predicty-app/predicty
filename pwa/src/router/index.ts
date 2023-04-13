@@ -1,9 +1,55 @@
 import { useOnBoardingStore } from "@/stores/onboarding";
+import { useUserDashboardStore } from "@/stores/userDashboard";
 import { createRouter, createWebHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
 import GuardService from "@/services/guard";
 
 const routes: Array<RouteRecordRaw> = [
+  {
+    path: "/authentication",
+    name: "authentication",
+    redirect: () => "/authentication/login",
+    component: () => import("@/views/Authentication/AuthenticationView.vue"),
+    children: [
+      {
+        path: "/authentication/login",
+        name: "authentication-login",
+        meta: {
+          authentication: false,
+          authorizationType: "dashboard"
+        },
+        component: () =>
+          import("@/views/Authentication/AuthenticationLoginView.vue")
+      },
+      {
+        path: "/authentication/reset-password",
+        name: "authentication-reset-password",
+        meta: {
+          authentication: false,
+          authorizationType: "dashboard"
+        },
+        component: () =>
+          import("@/views/Authentication/AuthenticationResetPasswordView.vue")
+      },
+      {
+        path: "/authentication/confirm-password-reset/:token",
+        name: "authentication-confirm-password-reset",
+        meta: {
+          authentication: false,
+          authorizationType: "dashboard"
+        },
+        component: () =>
+          import(
+            "@/views/Authentication/AuthenticationConfirmResetPasswordView.vue"
+          ),
+        beforeEnter: (route) => {
+          if (!route.params.token) {
+            return { path: "/authentication/login" };
+          }
+        }
+      }
+    ]
+  },
   {
     path: "/onboarding/",
     name: "on-boarding",
@@ -18,50 +64,6 @@ const routes: Array<RouteRecordRaw> = [
           authorizationType: "login"
         },
         component: () => import("@/views/StartScreenView.vue")
-      },
-      {
-        path: "/onboarding/authentication",
-        name: "on-boarding-authentication",
-        redirect: () => "/onboarding/authentication/login",
-        component: () =>
-          import("@/views/Authentication/AuthenticationView.vue"),
-        children: [
-          {
-            path: "/onboarding/authentication/login",
-            name: "on-boarding-authentication-login",
-            meta: {
-              authentication: false,
-              authorizationType: "dashboard"
-            },
-            component: () =>
-              import("@/views/Authentication/AuthenticationLoginView.vue")
-          },
-          {
-            path: "/onboarding/authentication/reset-password",
-            name: "on-boarding-authentication-reset-password",
-            meta: {
-              authentication: false,
-              authorizationType: "dashboard"
-            },
-            component: () =>
-              import("@/views/Authentication/AuthenticationResetPasswordView.vue")
-          },
-          {
-            path: "/onboarding/authentication/confirm-password-reset/:token",
-            name: "on-boarding-authentication-confirm-password-reset",
-            meta: {
-              authentication: false,
-              authorizationType: "dashboard"
-            },
-            component: () =>
-              import("@/views/Authentication/AuthenticationConfirmResetPasswordView.vue"),
-            beforeEnter: (route) => {
-              if(!route.params.token) {
-                return { path: "/onboarding/start-screen" };
-              }
-            }
-          },
-        ]
       },
       {
         path: "/onboarding/account-creation",
@@ -98,7 +100,8 @@ const routes: Array<RouteRecordRaw> = [
         path: "/onboarding/basic-media-integration",
         name: "on-boarding-basic-media-integration",
         meta: {
-          authentication: true
+          authentication: true,
+          authorizationType: "onboarding"
         },
         component: () => import("@/views/BasicMediaIntegrationView.vue")
       },
@@ -117,13 +120,7 @@ const routes: Array<RouteRecordRaw> = [
           authentication: true
         },
         component: () =>
-          import("@/views/MoreMediaIntegrationFileSettingsView.vue"),
-        beforeEnter: () => {
-          const onboardingStore = useOnBoardingStore();
-          if (!onboardingStore.file.file) {
-            return { path: "/onboarding/preparing-screen" };
-          }
-        }
+          import("@/views/MoreMediaIntegrationFileSettingsView.vue")
       },
       {
         path: "/onboarding/preparing-screen",
@@ -131,16 +128,15 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           authentication: true
         },
-        component: () => import("@/views/PreparingScreenView.vue"),
-        beforeEnter: () => {
-          const onboardingStore = useOnBoardingStore();
-          if (
-            Object.keys(onboardingStore.providers).length === 0 &&
-            !onboardingStore.file.file
-          ) {
-            return { path: "/" };
-          }
-        }
+        component: () => import("@/views/PreparingScreenView.vue")
+      },
+      {
+        path: "/onboarding/preparing-screen/import-history",
+        name: "on-boarding-preparing-screen-import-history",
+        meta: {
+          authentication: true
+        },
+        component: () => import("@/views/PreparingScreenImportHistoryView.vue")
       },
       {
         path: "/onboarding/add-more-files",
@@ -159,11 +155,17 @@ const routes: Array<RouteRecordRaw> = [
       authentication: true,
       authorizationType: "after"
     },
-    component: () => import("@/views/UserDashboardView.vue")
+    component: () => import("@/views/UserDashboardView.vue"),
+    beforeEnter: () => {
+      const userDashboardStore = useUserDashboardStore();
+      if (!userDashboardStore.authenticatedUserParams.isOnboardingComplete) {
+        return { path: "/onboarding/basic-media-integration" };
+      }
+    }
   },
   {
     path: "/:pathMatch(.*)*",
-    redirect: () => "/onboarding/start-screen",
+    redirect: () => "/onboarding/start-screen"
   }
 ];
 

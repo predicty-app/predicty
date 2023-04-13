@@ -4,9 +4,7 @@ import { useRouter } from "vue-router";
 
 const { t } = useI18n();
 const router = useRouter();
-const previousStepPath = "/onboarding/start-screen";
-const forgotStepPath = "/onboarding/authentication/remind-password";
-const signupStepPath = "/onboarding/account-creation/email";
+const previousStepPath = "/authentication/login";
 </script>
 
 <template>
@@ -15,14 +13,20 @@ const signupStepPath = "/onboarding/account-creation/email";
       <AppLogo />
     </template>
     <template #content>
-      <HeaderText :header-title="t('views.authentication-reset-password.header-title')" :header-description="
-        t('views.authentication-reset-password.header-description')
-      " />
+      <HeaderText
+        :header-title="t('views.authentication-reset-password.header-title')"
+        :header-description="
+          t('views.authentication-reset-password.header-description')
+        "
+      />
       <AuthenticationResetPasswordForm />
     </template>
     <template #footer>
       <div class="w-full max-w-[48px]">
-        <ButtonForm class="w-full flex justify-center" @click="router.push(previousStepPath)">
+        <ButtonForm
+          class="w-full flex justify-center"
+          @click="router.push(previousStepPath)"
+        >
           <IconSvg name="arrowback" class-name="h-3 w-3" />
         </ButtonForm>
       </div>

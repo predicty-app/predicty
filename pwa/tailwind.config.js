@@ -35,6 +35,10 @@ module.exports = {
       },
       connectMoreMedia: {
         text: "#272727",
+        icon: {
+          background: "#FFFFFF",
+          fill: "#60d073"
+        }
       },
       codeForm: {
         dash: {

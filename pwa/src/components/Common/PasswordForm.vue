@@ -32,15 +32,8 @@ function changeValue(event: Event) {
 
 <template>
   <div>
-    <label
-      v-if="label"
-      class="text-xs mb-1 block ml-1"
-    >
-      <span
-        class="text-text-error"
-        v-if="required"
-        >*</span
-      >
+    <label v-if="label" class="text-xs mb-1 block ml-1">
+      <span class="text-text-error" v-if="required">*</span>
       {{ label }}
     </label>
     <input

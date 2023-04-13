@@ -51,16 +51,16 @@ export function isPasscodeCorrectValidation(
  */
 export function isPasswordValidation(value: string): string | null {
   if (value.length < 8) {
-    return 'The password must have 8 characters.';
+    return "The password must have 8 characters.";
   }
   if (!/[A-Z]/.test(value)) {
-    return 'Password must contain one upper case letter.';
+    return "Password must contain one upper case letter.";
   }
   if (!/\d/.test(value)) {
-    return 'Password must contain one number.';
+    return "Password must contain one number.";
   }
   if (/[ęóąśłżźćńĘÓĄŚŁŻŹĆŃ ]/.test(value)) {
-    return 'The password cannot contain special characters.';
+    return "The password cannot contain special characters.";
   }
 
   return null;

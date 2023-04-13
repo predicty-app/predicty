@@ -6,9 +6,12 @@ import NotificationMessage from "@/components/Common/NotificationMessage.vue";
 type PropsType = {
   modelValue: File | string | null;
   filesType?: string[];
+  canRemove?: boolean;
 };
 
-const props = defineProps<PropsType>();
+const props = withDefaults(defineProps<PropsType>(), {
+  canRemove: true
+});
 const { t } = useI18n();
 
 const emit = defineEmits<{
@@ -101,7 +104,7 @@ function handleSelectFile(e: Event) {
       class="text-upload-text gap-y-3 text-base relative bg-upload-background border border-upload-border border-dashed flex flex-col items-center justify-center w-full py-6"
     >
       <IconSvg
-        v-if="isFileUploaded"
+        v-if="isFileUploaded && canRemove"
         @click="emit('update:modelValue', null)"
         name="close"
         class-name="absolute top-3 right-3 z-30 cursor-pointer"

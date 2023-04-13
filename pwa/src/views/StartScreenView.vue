@@ -5,7 +5,7 @@ import { useRouter } from "vue-router";
 const { t } = useI18n();
 const router = useRouter();
 const nextStepPath = "/onboarding/account-creation";
-const authenticationStepPath = "/onboarding/authentication";
+const authenticationStepPath = "/authentication";
 </script>
 
 <template>
@@ -30,7 +30,12 @@ const authenticationStepPath = "/onboarding/authentication";
       </ButtonForm>
       <div class="text-base flex justify-center items-center gap-x-1">
         {{ t("views.start-screen.login.description") }}
-        <button class="font-bold cursor-pointer underline" @click="router.push(authenticationStepPath)">{{ t("views.start-screen.login.button") }}</button>
+        <button
+          class="font-bold cursor-pointer underline"
+          @click="router.push(authenticationStepPath)"
+        >
+          {{ t("views.start-screen.login.button") }}
+        </button>
       </div>
     </template>
     <template #progress>

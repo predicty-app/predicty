@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 
-const { t } = useI18n();
 const router = useRouter();
-const previousStepPath = "/authentication/login";
+const previousStepPath = "/onboarding/more-media-integration";
 </script>
 
 <template>
@@ -12,17 +10,7 @@ const previousStepPath = "/authentication/login";
     <template #header>
       <AppLogo />
     </template>
-    <template #content>
-      <HeaderText
-        :header-title="
-          t('views.authentication-confirm-reset-password.header-title')
-        "
-        :header-description="
-          t('views.authentication-confirm-reset-password.header-description')
-        "
-      />
-      <AuthenticationConfirmResetPasswordForm />
-    </template>
+    <template #content> sdf </template>
     <template #footer>
       <div class="w-full max-w-[48px]">
         <ButtonForm
@@ -36,7 +24,7 @@ const previousStepPath = "/authentication/login";
       <div class="w-full max-w-[267px]" id="next-button"></div>
     </template>
     <template #progress>
-      <ProgressBar :count-steps="6" :active-step="2" />
+      <ProgressBar :count-steps="6" :active-step="5" />
     </template>
   </OnBoardingLayout>
 </template>

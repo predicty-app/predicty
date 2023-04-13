@@ -66,9 +66,31 @@
       "connect-more-services-form": {
         "button": {
           "next": "Next"
+        },
+        "input": {
+          "placeholder": "Search service provider"
+        },
+        "services": {
+          "add": "+ <br/> Add <br/> custom"
+        },
+        "data-type": {
+          "options": {
+            "GOOGLE_ADS": "Google Ads",
+            "FACEBOOK_ADS": "Facebook Ads (Meta)",
+            "GOOGLE_ANALYTICS": "Google Analytics",
+            "TIK_TOK": "TikTok",
+            "OTHER": "Other (internal)"
+          }
         }
       },
       "connect-more-services-file-settings-form": {
+        "header-title": "What is this file?",
+        "header-description": "Tell us what kind of data this file represents",
+        "header-title-dynamic": "{provider} data upload",
+        "header-title-dynamic-custom": "Custom file upload “{name}”",
+        "notifications": {
+          "success": "Provider with file added correctly."
+        },
         "data-type": {
           "label": "Data type",
           "placeholder": "Choose data type....",
@@ -90,14 +112,15 @@
           "error-message": "The file name is required."
         },
         "descriptions": {
-          "header": "This file should be <b>separated per day</b> and contain columns:",
+          "header": "Data should be <b><u>separated per day</u></b> (YYYY-MM-DD) and contain columns:",
           "columns-names": {
             "campaign-id": "Campaign ID",
             "adset-id": "Adset ID",
             "ad-id": "Ad ID",
             "ad-name": "Ad Name",
             "image-hash": "Image Hash",
-            "spent": "Spent"
+            "spent": "Spent",
+            "currency": "Currency"
           }
         }
       }
@@ -230,10 +253,6 @@
     "more-media-integration": {
       "header-title": "Connect more services",
       "header-description": "We are platform that collects data from your websites and apps to create"
-    },
-    "more-media-integration-file-settings": {
-      "header-title": "What is this file?",
-      "header-description": "Tell us what kind of data this file represents"
     },
     "preparing-screen": {
       "header-title": "Good job!",

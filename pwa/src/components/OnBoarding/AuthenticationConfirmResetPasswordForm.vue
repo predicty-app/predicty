@@ -42,7 +42,7 @@ async function handleSubmitForm() {
 
   if (!errorMessage.value) {
     globalStore.toogleSpinnerState();
-    const response = await handleConfirmResetPassword({ password: modelValue.value, token: <string>route.params.token });
+    const response = await handleConfirmResetPassword({ password: modelValue.value, token: route.params.token as string });
 
     if (response !== "OK") {
       setErrorFormResponse(response);

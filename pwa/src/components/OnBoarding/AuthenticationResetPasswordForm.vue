@@ -3,7 +3,6 @@ import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { ref, onMounted, nextTick } from "vue";
 import { useGlobalStore } from "@/stores/global";
-import { useOnBoardingStore } from "@/stores/onboarding";
 import { handleResetPassword } from "@/services/api/onboarding";
 import {
   isRequiredValidation,
@@ -49,8 +48,10 @@ async function handleSubmitForm() {
     }
 
     notificationMessageModel.value.visible = true;
-    notificationMessageModel.value.message = t('components.on-boarding.authentication-reset-password-form.success');
-    notificationMessageModel.value.type = 'success';
+    notificationMessageModel.value.message = t(
+      "components.on-boarding.authentication-reset-password-form.success"
+    );
+    notificationMessageModel.value.type = "success";
 
     setTimeout(() => {
       globalStore.toogleSpinnerState();
@@ -72,22 +73,40 @@ onMounted(() => nextTick(() => (isComponentMounted.value = true)));
 </script>
 
 <template>
-  <NotificationMessage v-model="notificationMessageModel.visible" :message="notificationMessageModel.message"
-    :type="notificationMessageModel.type" />
+  <NotificationMessage
+    v-model="notificationMessageModel.visible"
+    :message="notificationMessageModel.message"
+    :type="notificationMessageModel.type"
+  />
   <div v-if="isComponentMounted" class="flex flex-col gap-y-6">
-    <InputForm v-model="modelValue" :error-message="errorMessage" v-on:keyup.enter="handleSubmitForm" :required="true"
+    <InputForm
+      v-model="modelValue"
+      :error-message="errorMessage"
+      v-on:keyup.enter="handleSubmitForm"
+      :required="true"
       :placeholder="
         t(
           'components.on-boarding.authentication-reset-password-form.input-placeholder'
         )
-      " :label="
-  t('components.on-boarding.authentication-reset-password-form.input-label')
-" />
+      "
+      :label="
+        t(
+          'components.on-boarding.authentication-reset-password-form.input-label'
+        )
+      "
+    />
     <Teleport to="#next-button">
       <ButtonForm type="success" class="w-full" @click="handleSubmitForm">
         <div class="relative">
-          {{ t("components.on-boarding.authentication-reset-password-form.button") }}
-          <IconSvg name="arrownext" class-name="absolute right-5 top-0 bottom-0 m-auto h-3 w-3" />
+          {{
+            t(
+              "components.on-boarding.authentication-reset-password-form.button"
+            )
+          }}
+          <IconSvg
+            name="arrownext"
+            class-name="absolute right-5 top-0 bottom-0 m-auto h-3 w-3"
+          />
         </div>
       </ButtonForm>
     </Teleport>

@@ -6,7 +6,7 @@ export type RegisterUserPayloadType = {
 
 export type ResetPasswordPayloadType = {
   email: string;
-}
+};
 
 export type LoginUserPayloadType = {
   username: string;
@@ -21,12 +21,13 @@ export type AuthLoginUserPayloadType = {
 export type UploadFilePayloadType = {
   type: string;
   file: File;
+  campaignName: string;
 };
 
 export type ConfirmResetPasswordPayloadType = {
   token: string;
   password: string;
-}
+};
 
 /**
  * Function to handle register user.
@@ -68,9 +69,12 @@ async function handleResetPassword(payload: ResetPasswordPayloadType) {
   }`;
 
   try {
-    const response = await apiService.request<ResetPasswordParamsType, any>(query, {
-      username: payload.email
-    });
+    const response = await apiService.request<ResetPasswordParamsType, any>(
+      query,
+      {
+        username: payload.email
+      }
+    );
 
     return response.errors
       ? response.errors[0].message
@@ -84,7 +88,9 @@ async function handleResetPassword(payload: ResetPasswordPayloadType) {
  * Function to handle confirm reset password.
  * @param {ConfirmResetPasswordPayloadType} payload
  */
-async function handleConfirmResetPassword(payload: ConfirmResetPasswordPayloadType) {
+async function handleConfirmResetPassword(
+  payload: ConfirmResetPasswordPayloadType
+) {
   type ConfirmResetPasswordParamsType = {
     token: string;
     password: string;
@@ -95,7 +101,10 @@ async function handleConfirmResetPassword(payload: ConfirmResetPasswordPayloadTy
   }`;
 
   try {
-    const response = await apiService.request<ConfirmResetPasswordParamsType, any>(query, {
+    const response = await apiService.request<
+      ConfirmResetPasswordParamsType,
+      any
+    >(query, {
       ...payload
     });
 
@@ -106,7 +115,6 @@ async function handleConfirmResetPassword(payload: ConfirmResetPasswordPayloadTy
     return (error as Error).message;
   }
 }
-
 
 /**
  * Function to handle login user.
@@ -172,18 +180,36 @@ async function handleAuthLoginUser(payload: AuthLoginUserPayloadType) {
  * @param {UploadFilePayloadType} payload
  */
 async function handleUploadFile(payload: UploadFilePayloadType) {
-  const query = `mutation($file: Upload) {
-    uploadDataFile(file: $file, type: ${payload.type})
+  const query = `mutation($file: Upload, $campaignName: String) {
+    uploadDataFile(file: $file, type: ${payload.type}, campaignName: $campaignName)
   }`;
 
   try {
     const response = await apiService.request<any, any>(
       query,
       {
-        file: payload.file
+        file: payload.file,
+        campaignName: payload.campaignName
       },
       "apollo"
     );
+
+    return response.errors ? response.errors[0].message : "OK";
+  } catch (error) {
+    return (error as Error).message;
+  }
+}
+
+/**
+ * Function to handle complete onboarding.
+ */
+async function handleCompleteOnboarding() {
+  const query = `mutation completeOnboarding {
+    completeOnboarding
+  }`;
+
+  try {
+    const response = await apiService.request<any, any>(query);
 
     return response.errors ? response.errors[0].message : "OK";
   } catch (error) {
@@ -196,6 +222,7 @@ export {
   handleLoginUser,
   handleUploadFile,
   handleResetPassword,
+  handleCompleteOnboarding,
   handleConfirmResetPassword,
   handleAuthLoginUser
 };

@@ -79,6 +79,7 @@ type AuthenticatedUserParamsType = {
   uid: string;
   email: string;
   isEmailVerified: boolean;
+  isOnboardingComplete: boolean;
 };
 
 export type DailyRevenueType = {

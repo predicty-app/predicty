@@ -19,7 +19,6 @@ const previousStepPath = "/onboarding/basic-media-integration";
           t('views.more-media-integration.header-description')
         "
       />
-      <DividerLine />
       <ConnectMoreServicesForm />
     </template>
     <template #footer>
