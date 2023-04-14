@@ -29,7 +29,7 @@ class ImportTrackingService
     ) {
     }
 
-    public function createNewFileImport(int $userId, string $filename, FileImportType $fileImportType): Import
+    public function createNewFileImport(int $userId, string $filename, FileImportType $fileImportType): FileImport
     {
         $import = new FileImport($userId, $filename, $fileImportType);
         $this->importRepository->save($import);
