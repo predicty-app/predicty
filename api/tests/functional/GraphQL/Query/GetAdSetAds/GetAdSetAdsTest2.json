@@ -1,0 +1,29 @@
+{
+  "data": {
+    "dashboard": {
+      "campaigns": [
+        {
+          "name": "@string@",
+          "adSets": [
+            {
+              "name": "@string@",
+              "ads": [
+                {
+                  "id": "@integer@",
+                  "externalId": "@string@",
+                  "name": "@string@",
+                  "campaignId": "@integer@",
+                  "startedAt": "@date@",
+                  "endedAt": "@date@"
+                },
+                "@...@"
+              ]
+            },
+            "@...@"
+          ]
+        },
+        "@...@"
+      ]
+    }
+  }
+}

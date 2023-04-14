@@ -7,6 +7,7 @@ namespace App\Tests\Unit\Service\DataImport;
 use App\Entity\FileImportType;
 use App\Entity\Import;
 use App\Entity\ImportResult;
+use App\Message\Event\ImportCompleted;
 use App\Repository\ImportRepository;
 use App\Service\DataImport\ImportTrackingService;
 use App\Service\DataImport\TrackableDataImportApi;
@@ -75,6 +76,26 @@ class ImportTrackingServiceTest extends TestCase
 
         $eventBus = $this->createMock(MessageBusInterface::class);
         $eventBus->method('dispatch')->willReturnCallback(fn ($message, $stamps) => new Envelope(new stdClass()));
+
+        $dataImportApi = $this->createMock(TrackableDataImportApi::class);
+
+        $logger = new NullLogger();
+        $service = new ImportTrackingService($importRepository, $dataImportApi, $eventBus, $logger);
+
+        $service->run(1, function (): void {});
+    }
+
+    public function test_successful_import_emits_event(): void
+    {
+        $import = $this->createMock(Import::class);
+
+        $importRepository = $this->createMock(ImportRepository::class);
+        $importRepository->method('findById')->willReturn($import);
+
+        $eventBus = $this->createMock(MessageBusInterface::class);
+        $eventBus->expects($this->once())->method('dispatch')->with($this->isInstanceOf(ImportCompleted::class))->willReturnCallback(
+            fn ($message, $stamps) => new Envelope($message)
+        );
 
         $dataImportApi = $this->createMock(TrackableDataImportApi::class);
 

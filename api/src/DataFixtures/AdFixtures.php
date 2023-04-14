@@ -33,7 +33,7 @@ class AdFixtures extends Fixture implements DependentFixtureInterface
 
         $data = [
             ['ad-external-id-1', $adSet1, 'Dummy Ad 1', self::AD_1, '2023-01-02 00:00:00', '2023-01-18 23:59:59'],
-            ['ad-external-id-2', $adSet1, 'Dummy Ad 2', self::AD_2, '2023-01-02 00:00:00', '2023-01-09 23:59:59'],
+            ['ad-external-id-2', $adSet1, 'Dummy Ad 2', self::AD_2, '2023-01-03 00:00:00', '2023-01-09 23:59:59'],
             ['ad-external-id-3', $adSet1, 'Dummy Ad 3', self::AD_3],
             ['ad-external-id-4', $adSet2, 'Dummy Ad 4', self::AD_4, '2023-01-10 00:00:00', '2023-01-18 23:59:59'],
             ['ad-external-id-5', $adSet2, 'Dummy Ad 5', self::AD_5],
