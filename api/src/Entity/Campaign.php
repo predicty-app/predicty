@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Service\Clock\Clock;
+use DateTimeImmutable;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Index(fields: ['userId'])]
 #[ORM\Index(fields: ['externalId'])]
+#[ORM\Index(fields: ['startedAt'])]
 #[ORM\UniqueConstraint(fields: ['userId', 'externalId'])]
 class Campaign implements Importable
 {
@@ -29,11 +32,19 @@ class Campaign implements Importable
     #[ORM\Column(options: ['default' => DataProvider::OTHER])]
     private DataProvider $dataProvider;
 
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    private ?DateTimeImmutable $startedAt;
+
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    private ?DateTimeImmutable $endedAt;
+
     public function __construct(
         string $externalId,
         int $userId,
         string $name,
         DataProvider $dataProvider = DataProvider::OTHER,
+        ?DateTimeImmutable $startedAt = null,
+        ?DateTimeImmutable $endedAt = null,
     ) {
         $this->externalId = $externalId;
         $this->userId = $userId;
@@ -41,6 +52,8 @@ class Campaign implements Importable
         $this->dataProvider = $dataProvider;
         $this->createdAt = Clock::now();
         $this->changedAt = Clock::now();
+        $this->startedAt = $startedAt;
+        $this->endedAt = $endedAt;
     }
 
     public function getUserId(): int
@@ -68,5 +81,25 @@ class Campaign implements Importable
     public function getDataProvider(): DataProvider
     {
         return $this->dataProvider;
+    }
+
+    public function getStartedAt(): ?DateTimeImmutable
+    {
+        return $this->startedAt;
+    }
+
+    public function getEndedAt(): ?DateTimeImmutable
+    {
+        return $this->endedAt;
+    }
+
+    public function setStartedAt(DateTimeImmutable $startedAt): void
+    {
+        $this->startedAt = $startedAt;
+    }
+
+    public function setEndedAt(DateTimeImmutable $endedAt): void
+    {
+        $this->endedAt = $endedAt;
     }
 }

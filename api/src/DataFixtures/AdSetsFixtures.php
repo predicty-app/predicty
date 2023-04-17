@@ -6,6 +6,7 @@ namespace App\DataFixtures;
 
 use App\Entity\AdSet;
 use App\Entity\Campaign;
+use App\Service\Util\DateHelper;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -19,33 +20,32 @@ class AdSetsFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        /** @var Campaign $campaign1 */
-        $campaign1 = $this->getReference(CampaignFixtures::CAMPAIGN_1);
+        $campaign1 = $this->getReference(CampaignFixtures::CAMPAIGN_1, Campaign::class);
+        $campaign2 = $this->getReference(CampaignFixtures::CAMPAIGN_2, Campaign::class);
+        $campaign3 = $this->getReference(CampaignFixtures::CAMPAIGN_3, Campaign::class);
 
-        /** @var Campaign $campaign2 */
-        $campaign2 = $this->getReference(CampaignFixtures::CAMPAIGN_2);
-
-        /** @var Campaign $campaign3 */
-        $campaign3 = $this->getReference(CampaignFixtures::CAMPAIGN_3);
+        $userId = $campaign1->getUserId();
 
         $data = [
             // string $externalId, int $userId, int $campaignId, string $name
-            ['adset-external-id-1', $campaign1->getUserId(), $campaign1->getId(), 'Dummy AdSet 1', self::ADSET_1],
-            ['adset-external-id-2', $campaign1->getUserId(), $campaign1->getId(), 'Dummy AdSet 2', self::ADSET_2],
-            ['adset-external-id-3', $campaign2->getUserId(), $campaign2->getId(), 'Dummy AdSet 3', self::ADSET_3],
-            ['adset-external-id-4', $campaign3->getUserId(), $campaign3->getId(), 'Dummy AdSet 4', self::ADSET_4],
+            [self::ADSET_1, 'adset-external-id-1', $userId, $campaign1->getId(), 'Dummy AdSet 1', '2023-01-02 00:00:00', '2023-01-18 23:59:59'],
+            [self::ADSET_2, 'adset-external-id-2', $userId, $campaign1->getId(), 'Dummy AdSet 2', '2023-01-10 00:00:00', '2023-01-18 23:59:59'],
+            [self::ADSET_3, 'adset-external-id-3', $userId, $campaign2->getId(), 'Dummy AdSet 3'],
+            [self::ADSET_4, 'adset-external-id-4', $userId, $campaign3->getId(), 'Dummy AdSet 4'],
         ];
 
         foreach ($data as $row) {
             $entity = new AdSet(
-                externalId: $row[0],
-                userId: $row[1],
-                campaignId: $row[2],
-                name: $row[3],
+                externalId: $row[1],
+                userId: $row[2],
+                campaignId: $row[3],
+                name: $row[4],
+                startedAt: isset($row[5]) ? DateHelper::fromString($row[5], 'Y-m-d H:i:s') : null,
+                endedAt: isset($row[6]) ? DateHelper::fromString($row[6], 'Y-m-d H:i:s') : null,
             );
 
             $manager->persist($entity);
-            $this->addReference($row[4], $entity);
+            $this->addReference($row[0], $entity);
         }
 
         $manager->flush();

@@ -20,10 +20,12 @@ class AdRepository
         $this->repository = $em->getRepository(Ad::class);
     }
 
-    public function save(Ad $ad): void
+    /**
+     * @return array<Ad>
+     */
+    public function findAllByUserId(int $userId): array
     {
-        $this->em->persist($ad);
-        $this->em->flush();
+        return $this->repository->findBy(['userId' => $userId]);
     }
 
     public function findByUserIdAndExternalId(int $userId, string $externalId): ?Ad
@@ -36,7 +38,7 @@ class AdRepository
      */
     public function findAllByAdSetId(int $adSetId): array
     {
-        return $this->repository->findBy(['adSetId' => $adSetId]);
+        return $this->repository->findBy(['adSetId' => $adSetId], ['startedAt' => 'ASC', 'id' => 'ASC']);
     }
 
     /**
@@ -44,6 +46,12 @@ class AdRepository
      */
     public function findAllByIds(array $ids): array
     {
-        return $this->repository->findBy(['id' => $ids]);
+        return $this->repository->findBy(['id' => $ids], ['startedAt' => 'ASC', 'id' => 'ASC']);
+    }
+
+    public function save(Ad $ad): void
+    {
+        $this->em->persist($ad);
+        $this->em->flush();
     }
 }

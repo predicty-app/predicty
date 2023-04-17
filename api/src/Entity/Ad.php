@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Service\Clock\Clock;
+use DateTimeImmutable;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -12,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Index(fields: ['adSetId'])]
 #[ORM\Index(fields: ['campaignId'])]
 #[ORM\Index(fields: ['externalId'])]
+#[ORM\Index(fields: ['startedAt'])]
 #[ORM\UniqueConstraint(fields: ['userId', 'externalId'])]
 class Ad implements Importable
 {
@@ -34,12 +37,20 @@ class Ad implements Importable
     #[ORM\Column]
     private string $name;
 
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    private ?DateTimeImmutable $startedAt;
+
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
+    private ?DateTimeImmutable $endedAt;
+
     public function __construct(
         int $userId,
         string $externalId,
         int $campaignId,
         string $name,
-        ?int $adSetId = null
+        ?int $adSetId = null,
+        ?DateTimeImmutable $startedAt = null,
+        ?DateTimeImmutable $endedAt = null,
     ) {
         $this->userId = $userId;
         $this->externalId = $externalId;
@@ -48,6 +59,8 @@ class Ad implements Importable
         $this->name = $name;
         $this->createdAt = Clock::now();
         $this->changedAt = Clock::now();
+        $this->startedAt = $startedAt;
+        $this->endedAt = $endedAt;
     }
 
     public function getExternalId(): string
@@ -73,5 +86,25 @@ class Ad implements Importable
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function setStartedAt(DateTimeImmutable $startedAt): void
+    {
+        $this->startedAt = $startedAt;
+    }
+
+    public function setEndedAt(DateTimeImmutable $endedAt): void
+    {
+        $this->endedAt = $endedAt;
+    }
+
+    public function getStartedAt(): ?DateTimeImmutable
+    {
+        return $this->startedAt;
+    }
+
+    public function getEndedAt(): ?DateTimeImmutable
+    {
+        return $this->endedAt;
     }
 }

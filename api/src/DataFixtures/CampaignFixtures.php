@@ -6,6 +6,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Campaign;
 use App\Entity\User;
+use App\Service\Util\DateHelper;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -21,21 +22,23 @@ class CampaignFixtures extends Fixture implements DependentFixtureInterface
         /** @var User $user */
         $user = $this->getReference(UserFixtures::JOHN);
 
-        $campaigns = [
-            [$user->getId(), 'Campaign 1', 'external-id-1', self::CAMPAIGN_1],
-            [$user->getId(), 'Campaign 2', 'external-id-2', self::CAMPAIGN_2],
-            [$user->getId(), 'Campaign 3', 'external-id-3', self::CAMPAIGN_3],
+        $rows = [
+            [self::CAMPAIGN_1, 'external-id-1', $user->getId(), 'Campaign 1', '2023-01-02 00:00:00', '2023-01-18 23:59:59'],
+            [self::CAMPAIGN_2, 'external-id-2', $user->getId(), 'Campaign 2'],
+            [self::CAMPAIGN_3, 'external-id-3', $user->getId(), 'Campaign 3'],
         ];
 
-        foreach ($campaigns as $campaign) {
+        foreach ($rows as $row) {
             $entity = new Campaign(
-                externalId: $campaign[2],
-                userId: $campaign[0],
-                name: $campaign[1],
+                externalId: $row[1],
+                userId: $row[2],
+                name: $row[3],
+                startedAt: isset($row[4]) ? DateHelper::fromString($row[4], 'Y-m-d H:i:s') : null,
+                endedAt: isset($row[5]) ? DateHelper::fromString($row[5], 'Y-m-d H:i:s') : null,
             );
 
             $manager->persist($entity);
-            $this->addReference($campaign[3], $entity);
+            $this->addReference($row[0], $entity);
         }
 
         $manager->flush();
