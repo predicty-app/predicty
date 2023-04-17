@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use RuntimeException;
 
 #[ORM\Entity]
 class FileImport extends Import
@@ -25,9 +26,28 @@ class FileImport extends Import
         $this->fileImportType = $fileImportType;
     }
 
+    /**
+     * Gets full filename like "uploads/file123.csv".
+     */
     public function getFilename(): string
     {
         return $this->filename;
+    }
+
+    /**
+     * Gets file basename like "file123.csv".
+     */
+    public function getBasename(): string
+    {
+        return pathinfo($this->filename, \PATHINFO_BASENAME);
+    }
+
+    public function getMimeType(): string
+    {
+        return match (pathinfo($this->filename, \PATHINFO_EXTENSION)) {
+            'csv' => 'text/csv',
+            default => throw new RuntimeException('Unknown file extension'),
+        };
     }
 
     public function getFileImportType(): FileImportType

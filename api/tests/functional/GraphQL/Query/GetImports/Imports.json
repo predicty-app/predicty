@@ -19,7 +19,8 @@
         },
         "startedAt": "@datetime@",
         "completedAt": "@datetime@",
-        "filename": "dummy-import-1.csv"
+        "filename": "dummy-import-1.csv",
+        "downloadUrl": "@string@.isUrl()"
       },
       {
         "id": "@integer@",
@@ -58,7 +59,8 @@
         },
         "startedAt": "@datetime@",
         "completedAt": "@datetime@",
-        "filename": "dummy-import-3.csv"
+        "filename": "dummy-import-3.csv",
+        "downloadUrl": "@string@.isUrl()"
       },
       {
         "id": "@integer@",
@@ -78,7 +80,8 @@
         },
         "startedAt": "@datetime@",
         "completedAt": null,
-        "filename": "dummy-import-2.csv"
+        "filename": "dummy-import-2.csv",
+        "downloadUrl": "@string@.isUrl()"
       },
       {
         "id": "@integer@",
@@ -98,7 +101,8 @@
         },
         "startedAt": null,
         "completedAt": null,
-        "filename": "dummy-import-1.csv"
+        "filename": "dummy-import-1.csv",
+        "downloadUrl": "@string@.isUrl()"
       }
     ]
   }
