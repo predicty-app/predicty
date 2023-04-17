@@ -19,7 +19,7 @@ trait EmitEventTrait
         $this->eventBus = $eventBus;
     }
 
-    public function emit(object $event): void
+    protected function emit(object $event): void
     {
         if ($this->eventBus === null) {
             throw new RuntimeException('Event bus is not set.');
