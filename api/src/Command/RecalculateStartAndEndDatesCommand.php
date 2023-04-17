@@ -15,7 +15,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'app:recalculate-start-and-end-dates',
-    description: 'Connect user account to google ads',
+    description: 'Recalculates start and end dates for all campaign, ads, ad collections and ad sets.',
 )]
 class RecalculateStartAndEndDatesCommand extends Command
 {
@@ -29,7 +29,6 @@ class RecalculateStartAndEndDatesCommand extends Command
     protected function configure(): void
     {
         $this
-            ->setDescription('Recalculates start and end dates for all campaign, ads, ad collections and ad sets.')
             ->addArgument('userId', InputArgument::REQUIRED, 'The user for who the dates should be recalculated.')
         ;
     }
@@ -39,7 +38,7 @@ class RecalculateStartAndEndDatesCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $userId = (int) $input->getArgument('userId');
-        $user = $this->userRepository->findById((int) $userId);
+        $user = $this->userRepository->findById($userId);
 
         if ($user === null) {
             $io->writeln('User with given id was not found.');
