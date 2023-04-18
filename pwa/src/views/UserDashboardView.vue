@@ -67,7 +67,6 @@ const amountScale = computed<string[]>(() => [
 ]);
 
 const isSpinnerVisible = ref<boolean>(false);
-const isDropped = ref<boolean>(true);
 
 /**
  * Function to check is ad in collection.
@@ -95,28 +94,41 @@ function toggleCollection(value?: AdSetsType) {
 /**
  * Functions to drag and drop an ad into collection.
  */
-function startDrag(e: any, ad: AdsType, campaign: CampaignType) {
+function startDrag(e: any, ad: AdsType) {
   e.dataTransfer.dropEffect = "move";
   e.dataTransfer.effectAllowed = "move";
+
+  if (userDashboardStore.selectedAdsList.ads.length > 1) {
+    let ghost = e.currentTarget.cloneNode(true);
+
+    ghost.classList.add("border-[2px]");
+    ghost.style.position = "fixed";
+    ghost.style.borderColor = e.currentTarget
+      .querySelector(".chart-timeline-item")
+      .style.getPropertyValue("--color");
+    document.body.appendChild(ghost);
+    e.dataTransfer.setDragImage(ghost, 0, 0);
+  }
+
   userDashboardStore.isDragAndDrop = true;
-  isDropped.value = false;
-  userDashboardStore.toogleAssignAdsAction(campaign.uid, ad.uid, false);
+  userDashboardStore.draggedAd = ad.uid;
 }
 
 function endDrag() {
   userDashboardStore.isDragAndDrop = false;
-  userDashboardStore.selectedAdsList.ads = [];
-  isDropped.value = true;
 }
 
-async function onDrop(e: any, collection: AdSetsType, campaign: CampaignType) {
+async function onDrop(collection: AdSetsType, campaign: CampaignType) {
   await handleAssignAdToCollection({
     campaignUid: campaign.uid,
     collectionUid: collection.uid,
-    ads: userDashboardStore.selectedAdsList.ads
+    ads: [
+      userDashboardStore.draggedAd,
+      ...userDashboardStore.selectedAdsList.ads
+    ]
   });
+  userDashboardStore.draggedAd = null;
   userDashboardStore.selectedAdsList.ads = [];
-  userDashboardStore.selectedAdsList.campaignUid = null;
   await setResponseFiredAction();
 }
 
@@ -130,7 +142,6 @@ async function setResponseFiredAction() {
     isSpinnerVisible.value = false;
   });
   isSpinnerVisible.value = false;
-  isDropped.value = true;
 }
 </script>
 
@@ -140,8 +151,7 @@ async function setResponseFiredAction() {
     v-if="
       (userDashboardStore.selectedAdsList.ads.length > 0 ||
         userDashboardStore.selectedCollectionAdsList.ads.length > 0) &&
-      !userDashboardStore.isDragAndDrop &&
-      isDropped
+      !userDashboardStore.isDragAndDrop
     "
   />
   <SpinnerBar :is-visible="isSpinnerVisible" :is-global="true" />
@@ -188,6 +198,9 @@ async function setResponseFiredAction() {
             <ChartTimelineItem
               :element="adset"
               type="collection"
+              @drop="onDrop($event, adset, campaign)"
+              @dragover.prevent
+              @dragenter.prevent
               :is-visible="true"
               :uid="adset.uid"
               :color="campaign.color"
@@ -204,6 +217,9 @@ async function setResponseFiredAction() {
               <ChartTimelineItem
                 :element="ad"
                 type="ad"
+                draggable="true"
+                @dragstart="startDrag($event, ad)"
+                @dragend="endDrag"
                 :is-visible="checkIsAdInCollection(ad.uid)"
                 :uid="ad.uid"
                 :color="campaign.color"

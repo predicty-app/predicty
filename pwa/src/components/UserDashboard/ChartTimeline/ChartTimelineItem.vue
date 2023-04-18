@@ -160,7 +160,7 @@ function handleSelectCollection() {
     >
       <div
         :class="[
-          'p-2 text-xs overflow-hidden rounded-[5px] shadow-sm text-text-white font-semibold bg-timeline-item-background',
+          'chart-timeline-item p-2 text-xs overflow-hidden rounded-[5px] shadow-sm text-text-white font-semibold bg-timeline-item-background',
           {
             'shadow-lg shadow-timeline-shadow': isSelectedElement
           }
@@ -172,7 +172,7 @@ function handleSelectCollection() {
           <CheckboxForm
             v-if="type === 'ad'"
             :color="currentColor"
-            :is-checked="isSelectedElement && !userStore.isDragAndDrop"
+            :is-checked="isSelectedElement"
           />
           <svg
             v-if="type === 'collection'"
