@@ -103,6 +103,12 @@ abstract class Import
         $this->status = ImportStatus::FAILED;
     }
 
+    public function withdraw(): void
+    {
+        $this->status = ImportStatus::WITHDRAWN;
+        $this->changedAt = Clock::now();
+    }
+
     public function getStartedAt(): ?DateTimeImmutable
     {
         return $this->startedAt;

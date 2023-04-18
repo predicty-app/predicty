@@ -43,6 +43,7 @@ class Campaign implements Importable
         int $userId,
         string $name,
         DataProvider $dataProvider = DataProvider::OTHER,
+        ?int $importId = null,
         ?DateTimeImmutable $startedAt = null,
         ?DateTimeImmutable $endedAt = null,
     ) {
@@ -52,6 +53,7 @@ class Campaign implements Importable
         $this->dataProvider = $dataProvider;
         $this->createdAt = Clock::now();
         $this->changedAt = Clock::now();
+        $this->importId = $importId;
         $this->startedAt = $startedAt;
         $this->endedAt = $endedAt;
     }
