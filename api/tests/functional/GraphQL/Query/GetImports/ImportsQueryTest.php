@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Tests\Functional\GraphQL\Query;
+namespace App\Tests\Functional\GraphQL\Query\GetImports;
 
 use App\Test\GraphQLTestCase;
 
@@ -40,6 +40,7 @@ class ImportsQueryTest extends GraphQLTestCase
                 completedAt
                 ... on FileImport {
                   filename
+                  downloadUrl
                 }
               }
             }
@@ -47,6 +48,6 @@ class ImportsQueryTest extends GraphQLTestCase
 
         $this->executeQuery($query);
         $this->assertResponseIsSuccessful();
-        $this->assertResponseMatchesJsonFile(__DIR__.'/response/Imports.json');
+        $this->assertResponseMatchesJsonFile(__DIR__.'/Imports.json');
     }
 }
