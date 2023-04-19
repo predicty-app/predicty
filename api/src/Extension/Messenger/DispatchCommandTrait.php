@@ -12,6 +12,9 @@ use Symfony\Contracts\Service\Attribute\Required;
 
 trait DispatchCommandTrait
 {
+    /**
+     * @internal do not use it directly, use dispatch method instead
+     */
     private ?MessageBusInterface $commandBus = null;
 
     #[Required]

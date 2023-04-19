@@ -23,15 +23,11 @@ framework:
             async: '%env(MESSENGER_TRANSPORT_DSN)%'
 
         routing:
-            # Symfony\Component\Mailer\Messenger\SendEmailMessage: async
-            # App\Message\AsyncMessage: async
-            # App\Message\Event: async
+            'App\Message\Command\SyncGoogleAnalytics': sync
 
 when@test:
     framework:
         messenger:
             transports:
-                # replace with your transport name here (e.g., my_transport: 'in-memory://')
-                # For more Messenger testing tools, see https://github.com/zenstruck/messenger-test
-#                async: 'in-memory://'
-                async: 'test://'
+                async: 'test://?intercept=false&catch_exceptions=false'
+                sync: 'test://?intercept=false&catch_exceptions=false'

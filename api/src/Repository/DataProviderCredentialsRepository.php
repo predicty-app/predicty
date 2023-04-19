@@ -23,13 +23,12 @@ class DataProviderCredentialsRepository
 
     public function findOrCreate(int $userId, DataProvider $type): DataProviderCredentials
     {
-        $entity = $this->repository->findOneBy(['userId' => $userId, 'dataProvider' => $type]);
+        return $this->find($userId, $type) ?? new DataProviderCredentials($userId, $type);
+    }
 
-        if ($entity === null) {
-            $entity = new DataProviderCredentials($userId, $type);
-        }
-
-        return $entity;
+    public function find(int $userId, DataProvider $type): ?DataProviderCredentials
+    {
+        return $this->repository->findOneBy(['userId' => $userId, 'dataProvider' => $type]);
     }
 
     public function save(DataProviderCredentials $entity): void
