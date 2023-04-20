@@ -31,6 +31,12 @@ class AdType extends ObjectType
                     'type' => fn () => $type->id(),
                     'resolve' => fn (Ad $ad) => $ad->getCampaignId(),
                 ],
+                'startedAt' => [
+                    'type' => $type->date(),
+                ],
+                'endedAt' => [
+                    'type' => $type->date(),
+                ],
                 'adStats' => [
                     'type' => $type->listOf($type->adStats()),
                     'resolve' => fn (Ad $ad) => $adStatsRepository->findAllByAdId($ad->getId()),

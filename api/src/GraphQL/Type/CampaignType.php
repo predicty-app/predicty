@@ -25,6 +25,12 @@ class CampaignType extends ObjectType
                 'name' => [
                     'type' => $type->string(),
                 ],
+                'startedAt' => [
+                    'type' => $type->date(),
+                ],
+                'endedAt' => [
+                    'type' => $type->date(),
+                ],
                 'dataProvider' => [
                     'type' => $type->dataProvider(),
                     'resolve' => fn (Campaign $campaign) => $campaign->getDataProvider(),

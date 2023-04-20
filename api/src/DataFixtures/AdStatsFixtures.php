@@ -21,14 +21,9 @@ class AdStatsFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        /** @var Ad $ad1 */
-        $ad1 = $this->getReference(AdFixtures::AD_1);
-
-        /** @var Ad $ad2 */
-        $ad2 = $this->getReference(AdFixtures::AD_2);
-
-        /** @var Ad $ad4 */
-        $ad4 = $this->getReference(AdFixtures::AD_4);
+        $ad1 = $this->getReference(AdFixtures::AD_1, Ad::class);
+        $ad2 = $this->getReference(AdFixtures::AD_2, Ad::class);
+        $ad4 = $this->getReference(AdFixtures::AD_4, Ad::class);
 
         $data = [
             // ad, day, results, cpr (as int, in the smallest currency unit)
@@ -58,24 +53,7 @@ class AdStatsFixtures extends Fixture implements DependentFixtureInterface
             [$ad2, '2023-01-07', 1, 50],
             [$ad2, '2023-01-08', 5, 65],
             [$ad2, '2023-01-09', 3, 15],
-            [$ad2, '2023-01-10', 20, 10],
-            [$ad2, '2023-01-11', 30, 2],
-            [$ad2, '2023-01-12', 15, 1],
-            [$ad2, '2023-01-13', 1, 50],
-            [$ad2, '2023-01-14', 5, 65],
-            [$ad2, '2023-01-15', 3, 15],
-            [$ad2, '2023-01-16', 20, 10],
-            [$ad2, '2023-01-17', 30, 2],
-            [$ad2, '2023-01-18', 15, 1],
 
-            [$ad4, '2023-01-02', 24, 15],
-            [$ad4, '2023-01-03', 5, 20],
-            [$ad4, '2023-01-04', 0, 25],
-            [$ad4, '2023-01-05', 0, 30],
-            [$ad4, '2023-01-06', 1, 46],
-            [$ad4, '2023-01-07', 1, 50],
-            [$ad4, '2023-01-08', 5, 65],
-            [$ad4, '2023-01-09', 3, 15],
             [$ad4, '2023-01-10', 20, 10],
             [$ad4, '2023-01-11', 30, 2],
             [$ad4, '2023-01-12', 15, 1],

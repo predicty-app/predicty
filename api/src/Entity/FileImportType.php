@@ -21,7 +21,7 @@ enum FileImportType: string
             self::GOOGLE_ADS_CSV => DataProvider::GOOGLE_ADS,
             self::GOOGLE_ANALYTICS_REVENUE => DataProvider::GOOGLE_ANALYTICS,
             self::OTHER_SIMPLIFIED_CSV => DataProvider::OTHER,
-            default => throw new RuntimeException('FileImportType does not have a data provider')
+            default => throw new RuntimeException(sprintf('FileImportType does not have a data provider: "%s"', $this->value))
         };
     }
 }

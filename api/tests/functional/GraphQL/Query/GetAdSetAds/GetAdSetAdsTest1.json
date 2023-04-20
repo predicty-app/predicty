@@ -1,0 +1,65 @@
+{
+  "data": {
+    "dashboard": {
+      "campaigns": [
+        {
+          "adSets": [
+            {
+              "ads": [
+                {
+                  "id": "@integer@",
+                  "startedAt": "2023-01-02",
+                  "endedAt": "2023-01-18"
+                },
+                {
+                  "id": "@integer@",
+                  "startedAt": "2023-01-03",
+                  "endedAt": "2023-01-09"
+                },
+                {
+                  "id": "@integer@",
+                  "startedAt": null,
+                  "endedAt": null
+                }
+              ]
+            },
+            {
+              "ads": [
+                {
+                  "id": "@integer@",
+                  "startedAt": "2023-01-10",
+                  "endedAt": "2023-01-18"
+                },
+                {
+                  "id": "@integer@",
+                  "startedAt": null,
+                  "endedAt": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "adSets": [
+            {
+              "ads": [
+                {
+                  "id": "@integer@",
+                  "startedAt": null,
+                  "endedAt": null
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "adSets": [
+            {
+              "ads": []
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

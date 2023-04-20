@@ -6,6 +6,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Ad;
 use App\Entity\AdSet;
+use App\Service\Util\DateHelper;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -25,23 +26,16 @@ class AdFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        /** @var AdSet $adSet1 */
-        $adSet1 = $this->getReference(AdSetsFixtures::ADSET_1);
-
-        /** @var AdSet $adSet2 */
-        $adSet2 = $this->getReference(AdSetsFixtures::ADSET_2);
-
-        /** @var AdSet $adSet3 */
-        $adSet3 = $this->getReference(AdSetsFixtures::ADSET_3);
-
-        /** @var AdSet $adSet4 */
-        $adSet4 = $this->getReference(AdSetsFixtures::ADSET_4);
+        $adSet1 = $this->getReference(AdSetsFixtures::ADSET_1, AdSet::class);
+        $adSet2 = $this->getReference(AdSetsFixtures::ADSET_2, AdSet::class);
+        $adSet3 = $this->getReference(AdSetsFixtures::ADSET_3, AdSet::class);
+        $adSet4 = $this->getReference(AdSetsFixtures::ADSET_4, AdSet::class);
 
         $data = [
-            ['ad-external-id-1', $adSet1, 'Dummy Ad 1', self::AD_1],
-            ['ad-external-id-2', $adSet1, 'Dummy Ad 2', self::AD_2],
+            ['ad-external-id-1', $adSet1, 'Dummy Ad 1', self::AD_1, '2023-01-02 00:00:00', '2023-01-18 23:59:59'],
+            ['ad-external-id-2', $adSet1, 'Dummy Ad 2', self::AD_2, '2023-01-03 00:00:00', '2023-01-09 23:59:59'],
             ['ad-external-id-3', $adSet1, 'Dummy Ad 3', self::AD_3],
-            ['ad-external-id-4', $adSet2, 'Dummy Ad 4', self::AD_4],
+            ['ad-external-id-4', $adSet2, 'Dummy Ad 4', self::AD_4, '2023-01-10 00:00:00', '2023-01-18 23:59:59'],
             ['ad-external-id-5', $adSet2, 'Dummy Ad 5', self::AD_5],
             ['ad-external-id-6', $adSet3, 'Dummy Ad 6', self::AD_6],
         ];
@@ -53,6 +47,8 @@ class AdFixtures extends Fixture implements DependentFixtureInterface
                 campaignId: $row[1]->getCampaignId(),
                 name: $row[2],
                 adSetId: $row[1]->getId(),
+                startedAt: isset($row[4]) ? DateHelper::fromString($row[4], 'Y-m-d H:i:s') : null,
+                endedAt: isset($row[5]) ? DateHelper::fromString($row[5], 'Y-m-d H:i:s') : null,
             );
 
             $manager->persist($entity);

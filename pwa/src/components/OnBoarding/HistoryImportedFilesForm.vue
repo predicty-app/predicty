@@ -2,9 +2,7 @@
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 import { ref, onMounted, nextTick } from "vue";
-import {
-  handleCompleteOnboarding
-} from "@/services/api/onboarding";
+import { handleCompleteOnboarding } from "@/services/api/onboarding";
 
 const { t } = useI18n();
 

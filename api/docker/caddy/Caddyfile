@@ -7,12 +7,13 @@
 
 log
 
-@pwa expression `(!path('/graphql*', '/internal*', '/bundles*', '/contexts*', '/_profiler*', '/_wdt*'))`
+@pwa expression `(!path('/graphql*', '/internal*', '/bundles*', '/contexts*', '/_profiler*', '/_wdt*', '/uploads/file*'))`
 
 route {
     root * /app/public
     reverse_proxy @pwa {
             to https://{$PWA_UPSTREAM}
+            flush_interval -1
             transport http {
                 tls
                 tls_insecure_skip_verify

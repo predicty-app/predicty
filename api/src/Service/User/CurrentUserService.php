@@ -29,4 +29,9 @@ class CurrentUserService
 
         throw new AuthenticationException('There is no logged in user available');
     }
+
+    public function isAnonymous(): bool
+    {
+        return $this->security->getUser() === null;
+    }
 }
