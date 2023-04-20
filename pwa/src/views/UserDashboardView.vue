@@ -198,7 +198,7 @@ async function setResponseFiredAction() {
             <ChartTimelineItem
               :element="adset"
               type="collection"
-              @drop="onDrop($event, adset, campaign)"
+              @drop="onDrop(adset, campaign)"
               @dragover.prevent
               @dragenter.prevent
               :is-visible="true"
