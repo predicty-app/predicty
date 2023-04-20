@@ -22,8 +22,6 @@ onMounted(async () => {
         campaignName: service.name
       });
     });
-
-    await handleCompleteOnboarding();
     router.push("/onboarding/preparing-screen/import-history");
   } else {
     await handleCompleteOnboarding();

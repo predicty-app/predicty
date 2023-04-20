@@ -28,7 +28,7 @@ function handleChangeScrollParams(params: ScrollType) {
     @mouseup="globalStore.isActiveActionDrag = false"
   >
     <div
-      class="h-calc select-none grid grid-cols-[auto] grid-rows-[320px_80px_auto]"
+      class="h-calc select-none grid grid-cols-[auto] grid-rows-[345px_80px_auto]"
     >
       <div>
         <slot name="chart-legend" />
@@ -44,7 +44,7 @@ function handleChangeScrollParams(params: ScrollType) {
       </ScrollbarPanel>
     </div>
     <div
-      class="h-calc select-none grid grid-cols-[auto] grid-rows-[50px_270px_30px_30px_auto]"
+      class="h-calc select-none grid grid-cols-[auto] grid-rows-[70px_270px_30px_30px_auto]"
     >
       <ScrollbarPanel :scroll-x="globalStore.scrollParams.x">
         <slot name="chart-weeks" />

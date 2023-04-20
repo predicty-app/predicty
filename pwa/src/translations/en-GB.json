@@ -123,6 +123,11 @@
             "currency": "Currency"
           }
         }
+      },
+      "history-imported-files-form": {
+        "button": {
+          "next": "Finish setup"
+        }
       }
     },
     "user-dashboard": {

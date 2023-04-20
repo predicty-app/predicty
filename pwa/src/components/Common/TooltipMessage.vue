@@ -17,7 +17,7 @@ withDefaults(defineProps<PropsType>(), {
     <div
       v-if="isActive"
       :class="[
-        'tooltip-message__overlayer absolute whitespace-normal max-w-[350px] w-max text-xs p-2 rounded bg-tooltipMessage-background shadow text-text-white hidden',
+        'tooltip-message__overlayer absolute whitespace-normal w-full min-w-fit text-xs p-2 rounded bg-tooltipMessage-background shadow text-text-white hidden',
         {
           'bottom-[105%] left-1/2 translate-x-[-50%]': position === 'top',
           'top-[105%]  left-1/2 translate-x-[-50%]': position === 'bottom',

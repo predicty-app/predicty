@@ -103,7 +103,13 @@ const routes: Array<RouteRecordRaw> = [
           authentication: true,
           authorizationType: "onboarding"
         },
-        component: () => import("@/views/BasicMediaIntegrationView.vue")
+        component: () => import("@/views/BasicMediaIntegrationView.vue"),
+        beforeEnter: () => {
+          const userDashboardStore = useUserDashboardStore();
+          if (userDashboardStore.authenticatedUserParams && userDashboardStore.authenticatedUserParams?.isOnboardingComplete) {
+            return { path: "/" };
+          }
+        }
       },
       {
         path: "/onboarding/more-media-integration",
@@ -111,7 +117,13 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           authentication: true
         },
-        component: () => import("@/views/MoreMediaIntegrationView.vue")
+        component: () => import("@/views/MoreMediaIntegrationView.vue"),
+        // beforeEnter: () => {
+        //   const userDashboardStore = useUserDashboardStore();
+        //   if (userDashboardStore.authenticatedUserParams && userDashboardStore.authenticatedUserParams?.isOnboardingComplete) {
+        //     return { path: "/" };
+        //   }
+        // }
       },
       {
         path: "/onboarding/more-media-integration/file-settings",
@@ -120,7 +132,13 @@ const routes: Array<RouteRecordRaw> = [
           authentication: true
         },
         component: () =>
-          import("@/views/MoreMediaIntegrationFileSettingsView.vue")
+          import("@/views/MoreMediaIntegrationFileSettingsView.vue"),
+          // beforeEnter: () => {
+          //   const userDashboardStore = useUserDashboardStore();
+          //   if (userDashboardStore.authenticatedUserParams && userDashboardStore.authenticatedUserParams?.isOnboardingComplete) {
+          //     return { path: "/" };
+          //   }
+          // }
       },
       {
         path: "/onboarding/preparing-screen",
@@ -128,7 +146,13 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           authentication: true
         },
-        component: () => import("@/views/PreparingScreenView.vue")
+        component: () => import("@/views/PreparingScreenView.vue"),
+        // beforeEnter: () => {
+        //   const userDashboardStore = useUserDashboardStore();
+        //   if (userDashboardStore.authenticatedUserParams && userDashboardStore.authenticatedUserParams?.isOnboardingComplete) {
+        //     return { path: "/" };
+        //   }
+        // }
       },
       {
         path: "/onboarding/preparing-screen/import-history",
@@ -138,14 +162,6 @@ const routes: Array<RouteRecordRaw> = [
         },
         component: () => import("@/views/PreparingScreenImportHistoryView.vue")
       },
-      {
-        path: "/onboarding/add-more-files",
-        name: "add-more-files",
-        meta: {
-          authentication: true
-        },
-        component: () => import("@/views/AddMoreFiles.vue")
-      }
     ]
   },
   {

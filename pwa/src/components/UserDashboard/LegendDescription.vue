@@ -42,25 +42,29 @@ watch(
 
 <template>
   <div
-    class="h-full flex flex-col min-h-full items-end pr-7 pt-[15px] pb-[10px] bg-legendDescription-background border-b border-b-legendDescription-border"
+    class="h-full relative flex flex-col min-h-full items-end pr-7 pt-[15px] pb-[10px] bg-legendDescription-background border-b border-b-legendDescription-border"
   >
-    <div class="text-[10px] font-medium text-legendDescription-header pb-5">
+    <div class="text-[10px] font-medium text-legendDescription-header pb-[10px]">
       <SelectForm
         class="w-20"
         :options="typeChartOptions"
         v-model="currentTypeChart"
       />
     </div>
-    <div class="h-full flex flex-col justify-between">
+    <div class="h-full flex flex-col justify-between relative w-full">
       <div
-        class="text-[10px] font-medium text-legendDescription-scale-text"
+        :class="['text-[10px] font-medium text-legendDescription-scale-text absolute right-0 w-[100px] text-right', {
+          'top-0': index === 0,
+          'top-0 bottom-0 m-auto h-[1px]': index === 1,
+          'bottom-[75px] h-[1px]': index === 2
+        }]"
         :key="amount"
-        v-for="amount in amountScale"
+        v-for="amount, index in amountScale"
       >
         {{ amount }}
       </div>
     </div>
-    <div class="justify-end pt-14">
+    <div class="absolute bottom-0">
       <div
         :key="option.label"
         v-for="option in options"

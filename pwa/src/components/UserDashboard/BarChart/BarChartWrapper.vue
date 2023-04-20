@@ -68,11 +68,11 @@ function handleChangeScale(eventWheel: WheelEvent) {
     class="bar-chart-wrapper bg-timeline-background grid grid-rows-[1fr] w-fit h-full whitespace-nowrap relative"
   >
     <div
-      class="w-max absolute top-0 left-0 z-[1] pt-[30px] pb-[115px] justify-between h-full flex flex-col min-h-full"
+      class="w-max absolute top-0 left-0 z-[1] pt-0 pb-0 justify-between h-full flex flex-col min-h-full"
     >
-      <div class="h-[1px] w-max border-t border-t-chartBar-lines"></div>
-      <div class="h-[1px] w-max border-t border-t-chartBar-lines"></div>
-      <div class="h-[1px] w-max border-t border-t-chartBar-lines"></div>
+      <div class="h-[1px] w-max border-t border-t-chartBar-lines absolute top-[0px]"></div>
+      <div class="h-[1px] w-max border-t border-t-chartBar-lines absolute bottom-0 top-0 m-auto"></div>
+      <div class="h-[1px] w-max border-t border-t-chartBar-lines pb-[0px] absolute bottom-[70px]"></div>
     </div>
     <BarChartPoleWrapper />
   </div>

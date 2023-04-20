@@ -170,6 +170,12 @@ function parseCurrentDate(index: number): string {
   }`;
 }
 
+function getNameOfDay(date: string): string {
+  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const d = new Date(date);
+  return days[d.getDay()];
+}
+
 /**
  * Function to concat results.
  */
@@ -259,7 +265,10 @@ function setSpentInvestment() {
       <BarChartPoleItem
         :height="dailyReveneuNumber[item - 1] * getScale()"
         :key="`${Math.random()}_${item}`"
-        :investment="investmentNumber[item - 1] * getScale()"
+        :investment="investmentNumber[item - 1]"
+        :sales="dailyReveneuNumber[item - 1]"
+        :date="parseCurrentDate(item - 1)"
+        :day="getNameOfDay(parseCurrentDate(item - 1))"
         :result="resultNumber[item - 1] * getScale()"
         v-for="item in 7"
       />
@@ -267,8 +276,9 @@ function setSpentInvestment() {
     <template v-else>
       <BarChartPoleItem
         :type="TypeOptionsChart.WEEKS"
-        :investment="investmentWeekNumber * getScale()"
+        :investment="investmentWeekNumber"
         :height="dailyReveneuWeekNumber * getScale()"
+        :sales="dailyReveneuWeekNumber"
         :key="`${Math.random()}_${props.fisrtDayWeek}`"
         :result="resultWeekNumber * getScale()"
       />

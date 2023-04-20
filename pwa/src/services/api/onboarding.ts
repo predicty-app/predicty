@@ -201,6 +201,13 @@ async function handleUploadFile(payload: UploadFilePayloadType) {
 }
 
 /**
+ * Function to handle get imported files.
+ */
+async function handleGetImportedFiles() {
+
+}
+
+/**
  * Function to handle complete onboarding.
  */
 async function handleCompleteOnboarding() {
@@ -222,6 +229,7 @@ export {
   handleLoginUser,
   handleUploadFile,
   handleResetPassword,
+  handleGetImportedFiles,
   handleCompleteOnboarding,
   handleConfirmResetPassword,
   handleAuthLoginUser

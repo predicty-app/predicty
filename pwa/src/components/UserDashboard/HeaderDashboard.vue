@@ -66,7 +66,7 @@ async function handleLogoutUser() {
 <template>
   <SpinnerBar :is-visible="isSpinnerLoadingVisible" :is-global="true" />
   <div
-    class="header-dashboard h-[60px] flex items-center bg-text-white shadow-md px-5 justify-between relative z-10"
+    class="header-dashboard h-[60px] flex items-center bg-text-white drop-shadow-md px-5 justify-between relative z-10"
   >
     <AppLogo class="ml-6" />
     <DropdownMenu>

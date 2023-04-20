@@ -29,6 +29,10 @@ const timelineItemInstance = ref<HTMLDivElement | null>(null);
 const isSelectedElement = computed<boolean>(() =>
   userStore.selectedAdsList.ads.includes(props.element.uid)
 );
+const tooltipPositionX = ref<string>('0px');
+const tooltipPositionY = ref<string>('0px');
+const isTooltipVisible = ref<boolean>(false);
+const tooltTipReference = ref<HTMLDivElement | null>(null);
 
 const parseStart = computed<number>(() =>
   props.start > props.end ? props.end : props.start
@@ -74,23 +78,27 @@ const emit = defineEmits<{
  * Function to handle visible element.
  */
 function handleVisibleElement() {
-  if (!globalStore.scrollTimeline || !props.isVisible) {
-    isElementVisible.value = false;
-    return;
-  }
+  // --------------------------------------------------------------------------
+  // --> commented functionality at Stan's request -> remove virtualization <-- 
+  // --------------------------------------------------------------------------
 
-  const currentLeftPosition =
-    boundingBoxElement.value.left -
-    globalStore.scrollTimeline.getBoundingClientRect().left +
-    globalStore.scrollParams.x;
-  const currentRightPosition =
-    currentLeftPosition + boundingBoxElement.value.width;
+  // if (!globalStore.scrollTimeline || !props.isVisible) {
+  //   isElementVisible.value = false;
+  //   return;
+  // }
 
-  isElementVisible.value =
-    currentLeftPosition <
-      globalStore.scrollParams.x +
-        globalStore.scrollTimeline.getBoundingClientRect().width &&
-    currentRightPosition > globalStore.scrollParams.x;
+  // const currentLeftPosition =
+  //   boundingBoxElement.value.left -
+  //   globalStore.scrollTimeline.getBoundingClientRect().left +
+  //   globalStore.scrollParams.x;
+  // const currentRightPosition =
+  //   currentLeftPosition + boundingBoxElement.value.width;
+
+  // isElementVisible.value =
+  //   currentLeftPosition <
+  //     globalStore.scrollParams.x +
+  //       globalStore.scrollTimeline.getBoundingClientRect().width &&
+  //   currentRightPosition > globalStore.scrollParams.x;
 
   if (!props.isVisible) {
     isElementVisible.value = false;
@@ -122,6 +130,13 @@ function handleSelectCollection() {
 
   emit("collectionSelected", props.element as AdSetsType);
 }
+
+function handleShowTooltipPosition(event: MouseEvent) {
+  if(tooltTipReference.value) {
+    tooltipPositionX.value = `${event.clientX - (tooltTipReference.value.getBoundingClientRect().width / 2)}px`;
+    tooltipPositionY.value = `${event.clientY - tooltTipReference.value.getBoundingClientRect().height - 20}px`;
+  }
+}
 </script>
 
 <template>
@@ -151,23 +166,24 @@ function handleSelectCollection() {
       '--color': currentColor
     }"
   >
-    <TooltipMessage
-      :message="element.name"
-      :is-active="
-        parseEnd - parseStart < 5 &&
-        userStore.activeProviders.includes(element.dataProvider[0])
-      "
-    >
       <div
         :class="[
-          'p-2 text-xs overflow-hidden rounded-[5px] shadow-sm text-text-white font-semibold bg-timeline-item-background',
+          'p-2 text-xs overflow-hidden relative rounded-[5px] shadow-sm text-text-white font-semibold bg-timeline-item-background',
           {
             'shadow-lg shadow-timeline-shadow': isSelectedElement
           }
         ]"
         @click="handleToogleSelectAd"
+        @mouseenter="isTooltipVisible = true"
+        @mouseleave="isTooltipVisible = false"
+        @mousemove="handleShowTooltipPosition"
         :style="{ '--color': currentColor }"
       >
+        <div ref="tooltTipReference" v-if="isTooltipVisible && parseEnd - parseStart < 5 &&
+        userStore.activeProviders.includes(element.dataProvider[0])" class=" bg-popover-background drop-shadow-md rounded-xl z-[9999] text-chartBar-text fixed animate-fade-in text-center py-[10px] px-3 top-dynamic" :style="{'top': tooltipPositionY, 'left': tooltipPositionX}">
+          <IconSvg name="triangle" class-name="absolute w-3 h-3 bottom-[-9px] m-auto left-0 right-0" />
+          {{ element.name }}
+        </div>
         <div class="pr-4 flex gap-x-1 items-center overflow-hidden">
           <CheckboxForm
             v-if="type === 'ad'"
@@ -201,6 +217,5 @@ function handleSelectCollection() {
           </span>
         </div>
       </div>
-    </TooltipMessage>
   </div>
 </template>

@@ -49,20 +49,20 @@ const userDashboardStore = useUserDashboardStore();
 const isZoomVisible = ref<boolean>(false);
 
 const amountScale = computed<string[]>(() => [
-  `$${
+  `$ ${
     userDashboardStore.scaleChart.toString() === "-Infinity"
       ? 0
       : userDashboardStore.scaleChart.toFixed(2)
   }`,
-  `$${
+  `$ ${
     userDashboardStore.scaleChart.toString() === "-Infinity"
       ? 0
       : (userDashboardStore.scaleChart / 2).toFixed(2)
   }`,
-  `$${
+  `$ ${
     userDashboardStore.scaleChart.toString() === "-Infinity"
       ? 0
-      : (userDashboardStore.scaleChart / 3).toFixed(2)
+      : (userDashboardStore.scaleChart / 4).toFixed(2)
   }`
 ]);
 
