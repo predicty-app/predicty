@@ -27,7 +27,6 @@ withDefaults(defineProps<PropsType>(), {
       <template v-else>
         {{ header }}
       </template>
-
     </h3>
     <div class="font-semibold text-xs text-campaign-item-content-color">
       <slot />

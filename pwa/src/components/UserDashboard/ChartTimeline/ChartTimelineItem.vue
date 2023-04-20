@@ -29,8 +29,8 @@ const timelineItemInstance = ref<HTMLDivElement | null>(null);
 const isSelectedElement = computed<boolean>(() =>
   userStore.selectedAdsList.ads.includes(props.element.uid)
 );
-const tooltipPositionX = ref<string>('0px');
-const tooltipPositionY = ref<string>('0px');
+const tooltipPositionX = ref<string>("0px");
+const tooltipPositionY = ref<string>("0px");
 const isTooltipVisible = ref<boolean>(false);
 const tooltTipReference = ref<HTMLDivElement | null>(null);
 
@@ -79,7 +79,7 @@ const emit = defineEmits<{
  */
 function handleVisibleElement() {
   // --------------------------------------------------------------------------
-  // --> commented functionality at Stan's request -> remove virtualization <-- 
+  // --> commented functionality at Stan's request -> remove virtualization <--
   // --------------------------------------------------------------------------
 
   // if (!globalStore.scrollTimeline || !props.isVisible) {
@@ -132,9 +132,15 @@ function handleSelectCollection() {
 }
 
 function handleShowTooltipPosition(event: MouseEvent) {
-  if(tooltTipReference.value) {
-    tooltipPositionX.value = `${event.clientX - (tooltTipReference.value.getBoundingClientRect().width / 2)}px`;
-    tooltipPositionY.value = `${event.clientY - tooltTipReference.value.getBoundingClientRect().height - 20}px`;
+  if (tooltTipReference.value) {
+    tooltipPositionX.value = `${
+      event.clientX - tooltTipReference.value.getBoundingClientRect().width / 2
+    }px`;
+    tooltipPositionY.value = `${
+      event.clientY -
+      tooltTipReference.value.getBoundingClientRect().height -
+      20
+    }px`;
   }
 }
 </script>
@@ -166,56 +172,67 @@ function handleShowTooltipPosition(event: MouseEvent) {
       '--color': currentColor
     }"
   >
+    <div
+      :class="[
+        'p-2 text-xs overflow-hidden relative rounded-[5px] shadow-sm text-text-white font-semibold bg-timeline-item-background',
+        {
+          'shadow-lg shadow-timeline-shadow': isSelectedElement
+        }
+      ]"
+      @click="handleToogleSelectAd"
+      @mouseenter="isTooltipVisible = true"
+      @mouseleave="isTooltipVisible = false"
+      @mousemove="handleShowTooltipPosition"
+      :style="{ '--color': currentColor }"
+    >
       <div
-        :class="[
-          'p-2 text-xs overflow-hidden relative rounded-[5px] shadow-sm text-text-white font-semibold bg-timeline-item-background',
-          {
-            'shadow-lg shadow-timeline-shadow': isSelectedElement
-          }
-        ]"
-        @click="handleToogleSelectAd"
-        @mouseenter="isTooltipVisible = true"
-        @mouseleave="isTooltipVisible = false"
-        @mousemove="handleShowTooltipPosition"
-        :style="{ '--color': currentColor }"
+        ref="tooltTipReference"
+        v-if="
+          isTooltipVisible &&
+          parseEnd - parseStart < 5 &&
+          userStore.activeProviders.includes(element.dataProvider[0])
+        "
+        class="bg-popover-background drop-shadow-md rounded-xl z-[9999] text-chartBar-text fixed animate-fade-in text-center py-[10px] px-3 top-dynamic"
+        :style="{ top: tooltipPositionY, left: tooltipPositionX }"
       >
-        <div ref="tooltTipReference" v-if="isTooltipVisible && parseEnd - parseStart < 5 &&
-        userStore.activeProviders.includes(element.dataProvider[0])" class=" bg-popover-background drop-shadow-md rounded-xl z-[9999] text-chartBar-text fixed animate-fade-in text-center py-[10px] px-3 top-dynamic" :style="{'top': tooltipPositionY, 'left': tooltipPositionX}">
-          <IconSvg name="triangle" class-name="absolute w-3 h-3 bottom-[-9px] m-auto left-0 right-0" />
-          {{ element.name }}
-        </div>
-        <div class="pr-4 flex gap-x-1 items-center overflow-hidden">
-          <CheckboxForm
-            v-if="type === 'ad'"
-            :color="currentColor"
-            :is-checked="isSelectedElement && !userStore.isDragAndDrop"
-          />
-          <svg
-            v-if="type === 'collection'"
-            class="min-w-[16px] w-[16px]"
-            width="16"
-            height="16"
-            viewBox="0 0 16 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <rect x="1" y="1" width="7" height="3" rx="1" fill="white" />
-            <rect y="11" width="12" height="3" rx="1" fill="white" />
-            <rect x="3" y="6" width="12" height="3" rx="1" fill="white" />
-          </svg>
-          <div
-            v-if="type === 'collection'"
-            class="rounded font-semibold text-xs min-w-[18px] w-[14px] py-[1px] bg-timeline-collection-count flex items-center justify-center"
-          >
-            {{ (element as AdSetsType).ads.length }}
-          </div>
-          <span v-if="parseEnd - parseStart < 5">
-            {{ element.name.slice(0, 2) }}...
-          </span>
-          <span v-else>
-            {{ element.name }}
-          </span>
-        </div>
+        <IconSvg
+          name="triangle"
+          class-name="absolute w-3 h-3 bottom-[-9px] m-auto left-0 right-0"
+        />
+        {{ element.name }}
       </div>
+      <div class="pr-4 flex gap-x-1 items-center overflow-hidden">
+        <CheckboxForm
+          v-if="type === 'ad'"
+          :color="currentColor"
+          :is-checked="isSelectedElement && !userStore.isDragAndDrop"
+        />
+        <svg
+          v-if="type === 'collection'"
+          class="min-w-[16px] w-[16px]"
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect x="1" y="1" width="7" height="3" rx="1" fill="white" />
+          <rect y="11" width="12" height="3" rx="1" fill="white" />
+          <rect x="3" y="6" width="12" height="3" rx="1" fill="white" />
+        </svg>
+        <div
+          v-if="type === 'collection'"
+          class="rounded font-semibold text-xs min-w-[18px] w-[14px] py-[1px] bg-timeline-collection-count flex items-center justify-center"
+        >
+          {{ (element as AdSetsType).ads.length }}
+        </div>
+        <span v-if="parseEnd - parseStart < 5">
+          {{ element.name.slice(0, 2) }}...
+        </span>
+        <span v-else>
+          {{ element.name }}
+        </span>
+      </div>
+    </div>
   </div>
 </template>

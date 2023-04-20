@@ -203,9 +203,7 @@ async function handleUploadFile(payload: UploadFilePayloadType) {
 /**
  * Function to handle get imported files.
  */
-async function handleGetImportedFiles() {
-
-}
+async function handleGetImportedFiles() {}
 
 /**
  * Function to handle complete onboarding.

@@ -2,7 +2,7 @@ import { describe, it, expect } from "vitest";
 import { vMaska } from "maska";
 import plugins from "@/helpers/plugins";
 import { mount } from "@vue/test-utils";
-import IconSvg from '@/components/Common/IconSvg.vue'
+import IconSvg from "@/components/Common/IconSvg.vue";
 import InputForm from "@/components/Common/InputForm.vue";
 
 describe("Tests for InputForm component", () => {

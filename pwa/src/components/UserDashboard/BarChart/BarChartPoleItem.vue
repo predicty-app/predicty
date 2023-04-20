@@ -15,16 +15,14 @@ type PropsType = {
   investment?: string | number;
 };
 
-
-
 const props = withDefaults(defineProps<PropsType>(), {
   height: 0,
   result: 0,
   type: TypeOptionsChart.DAYS
 });
 
-const tooltipPositionX = ref<string>('0px');
-const tooltipPositionY = ref<string>('0px');
+const tooltipPositionX = ref<string>("0px");
+const tooltipPositionY = ref<string>("0px");
 const isHoverElement = ref<boolean>(false);
 const userDashboardStore = useUserDashboardStore();
 const currentHeightActive = ref<number>(0);
@@ -38,8 +36,12 @@ onMounted(() => {
 });
 
 function handleShowTooltipPosition(event: MouseEvent) {
-  tooltipPositionX.value = `${event.clientX - (tooltTipReference.value.getBoundingClientRect().width / 2)}px`;
-  tooltipPositionY.value = `${event.clientY - tooltTipReference.value.getBoundingClientRect().height - 20}px`;
+  tooltipPositionX.value = `${
+    event.clientX - tooltTipReference.value.getBoundingClientRect().width / 2
+  }px`;
+  tooltipPositionY.value = `${
+    event.clientY - tooltTipReference.value.getBoundingClientRect().height - 20
+  }px`;
 }
 </script>
 
@@ -47,9 +49,23 @@ function handleShowTooltipPosition(event: MouseEvent) {
   <div class="relative flex items-end">
     <div class="h-dynamic w-full" :style="{ '--height': `${height}px` }">
       <div class="px-[2px]">
-        <div ref="tooltTipReference" v-if="isTooltipVisible" class=" bg-popover-background drop-shadow-md rounded-xl z-[9999] fixed animate-fade-in text-center py-[10px] px-3 top-dynamic" :style="{'top': tooltipPositionY, 'left': tooltipPositionX}">
-          <IconSvg name="triangle" class-name="absolute w-3 h-3 bottom-[-9px] m-auto left-0 right-0" />
-          <SalesNumber :sales="sales" :investment="investment" :day="day" :date="date" currency="$"/>
+        <div
+          ref="tooltTipReference"
+          v-if="isTooltipVisible"
+          class="bg-popover-background drop-shadow-md rounded-xl z-[9999] fixed animate-fade-in text-center py-[10px] px-3 top-dynamic"
+          :style="{ top: tooltipPositionY, left: tooltipPositionX }"
+        >
+          <IconSvg
+            name="triangle"
+            class-name="absolute w-3 h-3 bottom-[-9px] m-auto left-0 right-0"
+          />
+          <SalesNumber
+            :sales="sales"
+            :investment="investment"
+            :day="day"
+            :date="date"
+            currency="$"
+          />
         </div>
         <div
           v-if="
@@ -67,9 +83,7 @@ function handleShowTooltipPosition(event: MouseEvent) {
             }
           ]"
           :style="{ '--height': `${height}px` }"
-        >
-      
-      </div>
+        ></div>
         <div
           v-if="
             userDashboardStore.selectedAdsList.ads.length === 0 &&
@@ -104,7 +118,7 @@ function handleShowTooltipPosition(event: MouseEvent) {
           ]"
           :style="{ '--height': `${height}px` }"
         >
-        <div
+          <div
             v-if="
               userDashboardStore.selectedAdsList.ads.length > 0 ||
               userDashboardStore.selectedCollection

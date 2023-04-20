@@ -42,7 +42,7 @@ const { t } = useI18n();
       <div
         class="text-base font-bold text-salesNumber-investment-text font-ibm-sans"
       >
-      {{ currency }}{{ investment }}
+        {{ currency }}{{ investment }}
       </div>
     </div>
   </div>

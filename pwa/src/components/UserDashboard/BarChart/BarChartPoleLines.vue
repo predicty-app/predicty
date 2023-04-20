@@ -57,7 +57,6 @@ async function insertInvestmentArray() {
   });
 }
 
-
 /**
  * Function calculate height of bars.
  */
@@ -77,13 +76,16 @@ async function calcualteAll() {
         for (let i = 0; i < 7; i++) {
           const createdDate = parseCurrentDate(firstDayWeek, i);
 
-          userDashboardStore.dailyRevenue.forEach((current: DailyRevenueType, k) => {
-            if (createdDate === current.date) {
-              dailyRevenue[index] += current.revenue.amount;
+          userDashboardStore.dailyRevenue.forEach(
+            (current: DailyRevenueType) => {
+              if (createdDate === current.date) {
+                dailyRevenue[index] += current.revenue.amount;
+              }
             }
-          })
+          );
         }
-      });
+      }
+    );
   }
 
   userDashboardStore.scaleChart = Math.max(...dailyRevenue);
@@ -95,10 +97,11 @@ async function calcualteAll() {
  */
 function setHeightLinesSvgElement() {
   if (instanceLines.value) {
-    instanceLines.value.style.height = `${(
+    instanceLines.value.style.height = `${
+      (
         globalStore.wrapperPole.parentNode as HTMLElement
       ).getBoundingClientRect().height
-      }px`;
+    }px`;
   }
 }
 
@@ -113,13 +116,15 @@ function parseCurrentDate(firstDayWeek: string, index: number): string {
   const parsedDate = new Date(`${date[2]}-${date[1]}-${date[0]}`);
   parsedDate.setDate(parsedDate.getDate() + index);
 
-  return `${parsedDate.getFullYear()}-${parsedDate.getMonth() + 1 < 10
+  return `${parsedDate.getFullYear()}-${
+    parsedDate.getMonth() + 1 < 10
       ? `0${parsedDate.getMonth() + 1}`
       : parsedDate.getMonth() + 1
-    }-${parsedDate.getDate() < 10
+  }-${
+    parsedDate.getDate() < 10
       ? `0${parsedDate.getDate()}`
       : parsedDate.getDate()
-    }`;
+  }`;
 }
 
 /**
@@ -207,18 +212,29 @@ function calculateLinePosition(
 </script>
 
 <template>
-  <template v-if="
-    userDashboardStore.scaleChart > 0 &&
-    (investmentNumber.length > 0 || investmentWeekNumber.length > 0)
-  ">
-    <svg ref="instanceLines" class="absolute top-0 left-0 z-[100] w-full h-full scale-x-[1] scale-y-[-1]">
-      <line class="animate-fade-in" :x1="calculateLinePosition('x1', index)"
-        :y1="calculateLinePosition('y1', index, investment)" :x2="calculateLinePosition('x2', index)"
-        :y2="calculateLinePosition('y2', index)" :key="`${investment[index]}_${index}`"
-        style="stroke: #ffae4f; stroke-width: 2" v-for="(investment, index) in userDashboardStore.typeChart ===
-          TypeOptionsChart.WEEKS
+  <template
+    v-if="
+      userDashboardStore.scaleChart > 0 &&
+      (investmentNumber.length > 0 || investmentWeekNumber.length > 0)
+    "
+  >
+    <svg
+      ref="instanceLines"
+      class="absolute top-0 left-0 z-[100] w-full h-full scale-x-[1] scale-y-[-1]"
+    >
+      <line
+        class="animate-fade-in"
+        :x1="calculateLinePosition('x1', index)"
+        :y1="calculateLinePosition('y1', index, investment)"
+        :x2="calculateLinePosition('x2', index)"
+        :y2="calculateLinePosition('y2', index)"
+        :key="`${investment[index]}_${index}`"
+        style="stroke: #ffae4f; stroke-width: 2"
+        v-for="(investment, index) in userDashboardStore.typeChart ===
+        TypeOptionsChart.WEEKS
           ? investmentWeekNumber
-          : investmentNumber" />
+          : investmentNumber"
+      />
     </svg>
   </template>
 </template>

@@ -1,17 +1,14 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import { useOnBoardingStore } from "@/stores/onboarding";
-import { ref, onMounted, nextTick, computed } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 import {
-  handleGetImportedFiles,
   handleCompleteOnboarding
 } from "@/services/api/onboarding";
 
 const { t } = useI18n();
 
 const router = useRouter();
-const onBoardingStore = useOnBoardingStore();
 const isComponentMounted = ref<boolean>(false);
 
 onMounted(() => nextTick(() => (isComponentMounted.value = true)));
@@ -21,16 +18,13 @@ onMounted(() => nextTick(() => (isComponentMounted.value = true)));
  */
 async function handleFinishSetup() {
   await handleCompleteOnboarding();
-  router.push('/')
+  router.push("/");
 }
 </script>
 <template>
   <div v-if="isComponentMounted" class="flex flex-col gap-y-6">
     <Teleport to="#next-button">
-      <ButtonForm
-        type="success"
-        class="w-full"
-      >
+      <ButtonForm type="success" class="w-full" @click="handleFinishSetup">
         <div class="relative">
           {{
             t("components.on-boarding.history-imported-files-form.button.next")

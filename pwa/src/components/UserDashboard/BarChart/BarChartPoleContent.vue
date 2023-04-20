@@ -171,7 +171,15 @@ function parseCurrentDate(index: number): string {
 }
 
 function getNameOfDay(date: string): string {
-  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ];
   const d = new Date(date);
   return days[d.getDay()];
 }
