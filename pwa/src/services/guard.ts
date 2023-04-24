@@ -34,7 +34,6 @@ export default class GuardService {
           }
         } else if (to.name === (pathWithLogin && pathWithLogin.name)) {
           const state = await handleAuthenticatedUser();
-
           if (state) {
             next(
               this.getPathByName(router.options.routes, "after", null) as any

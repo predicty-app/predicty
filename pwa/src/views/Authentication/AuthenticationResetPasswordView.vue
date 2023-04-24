@@ -4,7 +4,7 @@ import { useRouter } from "vue-router";
 
 const { t } = useI18n();
 const router = useRouter();
-const previousStepPath = "/onboarding/basic-media-integration";
+const previousStepPath = "/authentication/login";
 </script>
 
 <template>
@@ -14,12 +14,12 @@ const previousStepPath = "/onboarding/basic-media-integration";
     </template>
     <template #content>
       <HeaderText
-        :header-title="t('views.more-media-integration.header-title')"
+        :header-title="t('views.authentication-reset-password.header-title')"
         :header-description="
-          t('views.more-media-integration.header-description')
+          t('views.authentication-reset-password.header-description')
         "
       />
-      <ConnectMoreServicesForm />
+      <AuthenticationResetPasswordForm />
     </template>
     <template #footer>
       <div class="w-full max-w-[48px]">
@@ -34,7 +34,7 @@ const previousStepPath = "/onboarding/basic-media-integration";
       <div class="w-full max-w-[267px]" id="next-button"></div>
     </template>
     <template #progress>
-      <ProgressBar :count-steps="6" :active-step="5" />
+      <ProgressBar :count-steps="6" :active-step="2" />
     </template>
   </OnBoardingLayout>
 </template>

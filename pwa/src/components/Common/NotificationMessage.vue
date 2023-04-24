@@ -29,7 +29,7 @@ watch(
   <div
     v-if="modelValue"
     :class="[
-      'animate-fade-in text-xs z-50 flex flex-col shadow border-solid p-3 rounded shadow justify-center gap-y-0.5 border max-w-md w-full text-center fixed top-5 left-0 right-0 m-auto',
+      'animate-fade-in text-xs z-[9999] flex flex-col shadow border-solid p-3 rounded shadow justify-center gap-y-0.5 border max-w-md w-full text-center fixed top-5 left-0 right-0 m-auto',
       {
         'text-notification-text bg-notification-success': type === 'success',
         'text-notification-text bg-notification-error': type === 'error',

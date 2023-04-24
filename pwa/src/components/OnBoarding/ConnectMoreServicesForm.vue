@@ -1,42 +1,96 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
+import type { FileType } from "@/stores/onboarding";
 import { useOnBoardingStore } from "@/stores/onboarding";
-import { ref, watch, onMounted, nextTick, computed } from "vue";
+import { ref, onMounted, nextTick, computed } from "vue";
 
 const { t } = useI18n();
 
 const router = useRouter();
-const allowedFiles = [".csv", ".xls"];
+const searchValueModel = ref<string>("");
 const onBoardingStore = useOnBoardingStore();
 const isComponentMounted = ref<boolean>(false);
-const fileInstance = ref<File | string | null>(null);
-const nextStepPath = computed<string>(() =>
-  onBoardingStore.file.file
-    ? "/onboarding/more-media-integration/file-settings"
-    : "/onboarding/preparing-screen"
+const nextStepPath = computed<string>(() => "/onboarding/preparing-screen");
+const filterMoreServiceList = computed<FileType[]>(() =>
+  searchValueModel.value.length > 2
+    ? onBoardingStore.moreServices.filter((service: FileType) =>
+        service.type === "OTHER"
+          ? service.name.includes(searchValueModel.value)
+          : t(
+              `components.on-boarding.connect-more-services-form.data-type.options.${service.type}`
+            ).includes(searchValueModel.value)
+      )
+    : onBoardingStore.moreServices
 );
 
-const isNextButtonDisabled = computed<boolean>(() => {
-  if (Object.keys(onBoardingStore.providers).length > 0) {
-    return true;
-  }
+const addFileStepPath = computed<string>(
+  () => "/onboarding/more-media-integration/file-settings"
+);
 
-  return !onBoardingStore.file.file ? true : false;
-});
 onMounted(() => nextTick(() => (isComponentMounted.value = true)));
 
-watch(fileInstance, () => {
-  onBoardingStore.handleSaveFile(fileInstance.value as File);
-});
+function parseServiceName(service: FileType): string {
+  switch (service.type) {
+    case "OTHER": {
+      return `${service.name} <br/> <span class="opacity-75">(custom)</span>`;
+    }
+    default: {
+      return t(
+        `components.on-boarding.connect-more-services-form.data-type.options.${service.type}`
+      ).replace("(Meta)", "");
+    }
+  }
+}
 </script>
 
 <template>
-  <div v-if="isComponentMounted">
-    <UploadFile v-model="fileInstance" :files-type="allowedFiles" />
+  <div v-if="isComponentMounted" class="flex flex-col gap-y-6">
+    <InputForm
+      icon="search"
+      v-model="searchValueModel"
+      :placeholder="
+        t('components.on-boarding.connect-more-services-form.input.placeholder')
+      "
+    />
+    <div class="flex items-center gap-[8px]">
+      <CardPanel
+        class="animate-fade-in w-[90px] h-[100px] p-0 flex items-center justify-center"
+        type="success"
+        :key="`service_${index}`"
+        v-for="(service, index) in filterMoreServiceList"
+      >
+        <div class="flex flex-col items-center gap-y-4">
+          <span
+            class="text-xs font-bold text-center"
+            v-html="parseServiceName(service)"
+          ></span>
+          <div
+            class="bg-connectMoreMedia-icon-background rounded-full w-7 h-7 flex items-center justify-center"
+          >
+            <IconSvg
+              name="check"
+              class-name="w-4 h-4 fill-connectMoreMedia-icon-fill"
+            />
+          </div>
+        </div>
+      </CardPanel>
+      <CardPanel
+        @click="router.push(addFileStepPath)"
+        class="w-[90px] h-[100px] p-0 flex items-center justify-center cursor-pointer"
+        :key="`service_add`"
+      >
+        <div
+          class="text-center"
+          v-html="
+            t('components.on-boarding.connect-more-services-form.services.add')
+          "
+        ></div>
+      </CardPanel>
+    </div>
     <Teleport to="#next-button">
       <ButtonForm
-        :type="isNextButtonDisabled ? 'disabled' : 'success'"
+        type="success"
         class="w-full"
         @click="router.push(nextStepPath)"
       >

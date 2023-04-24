@@ -19,7 +19,14 @@ withDefaults(defineProps<PropsType>(), {
       class="font-bold text-base text-campaign-item-header-color"
       :style="{ '--color': color }"
     >
-      {{ header }}
+      <template v-if="header.length > 25">
+        <TooltipMessage position="top" :message="header">
+          {{ header.slice(0, 25) }}...
+        </TooltipMessage>
+      </template>
+      <template v-else>
+        {{ header }}
+      </template>
     </h3>
     <div class="font-semibold text-xs text-campaign-item-content-color">
       <slot />

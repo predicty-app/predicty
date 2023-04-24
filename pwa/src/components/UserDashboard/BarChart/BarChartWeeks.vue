@@ -26,7 +26,7 @@ function calculateWeek(): number {
 
 <template>
   <div
-    class="bar-chart-weeks text-center w-full pb-3 pt-6 text-chartBar-text text-xs font-medium"
+    class="bar-chart-weeks text-center w-full pb-8 pt-6 text-chartBar-text text-xs font-medium"
   >
     <BarChartWeeksItem
       :key="`days_${item}`"

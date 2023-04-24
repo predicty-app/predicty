@@ -103,13 +103,40 @@ class CampaignsService {
           ({
             uid: adset.id,
             name: adset.name,
-            end: adset.endedAt,
-            start: adset.startedAt,
+            end: this.#getStartEndAtDate(adset.ads, 0),
+            start: this.#getStartEndAtDate(adset.ads, -1),
             externalId: adset.externalId,
             ads: this.#setAdsList(adset.ads, campaign),
-            isActive: this.#checkIsActiveElement(adset.startedAt, adset.endedAt)
+            isActive: this.#checkIsActiveElement(
+              this.#getStartEndAtDate(adset.ads, -1),
+              this.#getStartEndAtDate(adset.ads, 0)
+            )
           } as AdSetsType)
       );
+  }
+
+  /**
+   * Method to get start and end for adset.
+   * @param {AdsNonParsedType[]} ads
+   * @param {number} type
+   * @returns {string}
+   */
+  #getStartEndAtDate(ads: AdsNonParsedType[], type: number): string {
+    const dates = [];
+
+    ads
+      .filter((ad: AdsNonParsedType) => ad.adStats.length >= 1)
+      .forEach((ad: AdsNonParsedType) => {
+        dates.push(
+          parseInt(
+            ad.adStats.at(type).date.replace("-", "").replace("-", ""),
+            10
+          )
+        );
+      });
+
+    const min = Math[type === -1 ? "min" : "max"](...dates).toString();
+    return `${min.slice(0, 4)}-${min.slice(4, 6)}-${min.slice(6, 8)}`;
   }
 
   /**

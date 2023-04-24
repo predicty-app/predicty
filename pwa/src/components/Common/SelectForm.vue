@@ -72,7 +72,7 @@ function handleSelectElement(item: string | number) {
     <div
       v-if="isSelectOpened"
       :class="[
-        'absolute left-0 w-full animate-fade-in shadow-sm bg-select-input-background border-select-overlayer-border border rounded',
+        'absolute z-50 left-0 w-full animate-fade-in shadow-sm bg-select-input-background border-select-overlayer-border border rounded',
         {
           'bottom-[110%]': position === 'top',
           'top-[110%]': position === 'bottom'

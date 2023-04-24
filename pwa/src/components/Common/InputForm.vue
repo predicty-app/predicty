@@ -3,6 +3,7 @@ import { vMaska } from "maska";
 
 type PropsType = {
   mask?: string;
+  icon?: string;
   label?: string;
   type?: "default";
   required?: boolean;
@@ -46,21 +47,29 @@ function changeValue(event: Event) {
       >
       {{ label }}
     </label>
-    <input
-      type="text"
-      v-maska
-      data-testid="input-form-input"
-      v-bind="mask ? { 'data-maska': mask } : ''"
-      :value="modelValue"
-      @input="changeValue"
-      :class="[
-        'w-full p-4 font-normal text-text-input text-base border border-slate-200 rounded-[10px] transition-all',
-        {
-          'border-default-border outline-default-outline': type === 'default'
-        }
-      ]"
-      :placeholder="placeholder"
-    />
+    <div class="relative">
+      <IconSvg
+        class="absolute left-6 m-auto top-0 bottom-0"
+        v-if="icon"
+        :name="icon"
+      />
+      <input
+        type="text"
+        v-maska
+        data-testid="input-form-input"
+        v-bind="mask ? { 'data-maska': mask } : ''"
+        :value="modelValue"
+        @input="changeValue"
+        :class="[
+          'w-full p-4 font-normal text-text-input text-base border border-slate-200 rounded-[10px] transition-all',
+          {
+            'border-default-border outline-default-outline': type === 'default',
+            ' pl-16': icon
+          }
+        ]"
+        :placeholder="placeholder"
+      />
+    </div>
     <span
       v-if="errorMessage"
       data-testid="input-form-error"

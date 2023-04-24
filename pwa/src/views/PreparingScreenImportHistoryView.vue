@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 
-const { t } = useI18n();
 const router = useRouter();
-const previousStepPath = "/onboarding/basic-media-integration";
+const previousStepPath = "/onboarding/more-media-integration";
 </script>
 
 <template>
@@ -13,13 +11,7 @@ const previousStepPath = "/onboarding/basic-media-integration";
       <AppLogo />
     </template>
     <template #content>
-      <HeaderText
-        :header-title="t('views.more-media-integration.header-title')"
-        :header-description="
-          t('views.more-media-integration.header-description')
-        "
-      />
-      <ConnectMoreServicesForm />
+      <HistoryImportedFilesForm />
     </template>
     <template #footer>
       <div class="w-full max-w-[48px]">

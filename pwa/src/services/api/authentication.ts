@@ -10,6 +10,7 @@ async function handleAuthenticatedUser() {
       uid
       email
       isEmailVerified
+      isOnboardingComplete
     }
   }`;
 

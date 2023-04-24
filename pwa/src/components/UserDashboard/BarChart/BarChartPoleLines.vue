@@ -32,7 +32,7 @@ watch(
   () => [
     userDashboardStore.activeProviders.length,
     userDashboardStore.hiddenAds.length,
-    userDashboardStore.typeChart,
+    userDashboardStore.typeChart
   ],
   async () => {
     await calcualteAll();
@@ -64,18 +64,31 @@ async function calcualteAll() {
   await insertInvestmentArray();
   await setSpentInvestment();
 
-  const dailyRevenue = userDashboardStore.dailyRevenue.map(
+  let dailyRevenue = userDashboardStore.dailyRevenue.map(
     (current: DailyRevenueType) => current.revenue.amount
   );
 
-  const divider =
-    userDashboardStore.typeChart === TypeOptionsChart.WEEKS ? 9 : 1;
-  const modifier =
-    userDashboardStore.typeChart === TypeOptionsChart.WEEKS
-      ? Math.max(...dailyRevenue) * divider
-      : Math.max(...dailyRevenue) * divider;
+  if (userDashboardStore.typeChart === TypeOptionsChart.WEEKS) {
+    dailyRevenue = [];
+    globalStore.dictionaryFirstDaysWeek.forEach(() => dailyRevenue.push(0));
+    globalStore.dictionaryFirstDaysWeek.forEach(
+      (firstDayWeek: string, index: number) => {
+        for (let i = 0; i < 7; i++) {
+          const createdDate = parseCurrentDate(firstDayWeek, i);
 
-  userDashboardStore.scaleChart = Math.max(...dailyRevenue) + modifier;
+          userDashboardStore.dailyRevenue.forEach(
+            (current: DailyRevenueType) => {
+              if (createdDate === current.date) {
+                dailyRevenue[index] += current.revenue.amount;
+              }
+            }
+          );
+        }
+      }
+    );
+  }
+
+  userDashboardStore.scaleChart = Math.max(...dailyRevenue);
   setHeightLinesSvgElement();
 }
 
@@ -126,7 +139,9 @@ function concatAllAdSetsToOne(): AdsType[] {
     .map((adset: AdSetsType) => adset.ads)
     .flat(1)
     .filter((ad: AdsType) => !userDashboardStore.hiddenAds.includes(ad.uid))
-    .filter((ad: AdsType) => userDashboardStore.activeProviders.includes(ad.dataProvider[0]))
+    .filter((ad: AdsType) =>
+      userDashboardStore.activeProviders.includes(ad.dataProvider[0])
+    );
 }
 
 /**

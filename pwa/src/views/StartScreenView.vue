@@ -5,6 +5,7 @@ import { useRouter } from "vue-router";
 const { t } = useI18n();
 const router = useRouter();
 const nextStepPath = "/onboarding/account-creation";
+const authenticationStepPath = "/authentication";
 </script>
 
 <template>
@@ -27,6 +28,15 @@ const nextStepPath = "/onboarding/account-creation";
       >
         {{ t("views.start-screen.button") }}
       </ButtonForm>
+      <div class="text-base flex justify-center items-center gap-x-1">
+        {{ t("views.start-screen.login.description") }}
+        <button
+          class="font-bold cursor-pointer underline"
+          @click="router.push(authenticationStepPath)"
+        >
+          {{ t("views.start-screen.login.button") }}
+        </button>
+      </div>
     </template>
     <template #progress>
       <ProgressBar :count-steps="6" :active-step="1" />

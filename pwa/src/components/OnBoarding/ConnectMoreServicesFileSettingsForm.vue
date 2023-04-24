@@ -1,12 +1,30 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
-import { ref, onMounted, nextTick, watch, computed } from "vue";
+import { ref, onMounted, nextTick, computed } from "vue";
 import {
   handleGetProvidersList,
   type ProviderType
 } from "@/services/api/providers";
 import { useOnBoardingStore, AvalibleProviders } from "@/stores/onboarding";
+
+enum StepValues {
+  CHOOSE_TYPE_FILE = "choose_type_file",
+  UPLOAD_FILE = "upload_file"
+}
+
+type ProvidersListType = {
+  name?: string;
+  key: string;
+  label: string;
+  fileImportTypes: string[];
+};
+
+type NotificationMessageType = {
+  visible: boolean;
+  type: "success" | "error";
+  message: string;
+};
 
 const { t } = useI18n();
 
@@ -15,6 +33,44 @@ const displayedName = ref<string>("");
 const selectedProvider = ref<string>("");
 const onBoardingStore = useOnBoardingStore();
 const isComponentMounted = ref<boolean>(false);
+const currentStep = ref<StepValues>(StepValues.CHOOSE_TYPE_FILE);
+const uploadedFileModel = ref<File | string | null>(null);
+const headerTitle = computed<string>(() =>
+  currentStep.value === StepValues.CHOOSE_TYPE_FILE
+    ? t(
+        "components.on-boarding.connect-more-services-file-settings-form.header-title"
+      )
+    : selectedProvider.value === AvalibleProviders.OTHER
+    ? t(
+        "components.on-boarding.connect-more-services-file-settings-form.header-title-dynamic-custom",
+        {
+          name: displayedName.value
+        }
+      )
+    : t(
+        "components.on-boarding.connect-more-services-file-settings-form.header-title-dynamic",
+        {
+          provider: t(
+            `components.on-boarding.connect-more-services-file-settings-form.data-type.options.${selectedProvider.value}`
+          )
+        }
+      )
+);
+
+const notificationMessageModel = ref<NotificationMessageType>({
+  visible: false,
+  type: "success",
+  message: ""
+});
+
+const headerDescription = computed<string>(() =>
+  currentStep.value === StepValues.CHOOSE_TYPE_FILE
+    ? t(
+        "components.on-boarding.connect-more-services-file-settings-form.header-description"
+      )
+    : ""
+);
+
 const isNextButtonDisabled = computed<boolean>(() => {
   if (!selectedProvider.value) {
     return true;
@@ -29,12 +85,6 @@ const isNextButtonDisabled = computed<boolean>(() => {
 
   return false;
 });
-
-type ProvidersListType = {
-  key: string;
-  label: string;
-  fileImportTypes: string[];
-};
 
 const columnsList = {
   "campaign-id": t(
@@ -54,6 +104,9 @@ const columnsList = {
   ),
   spent: t(
     "components.on-boarding.connect-more-services-file-settings-form.descriptions.columns-names.spent"
+  ),
+  currency: t(
+    "components.on-boarding.connect-more-services-file-settings-form.descriptions.columns-names.currency"
   )
 };
 
@@ -64,7 +117,8 @@ const columnsProvider = {
     "ad-id",
     "ad-name",
     "image-hash",
-    "spent"
+    "spent",
+    "currency"
   ],
   [AvalibleProviders.GOOGLE_ADS]: [
     "campaign-id",
@@ -72,7 +126,8 @@ const columnsProvider = {
     "ad-id",
     "ad-name",
     "image-hash",
-    "spent"
+    "spent",
+    "currency"
   ],
   [AvalibleProviders.GOOGLE_ANALYTICS]: [
     "campaign-id",
@@ -80,7 +135,8 @@ const columnsProvider = {
     "ad-id",
     "ad-name",
     "image-hash",
-    "spent"
+    "spent",
+    "currency"
   ],
   [AvalibleProviders.TIK_TOK]: [
     "campaign-id",
@@ -88,12 +144,14 @@ const columnsProvider = {
     "ad-id",
     "ad-name",
     "image-hash",
-    "spent"
+    "spent",
+    "currency"
   ],
-  [AvalibleProviders.OTHER]: ["ad-name", "spent"]
+  [AvalibleProviders.OTHER]: ["ad-name", "spent", "currency"]
 };
 
 const providersList = ref<ProvidersListType[]>([]);
+const typeFiles = ["csv", "xls"];
 
 onMounted(async () => {
   const response = await handleGetProvidersList();
@@ -103,25 +161,11 @@ onMounted(async () => {
       label: t(
         `components.on-boarding.connect-more-services-file-settings-form.data-type.options.${provider.id}`
       ),
+      name: provider.name,
       fileImportTypes: provider.fileImportTypes
     }));
   }
   nextTick(() => (isComponentMounted.value = true));
-});
-
-watch(selectedProvider, () => {
-  const provider = providersList.value.find(
-    (provider: ProvidersListType) => provider.key === selectedProvider.value
-  );
-  onBoardingStore.file.type = provider.fileImportTypes[0];
-
-  if (onBoardingStore.file.type === AvalibleProviders.OTHER) {
-    displayedName.value = "";
-  }
-});
-
-watch(displayedName, () => {
-  onBoardingStore.file.name = displayedName.value;
 });
 
 /**
@@ -132,18 +176,79 @@ function handleSubmitForm() {
     return;
   }
 
-  router.push("/onboarding/preparing-screen");
+  switch (currentStep.value) {
+    case StepValues.CHOOSE_TYPE_FILE:
+      {
+        currentStep.value = StepValues.UPLOAD_FILE;
+      }
+      break;
+    case StepValues.UPLOAD_FILE:
+      {
+        const provider = providersList.value.find(
+          (provider: ProvidersListType) =>
+            provider.key === selectedProvider.value
+        );
+        onBoardingStore.handleSaveCustomService({
+          file: uploadedFileModel.value as File,
+          fileImportTypes: provider.fileImportTypes[0],
+          name:
+            selectedProvider.value === AvalibleProviders.OTHER
+              ? displayedName.value
+              : selectedProvider.value,
+          type: selectedProvider.value
+        });
+        notificationMessageModel.value.visible = true;
+        notificationMessageModel.value.type = "success";
+        notificationMessageModel.value.message = t(
+          "components.on-boarding.connect-more-services-file-settings-form.notifications.success"
+        );
+
+        nextTick(() => {
+          router.push("/onboarding/more-media-integration");
+        });
+      }
+      break;
+  }
+}
+
+/**
+ * Handle action previous step.
+ */
+function handlePreviousStepAction() {
+  switch (currentStep.value) {
+    case StepValues.CHOOSE_TYPE_FILE:
+      {
+        router.push("/onboarding/more-media-integration");
+      }
+      break;
+    case StepValues.UPLOAD_FILE:
+      {
+        currentStep.value = StepValues.CHOOSE_TYPE_FILE;
+      }
+      break;
+  }
 }
 </script>
 
 <template>
+  <NotificationMessage
+    v-model="notificationMessageModel.visible"
+    :message="notificationMessageModel.message"
+    :type="notificationMessageModel.type"
+  />
   <div
     class="connect-more-services-file-settings flex flex-col gap-y-6"
     v-if="isComponentMounted"
   >
+    <HeaderText
+      :header-title="headerTitle"
+      :header-description="headerDescription"
+    />
     <SelectForm
+      v-if="currentStep === StepValues.CHOOSE_TYPE_FILE"
       v-model="selectedProvider"
       :options="providersList"
+      class="animate-fade-in"
       :placeholder="
         t(
           'components.on-boarding.connect-more-services-file-settings-form.data-type.placeholder'
@@ -156,9 +261,12 @@ function handleSubmitForm() {
       "
     />
     <InputForm
-      class="animate-fade-in"
-      v-if="selectedProvider === AvalibleProviders.OTHER"
+      v-if="
+        selectedProvider === AvalibleProviders.OTHER &&
+        currentStep === StepValues.CHOOSE_TYPE_FILE
+      "
       v-model="displayedName"
+      class="animate-fade-in"
       :label="
         t(
           'components.on-boarding.connect-more-services-file-settings-form.display-name.label'
@@ -170,8 +278,9 @@ function handleSubmitForm() {
         )
       "
     />
+
     <div
-      v-if="selectedProvider"
+      v-if="currentStep === StepValues.UPLOAD_FILE"
       class="animate-fade-in flex flex-col gap-y-6 text-base text-connectMoreMedia-text"
     >
       <p
@@ -190,6 +299,21 @@ function handleSubmitForm() {
         </li>
       </ul>
     </div>
+    <DividerLine v-if="currentStep === StepValues.UPLOAD_FILE" />
+    <UploadFile
+      v-if="currentStep === StepValues.UPLOAD_FILE"
+      :files-type="typeFiles"
+      :can-remove="false"
+      v-model="uploadedFileModel"
+    />
+    <Teleport to="#previous-button">
+      <ButtonForm
+        class="w-full flex justify-center"
+        @click="handlePreviousStepAction"
+      >
+        <IconSvg name="arrowback" class-name="h-3 w-3" />
+      </ButtonForm>
+    </Teleport>
     <Teleport to="#next-button">
       <ButtonForm
         :type="isNextButtonDisabled ? 'disabled' : 'success'"

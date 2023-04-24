@@ -30,6 +30,32 @@
           "next": "Next"
         }
       },
+      "authentication-reset-password-form": {
+        "input-label": "E-mail:",
+        "input-placeholder": "Email on which you signed up with",
+        "button": "Next",
+        "success": "Correct password reminder attempt. In a while, information with the next steps will come to the email provided."
+      },
+      "authentication-login-form": {
+        "button": "Next",
+        "success": "Correct login to the panel. A redirect will take place in a moment.",
+        "inputs": {
+          "email": {
+            "placeholder": "Please enter your email...",
+            "label": "E-mail:"
+          },
+          "password": {
+            "placeholder": "Please enter your password...",
+            "label": "Password:"
+          }
+        }
+      },
+      "authentication-confirm-reset-password-form": {
+        "input-label": "Password:",
+        "input-placeholder": "Please enter your new password...",
+        "button": "Next",
+        "success": "Correct password reminder attempt. Correct password change. You will be redirected in a moment."
+      },
       "connect-account-form": {
         "pin": {
           "connected": "Connected",
@@ -40,9 +66,31 @@
       "connect-more-services-form": {
         "button": {
           "next": "Next"
+        },
+        "input": {
+          "placeholder": "Search service provider"
+        },
+        "services": {
+          "add": "+ <br/> Add <br/> custom"
+        },
+        "data-type": {
+          "options": {
+            "GOOGLE_ADS": "Google Ads",
+            "FACEBOOK_ADS": "Facebook Ads (Meta)",
+            "GOOGLE_ANALYTICS": "Google Analytics",
+            "TIK_TOK": "TikTok",
+            "OTHER": "Other (internal)"
+          }
         }
       },
       "connect-more-services-file-settings-form": {
+        "header-title": "What is this file?",
+        "header-description": "Tell us what kind of data this file represents",
+        "header-title-dynamic": "{provider} data upload",
+        "header-title-dynamic-custom": "Custom file upload “{name}”",
+        "notifications": {
+          "success": "Provider with file added correctly."
+        },
         "data-type": {
           "label": "Data type",
           "placeholder": "Choose data type....",
@@ -64,16 +112,36 @@
           "error-message": "The file name is required."
         },
         "descriptions": {
-          "header": "This file should be <b>separated per day</b> and contain columns:",
+          "header": "Data should be <b><u>separated per day</u></b> (YYYY-MM-DD) and contain columns:",
           "columns-names": {
             "campaign-id": "Campaign ID",
             "adset-id": "Adset ID",
             "ad-id": "Ad ID",
             "ad-name": "Ad Name",
             "image-hash": "Image Hash",
-            "spent": "Spent"
+            "spent": "Spent",
+            "currency": "Currency"
           }
         }
+      },
+      "history-imported-files-form": {
+        "header": {
+          "title": "Imported today",
+          "description": "{count} imports"
+        },
+        "file": "file",
+        "import-from": "Import from",
+        "button": {
+          "next": "Finish setup",
+          "revert": "Revert import",
+          "show": "Show"
+        },
+        "ad": "ad",
+        "ads": "ads",
+        "campaign": "campaign",
+        "campaigns": "campaigns",
+        "element-added": "was added to your timeline",
+        "elements-added": "were added to your timeline"
       }
     },
     "user-dashboard": {
@@ -162,7 +230,11 @@
     "start-screen": {
       "header-title": "Welcome",
       "header-description": "We are platform that collects data from your websites and apps to create reports that provide insights into your business. Measuring a website To measure a website, you first...",
-      "button": "Start for free"
+      "button": "Start for free",
+      "login": {
+        "description": "Already have an account?",
+        "button": "Log In"
+      }
     },
     "account-creation-email": {
       "header-title": "Welcome",
@@ -172,6 +244,26 @@
       "header-title": "We’ve sent you a passcode",
       "header-description": "Check your email address: {email}"
     },
+    "authentication-login": {
+      "header-title": "Welcome back!",
+      "header-description": "We are platform that collects data from your websites and apps to create ",
+      "buttons": {
+        "forgot": "Forgot password",
+        "sign-up": {
+          "description": "Don’t have an account?",
+          "button": "Sign up"
+        }
+      }
+    },
+    "authentication-reset-password": {
+      "header-title": "Reset password",
+      "header-description": "Tell us your email adress and we’ll share with you temporary access to the account."
+    },
+    "authentication-confirm-reset-password": {
+      "header-title": "Confirm reset password",
+      "header-description": "Reset your password and next login to platform."
+    }
+    ,
     "basic-media-integration": {
       "header-title": "Connect your accounts",
       "header-description": "We are platform that collects data from your websites and apps to create ",
@@ -181,10 +273,6 @@
     "more-media-integration": {
       "header-title": "Connect more services",
       "header-description": "We are platform that collects data from your websites and apps to create"
-    },
-    "more-media-integration-file-settings": {
-      "header-title": "What is this file?",
-      "header-description": "Tell us what kind of data this file represents"
     },
     "preparing-screen": {
       "header-title": "Good job!",

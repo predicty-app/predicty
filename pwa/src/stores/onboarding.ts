@@ -15,16 +15,18 @@ type ProviderStateType = {
   token?: string;
 };
 
-type FileType = {
+export type FileType = {
   file: File | null;
   type: string;
   name: string;
+  fileImportTypes: string;
 };
 
 type StateType = {
   email: null | string;
   file: FileType;
   password: null | string;
+  moreServices: FileType[];
   providers: {};
 };
 
@@ -33,11 +35,7 @@ export const useOnBoardingStore = defineStore({
   state: () =>
     ({
       email: null,
-      file: {
-        file: null,
-        type: null,
-        name: ""
-      },
+      moreServices: [],
       password: null,
       providers: {}
     } as StateType),
@@ -60,11 +58,11 @@ export const useOnBoardingStore = defineStore({
     },
 
     /**
-     * Function to handle save file with data.
-     * @param {File} file
+     * Function to handle assign new file service.
+     * @param {FileType} service
      */
-    async handleSaveFile(file: File) {
-      this.file.file = file;
+    async handleSaveCustomService(service: FileType) {
+      this.moreServices.push(service);
     },
 
     /**

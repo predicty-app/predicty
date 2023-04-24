@@ -7,6 +7,9 @@ module.exports = {
       top: {
         dynamic: "var(--top)"
       },
+      left: {
+        dynamic: "var(--left)",
+      },
       width: {
         calc: "calc(100vw)",
         dynamic: "var(--height)",
@@ -34,7 +37,11 @@ module.exports = {
         }
       },
       connectMoreMedia: {
-        text: "#272727"
+        text: "#272727",
+        icon: {
+          background: "#FFFFFF",
+          fill: "#60d073"
+        }
       },
       codeForm: {
         dash: {
@@ -80,9 +87,9 @@ module.exports = {
           active: "#5cd070"
         },
         hover: {
-          background: "#4184FF",
+          background: "#4184ff85",
           shadow: "#4184FF",
-          disabled: "#C5C5C5",
+          disabled: "#c5c5c552",
           active: "#88ef9a"
         }
       },

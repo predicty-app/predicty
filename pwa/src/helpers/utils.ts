@@ -328,3 +328,20 @@ export function hRandomColor(): string {
     return (~~(Math.random() * 16)).toString(16);
   });
 }
+
+/**
+ * Function to get today date.
+ * @returns {string}
+ */
+export function hGetParseDate(date?: string): string {
+  const d = date ? new Date(date) : new Date();
+  const month = d.getMonth() + 1;
+  const day = d.getDate();
+  const year = d.getFullYear();
+
+  return [
+    year,
+    month < 10 ? `0${month}` : month,
+    day < 10 ? `0${day}` : day
+  ].join("-");
+}
