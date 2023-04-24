@@ -4,10 +4,7 @@
     "color": "EEEEEE"
   },
   "CHECKS": {
-    "prefixes": [
-      "fix: ",
-      "feat: "
-    ],
+    "prefixes": [],
     "regexp": "([A-Z]+\\-\\d+) [\\w ]+",
     "regexpFlags": "i",
     "ignoreLabels": [
