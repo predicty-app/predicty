@@ -17,6 +17,7 @@ export enum TypeOptionsChart {
 export enum MenuNames {
   "SETTINGS" = "settings",
   "FILES" = "files",
+  "IMPORTS" = "imports",
   "LOGOUT" = "logout"
 }
 

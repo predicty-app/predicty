@@ -69,6 +69,7 @@ declare module '@vue/runtime-core' {
     ScrollbarPanel: typeof import('./src/components/Common/ScrollbarPanel.vue')['default']
     SelectForm: typeof import('./src/components/Common/SelectForm.vue')['default']
     SpinnerBar: typeof import('./src/components/Common/SpinnerBar.vue')['default']
+    SupportingLayout: typeof import('./src/components/Layouts/SupportingLayout.vue')['default']
     TagPin: typeof import('./src/components/Common/TagPin.vue')['default']
     TooltipMessage: typeof import('./src/components/Common/TooltipMessage.vue')['default']
     UploadFile: typeof import('./src/components/Common/UploadFile.vue')['default']

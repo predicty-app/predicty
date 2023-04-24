@@ -170,6 +170,14 @@ const routes: Array<RouteRecordRaw> = [
             return { path: "/" };
           }
         }
+      },
+      {
+        path: "/onboarding/import-history",
+        name: "import-history",
+        meta: {
+          authentication: true
+        },
+        component: () => import("@/views/ImportHistoryView.vue")
       }
     ]
   },
