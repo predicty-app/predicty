@@ -20,12 +20,12 @@ const userDashboardStore = useUserDashboardStore();
 const isSpinnerLoadingVisible = ref<boolean>(false);
 
 const optionsMenu: OptionsType[] = [
-  {
-    key: MenuNames.FILES,
-    icon: "files",
-    color: "#4E5B72",
-    label: t("components.user-dashboard.header-dashboard.menu-list.files")
-  },
+  // {
+  //   key: MenuNames.FILES,
+  //   icon: "files",
+  //   color: "#4E5B72",
+  //   label: t("components.user-dashboard.header-dashboard.menu-list.files")
+  // },
   {
     key: MenuNames.IMPORTS,
     icon: "checkmark",
@@ -53,12 +53,7 @@ function handleFiredAction(menuName: MenuNames) {
       break;
     case MenuNames.IMPORTS:
       {
-        router.push("/onboarding/import-history");
-      }
-      break;
-    case MenuNames.FILES:
-      {
-        router.push("/onboarding/more-media-integration");
+        router.push("/user-dashboard/import-history");
       }
       break;
   }

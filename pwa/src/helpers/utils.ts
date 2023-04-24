@@ -81,8 +81,8 @@ export function hFirstAndLastDate(
       (<CampaignType[]>list)[0].adsets
         ? (<CampaignType[]>list)[0].adsets[0].end
         : (<AdNonParsedType[]>list)[0].adStats[
-          (<AdNonParsedType[]>list)[0].adStats.length - 1
-        ].date
+            (<AdNonParsedType[]>list)[0].adStats.length - 1
+          ].date
     ) / 1000;
 
   let firstDateString = (<CampaignType[]>list)[0].adsets
@@ -91,8 +91,8 @@ export function hFirstAndLastDate(
   let lastDateString = (<CampaignType[]>list)[0].adsets
     ? (<CampaignType[]>list)[0].adsets[0].end
     : (<AdNonParsedType[]>list)[0].adStats[
-      (<AdNonParsedType[]>list)[0].adStats.length - 1
-    ].date;
+        (<AdNonParsedType[]>list)[0].adStats.length - 1
+      ].date;
 
   list.forEach((element: CampaignType | AdNonParsedType) => {
     if ((<CampaignType>element).adsets) {
@@ -218,10 +218,11 @@ export function hNextDaysDictionary(
   range: number
 ): NextDayDictionary {
   const daysDictionary = {};
-  let firstDateParsed = `${firstDay.getFullYear()}-${firstDay.getMonth() + 1 < 10
+  let firstDateParsed = `${firstDay.getFullYear()}-${
+    firstDay.getMonth() + 1 < 10
       ? `0${firstDay.getMonth() + 1}`
       : firstDay.getMonth() + 1
-    }-${firstDay.getDate() < 10 ? `0${firstDay.getDate()}` : firstDay.getDate()}`;
+  }-${firstDay.getDate() < 10 ? `0${firstDay.getDate()}` : firstDay.getDate()}`;
 
   daysDictionary[firstDateParsed] = 1;
 
@@ -229,13 +230,15 @@ export function hNextDaysDictionary(
     const tomorrowDay = new Date(firstDateParsed);
     tomorrowDay.setDate(tomorrowDay.getDate() + 1);
 
-    const parsedDay = `${tomorrowDay.getFullYear()}-${tomorrowDay.getMonth() + 1 < 10
+    const parsedDay = `${tomorrowDay.getFullYear()}-${
+      tomorrowDay.getMonth() + 1 < 10
         ? `0${tomorrowDay.getMonth() + 1}`
         : tomorrowDay.getMonth() + 1
-      }-${tomorrowDay.getDate() < 10
+    }-${
+      tomorrowDay.getDate() < 10
         ? `0${tomorrowDay.getDate()}`
         : tomorrowDay.getDate()
-      }`;
+    }`;
 
     daysDictionary[parsedDay] = i;
     firstDateParsed = parsedDay;
@@ -252,36 +255,43 @@ export function hNextDaysDictionary(
  */
 export function hFirstDaysWeeks(firstDay: Date, range: number): string[] {
   const daysDictionary = [];
-  let firstDateParsed = `${firstDay.getFullYear()}-${firstDay.getMonth() + 1 < 10
+  let firstDateParsed = `${firstDay.getFullYear()}-${
+    firstDay.getMonth() + 1 < 10
       ? `0${firstDay.getMonth() + 1}`
       : firstDay.getMonth() + 1
-    }-${firstDay.getDate() < 10 ? `0${firstDay.getDate()}` : firstDay.getDate()}`;
+  }-${firstDay.getDate() < 10 ? `0${firstDay.getDate()}` : firstDay.getDate()}`;
 
-  daysDictionary[0] = `${firstDay.getDate() < 10 ? `0${firstDay.getDate()}` : firstDay.getDate()
-    }.${firstDay.getMonth() + 1 < 10
+  daysDictionary[0] = `${
+    firstDay.getDate() < 10 ? `0${firstDay.getDate()}` : firstDay.getDate()
+  }.${
+    firstDay.getMonth() + 1 < 10
       ? `0${firstDay.getMonth() + 1}`
       : firstDay.getMonth() + 1
-    }.${firstDay.getFullYear()}`;
+  }.${firstDay.getFullYear()}`;
 
   for (let i = 1; i <= range; i++) {
     const nextMonday = new Date(firstDateParsed);
     nextMonday.setDate(nextMonday.getDate() + 7);
 
-    const parsedDay = `${nextMonday.getFullYear()}-${nextMonday.getMonth() + 1 < 10
+    const parsedDay = `${nextMonday.getFullYear()}-${
+      nextMonday.getMonth() + 1 < 10
         ? `0${nextMonday.getMonth() + 1}`
         : nextMonday.getMonth() + 1
-      }-${nextMonday.getDate() < 10
+    }-${
+      nextMonday.getDate() < 10
         ? `0${nextMonday.getDate()}`
         : nextMonday.getDate()
-      }`;
+    }`;
 
-    daysDictionary[i] = `${nextMonday.getDate() < 10
+    daysDictionary[i] = `${
+      nextMonday.getDate() < 10
         ? `0${nextMonday.getDate()}`
         : nextMonday.getDate()
-      }.${nextMonday.getMonth() + 1 < 10
+    }.${
+      nextMonday.getMonth() + 1 < 10
         ? `0${nextMonday.getMonth() + 1}`
         : nextMonday.getMonth() + 1
-      }.${nextMonday.getFullYear()}`;
+    }.${nextMonday.getFullYear()}`;
 
     firstDateParsed = parsedDay;
   }
@@ -324,10 +334,14 @@ export function hRandomColor(): string {
  * @returns {string}
  */
 export function hGetParseDate(date?: string): string {
-  const d = date? new Date(date) : new Date();
-  let month = (d.getMonth() + 1);
-  let day = d.getDate();
-  let year = d.getFullYear();
+  const d = date ? new Date(date) : new Date();
+  const month = d.getMonth() + 1;
+  const day = d.getDate();
+  const year = d.getFullYear();
 
-  return [year, month < 10 ? `0${month}` : month, day < 10 ? `0${day}` : day].join('-');
+  return [
+    year,
+    month < 10 ? `0${month}` : month,
+    day < 10 ? `0${day}` : day
+  ].join("-");
 }

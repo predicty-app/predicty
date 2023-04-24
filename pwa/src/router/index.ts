@@ -123,7 +123,10 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/MoreMediaIntegrationView.vue"),
         beforeEnter: () => {
           const userDashboardStore = useUserDashboardStore();
-          if (userDashboardStore.authenticatedUserParams && userDashboardStore.authenticatedUserParams?.isOnboardingComplete) {
+          if (
+            userDashboardStore.authenticatedUserParams &&
+            userDashboardStore.authenticatedUserParams?.isOnboardingComplete
+          ) {
             return { path: "/" };
           }
         }
@@ -136,12 +139,15 @@ const routes: Array<RouteRecordRaw> = [
         },
         component: () =>
           import("@/views/MoreMediaIntegrationFileSettingsView.vue"),
-          beforeEnter: () => {
-            const userDashboardStore = useUserDashboardStore();
-            if (userDashboardStore.authenticatedUserParams && userDashboardStore.authenticatedUserParams?.isOnboardingComplete) {
-              return { path: "/" };
-            }
+        beforeEnter: () => {
+          const userDashboardStore = useUserDashboardStore();
+          if (
+            userDashboardStore.authenticatedUserParams &&
+            userDashboardStore.authenticatedUserParams?.isOnboardingComplete
+          ) {
+            return { path: "/" };
           }
+        }
       },
       {
         path: "/onboarding/preparing-screen",
@@ -152,7 +158,10 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/PreparingScreenView.vue"),
         beforeEnter: () => {
           const userDashboardStore = useUserDashboardStore();
-          if (userDashboardStore.authenticatedUserParams && userDashboardStore.authenticatedUserParams?.isOnboardingComplete) {
+          if (
+            userDashboardStore.authenticatedUserParams &&
+            userDashboardStore.authenticatedUserParams?.isOnboardingComplete
+          ) {
             return { path: "/" };
           }
         }
@@ -166,18 +175,13 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/PreparingScreenImportHistoryView.vue"),
         beforeEnter: () => {
           const userDashboardStore = useUserDashboardStore();
-          if (userDashboardStore.authenticatedUserParams && userDashboardStore.authenticatedUserParams?.isOnboardingComplete) {
+          if (
+            userDashboardStore.authenticatedUserParams &&
+            userDashboardStore.authenticatedUserParams?.isOnboardingComplete
+          ) {
             return { path: "/" };
           }
         }
-      },
-      {
-        path: "/onboarding/import-history",
-        name: "import-history",
-        meta: {
-          authentication: true
-        },
-        component: () => import("@/views/ImportHistoryView.vue")
       }
     ]
   },
@@ -198,6 +202,14 @@ const routes: Array<RouteRecordRaw> = [
         return { path: "/onboarding/basic-media-integration" };
       }
     }
+  },
+  {
+    path: "/user-dashboard/import-history",
+    name: "import-history",
+    meta: {
+      authentication: true
+    },
+    component: () => import("@/views/ImportHistoryView.vue")
   },
   {
     path: "/:pathMatch(.*)*",
