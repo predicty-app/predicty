@@ -7,7 +7,7 @@ namespace App\Service\Google\Analytics;
 use App\Entity\DataProvider;
 use App\Service\Clock\Clock;
 use App\Service\Google\GoogleOAuth;
-use App\Service\Security\DataProviderCredentials\DataProviderCredentialsProvider;
+use App\Service\Security\ConnectedAccountCredentials\ConnectedAccountCredentialsProvider;
 use DateInterval;
 use DatePeriod;
 use Google\Analytics\Data\V1beta\BetaAnalyticsDataClient;
@@ -19,7 +19,7 @@ use Google\Analytics\Data\V1beta\Row;
 class GoogleAnalyticsGA4Api
 {
     public function __construct(
-        private DataProviderCredentialsProvider $dataProviderCredentialsProvider,
+        private ConnectedAccountCredentialsProvider $dataProviderCredentialsProvider,
         private GoogleOAuth $googleOAuth,
     ) {
     }

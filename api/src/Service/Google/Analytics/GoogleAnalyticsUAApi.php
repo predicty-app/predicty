@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Google\Analytics;
 
 use App\Entity\DataProvider;
-use App\Service\Security\DataProviderCredentials\DataProviderCredentialsProvider;
+use App\Service\Security\ConnectedAccountCredentials\ConnectedAccountCredentialsProvider;
 use Google\Client as GoogleClient;
 use Google\Service\Analytics;
 use Google\Service\AnalyticsReporting;
@@ -19,7 +19,7 @@ class GoogleAnalyticsUAApi
 
     public function __construct(
         private GoogleClient $client,
-        private DataProviderCredentialsProvider $dataProviderCredentialsProvider,
+        private ConnectedAccountCredentialsProvider $dataProviderCredentialsProvider,
     ) {
         $this->client->addScope(Analytics::ANALYTICS_READONLY);
         $this->analyticsReporting = new AnalyticsReporting($this->client);

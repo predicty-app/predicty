@@ -11,6 +11,7 @@ use App\GraphQL\Type\AdType;
 use App\GraphQL\Type\ApiImportType;
 use App\GraphQL\Type\CampaignType;
 use App\GraphQL\Type\ColorType;
+use App\GraphQL\Type\ConnectedAccountType;
 use App\GraphQL\Type\ConversationCommentType;
 use App\GraphQL\Type\ConversationType;
 use App\GraphQL\Type\DailyRevenueType;
@@ -57,6 +58,7 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
  * @method ConversationType        conversation()
  * @method ConversationCommentType conversationComment()
  * @method ColorType               color()
+ * @method ConnectedAccountType    connectedAccount()
  */
 class TypeRegistry
 {

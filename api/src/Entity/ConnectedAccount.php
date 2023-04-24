@@ -7,16 +7,11 @@ namespace App\Entity;
 use App\Service\Clock\Clock;
 use Doctrine\ORM\Mapping as ORM;
 
-// @todo change to ConnectedAccount
 #[ORM\Entity]
-class DataProviderCredentials
+class ConnectedAccount
 {
+    use IdTrait;
     use TimestampableTrait;
-
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
 
     #[ORM\Column]
     private int $userId;
@@ -27,13 +22,17 @@ class DataProviderCredentials
     #[ORM\Column(nullable: true)]
     private array $credentials = [];
 
-    public function __construct(int $userId, DataProvider $dataProvider, array $credentials = [])
+    #[ORM\Column]
+    private bool $isEnabled = true;
+
+    public function __construct(int $userId, DataProvider $dataProvider, array $credentials = [], bool $isEnabled = true)
     {
         $this->userId = $userId;
         $this->dataProvider = $dataProvider;
         $this->credentials = $credentials;
         $this->createdAt = Clock::now();
         $this->changedAt = Clock::now();
+        $this->isEnabled = $isEnabled;
     }
 
     public function getId(): int
@@ -63,5 +62,10 @@ class DataProviderCredentials
     public function getCredentials(): array
     {
         return $this->credentials;
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->isEnabled;
     }
 }
