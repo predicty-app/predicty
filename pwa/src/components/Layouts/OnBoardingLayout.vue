@@ -15,7 +15,7 @@ const globalStore = useGlobalStore();
       <slot name="header" />
     </div>
     <div
-      class="flex-auto flex-col gap-y-6 h-0 overflow-y-auto flex justify-center max-w-[600px] w-full px-3"
+      class="flex-auto justify-center flex-col gap-y-6 h-0 overflow-y-auto flex max-w-[660px] w-full px-3"
     >
       <slot name="content" />
     </div>

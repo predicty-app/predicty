@@ -1,10 +1,12 @@
 <script setup lang="ts">
 type PropsType = {
   type?: "success" | "default" | "disabled";
+  isSmall?: boolean;
 };
 
 withDefaults(defineProps<PropsType>(), {
-  type: "default"
+  type: "default",
+  isSmall: false
 });
 </script>
 
@@ -14,8 +16,10 @@ withDefaults(defineProps<PropsType>(), {
     :data-type="type"
     :disabled="type === 'disabled'"
     :class="[
-      'py-[18px] rounded-[10px] w-full text-base transition-all',
+      'rounded-[10px] w-full text-base transition-all',
       {
+        'text-xs px-3 py-2 h-[31px]': isSmall,
+        'py-[18px]': !isSmall,
         'bg-button-default border border-button-border hover:bg-button-hover-default active:bg-button-active-default':
           type === 'default',
         'bg-button-success text-text-white hover:bg-button-hover-success active:bg-button-active-success':

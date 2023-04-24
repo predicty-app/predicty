@@ -125,9 +125,23 @@
         }
       },
       "history-imported-files-form": {
+        "header": {
+          "title": "Imported today",
+          "description": "{count} imports"
+        },
+        "file": "file",
+        "import-from": "Import from",
         "button": {
-          "next": "Finish setup"
-        }
+          "next": "Finish setup",
+          "revert": "Revert import",
+          "show": "Show"
+        },
+        "ad": "ad",
+        "ads": "ads",
+        "campaign": "campaign",
+        "campaigns": "campaigns",
+        "element-added": "was added to your timeline",
+        "elements-added": "were added to your timeline"
       }
     },
     "user-dashboard": {

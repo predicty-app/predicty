@@ -64,18 +64,17 @@ class CampaignsService {
   public parseCampaignsList(
     campaigns: CampaignNonParsedType[]
   ): CampaignType[] {
-
     const parsedList: CampaignType[] = campaigns
       .map(
         (campaign: CampaignNonParsedType) =>
-        ({
-          uid: campaign.id,
-          name: campaign.name,
-          externalId: campaign.externalId,
-          adsets: this.#setAdSetsList(campaign),
-          dataProvider: [campaign.dataProvider.id],
-          color: hLightenDarkenColor(hRandomColor(), -50)
-        } as CampaignType)
+          ({
+            uid: campaign.id,
+            name: campaign.name,
+            externalId: campaign.externalId,
+            adsets: this.#setAdSetsList(campaign),
+            dataProvider: [campaign.dataProvider.id],
+            color: hLightenDarkenColor(hRandomColor(), -50)
+          } as CampaignType)
       )
       .filter((campaign: CampaignType) => campaign.adsets.length > 0);
 
@@ -101,22 +100,25 @@ class CampaignsService {
       .filter((adset: AdSetsNonParsedType) => adset.ads.length > 0)
       .map(
         (adset: AdSetsNonParsedType) =>
-        ({
-          uid: adset.id,
-          name: adset.name,
-          end: this.#getStartEndAtDate(adset.ads, 0),
-          start: this.#getStartEndAtDate(adset.ads, -1),
-          externalId: adset.externalId,
-          ads: this.#setAdsList(adset.ads, campaign),
-          isActive: this.#checkIsActiveElement(this.#getStartEndAtDate(adset.ads, -1), this.#getStartEndAtDate(adset.ads, 0))
-        } as AdSetsType)
+          ({
+            uid: adset.id,
+            name: adset.name,
+            end: this.#getStartEndAtDate(adset.ads, 0),
+            start: this.#getStartEndAtDate(adset.ads, -1),
+            externalId: adset.externalId,
+            ads: this.#setAdsList(adset.ads, campaign),
+            isActive: this.#checkIsActiveElement(
+              this.#getStartEndAtDate(adset.ads, -1),
+              this.#getStartEndAtDate(adset.ads, 0)
+            )
+          } as AdSetsType)
       );
   }
 
   /**
    * Method to get start and end for adset.
-   * @param {AdsNonParsedType[]} ads 
-   * @param {number} type 
+   * @param {AdsNonParsedType[]} ads
+   * @param {number} type
    * @returns {string}
    */
   #getStartEndAtDate(ads: AdsNonParsedType[], type: number): string {
@@ -125,11 +127,16 @@ class CampaignsService {
     ads
       .filter((ad: AdsNonParsedType) => ad.adStats.length >= 1)
       .forEach((ad: AdsNonParsedType) => {
-        dates.push(parseInt(ad.adStats.at(type).date.replace('-', '').replace('-', ''), 10));
-      })
+        dates.push(
+          parseInt(
+            ad.adStats.at(type).date.replace("-", "").replace("-", ""),
+            10
+          )
+        );
+      });
 
-    const min = Math[type === -1 ? 'min' : 'max'](...dates).toString();
-    return `${min.slice(0, 4)}-${min.slice(4, 6)}-${min.slice(6, 8)}`
+    const min = Math[type === -1 ? "min" : "max"](...dates).toString();
+    return `${min.slice(0, 4)}-${min.slice(4, 6)}-${min.slice(6, 8)}`;
   }
 
   /**
@@ -145,19 +152,19 @@ class CampaignsService {
       .filter((ad: AdsNonParsedType) => ad.adStats.length >= 1)
       .map(
         (ad: AdsNonParsedType) =>
-        ({
-          uid: ad.id,
-          creation: "",
-          name: ad.name,
-          status: ad.adStats,
-          end: ad.adStats.at(0).date,
-          start: ad.adStats.at(-1).date,
-          dataProvider: [campaign.dataProvider.id],
-          isActive: this.#checkIsActiveElement(
-            ad.adStats.at(-1).date,
-            ad.adStats.at(0).date
-          )
-        } as AdsType)
+          ({
+            uid: ad.id,
+            creation: "",
+            name: ad.name,
+            status: ad.adStats,
+            end: ad.adStats.at(0).date,
+            start: ad.adStats.at(-1).date,
+            dataProvider: [campaign.dataProvider.id],
+            isActive: this.#checkIsActiveElement(
+              ad.adStats.at(-1).date,
+              ad.adStats.at(0).date
+            )
+          } as AdsType)
       );
   }
 

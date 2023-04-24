@@ -336,6 +336,10 @@ module.exports = {
           light: "#DBB9EB",
         },
       },
+      imports: {
+        green: "#80C9B9",
+        grey: "#8A8A8A"
+      }
     },
     boxShadow: {
       bottombar: "0px -5px 30px rgba(0, 0, 0, 0.15)",
