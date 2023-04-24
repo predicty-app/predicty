@@ -87,11 +87,11 @@
         "hide-element": "Show/Hide element",
         "select-placeholder": "Select campaning...",
         "notifications": {
-          "create-collection" :{
+          "create-collection": {
             "success": "Successfully created a collection.",
             "error": "An error occurred while creating the collection. Please try again in a moment."
           },
-          "assign-ads-to-collection" :{
+          "assign-ads-to-collection": {
             "success": "Correctly assigned adverts to collections.",
             "error": "An error occurred when assigning adverts to a collection. Please try again in a moment."
           },
@@ -105,6 +105,7 @@
         "menu-list": {
           "settings": "Settings",
           "files": "Add another file",
+          "imports": "Import history",
           "logout": "Logout"
         },
         "logout-modal": {
@@ -208,6 +209,19 @@
           "investment": "Overall investment"
         }
       }
+    },
+    "import-history": {
+      "title": "Import history",
+      "import-from": "Import from",
+      "file": "file",
+      "revert": "Revert import",
+      "show": "Show",
+      "ad": "ad",
+      "ads": "ads",
+      "campaign": "campaign",
+      "campaigns": "campaigns",
+      "element-added": "was added to your timeline",
+      "elements-added": "were added to your timeline"
     }
   },
   "validation": {

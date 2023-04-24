@@ -105,6 +105,14 @@ const routes: Array<RouteRecordRaw> = [
           authentication: true
         },
         component: () => import("@/views/AddMoreFiles.vue")
+      },
+      {
+        path: "/onboarding/import-history",
+        name: "import-history",
+        meta: {
+          authentication: true
+        },
+        component: () => import("@/views/ImportHistoryView.vue")
       }
     ]
   },

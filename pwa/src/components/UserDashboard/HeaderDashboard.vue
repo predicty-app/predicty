@@ -27,6 +27,12 @@ const optionsMenu: OptionsType[] = [
     label: t("components.user-dashboard.header-dashboard.menu-list.files")
   },
   {
+    key: MenuNames.IMPORTS,
+    icon: "checkmark",
+    color: "#4E5B72",
+    label: t("components.user-dashboard.header-dashboard.menu-list.imports")
+  },
+  {
     key: MenuNames.LOGOUT,
     icon: "logout",
     color: "#E24963",
@@ -43,6 +49,11 @@ function handleFiredAction(menuName: MenuNames) {
     case MenuNames.LOGOUT:
       {
         isModalWindowVisible.value = true;
+      }
+      break;
+    case MenuNames.IMPORTS:
+      {
+        router.push("/onboarding/import-history");
       }
       break;
     case MenuNames.FILES:
