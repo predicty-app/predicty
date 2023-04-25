@@ -82,7 +82,9 @@
             "OTHER": "Other (internal)"
           }
         }
-      },
+      }
+    },
+    "shared": {
       "connect-more-services-file-settings-form": {
         "header-title": "What is this file?",
         "header-description": "Tell us what kind of data this file represents",
@@ -128,6 +130,9 @@
         "header": {
           "title": "Imported today",
           "description": "{count} imports"
+        },
+        "notifications": {
+          "success": "Correctly reversed file import."
         },
         "file": "file",
         "import-from": "Import from",

@@ -30,6 +30,11 @@ export type ImportType = {
   completedAt: string;
   __typename: string;
   filename?: string;
+  downloadUrl?: string;
+};
+
+type RevertPaylodType = {
+  importId: string;
 };
 
 /**
@@ -57,6 +62,7 @@ async function handleGetImports() {
       completedAt
       ... on FileImport {
         filename
+        downloadUrl
       }
     }
   }`;
@@ -70,4 +76,30 @@ async function handleGetImports() {
   }
 }
 
-export { handleGetImports };
+/**
+ * Function to handle revert import.
+ * @param {RevertPaylodType} payload
+ * @returns
+ */
+async function handleRevertImport(payload: RevertPaylodType) {
+  type RevertImportParamsType = {
+    importId: string;
+  };
+
+  const query = `mutation RevertImport($importId: ID!) {
+    withdrawImport(importId: $importId)
+  }`;
+
+  try {
+    const response = await apiService.request<RevertImportParamsType, any>(
+      query,
+      { ...payload }
+    );
+
+    return response.errors ? response.errors[0].message : "OK";
+  } catch (error) {
+    return (error as Error).message;
+  }
+}
+
+export { handleGetImports, handleRevertImport };

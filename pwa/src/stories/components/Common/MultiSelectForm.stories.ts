@@ -55,7 +55,7 @@ MultiSelectForm.args = {
     {
       key: "test",
       label: "Option1",
-      icon: "/public/assets/images/providers/google-ads-provider.png"
+      icon: "/assets/images/providers/google-ads-provider.png"
     },
     {
       key: "test2",

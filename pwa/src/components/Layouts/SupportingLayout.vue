@@ -1,13 +1,9 @@
 <script setup lang="ts">
 import { useSlots } from "vue";
-import { useGlobalStore } from "@/stores/global";
-
 const slots = useSlots();
-const globalStore = useGlobalStore();
 </script>
 
 <template>
-  <SpinnerBar :is-visible="globalStore.isSpinnerVisible" :is-global="true" />
   <div
     class="h-full flex flex-col min-h-full animate-fade-in bg-layout-onboarding-background"
   >

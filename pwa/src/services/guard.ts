@@ -1,11 +1,41 @@
 import type { Router, RouteRecordRaw } from "vue-router";
+import { useUserDashboardStore } from "@/stores/userDashboard";
 import { handleAuthenticatedUser } from "@/services/api/authentication";
+
+type GuardRouteType = {
+  path: string;
+};
+
+export enum TypeOfAction {
+  POSITIVE = "positive",
+  NEGATION = "negation"
+}
 
 /**
  * RouterService
  * Router service to check authorization.
  */
 export default class GuardService {
+  /**
+   * Method to check is onboarding completed.
+   * @param {string} redirect
+   * @returns {GuardRouteType}
+   */
+  public static checkIsOnboardingCompleted(
+    redirect: string,
+    type: TypeOfAction = TypeOfAction.POSITIVE
+  ): GuardRouteType {
+    const userDashboardStore = useUserDashboardStore();
+    if (
+      userDashboardStore.authenticatedUserParams &&
+      (type === TypeOfAction.POSITIVE
+        ? userDashboardStore.authenticatedUserParams?.isOnboardingComplete
+        : !userDashboardStore.authenticatedUserParams?.isOnboardingComplete)
+    ) {
+      return { path: redirect };
+    }
+  }
+
   /**
    * Method to check is user authorization.
    * @param {Router} router

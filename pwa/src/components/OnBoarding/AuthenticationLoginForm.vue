@@ -5,6 +5,7 @@ import { ref, onMounted, nextTick } from "vue";
 import { useGlobalStore } from "@/stores/global";
 import { useUserDashboardStore } from "@/stores/userDashboard";
 import { handleAuthLoginUser } from "@/services/api/onboarding";
+import { handleAuthenticatedUser } from "@/services/api/authentication";
 import {
   isRequiredValidation,
   isEmailValidation,
@@ -85,6 +86,7 @@ async function handleSubmitForm() {
       "components.on-boarding.authentication-login-form.success"
     );
     notificationMessageModel.value.type = "success";
+    await handleAuthenticatedUser();
 
     setTimeout(() => {
       globalStore.toogleSpinnerState();
