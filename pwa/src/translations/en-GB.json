@@ -123,11 +123,16 @@
             "currency": "Currency"
           }
         }
-      },
+      }
+    },
+    "shared": {
       "history-imported-files-form": {
         "header": {
           "title": "Imported today",
           "description": "{count} imports"
+        },
+        "notifications": {
+          "success": "Correctly reversed file import."
         },
         "file": "file",
         "import-from": "Import from",

@@ -53,7 +53,7 @@ function handleFiredAction(menuName: MenuNames) {
       break;
     case MenuNames.IMPORTS:
       {
-        router.push("/user-dashboard/import-history");
+        router.push("/dashboard/import-history");
       }
       break;
   }

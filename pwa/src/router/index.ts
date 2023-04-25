@@ -2,7 +2,7 @@ import { useOnBoardingStore } from "@/stores/onboarding";
 import { useUserDashboardStore } from "@/stores/userDashboard";
 import { createRouter, createWebHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
-import GuardService from "@/services/guard";
+import GuardService, { TypeOfAction } from "@/services/guard";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -53,7 +53,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/onboarding/",
     name: "on-boarding",
-    component: () => import("@/views/OnBoardingView.vue"),
+    component: () => import("@/views/OnBoarding/OnBoardingView.vue"),
     redirect: () => "/onboarding/start-screen",
     children: [
       {
@@ -63,14 +63,14 @@ const routes: Array<RouteRecordRaw> = [
           authentication: false,
           authorizationType: "login"
         },
-        component: () => import("@/views/StartScreenView.vue")
+        component: () => import("@/views/OnBoarding/StartScreenView.vue")
       },
       {
         path: "/onboarding/account-creation",
         name: "on-boarding-account-creation",
         redirect: () => "/onboarding/account-creation/email",
         component: () =>
-          import("@/views/AccountCreation/AccountCreationView.vue"),
+          import("@/views/OnBoarding/AccountCreation/AccountCreationView.vue"),
         children: [
           {
             path: "/onboarding/account-creation/email",
@@ -80,13 +80,17 @@ const routes: Array<RouteRecordRaw> = [
               authorizationType: "dashboard"
             },
             component: () =>
-              import("@/views/AccountCreation/AccountCreationEmailView.vue")
+              import(
+                "@/views/OnBoarding/AccountCreation/AccountCreationEmailView.vue"
+              )
           },
           {
             path: "/onboarding/account-creation/password",
             name: "on-boarding-account-creation-password",
             component: () =>
-              import("@/views/AccountCreation/AccountCreationPasswordView.vue"),
+              import(
+                "@/views/OnBoarding/AccountCreation/AccountCreationPasswordView.vue"
+              ),
             beforeEnter: () => {
               const onboardingStore = useOnBoardingStore();
               if (!onboardingStore.email) {
@@ -103,7 +107,8 @@ const routes: Array<RouteRecordRaw> = [
           authentication: true,
           authorizationType: "onboarding"
         },
-        component: () => import("@/views/BasicMediaIntegrationView.vue"),
+        component: () =>
+          import("@/views/OnBoarding/BasicMediaIntegrationView.vue"),
         beforeEnter: () => {
           const userDashboardStore = useUserDashboardStore();
           if (
@@ -120,16 +125,9 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           authentication: true
         },
-        component: () => import("@/views/MoreMediaIntegrationView.vue"),
-        beforeEnter: () => {
-          const userDashboardStore = useUserDashboardStore();
-          if (
-            userDashboardStore.authenticatedUserParams &&
-            userDashboardStore.authenticatedUserParams?.isOnboardingComplete
-          ) {
-            return { path: "/" };
-          }
-        }
+        component: () =>
+          import("@/views/OnBoarding/MoreMediaIntegrationView.vue"),
+        beforeEnter: () => GuardService.checkIsOnboardingCompleted("/")
       },
       {
         path: "/onboarding/more-media-integration/file-settings",
@@ -138,16 +136,8 @@ const routes: Array<RouteRecordRaw> = [
           authentication: true
         },
         component: () =>
-          import("@/views/MoreMediaIntegrationFileSettingsView.vue"),
-        beforeEnter: () => {
-          const userDashboardStore = useUserDashboardStore();
-          if (
-            userDashboardStore.authenticatedUserParams &&
-            userDashboardStore.authenticatedUserParams?.isOnboardingComplete
-          ) {
-            return { path: "/" };
-          }
-        }
+          import("@/views/OnBoarding/MoreMediaIntegrationFileSettingsView.vue"),
+        beforeEnter: () => GuardService.checkIsOnboardingCompleted("/")
       },
       {
         path: "/onboarding/preparing-screen",
@@ -155,16 +145,8 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           authentication: true
         },
-        component: () => import("@/views/PreparingScreenView.vue"),
-        beforeEnter: () => {
-          const userDashboardStore = useUserDashboardStore();
-          if (
-            userDashboardStore.authenticatedUserParams &&
-            userDashboardStore.authenticatedUserParams?.isOnboardingComplete
-          ) {
-            return { path: "/" };
-          }
-        }
+        component: () => import("@/views/OnBoarding/PreparingScreenView.vue"),
+        beforeEnter: () => GuardService.checkIsOnboardingCompleted("/")
       },
       {
         path: "/onboarding/preparing-screen/import-history",
@@ -172,44 +154,42 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           authentication: true
         },
-        component: () => import("@/views/PreparingScreenImportHistoryView.vue"),
-        beforeEnter: () => {
-          const userDashboardStore = useUserDashboardStore();
-          if (
-            userDashboardStore.authenticatedUserParams &&
-            userDashboardStore.authenticatedUserParams?.isOnboardingComplete
-          ) {
-            return { path: "/" };
-          }
-        }
+        component: () =>
+          import("@/views/OnBoarding/PreparingScreenImportHistoryView.vue"),
+        beforeEnter: () => GuardService.checkIsOnboardingCompleted("/")
       }
     ]
   },
   {
     path: "/",
     name: "user-dashboard",
-    meta: {
-      authentication: true,
-      authorizationType: "after"
-    },
-    component: () => import("@/views/UserDashboardView.vue"),
-    beforeEnter: () => {
-      const userDashboardStore = useUserDashboardStore();
-      if (
-        userDashboardStore.authenticatedUserParams &&
-        !userDashboardStore.authenticatedUserParams?.isOnboardingComplete
-      ) {
-        return { path: "/onboarding/basic-media-integration" };
+    component: () => import("@/views/UserDashboard/UserDashboardView.vue"),
+    redirect: () => "/dashboard",
+    beforeEnter: () =>
+      GuardService.checkIsOnboardingCompleted(
+        "/onboarding/basic-media-integration",
+        TypeOfAction.NEGATION
+      ),
+    children: [
+      {
+        path: "/dashboard",
+        name: "user-dashboard",
+        meta: {
+          authentication: true,
+          authorizationType: "after"
+        },
+        component: () =>
+          import("@/views/UserDashboard/UserDashboardPanelView.vue")
+      },
+      {
+        path: "/dashboard/import-history",
+        name: "import-history",
+        meta: {
+          authentication: true
+        },
+        component: () => import("@/views/UserDashboard/ImportHistoryView.vue")
       }
-    }
-  },
-  {
-    path: "/user-dashboard/import-history",
-    name: "import-history",
-    meta: {
-      authentication: true
-    },
-    component: () => import("@/views/ImportHistoryView.vue")
+    ]
   },
   {
     path: "/:pathMatch(.*)*",

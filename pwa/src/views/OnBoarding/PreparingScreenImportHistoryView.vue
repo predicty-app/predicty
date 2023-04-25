@@ -11,7 +11,7 @@ const previousStepPath = "/onboarding/more-media-integration";
       <AppLogo />
     </template>
     <template #content>
-      <HistoryImportedFilesForm />
+      <HistoryImportedFilesForm type="extended" />
     </template>
     <template #footer>
       <div class="w-full max-w-[48px]">
