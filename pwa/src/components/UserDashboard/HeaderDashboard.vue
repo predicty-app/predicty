@@ -51,7 +51,7 @@ function handleFiredAction(menuName: MenuNames) {
         isModalWindowVisible.value = true;
       }
       break;
-      case MenuNames.FILES:
+    case MenuNames.FILES:
       {
         router.push("/dashboard/upload-more-files");
       }

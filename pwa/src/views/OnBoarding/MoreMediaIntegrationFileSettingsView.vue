@@ -4,7 +4,7 @@
       <AppLogo />
     </template>
     <template #content>
-      <ConnectMoreServicesFileSettingsForm type="extended"/>
+      <ConnectMoreServicesFileSettingsForm type="extended" />
     </template>
     <template #footer>
       <div class="w-full max-w-[48px]" id="previous-button"></div>

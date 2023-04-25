@@ -215,7 +215,11 @@ function handleSubmitForm() {
         );
 
         nextTick(() => {
-          router.push(props.type === TypeOfList.EXTENDED? "/onboarding/more-media-integration" : "/dashboard/import-history");
+          router.push(
+            props.type === TypeOfList.EXTENDED
+              ? "/onboarding/more-media-integration"
+              : "/dashboard/import-history"
+          );
         });
       }
       break;
