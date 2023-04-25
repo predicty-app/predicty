@@ -1,25 +1,28 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
+import { until } from '@vueuse/core'
 import { useRouter } from "vue-router";
 import { hGetParseDate } from "@/helpers/utils";
+import type { FileType } from "@/stores/onboarding";
+import { useOnBoardingStore } from "@/stores/onboarding";
 import { ref, onMounted, nextTick, computed } from "vue";
 import type { ImportType } from "@/services/api/imports";
 import { handleGetImports, handleRevertImport } from "@/services/api/imports";
-import { handleCompleteOnboarding } from "@/services/api/onboarding";
+import { handleCompleteOnboarding, handleUploadFile } from "@/services/api/onboarding";
 
 enum TypeOfList {
-  BASIC = 'basic',
-  EXTENDED = 'extended'
+  BASIC = "basic",
+  EXTENDED = "extended"
 }
 
 enum ActionFiles {
-  SHOW = 'show',
-  REVERT = 'revert'
+  SHOW = "show",
+  REVERT = "revert"
 }
 
 type PropsType = {
-  type?: TypeOfList
-}
+  type?: TypeOfList;
+};
 
 type NotificationMessageType = {
   visible: boolean;
@@ -27,11 +30,10 @@ type NotificationMessageType = {
   message: string;
 };
 
-
 const { t } = useI18n();
 const router = useRouter();
 const props = withDefaults(defineProps<PropsType>(), {
-  type: 'basic' as TypeOfList
+  type: "basic" as TypeOfList
 });
 const notificationMessageModel = ref<NotificationMessageType>({
   visible: false,
@@ -39,19 +41,43 @@ const notificationMessageModel = ref<NotificationMessageType>({
   message: ""
 });
 const importsList = ref<ImportType[]>([]);
+const onBoardingStore = useOnBoardingStore();
 const isSpinnerVisible = ref<boolean>(true);
 const isComponentMounted = ref<boolean>(false);
 const onlyTodayImportsHistoryList = computed<ImportType[]>(() =>
-  props.type === TypeOfList.BASIC ? importsList.value : importsList.value.filter(
-    (item: ImportType) => hGetParseDate(item.startedAt) === hGetParseDate()
-  )
+  props.type === TypeOfList.BASIC
+    ? importsList.value
+    : importsList.value.filter(
+      (item: ImportType) => hGetParseDate(item.startedAt) === hGetParseDate()
+    )
 );
 
 onMounted(async () => {
+  await handleUploadFiles();
   importsList.value = await handleGetImports();
   nextTick(() => (isComponentMounted.value = true));
   isSpinnerVisible.value = false;
 });
+
+/**
+ * Function to handle uplaod files.
+ * @return {Promise<unknown>}
+ */
+async function handleUploadFiles(): Promise<unknown> {
+  return new Promise(resolve => {
+    if (onBoardingStore.moreServices.length > 0) {
+      onBoardingStore.moreServices.forEach(async (service: FileType) => {
+        await handleUploadFile({
+          file: service.file,
+          type: service.fileImportTypes,
+          campaignName: service.name
+        });
+      });
+    }
+    onBoardingStore.moreServices = [];
+    resolve(true);
+  });
+}
 
 /**
  * Function to submit finish setup onboarding.
@@ -63,33 +89,39 @@ async function handleFinishSetup() {
 
 /**
  * Function to fired action for file.
- * @param {ImportType} file 
+ * @param {ImportType} file
  * @param {ActionFiles} action
  */
-async function handleFiredActionFile(importedFile: ImportType, action: ActionFiles) {
+async function handleFiredActionFile(
+  importedFile: ImportType,
+  action: ActionFiles
+) {
   switch (action) {
-    case ActionFiles.SHOW: {
-      window.open(importedFile.downloadUrl, '__blank');
-    } break;
-    case ActionFiles.REVERT: {
-      isSpinnerVisible.value = true;
-      await handleRevertImport({ 'importId': importedFile.id });
-      importsList.value = await handleGetImports();
-      isSpinnerVisible.value = false;
+    case ActionFiles.SHOW:
+      {
+        window.open(importedFile.downloadUrl, "__blank");
+      }
+      break;
+    case ActionFiles.REVERT:
+      {
+        isSpinnerVisible.value = true;
+        await handleRevertImport({ importId: importedFile.id });
+        importsList.value = await handleGetImports();
+        isSpinnerVisible.value = false;
 
-      notificationMessageModel.value.type = 'success';
-      notificationMessageModel.value.visible = true;
-      notificationMessageModel.value.message = t('components.shared.history-imported-files-form.notifications.success');
-    } break;
+        notificationMessageModel.value.type = "success";
+        notificationMessageModel.value.visible = true;
+        notificationMessageModel.value.message = t(
+          "components.shared.history-imported-files-form.notifications.success"
+        );
+      }
+      break;
   }
 }
 </script>
 <template>
-  <NotificationMessage
-    v-model="notificationMessageModel.visible"
-    :message="notificationMessageModel.message"
-    :type="notificationMessageModel.type"
-  />
+  <NotificationMessage v-model="notificationMessageModel.visible" :message="notificationMessageModel.message"
+    :type="notificationMessageModel.type" />
   <SpinnerBar :is-visible="isSpinnerVisible" :is-global="true" />
   <div v-if="isComponentMounted" class="flex flex-col gap-y-6">
     <div class="flex justify-between items-center">
@@ -110,9 +142,7 @@ async function handleFiredActionFile(importedFile: ImportType, action: ActionFil
             <IconSvg name="checkmark" :class-name="`w-8 h-8`" />
             <h4 class="text-base font-bold">
               {{
-                t(
-                  "components.shared.history-imported-files-form.import-from"
-                )
+                t("components.shared.history-imported-files-form.import-from")
               }}
               {{
                 importFile.__typename === "ApiImport"
@@ -123,7 +153,8 @@ async function handleFiredActionFile(importedFile: ImportType, action: ActionFil
             <div class="flex direction-column" :class="{
                   'justify-end': importFile.__typename !== 'FileImport'
                 }">
-              <ButtonForm @click="handleFiredActionFile(importFile, ActionFiles.REVERT)" isSmall :class="{ 'w-1/2': importFile.__typename !== 'FileImport' }">
+              <ButtonForm @click="handleFiredActionFile(importFile, ActionFiles.REVERT)" isSmall
+                :class="{ 'w-1/2': importFile.__typename !== 'FileImport' }">
                 {{
                   t(
                     "components.shared.history-imported-files-form.button.revert"
@@ -132,9 +163,7 @@ async function handleFiredActionFile(importedFile: ImportType, action: ActionFil
               </ButtonForm>
               <ButtonForm @click="handleFiredActionFile(importFile, ActionFiles.SHOW)" isSmall class="ml-3"
                 v-if="importFile.__typename === 'FileImport'">{{
-                  t(
-                    "components.shared.history-imported-files-form.button.show"
-                  )
+                  t("components.shared.history-imported-files-form.button.show")
                 }}</ButtonForm>
             </div>
           </div>
@@ -144,12 +173,8 @@ async function handleFiredActionFile(importedFile: ImportType, action: ActionFil
                 <span class="text-imports-green font-bold">{{ importFile.result.createdAds }}
                   {{
                     importFile.result.createdAds === 1
-                    ? t(
-                      "components.shared.history-imported-files-form.ad"
-                    )
-                    : t(
-                      "components.shared.history-imported-files-form.ads"
-                    )
+                    ? t("components.shared.history-imported-files-form.ad")
+                    : t("components.shared.history-imported-files-form.ads")
                   }}</span>
                 {{
                   importFile.result.createdAds === 1
@@ -196,9 +221,7 @@ async function handleFiredActionFile(importedFile: ImportType, action: ActionFil
     <Teleport to="#next-button" v-if="type === TypeOfList.EXTENDED">
       <ButtonForm type="success" class="w-full" @click="handleFinishSetup">
         <div class="relative">
-          {{
-            t("components.shared.history-imported-files-form.button.next")
-          }}
+          {{ t("components.shared.history-imported-files-form.button.next") }}
           <IconSvg name="arrownext" class-name="absolute right-5 top-0 bottom-0 m-auto h-3 w-3" />
         </div>
       </ButtonForm>

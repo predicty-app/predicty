@@ -82,7 +82,9 @@
             "OTHER": "Other (internal)"
           }
         }
-      },
+      }
+    },
+    "shared": {
       "connect-more-services-file-settings-form": {
         "header-title": "What is this file?",
         "header-description": "Tell us what kind of data this file represents",
@@ -123,9 +125,7 @@
             "currency": "Currency"
           }
         }
-      }
-    },
-    "shared": {
+      },
       "history-imported-files-form": {
         "header": {
           "title": "Imported today",

@@ -8,6 +8,11 @@ import {
 } from "@/services/api/providers";
 import { useOnBoardingStore, AvalibleProviders } from "@/stores/onboarding";
 
+enum TypeOfList {
+  BASIC = "basic",
+  EXTENDED = "extended"
+}
+
 enum StepValues {
   CHOOSE_TYPE_FILE = "choose_type_file",
   UPLOAD_FILE = "upload_file"
@@ -28,7 +33,13 @@ type NotificationMessageType = {
 
 const { t } = useI18n();
 
+type PropsType = {
+  type?: TypeOfList;
+};
 const router = useRouter();
+const props = withDefaults(defineProps<PropsType>(), {
+  type: "basic" as TypeOfList
+});
 const displayedName = ref<string>("");
 const selectedProvider = ref<string>("");
 const onBoardingStore = useOnBoardingStore();
@@ -38,20 +49,20 @@ const uploadedFileModel = ref<File | string | null>(null);
 const headerTitle = computed<string>(() =>
   currentStep.value === StepValues.CHOOSE_TYPE_FILE
     ? t(
-        "components.on-boarding.connect-more-services-file-settings-form.header-title"
+        "components.shared.connect-more-services-file-settings-form.header-title"
       )
     : selectedProvider.value === AvalibleProviders.OTHER
     ? t(
-        "components.on-boarding.connect-more-services-file-settings-form.header-title-dynamic-custom",
+        "components.shared.connect-more-services-file-settings-form.header-title-dynamic-custom",
         {
           name: displayedName.value
         }
       )
     : t(
-        "components.on-boarding.connect-more-services-file-settings-form.header-title-dynamic",
+        "components.shared.connect-more-services-file-settings-form.header-title-dynamic",
         {
           provider: t(
-            `components.on-boarding.connect-more-services-file-settings-form.data-type.options.${selectedProvider.value}`
+            `components.shared.connect-more-services-file-settings-form.data-type.options.${selectedProvider.value}`
           )
         }
       )
@@ -66,7 +77,7 @@ const notificationMessageModel = ref<NotificationMessageType>({
 const headerDescription = computed<string>(() =>
   currentStep.value === StepValues.CHOOSE_TYPE_FILE
     ? t(
-        "components.on-boarding.connect-more-services-file-settings-form.header-description"
+        "components.shared.connect-more-services-file-settings-form.header-description"
       )
     : ""
 );
@@ -88,25 +99,25 @@ const isNextButtonDisabled = computed<boolean>(() => {
 
 const columnsList = {
   "campaign-id": t(
-    "components.on-boarding.connect-more-services-file-settings-form.descriptions.columns-names.campaign-id"
+    "components.shared.connect-more-services-file-settings-form.descriptions.columns-names.campaign-id"
   ),
   "adset-id": t(
-    "components.on-boarding.connect-more-services-file-settings-form.descriptions.columns-names.adset-id"
+    "components.shared.connect-more-services-file-settings-form.descriptions.columns-names.adset-id"
   ),
   "ad-id": t(
-    "components.on-boarding.connect-more-services-file-settings-form.descriptions.columns-names.ad-id"
+    "components.shared.connect-more-services-file-settings-form.descriptions.columns-names.ad-id"
   ),
   "ad-name": t(
-    "components.on-boarding.connect-more-services-file-settings-form.descriptions.columns-names.ad-name"
+    "components.shared.connect-more-services-file-settings-form.descriptions.columns-names.ad-name"
   ),
   "image-hash": t(
-    "components.on-boarding.connect-more-services-file-settings-form.descriptions.columns-names.image-hash"
+    "components.shared.connect-more-services-file-settings-form.descriptions.columns-names.image-hash"
   ),
   spent: t(
-    "components.on-boarding.connect-more-services-file-settings-form.descriptions.columns-names.spent"
+    "components.shared.connect-more-services-file-settings-form.descriptions.columns-names.spent"
   ),
   currency: t(
-    "components.on-boarding.connect-more-services-file-settings-form.descriptions.columns-names.currency"
+    "components.shared.connect-more-services-file-settings-form.descriptions.columns-names.currency"
   )
 };
 
@@ -159,7 +170,7 @@ onMounted(async () => {
     providersList.value = response.map((provider: ProviderType) => ({
       key: provider.id,
       label: t(
-        `components.on-boarding.connect-more-services-file-settings-form.data-type.options.${provider.id}`
+        `components.shared.connect-more-services-file-settings-form.data-type.options.${provider.id}`
       ),
       name: provider.name,
       fileImportTypes: provider.fileImportTypes
@@ -200,11 +211,11 @@ function handleSubmitForm() {
         notificationMessageModel.value.visible = true;
         notificationMessageModel.value.type = "success";
         notificationMessageModel.value.message = t(
-          "components.on-boarding.connect-more-services-file-settings-form.notifications.success"
+          "components.shared.connect-more-services-file-settings-form.notifications.success"
         );
 
         nextTick(() => {
-          router.push("/onboarding/more-media-integration");
+          router.push(props.type === TypeOfList.EXTENDED? "/onboarding/more-media-integration" : "/dashboard/import-history");
         });
       }
       break;
@@ -251,12 +262,12 @@ function handlePreviousStepAction() {
       class="animate-fade-in"
       :placeholder="
         t(
-          'components.on-boarding.connect-more-services-file-settings-form.data-type.placeholder'
+          'components.shared.connect-more-services-file-settings-form.data-type.placeholder'
         )
       "
       :label="
         t(
-          'components.on-boarding.connect-more-services-file-settings-form.data-type.label'
+          'components.shared.connect-more-services-file-settings-form.data-type.label'
         )
       "
     />
@@ -269,12 +280,12 @@ function handlePreviousStepAction() {
       class="animate-fade-in"
       :label="
         t(
-          'components.on-boarding.connect-more-services-file-settings-form.display-name.label'
+          'components.shared.connect-more-services-file-settings-form.display-name.label'
         )
       "
       :placeholder="
         t(
-          'components.on-boarding.connect-more-services-file-settings-form.display-name.placeholder'
+          'components.shared.connect-more-services-file-settings-form.display-name.placeholder'
         )
       "
     />
@@ -286,7 +297,7 @@ function handlePreviousStepAction() {
       <p
         v-html="
           t(
-            `components.on-boarding.connect-more-services-file-settings-form.descriptions.header`
+            `components.shared.connect-more-services-file-settings-form.descriptions.header`
           )
         "
       ></p>
@@ -306,7 +317,7 @@ function handlePreviousStepAction() {
       :can-remove="false"
       v-model="uploadedFileModel"
     />
-    <Teleport to="#previous-button">
+    <Teleport to="#previous-button" v-if="type === TypeOfList.EXTENDED">
       <ButtonForm
         class="w-full flex justify-center"
         @click="handlePreviousStepAction"
@@ -323,7 +334,7 @@ function handlePreviousStepAction() {
         <div class="relative">
           {{
             t(
-              "components.on-boarding.connect-more-services-file-settings-form.button.next"
+              "components.shared.connect-more-services-file-settings-form.button.next"
             )
           }}
           <IconSvg

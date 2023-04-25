@@ -188,6 +188,14 @@ const routes: Array<RouteRecordRaw> = [
           authentication: true
         },
         component: () => import("@/views/UserDashboard/ImportHistoryView.vue")
+      },
+      {
+        path: "/dashboard/upload-more-files",
+        name: "upload-more-files",
+        meta: {
+          authentication: true
+        },
+        component: () => import("@/views/UserDashboard/UploadMoreFilesView.vue")
       }
     ]
   },
