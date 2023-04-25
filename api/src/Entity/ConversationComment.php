@@ -1,0 +1,62 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Entity;
+
+use App\Service\Clock\Clock;
+use Doctrine\ORM\Mapping as ORM;
+
+#[ORM\Entity]
+#[ORM\Index(fields: ['userId'])]
+#[ORM\Index(fields: ['conversationId'])]
+#[ORM\Index(fields: ['createdAt'])]
+class ConversationComment implements UserOwnedEntity
+{
+    use IdTrait;
+    use TimestampableTrait;
+
+    #[ORM\Column]
+    private int $conversationId;
+
+    #[ORM\Column]
+    private int $userId;
+
+    #[ORM\Column]
+    private string $comment;
+
+    public function __construct(int $conversationId, int $userId, string $comment)
+    {
+        $this->conversationId = $conversationId;
+        $this->userId = $userId;
+        $this->comment = $comment;
+        $this->createdAt = Clock::now();
+        $this->changedAt = Clock::now();
+    }
+
+    public function getConversationId(): int
+    {
+        return $this->conversationId;
+    }
+
+    public function getUserId(): int
+    {
+        return $this->userId;
+    }
+
+    public function getComment(): string
+    {
+        return $this->comment;
+    }
+
+    public function changeComment(string $comment): void
+    {
+        $this->comment = $comment;
+        $this->changedAt = Clock::now();
+    }
+
+    public function isOwnedBy(User $user): bool
+    {
+        return $this->userId === $user->getId();
+    }
+}

@@ -219,6 +219,7 @@
       <path value="$PROJECT_DIR$/api/vendor/lcobucci/clock" />
       <path value="$PROJECT_DIR$/api/vendor/symfony/rate-limiter" />
       <path value="$PROJECT_DIR$/api/vendor/symfony/translation" />
+      <path value="$PROJECT_DIR$/api/vendor/spatie/color" />
     </include_path>
   </component>
   <component name="PhpInterpreters">

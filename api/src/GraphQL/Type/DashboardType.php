@@ -7,6 +7,7 @@ namespace App\GraphQL\Type;
 use App\GraphQL\TypeRegistry;
 use App\Repository\AdCollectionRepository;
 use App\Repository\CampaignRepository;
+use App\Repository\ConversationRepository;
 use App\Repository\DailyRevenueRepository;
 use App\Service\User\CurrentUserService;
 use GraphQL\Type\Definition\ObjectType;
@@ -18,6 +19,7 @@ class DashboardType extends ObjectType
         CampaignRepository $campaignRepository,
         AdCollectionRepository $adCollectionRepository,
         DailyRevenueRepository $dailyRevenueRepository,
+        ConversationRepository $conversationRepository,
         private CurrentUserService $currentUserService
     ) {
         parent::__construct([
@@ -37,13 +39,11 @@ class DashboardType extends ObjectType
                 ],
                 'collections' => [
                     'type' => $type->listOf($type->adCollection()),
-                    'args' => [
-                        'limit' => [
-                            'type' => $type->int(),
-                            'defaultValue' => 10,
-                        ],
-                    ],
                     'resolve' => fn () => $adCollectionRepository->findAllByUserId($this->currentUserService->getId()),
+                ],
+                'conversations' => [
+                    'type' => $type->listOf($type->conversation()),
+                    'resolve' => fn () => $conversationRepository->findAllByUserId($this->currentUserService->getId()),
                 ],
             ],
         ]);

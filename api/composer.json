@@ -27,6 +27,7 @@
         "psr/simple-cache": "^3.0",
         "qandidate/symfony-json-request-transformer": "^2.2",
         "simpod/doctrine-utcdatetime": "^0.2.1",
+        "spatie/color": "^1.5",
         "symfony/cache": "6.2.*",
         "symfony/clock": "6.2.*",
         "symfony/console": "6.2.*",
