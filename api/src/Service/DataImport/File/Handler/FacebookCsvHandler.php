@@ -11,6 +11,12 @@ use App\Service\Util\DateHelper;
 use App\Service\Util\MoneyHelper;
 use Brick\Money\Currency;
 
+/**
+ * CSV structure:
+ * Day,Ad name,Campaign name,Results,Cost per result,Amount spent (PLN),Ad ID,Ad set ID,Campaign ID.
+ *
+ * @todo extract currency
+ */
 class FacebookCsvHandler extends AbstractCsvFileImportHandler
 {
     private const HEADER_DAY = 'Day';

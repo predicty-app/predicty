@@ -57,7 +57,17 @@ class DailyRevenueRepository
 
     public function save(DailyRevenue $revenue): void
     {
+        $this->persist($revenue);
+        $this->flush();
+    }
+
+    public function persist(DailyRevenue $revenue): void
+    {
         $this->em->persist($revenue);
+    }
+
+    public function flush(): void
+    {
         $this->em->flush();
     }
 }

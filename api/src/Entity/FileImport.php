@@ -13,8 +13,8 @@ class FileImport extends Import
     #[ORM\Column(length: 255)]
     private string $filename;
 
-    #[ORM\Column(options: ['default' => FileImportType::OTHER])]
-    private FileImportType $fileImportType;
+    #[ORM\Column(nullable: true, options: ['default' => null])]
+    private ?FileImportType $fileImportType;
 
     public function __construct(
         int $userId,
@@ -52,6 +52,6 @@ class FileImport extends Import
 
     public function getFileImportType(): FileImportType
     {
-        return $this->fileImportType;
+        return $this->fileImportType ?? FileImportType::OTHER;
     }
 }

@@ -6,7 +6,7 @@ namespace App\GraphQL\Mutation;
 
 use App\Extension\Messenger\HandleTrait;
 use App\GraphQL\TypeRegistry;
-use App\Message\Command\RegisterDataProvider;
+use App\Message\Command\RegisterGoogleOAuthCredentials;
 use App\Service\User\CurrentUserService;
 use GraphQL\Type\Definition\FieldDefinition;
 
@@ -31,7 +31,7 @@ class RegisterDataProviderMutation extends FieldDefinition
     private function resolve(array $args): string
     {
         $this->handle(
-            new RegisterDataProvider(
+            new RegisterGoogleOAuthCredentials(
                 $this->currentUserService->getId(),
                 $args['type'],
                 $args['oauthRefreshToken']

@@ -46,4 +46,17 @@ enum DataProvider: string
             default => []
         };
     }
+
+    public function getOAuthScope(): array
+    {
+        return match ($this) {
+            self::GOOGLE_ADS => [
+                'https://www.googleapis.com/auth/adwords',
+            ],
+            self::GOOGLE_ANALYTICS => [
+                'https://www.googleapis.com/auth/analytics.readonly',
+            ],
+            default => []
+        };
+    }
 }

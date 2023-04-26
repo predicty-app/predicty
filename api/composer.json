@@ -7,6 +7,7 @@
     "prefer-stable": true,
     "require": {
         "php": ">=8.1",
+        "ext-bcmath": "*",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-openssl": "*",
@@ -16,6 +17,9 @@
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.14",
         "ecodev/graphql-upload": "^7.0",
+        "google/analytics-data": "^0.9.5",
+        "google/apiclient": "^2.13",
+        "google/auth": "^1.26",
         "googleads/google-ads-php": "^17.1",
         "league/csv": "^9.8",
         "league/flysystem-bundle": "^3.1",

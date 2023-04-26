@@ -63,6 +63,20 @@ class DefaultDataImportApi implements DataImportApi, TrackableDataImportApi
         return $entity;
     }
 
+    public function createDailyRevenueIfNotExists(int $userId, DateTimeImmutable $date, Money $revenue, Money $averageOrderValue): ?DailyRevenue
+    {
+        $entity = $this->dailyRevenueRepository->findByDay($userId, $date);
+
+        if ($entity === null) {
+            $entity = new DailyRevenue($userId, $date, $revenue, $averageOrderValue);
+
+            $this->doTrack($entity);
+            $this->dailyRevenueRepository->save($entity);
+        }
+
+        return $entity;
+    }
+
     public function getOrCreateAd(AdSet $adSet, string $name, string $externalId): Ad
     {
         $entity = $this->adRepository->findByUserIdAndExternalId($adSet->getUserId(), $externalId);

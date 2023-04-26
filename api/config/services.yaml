@@ -69,7 +69,7 @@ services:
         factory: [App\Service\Google\GoogleAdsClientFactory, build]
 
     App\Service\Google\GoogleOAuthClientCredentials:
-        arguments: ['%env(GOOGLE_ADS_OAUTH_CLIENT_ID)%', '%env(GOOGLE_ADS_OAUTH_CLIENT_SECRET)%']
+        arguments: ['%env(GOOGLE_CLIENT_ID)%', '%env(GOOGLE_CLIENT_SECRET)%']
 
     Symfony\Component\Cache\Psr16Cache: ~
     Psr\SimpleCache\CacheInterface: '@Symfony\Component\Cache\Psr16Cache'
