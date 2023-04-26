@@ -10,6 +10,9 @@ use App\GraphQL\Type\AdStatsType;
 use App\GraphQL\Type\AdType;
 use App\GraphQL\Type\ApiImportType;
 use App\GraphQL\Type\CampaignType;
+use App\GraphQL\Type\ColorType;
+use App\GraphQL\Type\ConversationCommentType;
+use App\GraphQL\Type\ConversationType;
 use App\GraphQL\Type\DailyRevenueType;
 use App\GraphQL\Type\DashboardType;
 use App\GraphQL\Type\DataProviderIdType;
@@ -32,25 +35,28 @@ use RuntimeException;
 use Symfony\Component\DependencyInjection\ServiceLocator;
 
 /**
- * @method UserType           user()
- * @method DashboardType      dashboard()
- * @method CampaignType       campaign()
- * @method AdSetType          adSet()
- * @method AdType             ad()
- * @method AdStatsType        adStats()
- * @method MoneyType          money()
- * @method AdCollectionType   adCollection()
- * @method FileImportTypeType fileImportType()
- * @method DataProviderIdType dataProviderId()
- * @method DataProviderType   dataProvider()
- * @method Date               date()
- * @method DateTime           dateTime()
- * @method DailyRevenueType   dailyRevenue()
- * @method ImportStatusType   importStatus()
- * @method ImportType         import()
- * @method ApiImportType      apiImport()
- * @method FileImportType     fileImport()
- * @method ImportResultType   importResult()
+ * @method UserType                user()
+ * @method DashboardType           dashboard()
+ * @method CampaignType            campaign()
+ * @method AdSetType               adSet()
+ * @method AdType                  ad()
+ * @method AdStatsType             adStats()
+ * @method MoneyType               money()
+ * @method AdCollectionType        adCollection()
+ * @method FileImportTypeType      fileImportType()
+ * @method DataProviderIdType      dataProviderId()
+ * @method DataProviderType        dataProvider()
+ * @method Date                    date()
+ * @method DateTime                dateTime()
+ * @method DailyRevenueType        dailyRevenue()
+ * @method ImportStatusType        importStatus()
+ * @method ImportType              import()
+ * @method ApiImportType           apiImport()
+ * @method FileImportType          fileImport()
+ * @method ImportResultType        importResult()
+ * @method ConversationType        conversation()
+ * @method ConversationCommentType conversationComment()
+ * @method ColorType               color()
  */
 class TypeRegistry
 {

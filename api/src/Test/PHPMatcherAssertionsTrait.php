@@ -14,7 +14,6 @@ trait PHPMatcherAssertionsTrait
     public static function assertResponseMatchesJsonFile(string $filename, string $message = ''): void
     {
         $responseContent = (string) static::getClient()->getResponse()->getContent();
-
         $dirname = dirname($filename);
 
         if (!is_dir($dirname)) {
@@ -27,6 +26,12 @@ trait PHPMatcherAssertionsTrait
         }
 
         $pattern = (string) file_get_contents($filename);
+        static::assertResponseMatchesPattern($pattern, $message);
+    }
+
+    public static function assertResponseMatchesPattern(string $pattern, string $message = ''): void
+    {
+        $responseContent = (string) static::getClient()->getResponse()->getContent();
         static::assertMatchesPattern($pattern, $responseContent, $message);
     }
 
