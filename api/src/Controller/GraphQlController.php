@@ -5,16 +5,15 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\GraphQL\DefaultFieldResolver;
+use App\GraphQL\ErrorHandler;
 use App\GraphQL\Schema;
 use GraphQL\Error\DebugFlag;
-use GraphQL\Error\Error;
 use GraphQL\Server\ServerConfig;
 use GraphQL\Server\StandardServer;
 use GraphQL\Upload\UploadMiddleware;
 use GraphQL\Validator\DocumentValidator;
 use GraphQL\Validator\Rules\QueryDepth;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class GraphQlController extends AbstractController
 {
-    public function __construct(private LoggerInterface $logger)
+    public function __construct(private ErrorHandler $errorHandler)
     {
     }
 
@@ -44,16 +43,7 @@ class GraphQlController extends AbstractController
             ->setSchema($schema)
             ->setDebugFlag($this->getDebugFlag())
             ->setFieldResolver($fieldResolver)
-            ->setErrorsHandler(function (array $errors, callable $formatter) {
-                /** @var Error[] $errors */
-                foreach ($errors as $error) {
-                    $this->logger->error($error->getMessage(), [
-                        'exception' => $error,
-                    ]);
-                }
-
-                return array_map($formatter, $errors);
-            });
+            ->setErrorsHandler($this->errorHandler);
 
         return $this->json((new StandardServer($config))->executePsrRequest($request));
     }

@@ -42,7 +42,10 @@ class Authenticator
     private function authenticate(array $credentials, ?callable $onSuccess = null): User
     {
         if ($this->isLoggedIn()) {
-            throw new CustomUserMessageAuthenticationException('Already logged in.');
+            $exception = new CustomUserMessageAuthenticationException('User is already logged in');
+            $exception->setSafeMessage('Already logged in');
+
+            throw $exception;
         }
 
         $request = $this->requestStack->getMainRequest();

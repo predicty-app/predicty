@@ -7,7 +7,6 @@ framework:
         buses:
             command.bus:
                 middleware:
-                    - App\Extension\Messenger\GraphQLMiddleware
                     - validation
             event.bus:
                 default_middleware:
