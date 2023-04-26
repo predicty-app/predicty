@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service\DataImport;
 
+use App\Entity\ApiImport;
+use App\Entity\DataProvider;
 use App\Entity\FileImport;
 use App\Entity\FileImportType;
 use App\Entity\Import;
@@ -35,6 +37,20 @@ class ImportTrackingService
         $this->importRepository->save($import);
 
         return $import;
+    }
+
+    public function createNewApiImport(int $userId, DataProvider $dataProvider): Import
+    {
+        $import = new ApiImport($userId, $dataProvider);
+        $this->importRepository->save($import);
+
+        return $import;
+    }
+
+    public function createAndRunNewApiImport(int $userId, DataProvider $dataProvider, callable $callback): void
+    {
+        $import = $this->createNewApiImport($userId, $dataProvider);
+        $this->run($import->getId(), $callback);
     }
 
     public function run(int $importId, callable $callback): void

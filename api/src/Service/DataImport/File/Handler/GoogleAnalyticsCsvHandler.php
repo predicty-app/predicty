@@ -11,6 +11,10 @@ use App\Service\Util\DateHelper;
 use Brick\Money\Currency;
 use Brick\Money\Money;
 
+/**
+ * CSV structure:
+ * Date,Revenue,AOV,Currency.
+ */
 class GoogleAnalyticsCsvHandler extends AbstractCsvFileImportHandler
 {
     private const HEADER_DATE = 'Date';

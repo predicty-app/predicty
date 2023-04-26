@@ -13,6 +13,10 @@ use Brick\Math\RoundingMode;
 use Brick\Money\Currency;
 use Brick\Money\Money;
 
+/**
+ * CSV structure:
+ * Day,Campaign,Campaign ID,Ad group,Ad group ID,Ad ID,Conversions,Cost,Currency code.
+ */
 class GoogleAdsCsvHandler extends AbstractCsvFileImportHandler
 {
     private const HEADER_CAMPAIGN_NAME = 'Campaign';

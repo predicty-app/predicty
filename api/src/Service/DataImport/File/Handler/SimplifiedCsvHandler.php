@@ -13,6 +13,10 @@ use App\Service\Util\MoneyHelper;
 use Brick\Money\Currency;
 use Brick\Money\Money;
 
+/**
+ * CSV structure:
+ * Ad Name,Spent,Currency,Date.
+ */
 class SimplifiedCsvHandler extends AbstractCsvFileImportHandler
 {
     private const HEADER_AD_NAME = 'Ad Name';

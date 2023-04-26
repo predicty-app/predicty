@@ -24,6 +24,7 @@ RUN set -eux; \
     	apcu \
 		opcache \
         pdo_pgsql \
+        bcmath \
     ;
 
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"

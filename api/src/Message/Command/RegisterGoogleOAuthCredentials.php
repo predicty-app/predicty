@@ -7,7 +7,7 @@ namespace App\Message\Command;
 use App\Entity\DataProvider;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class RegisterDataProvider
+class RegisterGoogleOAuthCredentials
 {
     public int $userId;
     public DataProvider $dataProvider;

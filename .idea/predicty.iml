@@ -7,6 +7,9 @@
       <sourceFolder url="file://$MODULE_DIR$/api/tests/functional" isTestSource="true" packagePrefix="App\Tests\Functional\" />
       <sourceFolder url="file://$MODULE_DIR$/api/tests/integration" isTestSource="true" packagePrefix="App\Tests\Integration\" />
       <sourceFolder url="file://$MODULE_DIR$/api/tests" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/api/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/dependency-injection" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/cache" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/doctrine-bridge" />
@@ -198,6 +201,7 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/league/mime-type-detection" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/rate-limiter" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/translation" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/spatie/color" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
