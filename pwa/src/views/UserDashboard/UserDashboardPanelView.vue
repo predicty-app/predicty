@@ -9,6 +9,7 @@ import {
   handleAssignAdToCollection,
   handleGetCampaigns
 } from "@/services/api/userDashboard";
+import Conversation from "@/components/UserDashboard/Comments/Conversation.vue";
 
 const { t } = useI18n();
 
@@ -47,19 +48,23 @@ const chartTypeOptions: TypesOptionsChart[] = [
 const globalStore = useGlobalStore();
 const userDashboardStore = useUserDashboardStore();
 const isZoomVisible = ref<boolean>(false);
+const isConversationVisible = ref<boolean>(true);
 
 const amountScale = computed<string[]>(() => [
-  `$ ${userDashboardStore.scaleChart.toString() === "-Infinity"
-    ? 0
-    : userDashboardStore.scaleChart.toFixed(2)
+  `$ ${
+    userDashboardStore.scaleChart.toString() === "-Infinity"
+      ? 0
+      : userDashboardStore.scaleChart.toFixed(2)
   }`,
-  `$ ${userDashboardStore.scaleChart.toString() === "-Infinity"
-    ? 0
-    : (userDashboardStore.scaleChart / 2).toFixed(2)
+  `$ ${
+    userDashboardStore.scaleChart.toString() === "-Infinity"
+      ? 0
+      : (userDashboardStore.scaleChart / 2).toFixed(2)
   }`,
-  `$ ${userDashboardStore.scaleChart.toString() === "-Infinity"
-    ? 0
-    : (userDashboardStore.scaleChart / 4).toFixed(2)
+  `$ ${
+    userDashboardStore.scaleChart.toString() === "-Infinity"
+      ? 0
+      : (userDashboardStore.scaleChart / 4).toFixed(2)
   }`
 ]);
 
@@ -102,9 +107,11 @@ function handleStartDrag(e: DragEvent, ad: AdsType) {
 
     ghost.classList.add("border-[2px]");
     ghost.style.position = "fixed";
-    ghost.style.borderColor = ((e.currentTarget as HTMLElement)
-      .querySelector(".chart-timeline-item") as HTMLElement)
-      .style.getPropertyValue("--color");
+    ghost.style.borderColor = (
+      (e.currentTarget as HTMLElement).querySelector(
+        ".chart-timeline-item"
+      ) as HTMLElement
+    ).style.getPropertyValue("--color");
     document.body.appendChild(ghost);
     e.dataTransfer.setDragImage(ghost, 0, 0);
   }
@@ -122,10 +129,13 @@ function handleEndDrag() {
 
 /**
  * Function to handle drop element on collection.
- * @param {AdSetsType} collection 
- * @param {CampaignType} campaign 
+ * @param {AdSetsType} collection
+ * @param {CampaignType} campaign
  */
-async function handleDropElement(collection: AdSetsType, campaign: CampaignType) {
+async function handleDropElement(
+  collection: AdSetsType,
+  campaign: CampaignType
+) {
   isSpinnerVisible.value = true;
   await handleAssignAdToCollection({
     campaignUid: campaign.uid,
@@ -158,17 +168,29 @@ async function setResponseFiredAction() {
 
 <template>
   <ZoomScale v-if="isZoomVisible" />
-  <FloatingSwitchViewForm v-if="(userDashboardStore.selectedAdsList.ads.length > 0 ||
-      userDashboardStore.selectedCollectionAdsList.ads.length > 0) &&
-    !userDashboardStore.isDragAndDrop
-    " />
+  <Conversation
+    :x-position="400"
+    :y-position="200"
+    v-model="isConversationVisible"
+  />
+  <FloatingSwitchViewForm
+    v-if="
+      (userDashboardStore.selectedAdsList.ads.length > 0 ||
+        userDashboardStore.selectedCollectionAdsList.ads.length > 0) &&
+      !userDashboardStore.isDragAndDrop
+    "
+  />
   <SpinnerBar :is-visible="isSpinnerVisible" :is-global="true" />
   <UserDashboardLayout>
     <template #header>
       <HeaderDashboard />
     </template>
     <template #chart-legend>
-      <LegendDescription :options="legendOptions" :amount-scale="amountScale" :typeChartOptions="chartTypeOptions" />
+      <LegendDescription
+        :options="legendOptions"
+        :amount-scale="amountScale"
+        :typeChartOptions="chartTypeOptions"
+      />
     </template>
     <template #providers-list>
       <ProvidersListForm />
@@ -177,7 +199,10 @@ async function setResponseFiredAction() {
       <BarChartWeeks />
     </template>
     <template #chart>
-      <BarChartWrapper @mouseenter="isZoomVisible = true" @mouseleave="isZoomVisible = false" />
+      <BarChartWrapper
+        @mouseenter="isZoomVisible = true"
+        @mouseleave="isZoomVisible = false"
+      />
     </template>
     <template #chart-days>
       <BarChartDaysWeek />
@@ -190,27 +215,55 @@ async function setResponseFiredAction() {
     </template>
     <template #ads-chart>
       <ChartTimelineWrapper>
-        <ChartTimelineContent :campaign="campaign" :key="campaign.uid"
-          v-for="campaign in userDashboardStore.parsedCampaignsList">
+        <ChartTimelineContent
+          :campaign="campaign"
+          :key="campaign.uid"
+          v-for="campaign in userDashboardStore.parsedCampaignsList"
+        >
           <template v-if="campaign.isCollection && campaign.adsets.length > 0">
-            <ChartTimelineItem :element="adset" type="collection" @drop="handleDropElement(adset, campaign)"
-              @dragover.prevent @dragenter.prevent :is-visible="true" :uid="adset.uid" :color="campaign.color"
-              :key="`${adset.uid}_${Math.random()}`" @collectionSelected="toggleCollection"
-              v-for="adset in userDashboardStore.campaigns[0].adsets" :start="globalStore.dictionaryTimeline[adset.start]"
-              :campaing-uid="campaign.uid" :end="globalStore.dictionaryTimeline[adset.end]" />
+            <ChartTimelineItem
+              :element="adset"
+              type="collection"
+              @drop="handleDropElement(adset, campaign)"
+              @dragover.prevent
+              @dragenter.prevent
+              :is-visible="true"
+              :uid="adset.uid"
+              :color="campaign.color"
+              :key="`${adset.uid}_${Math.random()}`"
+              @collectionSelected="toggleCollection"
+              v-for="adset in userDashboardStore.campaigns[0].adsets"
+              :start="globalStore.dictionaryTimeline[adset.start]"
+              :campaing-uid="campaign.uid"
+              :end="globalStore.dictionaryTimeline[adset.end]"
+            />
           </template>
           <template v-if="!campaign.isCollection">
             <template :key="adsSet.uid" v-for="adsSet in campaign.adsets">
-              <ChartTimelineItem :element="ad" type="ad" draggable="true" @dragstart="handleStartDrag($event, ad)"
-                @dragend="handleEndDrag" :is-visible="checkIsAdInCollection(ad.uid)" :uid="ad.uid" :color="campaign.color"
-                :key="`${ad.uid}_${Math.random()}`" @collectionSelected="toggleCollection" v-for="ad in adsSet.ads"
-                :start="globalStore.dictionaryTimeline[ad.start]" :campaing-uid="campaign.uid"
-                :end="globalStore.dictionaryTimeline[ad.end]" />
+              <ChartTimelineItem
+                :element="ad"
+                type="ad"
+                draggable="true"
+                @dragstart="handleStartDrag($event, ad)"
+                @dragend="handleEndDrag"
+                :is-visible="checkIsAdInCollection(ad.uid)"
+                :uid="ad.uid"
+                :color="campaign.color"
+                :key="`${ad.uid}_${Math.random()}`"
+                @collectionSelected="toggleCollection"
+                v-for="ad in adsSet.ads"
+                :start="globalStore.dictionaryTimeline[ad.start]"
+                :campaing-uid="campaign.uid"
+                :end="globalStore.dictionaryTimeline[ad.end]"
+              />
             </template>
           </template>
         </ChartTimelineContent>
       </ChartTimelineWrapper>
     </template>
   </UserDashboardLayout>
-  <CollectionBottomBar :collection="userDashboardStore.selectedCollection" @handleCloseDetials="toggleCollection()" />
+  <CollectionBottomBar
+    :collection="userDashboardStore.selectedCollection"
+    @handleCloseDetials="toggleCollection()"
+  />
 </template>

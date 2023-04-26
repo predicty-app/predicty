@@ -1,6 +1,6 @@
 <script setup lang="ts">
 type PropsType = {
-  type?: "success" | "default";
+  type?: "success" | "default" | "comments";
 };
 
 withDefaults(defineProps<PropsType>(), {
@@ -13,12 +13,14 @@ withDefaults(defineProps<PropsType>(), {
     data-testid="card-panel"
     :data-type="type"
     :class="[
-      'border p-6 rounded-[10px] hover:shadow-md transition-all',
+      'border rounded-[10px] hover:shadow-md transition-all',
       {
-        ' bg-card-background-success border-card-border-success text-card-text-success':
+        ' bg-card-background-success border-card-border-success text-card-text-success p-6':
           type === 'success',
-        'bg-card-background-default border-card-border-default text-card-text-default':
-          type === 'default'
+        'bg-card-background-default border-card-border-default text-card-text-default p-6':
+          type === 'default',
+        'bg-card-background-default p-3 border-2 border-comments-red':
+          type === 'comments'
       }
     ]"
   >

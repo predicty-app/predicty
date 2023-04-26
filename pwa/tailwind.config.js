@@ -8,7 +8,7 @@ module.exports = {
         dynamic: "var(--top)"
       },
       left: {
-        dynamic: "var(--left)",
+        dynamic: "var(--left)"
       },
       width: {
         calc: "calc(100vw)",
@@ -339,6 +339,12 @@ module.exports = {
       imports: {
         green: "#80C9B9",
         grey: "#8A8A8A"
+      },
+      comments: {
+        red: "#E24963",
+        grey: "#B5B5B5",
+        textarea: "#F3F3F3",
+        text: "#333333"
       }
     },
     boxShadow: {
