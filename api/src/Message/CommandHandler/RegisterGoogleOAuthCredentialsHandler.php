@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace App\Message\CommandHandler;
 
 use App\Message\Command\RegisterGoogleOAuthCredentials;
-use App\Repository\DataProviderCredentialsRepository;
+use App\Repository\ConnectedAccountRepository;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
 class RegisterGoogleOAuthCredentialsHandler
 {
-    public function __construct(private DataProviderCredentialsRepository $repository)
+    public function __construct(private ConnectedAccountRepository $repository)
     {
     }
 

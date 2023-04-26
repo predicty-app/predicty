@@ -6,11 +6,12 @@ namespace App\GraphQL\Type;
 
 use App\Entity\User;
 use App\GraphQL\TypeRegistry;
+use App\Repository\ConnectedAccountRepository;
 use GraphQL\Type\Definition\ObjectType;
 
 class UserType extends ObjectType
 {
-    public function __construct(TypeRegistry $type)
+    public function __construct(TypeRegistry $type, ConnectedAccountRepository $connectedAccountRepository)
     {
         parent::__construct([
             'name' => 'User',
@@ -30,6 +31,10 @@ class UserType extends ObjectType
                 ],
                 'isOnboardingComplete' => [
                     'type' => $type->boolean(),
+                ],
+                'connectedAccounts' => [
+                    'type' => $type->listOf($type->connectedAccount()),
+                    'resolve' => fn (User $user) => $connectedAccountRepository->findAll($user->getId()),
                 ],
             ],
         ]);
