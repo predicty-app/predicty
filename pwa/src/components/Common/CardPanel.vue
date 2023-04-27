@@ -19,7 +19,7 @@ withDefaults(defineProps<PropsType>(), {
           type === 'success',
         'bg-card-background-default border-card-border-default text-card-text-default p-6':
           type === 'default',
-        'bg-card-background-default p-3 border-2 border-comments-red':
+        'bg-card-background-default p-3 pb-0 border-2 border-comments-red':
           type === 'comments'
       }
     ]"

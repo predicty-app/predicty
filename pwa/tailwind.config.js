@@ -344,7 +344,8 @@ module.exports = {
         red: "#E24963",
         grey: "#B5B5B5",
         textarea: "#F3F3F3",
-        text: "#333333"
+        text: "#333333",
+        white: "#fff"
       }
     },
     boxShadow: {

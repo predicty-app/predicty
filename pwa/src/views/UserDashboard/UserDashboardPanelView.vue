@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, ref } from "vue";
+import { computed, nextTick, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useGlobalStore } from "@/stores/global";
 import type { AdsType, CampaignType } from "@/stores/userDashboard";
@@ -48,7 +48,7 @@ const chartTypeOptions: TypesOptionsChart[] = [
 const globalStore = useGlobalStore();
 const userDashboardStore = useUserDashboardStore();
 const isZoomVisible = ref<boolean>(false);
-const isConversationVisible = ref<boolean>(true);
+const isConversationVisible = ref<boolean>(false);
 
 const amountScale = computed<string[]>(() => [
   `$ ${
@@ -69,6 +69,10 @@ const amountScale = computed<string[]>(() => [
 ]);
 
 const isSpinnerVisible = ref<boolean>(false);
+
+onMounted(async () => {
+  await getComments();
+});
 
 /**
  * Function to check is ad in collection.
@@ -164,6 +168,11 @@ async function setResponseFiredAction() {
   });
   isSpinnerVisible.value = false;
 }
+
+async function getComments() {
+  const { conversations } = await handleGetCampaigns();
+  userDashboardStore.setConversationsList(conversations);
+}
 </script>
 
 <template>
@@ -172,6 +181,7 @@ async function setResponseFiredAction() {
     :x-position="400"
     :y-position="200"
     v-model="isConversationVisible"
+    @updated="getComments"
   />
   <FloatingSwitchViewForm
     v-if="

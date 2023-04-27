@@ -90,6 +90,22 @@ export type DailyRevenueType = {
   date: string;
 };
 
+export type ColorType = {
+  hex: string;
+};
+
+export type CommentType = {
+  createdAt: string;
+  comment: string;
+};
+
+export type ConversationsType = {
+  id: string;
+  date: string;
+  color: ColorType;
+  comments: CommentType[];
+};
+
 type StateType = {
   scaleChart: number;
   hiddenAds: string[];
@@ -100,6 +116,7 @@ type StateType = {
   typeChart: TypeOptionsChart;
   selectedCollection: AdSetsType;
   dailyRevenue: DailyRevenueType[];
+  conversations: ConversationsType[];
   parsedCampaignsList: CampaignType[];
   selectedAdsList: CheckedAdsToCollectionType;
   authenticatedUserParams: AuthenticatedUserParamsType;
@@ -113,6 +130,7 @@ export const useUserDashboardStore = defineStore({
       scaleChart: 0,
       typeChart: TypeOptionsChart.DAYS,
       dailyRevenue: [],
+      conversations: [],
       authenticatedUserParams: null,
       campaigns: [],
       parsedCampaignsList: [],
@@ -150,6 +168,14 @@ export const useUserDashboardStore = defineStore({
      */
     setDailyReveneu(list: DailyRevenueType[]) {
       this.dailyRevenue = list;
+    },
+
+    /**
+     * Function to set conversations list to store.
+     * @param {ConversationsType[]} list
+     */
+    setConversationsList(list: ConversationsType[]) {
+      this.conversations = list;
     },
 
     /**

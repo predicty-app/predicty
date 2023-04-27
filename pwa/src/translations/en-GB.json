@@ -223,6 +223,20 @@
           "TIK_TOK": "TikTok",
           "OTHER": "Other (internal)"
         }
+      },
+      "conversation": {
+        "weekdays": {
+          "0": "Sunday",
+          "1": "Monday",
+          "2": "Tuesday",
+          "3": "Wednesday",
+          "4": "Thursday",
+          "5": "Friday",
+          "6": "Saturday"
+        },
+        "today": "Today",
+        "day-ago": "day ago",
+        "days-ago": "days ago"
       }
     }
   },
@@ -267,8 +281,7 @@
     "authentication-confirm-reset-password": {
       "header-title": "Confirm reset password",
       "header-description": "Reset your password and next login to platform."
-    }
-    ,
+    },
     "basic-media-integration": {
       "header-title": "Connect your accounts",
       "header-description": "We are platform that collects data from your websites and apps to create ",
