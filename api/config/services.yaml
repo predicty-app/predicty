@@ -31,6 +31,7 @@ services:
             - '../src/Kernel.php'
             - '../src/Validator/EntityExists.php'
             - '../src/Service/DataImport/File/FileImportContext.php'
+            - '../src/Service/Security/Authorization/AuthorizationToken.php'
 
     _instanceof:
         GraphQL\Type\Definition\Type:

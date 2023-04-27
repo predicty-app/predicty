@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\GraphQL\Mutation\ChangeConversationComment;
 
+use App\DataFixtures\UserFixtures;
 use App\Entity\ConversationComment;
 use App\Test\GraphQLTestCase;
 
@@ -30,6 +31,25 @@ class ChangeConversationCommentMutationTest extends GraphQLTestCase
 
         $comment = $this->getLastComment();
         $this->assertSame('This is some updated comment', $comment->getComment());
+    }
+
+    public function test_change_comment_by_someone_else_is_not_allowed(): void
+    {
+        $this->authenticate(UserFixtures::JANE);
+
+        $comment = $this->getLastComment();
+        $mutation = <<<'EOF'
+            mutation($commentId: ID!) {
+              changeConversationComment(commentId: $commentId, comment: "This is some updated comment")
+            }
+            EOF;
+
+        $this->executeMutation($mutation, ['commentId' => $comment->getId()]);
+        $this->assertResponseMatchesJsonFile(__DIR__.'/ChangeCommentNotAllowed.json');
+        $this->assertResponseIsSuccessful();
+
+        $comment = $this->getLastComment();
+        $this->assertSame('This is a second comment in that conversation', $comment->getComment());
     }
 
     private function getLastComment(): ConversationComment
