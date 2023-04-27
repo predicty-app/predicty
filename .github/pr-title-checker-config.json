@@ -5,7 +5,7 @@
   },
   "CHECKS": {
     "prefixes": [],
-    "regexp": "([A-Z]+\\-\\d+) [\\w ]+",
+    "regexp": "^([A-Z]+\\-\\d+) [\\w ]+$",
     "regexpFlags": "i",
     "ignoreLabels": [
       "ignore-title-check"

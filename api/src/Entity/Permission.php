@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use InvalidArgumentException;
-
 /**
  * List of permission attributes.
  */
@@ -17,23 +15,7 @@ final class Permission
     public const EDIT_CONVERSATION_COMMENT = 'EDIT_CONVERSATION_COMMENT';
     public const REMOVE_CONVERSATION_COMMENT = 'REMOVE_CONVERSATION_COMMENT';
 
-    public const ALL = [
-        self::EDIT_CONVERSATION_COMMENT,
-        self::REMOVE_CONVERSATION_COMMENT,
-        self::START_CONVERSATION,
-        self::REMOVE_CONVERSATION,
-        self::ADD_CONVERSATION_COMMENT,
-    ];
-
-    public static function isValid(string $permission): bool
-    {
-        return in_array($permission, self::ALL, true);
-    }
-
-    public static function validate(string $permission): void
-    {
-        if (!self::isValid($permission)) {
-            throw new InvalidArgumentException(sprintf('Invalid permission "%s".', $permission));
-        }
-    }
+    public const ADD_AD_TO_AD_COLLECTION = 'ADD_AD_TO_AD_COLLECTION';
+    public const REMOVE_AD_FROM_AD_COLLECTION = 'REMOVE_AD_FROM_AD_COLLECTION';
+    public const CREATE_AD_COLLECTION = 'CREATE_AD_COLLECTION';
 }

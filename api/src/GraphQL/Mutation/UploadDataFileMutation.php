@@ -9,7 +9,7 @@ use App\Extension\Messenger\HandleTrait;
 use App\GraphQL\TypeRegistry;
 use App\Message\Command\ScheduleFileImport;
 use App\Service\FileUpload\FileUploadService;
-use App\Service\User\CurrentUserService;
+use App\Service\Security\CurrentUser;
 use GraphQL\Type\Definition\FieldDefinition;
 use Symfony\Component\Messenger\MessageBusInterface;
 
@@ -20,7 +20,7 @@ class UploadDataFileMutation extends FieldDefinition
     public function __construct(
         private TypeRegistry $type,
         private FileUploadService $fileUploadService,
-        private CurrentUserService $currentUserService,
+        private CurrentUser $currentUser,
         private MessageBusInterface $commandBus
     ) {
         parent::__construct([
@@ -47,7 +47,7 @@ class UploadDataFileMutation extends FieldDefinition
 
         $this->commandBus->dispatch(
             new ScheduleFileImport(
-                userId: $this->currentUserService->getId(),
+                userId: $this->currentUser->getId(),
                 dataProvider: $fileImportType->getDataProvider(),
                 fileImportType: $fileImportType,
                 filename: $filename,

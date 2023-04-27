@@ -35,15 +35,16 @@ class ErrorHandler
             $error = $this->normalize($error);
             $previous = $error->getPrevious();
             $logMessage = $previous?->getMessage() ?? $error->getMessage();
+            $context = ['exception' => $error];
 
             if ($error->isClientSafe()) {
                 if ($previous instanceof ClientSafeException) {
                     $logMessage = $previous->getRealMessage();
                 }
 
-                $this->logger->info($logMessage, ['exception' => $error]);
+                $this->logger->info($logMessage, $context);
             } else {
-                $this->logger->error($logMessage, ['exception' => $error]);
+                $this->logger->error($logMessage, $context);
             }
 
             $checkedErrors[] = $error;
@@ -88,7 +89,11 @@ class ErrorHandler
 
     private function wrapAccessDeniedException(AccessDeniedException $exception): ClientSafeException
     {
-        return $this->createClientSafeException('You are not allowed to do that', $exception);
+        $subject = get_debug_type($exception->getSubject());
+        $attributes = implode(', ', $exception->getAttributes());
+        $message = sprintf('Access denied on "%s", permission: "%s"', $subject, $attributes);
+
+        return $this->createClientSafeException('You are not allowed to do that', $message, $exception);
     }
 
     private function wrapAuthenticationException(AuthenticationException $exception): ClientSafeException

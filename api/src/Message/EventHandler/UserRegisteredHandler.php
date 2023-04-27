@@ -7,7 +7,7 @@ namespace App\Message\EventHandler;
 use App\Message\Event\UserRegistered;
 use App\Notification\UserRegisteredNotification;
 use App\Repository\UserRepository;
-use App\Service\User\RandomPasswordGenerator;
+use App\Service\Security\PasswordGenerator\RandomPasswordGenerator;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Notifier\NotifierInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;

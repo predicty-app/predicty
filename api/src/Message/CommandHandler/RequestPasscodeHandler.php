@@ -25,9 +25,18 @@ class RequestPasscodeHandler
     ) {
     }
 
+    /**
+     * @todo throttling
+     */
     public function __invoke(RequestPasscode $message): void
     {
-        $user = $this->userRepository->getById($message->userId);
+        $user = $this->userRepository->findById($message->userId);
+
+        if ($user === null) {
+            // fail silently
+            return;
+        }
+
         $passcode = $this->passcodeGenerator->generate($user);
         $this->notifier->send(new PasscodeIssuedNotification($passcode), $user);
 

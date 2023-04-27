@@ -4,41 +4,39 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Authorization\Voter;
 
-use App\Entity\ConversationComment;
+use App\Entity\AdCollection;
 use App\Entity\Permission;
 use App\Entity\User;
 
 /**
- * @extends Voter<ConversationComment>
+ * @extends Voter<AdCollection>
  */
-class ConversationCommentVoter extends Voter
+class AdCollectionVoter extends Voter
 {
     protected function getSupportedType(): string
     {
-        return ConversationComment::class;
+        return AdCollection::class;
     }
 
     protected function getSupportedPermissions(): array
     {
         return [
-            Permission::REMOVE_CONVERSATION_COMMENT,
-            Permission::EDIT_CONVERSATION_COMMENT,
+            Permission::ADD_AD_TO_AD_COLLECTION,
+            Permission::REMOVE_AD_FROM_AD_COLLECTION,
+            Permission::CREATE_AD_COLLECTION,
         ];
     }
 
     protected function voteOnAttribute(string $permission, mixed $subject, ?User $user): bool
     {
-        // we do not support manipulating comments without a user
         if ($user === null) {
             return false;
         }
 
-        // we do not support above permissions without a comment
         if ($subject === null) {
-            return false;
+            return $permission === Permission::CREATE_AD_COLLECTION;
         }
 
-        // we support removing comments and editing them, but only if the user owns them
         return $subject->isOwnedBy($user);
     }
 }
