@@ -69,7 +69,7 @@ const addComment = () => {
         >
           <p class="font-bold mb-2">6 days ago</p>
           <p>
-            New website release is planned for this date, please don’t plan
+            New website release is planned for this date, please don't plan
             anything critical for this sprint.
           </p>
         </div>
