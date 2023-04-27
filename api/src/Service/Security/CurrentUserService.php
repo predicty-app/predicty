@@ -30,7 +30,9 @@ class CurrentUserService implements CurrentUser
             return $user;
         }
 
-        throw new CustomUserMessageAuthenticationException('There is no logged in user available');
+        $exception = new CustomUserMessageAuthenticationException('User was requested but none was logged in');
+        $exception->setSafeMessage('You are not logged in');
+        throw $exception;
     }
 
     public function isAnonymous(): bool
