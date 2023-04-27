@@ -7,7 +7,7 @@ namespace App\Service\User;
 use App\Entity\User;
 use App\Entity\UserOwnedEntity;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 
 class CurrentUserService
 {
@@ -28,7 +28,7 @@ class CurrentUserService
             return $user;
         }
 
-        throw new AuthenticationException('There is no logged in user available');
+        throw new CustomUserMessageAuthenticationException('There is no logged in user available');
     }
 
     public function isAnonymous(): bool
