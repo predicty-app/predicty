@@ -1,0 +1,19 @@
+{
+  "LABEL": {
+    "name": "title needs formatting",
+    "color": "EEEEEE"
+  },
+  "CHECKS": {
+    "prefixes": [],
+    "regexp": "([A-Z]+\\-\\d+) [\\w ]+",
+    "regexpFlags": "i",
+    "ignoreLabels": [
+      "ignore-title-check"
+    ]
+  },
+  "MESSAGES": {
+    "success": "All OK",
+    "failure": "Failing CI test",
+    "notice": ""
+  }
+}
