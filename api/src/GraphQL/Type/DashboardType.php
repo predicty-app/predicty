@@ -9,7 +9,7 @@ use App\Repository\AdCollectionRepository;
 use App\Repository\CampaignRepository;
 use App\Repository\ConversationRepository;
 use App\Repository\DailyRevenueRepository;
-use App\Service\User\CurrentUserService;
+use App\Service\Security\CurrentUser;
 use GraphQL\Type\Definition\ObjectType;
 
 class DashboardType extends ObjectType
@@ -20,7 +20,7 @@ class DashboardType extends ObjectType
         AdCollectionRepository $adCollectionRepository,
         DailyRevenueRepository $dailyRevenueRepository,
         ConversationRepository $conversationRepository,
-        private CurrentUserService $currentUserService
+        private CurrentUser $currentUser
     ) {
         parent::__construct([
             'name' => 'Dashboard',
@@ -31,19 +31,19 @@ class DashboardType extends ObjectType
                 ],
                 'dailyRevenue' => [
                     'type' => $type->listOf($type->dailyRevenue()),
-                    'resolve' => fn () => $dailyRevenueRepository->findAllByUserId($this->currentUserService->getId()),
+                    'resolve' => fn () => $dailyRevenueRepository->findAllByUserId($this->currentUser->getId()),
                 ],
                 'campaigns' => [
                     'type' => $type->listOf($type->campaign()),
-                    'resolve' => fn () => $campaignRepository->findAllByUserId($this->currentUserService->getId()),
+                    'resolve' => fn () => $campaignRepository->findAllByUserId($this->currentUser->getId()),
                 ],
                 'collections' => [
                     'type' => $type->listOf($type->adCollection()),
-                    'resolve' => fn () => $adCollectionRepository->findAllByUserId($this->currentUserService->getId()),
+                    'resolve' => fn () => $adCollectionRepository->findAllByUserId($this->currentUser->getId()),
                 ],
                 'conversations' => [
                     'type' => $type->listOf($type->conversation()),
-                    'resolve' => fn () => $conversationRepository->findAllByUserId($this->currentUserService->getId()),
+                    'resolve' => fn () => $conversationRepository->findAllByUserId($this->currentUser->getId()),
                 ],
             ],
         ]);

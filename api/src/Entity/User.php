@@ -16,7 +16,7 @@ use Webmozart\Assert\Assert;
 
 #[ORM\Entity]
 #[ORM\Table(name: '`user`')]
-class User implements UserInterface, EmailRecipientInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, EmailRecipientInterface, PasswordAuthenticatedUserInterface, UserWithId
 {
     use IdTrait;
     use TimestampableTrait;

@@ -7,6 +7,7 @@ namespace App\Repository;
 use App\Entity\AdCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use RuntimeException;
 
 class AdCollectionRepository
 {
@@ -18,6 +19,16 @@ class AdCollectionRepository
     public function __construct(private EntityManagerInterface $em)
     {
         $this->repository = $em->getRepository(AdCollection::class);
+    }
+
+    public function getById(int $adCollectionId): AdCollection
+    {
+        $adCollection = $this->repository->find($adCollectionId);
+        if ($adCollection === null) {
+            throw new RuntimeException('AdCollection was not found');
+        }
+
+        return $adCollection;
     }
 
     /**

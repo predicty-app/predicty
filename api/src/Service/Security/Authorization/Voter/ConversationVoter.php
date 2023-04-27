@@ -7,44 +7,39 @@ namespace App\Service\Security\Authorization\Voter;
 use App\Entity\Conversation;
 use App\Entity\Permission;
 use App\Entity\User;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
+/**
+ * @extends Voter<Conversation>
+ */
 class ConversationVoter extends Voter
 {
-    protected function supports(string $attribute, mixed $subject): bool
+    protected function getSupportedType(): string
     {
-        $supported = [
+        return Conversation::class;
+    }
+
+    protected function getSupportedPermissions(): array
+    {
+        return [
             Permission::START_CONVERSATION,
             Permission::REMOVE_CONVERSATION,
             Permission::ADD_CONVERSATION_COMMENT,
         ];
-
-        return in_array($attribute, $supported, true);
     }
 
-    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
+    protected function voteOnAttribute(string $permission, mixed $subject, ?User $user): bool
     {
-        /** @var null|Conversation $conversation */
-        $conversation = $subject;
-        $user = $token->getUser();
-
-        if ($user instanceof User) {
-            if ($conversation === null) {
-                if ($attribute === Permission::START_CONVERSATION) {
-                    return true;
-                }
-
-                return false;
-            }
-
-            return match ($attribute) {
-                Permission::REMOVE_CONVERSATION, Permission::REMOVE_CONVERSATION_COMMENT, Permission::ADD_CONVERSATION_COMMENT => $conversation->isOwnedBy($user),
-                Permission::START_CONVERSATION => true,
-                default => false,
-            };
+        // we do not support manipulating conversations without a user
+        if ($user === null) {
+            return false;
         }
 
-        return false;
+        // we support starting conversations without a subject, any user is allowed
+        if ($subject === null) {
+            return $permission === Permission::START_CONVERSATION;
+        }
+
+        // we support removing conversations and adding comments to them, but only if the user owns them
+        return $subject->isOwnedBy($user);
     }
 }
