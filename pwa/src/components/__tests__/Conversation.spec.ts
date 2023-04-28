@@ -12,7 +12,7 @@ describe("Tests for Conversation component", () => {
   function prepareElementsToTests<T>(props?: T) {
     const wrapper = shallowMount(Conversation, {
       props: {
-        modelValue: "true",
+        modelValue: true,
         ...props
       },
       global: {
