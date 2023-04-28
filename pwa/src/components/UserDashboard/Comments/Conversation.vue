@@ -101,7 +101,10 @@ const addComment = async () => {
   >
     <div class="grid grid-flow-row">
       <div class="flex justify-between items-center">
-        <h4 class="text-base text-black font-bold">
+        <h4
+          class="text-base text-black font-bold"
+          data-testid="conversation__heading"
+        >
           {{ t(`components.user-dashboard.conversation.weekdays.${weekday}`) }}
           {{ dateFormat(conversation ? conversation.date : null) }}
         </h4>
@@ -109,6 +112,7 @@ const addComment = async () => {
           <button
             class="p-1 mr-1 focus:bg-bottombar-hover/50 hover:bg-bottombar-hover/50 rounded-md"
             @click="deleteConversation"
+            data-testid="conversation__delete"
           >
             <IconSvg name="trash" :class-name="`w-[12px] h-[16px]`" />
           </button>
@@ -118,6 +122,7 @@ const addComment = async () => {
               $emit('update:modelValue', false);
               isModalWindowVisible = false;
             "
+            data-testid="conversation__close"
           >
             <IconSvg
               name="close"
@@ -131,6 +136,7 @@ const addComment = async () => {
         <div
           class="py-2 border-b border-b-divider-default last:border-0 text-[10px] leading-3"
           v-for="comment in conversation.comments"
+          data-testid="conversation__comment"
         >
           <p class="font-bold mb-2">
             {{ commentDate(comment.createdAt) }}
