@@ -18,4 +18,6 @@ final class Permission
     public const ADD_AD_TO_AD_COLLECTION = 'ADD_AD_TO_AD_COLLECTION';
     public const REMOVE_AD_FROM_AD_COLLECTION = 'REMOVE_AD_FROM_AD_COLLECTION';
     public const CREATE_AD_COLLECTION = 'CREATE_AD_COLLECTION';
+
+    public const WITHDRAW_IMPORT = 'WITHDRAW_IMPORT';
 }

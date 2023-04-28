@@ -32,6 +32,7 @@ class CurrentUserService implements CurrentUser
 
         $exception = new CustomUserMessageAuthenticationException('User was requested but none was logged in');
         $exception->setSafeMessage('You are not logged in');
+
         throw $exception;
     }
 
