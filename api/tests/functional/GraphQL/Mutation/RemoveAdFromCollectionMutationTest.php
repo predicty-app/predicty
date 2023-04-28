@@ -12,7 +12,7 @@ use App\Test\GraphQLTestCase;
 
 /**
  * @covers \App\GraphQL\Mutation\RemoveAdFromCollectionMutation
- * @covers \App\Message\CommandHandler\RemoveAdFromCollectionHandler
+ * @covers \App\MessageHandler\Command\RemoveAdFromCollectionHandler
  */
 class RemoveAdFromCollectionMutationTest extends GraphQLTestCase
 {

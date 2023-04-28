@@ -8,7 +8,7 @@ use App\Test\GraphQLTestCase;
 
 /**
  * @covers \App\GraphQL\Mutation\LogoutMutation
- * @covers \App\Message\CommandHandler\LogoutHandler
+ * @covers \App\MessageHandler\Command\LogoutHandler
  */
 class LogoutMutationTest extends GraphQLTestCase
 {

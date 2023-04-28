@@ -14,7 +14,7 @@ use Zenstruck\Messenger\Test\InteractsWithMessenger;
 
 /**
  * @covers \App\GraphQL\Mutation\ResetPasswordMutation
- * @covers \App\Message\CommandHandler\RequestPasswordResetTokenHandler
+ * @covers \App\MessageHandler\Command\RequestPasswordResetTokenHandler
  */
 class ResetPasswordResetTest extends GraphQLTestCase
 {

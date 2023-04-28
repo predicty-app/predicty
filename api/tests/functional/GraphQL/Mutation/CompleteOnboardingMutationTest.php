@@ -10,7 +10,7 @@ use App\Test\GraphQLTestCase;
 
 /**
  * @covers \App\GraphQL\Mutation\CompleteOnboardingMutation
- * @covers \App\Message\CommandHandler\CompleteOnboardingHandler
+ * @covers \App\MessageHandler\Command\CompleteOnboardingHandler
  */
 class CompleteOnboardingMutationTest extends GraphQLTestCase
 {

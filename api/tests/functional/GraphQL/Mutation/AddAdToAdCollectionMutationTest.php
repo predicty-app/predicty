@@ -12,7 +12,7 @@ use App\Test\GraphQLTestCase;
 
 /**
  * @covers \App\GraphQL\Mutation\AddAdToCollectionMutation
- * @covers \App\Message\CommandHandler\AddAdToCollectionHandler
+ * @covers \App\MessageHandler\Command\AddAdToCollectionHandler
  */
 class AddAdToAdCollectionMutationTest extends GraphQLTestCase
 {

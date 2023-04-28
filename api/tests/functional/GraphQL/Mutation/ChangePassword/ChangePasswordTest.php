@@ -11,7 +11,7 @@ use Zenstruck\Messenger\Test\InteractsWithMessenger;
 
 /**
  * @covers \App\GraphQL\Mutation\ChangePasswordMutation
- * @covers \App\Message\CommandHandler\ChangePasswordHandler
+ * @covers \App\MessageHandler\Command\ChangePasswordHandler
  */
 class ChangePasswordTest extends GraphQLTestCase
 {

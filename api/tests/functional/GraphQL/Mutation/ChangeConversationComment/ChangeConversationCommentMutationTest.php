@@ -10,7 +10,7 @@ use App\Test\GraphQLTestCase;
 
 /**
  * @covers \App\GraphQL\Mutation\ChangeConversationCommentMutation
- * @covers \App\Message\CommandHandler\ChangeConversationCommentHandler
+ * @covers \App\MessageHandler\Command\ChangeConversationCommentHandler
  */
 class ChangeConversationCommentMutationTest extends GraphQLTestCase
 {
