@@ -11,7 +11,7 @@ use App\Test\GraphQLTestCase;
 
 /**
  * @covers \App\GraphQL\Mutation\StartConversationMutation
- * @covers \App\Message\CommandHandler\StartConversationHandler
+ * @covers \App\MessageHandler\Command\StartConversationHandler
  */
 class StartConversationMutationTest extends GraphQLTestCase
 {

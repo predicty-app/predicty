@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\GraphQL\Mutation;
 
-use App\DataFixtures\AdCollectionFixtures;
-use App\DataFixtures\AdFixtures;
+use App\DataFixtures\AdCollectionFixture;
+use App\DataFixtures\AdFixture;
 use App\Entity\Ad;
 use App\Entity\AdCollection;
 use App\Test\GraphQLTestCase;
 
 /**
  * @covers \App\GraphQL\Mutation\AddAdToCollectionMutation
- * @covers \App\Message\CommandHandler\AddAdToCollectionHandler
+ * @covers \App\MessageHandler\Command\AddAdToCollectionHandler
  */
 class AddAdToAdCollectionMutationTest extends GraphQLTestCase
 {
@@ -25,13 +25,13 @@ class AddAdToAdCollectionMutationTest extends GraphQLTestCase
         parent::setUp();
 
         $this->loadFixtures([
-            AdCollectionFixtures::class,
+            AdCollectionFixture::class,
         ]);
 
-        $this->adCollectionId = $this->getReference(AdCollectionFixtures::EMPTY_COLLECTION, AdCollection::class)->getId();
-        $this->adsIds[] = $this->getReference(AdFixtures::AD_1, Ad::class)->getId();
-        $this->adsIds[] = $this->getReference(AdFixtures::AD_2, Ad::class)->getId();
-        $this->adsIds[] = $this->getReference(AdFixtures::AD_3, Ad::class)->getId();
+        $this->adCollectionId = $this->getReference(AdCollectionFixture::EMPTY_COLLECTION, AdCollection::class)->getId();
+        $this->adsIds[] = $this->getReference(AdFixture::AD_1, Ad::class)->getId();
+        $this->adsIds[] = $this->getReference(AdFixture::AD_2, Ad::class)->getId();
+        $this->adsIds[] = $this->getReference(AdFixture::AD_3, Ad::class)->getId();
 
         $this->mutation = <<<'EOF'
             mutation($var1: ID!, $var2: [ID]!) {

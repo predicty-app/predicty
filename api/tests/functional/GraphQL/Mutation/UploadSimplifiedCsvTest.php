@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\GraphQL\Mutation;
 
-use App\DataFixtures\UserFixtures;
+use App\DataFixtures\UserFixture;
 use App\Entity\Ad;
 use App\Entity\AdSet;
 use App\Entity\Campaign;
@@ -22,7 +22,7 @@ class UploadSimplifiedCsvTest extends GraphQLTestCase
         parent::setUp();
 
         $this->loadFixtures([
-            UserFixtures::class,
+            UserFixture::class,
         ]);
     }
 

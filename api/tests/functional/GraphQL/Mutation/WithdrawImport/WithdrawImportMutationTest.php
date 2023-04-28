@@ -12,7 +12,7 @@ use Zenstruck\Messenger\Test\InteractsWithMessenger;
 
 /**
  * @covers \App\GraphQL\Mutation\WithdrawImportMutation
- * @covers \App\Message\CommandHandler\WithdrawImportHandler
+ * @covers \App\MessageHandler\Command\WithdrawImportHandler
  */
 class WithdrawImportMutationTest extends GraphQLTestCase
 {
