@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace App\Message\Command;
 
 use App\Entity\Import;
-use App\Validator\EntityExists;
+use App\Entity\User;
+use App\Validator as AssertCustom;
 
 class WithdrawImport
 {
+    #[AssertCustom\EntityExists(entity: User::class, message: 'User does not exist')]
     public int $userId;
 
-    #[EntityExists(Import::class)]
+    #[AssertCustom\EntityExists(Import::class)]
     public int $importId;
 
     public function __construct(int $userId, int $importId)

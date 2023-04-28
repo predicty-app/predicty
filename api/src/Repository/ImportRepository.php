@@ -24,6 +24,14 @@ class ImportRepository
         $this->repository = $em->getRepository(Import::class);
     }
 
+    public function getById(int $importId): Import
+    {
+        $user = $this->repository->find($importId);
+        assert($user instanceof Import, 'Import not found');
+
+        return $user;
+    }
+
     public function findById(int $id): ?Import
     {
         return $this->repository->find($id);
