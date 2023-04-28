@@ -93,6 +93,17 @@ async function handleGetCampaigns() {
           }
         }
       }
+      conversations {
+        id
+        date
+        color {
+          hex
+        }
+        comments {
+          createdAt
+          comment
+        }
+      }
     }
   }`;
 
@@ -115,7 +126,11 @@ async function handleGetCampaigns() {
 
     return response.errors
       ? null
-      : { campaigns, dailyRevenue: response.data.dashboard.dailyRevenue };
+      : {
+          campaigns,
+          dailyRevenue: response.data.dashboard.dailyRevenue,
+          conversations: response.data.dashboard.conversations
+        };
   } catch (error) {
     console.log(error);
     return null;

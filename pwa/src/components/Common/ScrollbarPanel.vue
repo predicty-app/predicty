@@ -99,15 +99,18 @@ function handleScroll(state: UseScrollReturn) {
 .scroll-bar {
   scrollbar-color: #8a8a8a #edf0f3;
   scrollbar-width: thin;
+  border-radius: 10px;
 
   &::-webkit-scrollbar {
     width: 8px;
     height: 8px;
     scrollbar-color: #8a8a8a #edf0f3;
+    border-radius: 10px;
   }
 
   &::-webkit-scrollbar-track {
     background: #edf0f3;
+    border-radius: 10px;
   }
 
   &::-webkit-scrollbar-thumb {
