@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\MessageHandler\Command;
 
+use App\Entity\Factory\UserFactory;
 use App\Extension\Messenger\DispatchCommandTrait;
 use App\Extension\Messenger\EmitEventTrait;
-use App\Entity\Factory\UserFactory;
 use App\Message\Command\Register;
 use App\Message\Command\RequestPasscode;
 use App\Message\Event\UserRegistered;

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Tests\Unit\MessageHandler\Command;
 
 use App\Message\Command\WithdrawImport;
-use App\MessageHandler\Command\WithdrawImportHandler;
 use App\Message\Event\ImportWithdrew;
+use App\MessageHandler\Command\WithdrawImportHandler;
 use App\Repository\ImportRepository;
 use App\Repository\UserRepository;
 use App\Service\DataImport\ImportWithdrawalService;
