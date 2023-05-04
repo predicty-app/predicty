@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Service\User;
+namespace App\Service\Security;
 
 use App\Entity\User;
-use App\Entity\UserOwnedEntity;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 
-class CurrentUserService
+/**
+ * @internal This class should only be used by the Security component. {@link CurrentUser} should be used instead.
+ */
+class CurrentUserService implements CurrentUser
 {
     public function __construct(private Security $security)
     {
@@ -28,7 +30,10 @@ class CurrentUserService
             return $user;
         }
 
-        throw new CustomUserMessageAuthenticationException('There is no logged in user available');
+        $exception = new CustomUserMessageAuthenticationException('User was requested but none was logged in');
+        $exception->setSafeMessage('You are not logged in');
+
+        throw $exception;
     }
 
     public function isAnonymous(): bool
@@ -36,8 +41,8 @@ class CurrentUserService
         return $this->security->getUser() === null;
     }
 
-    public function isAnOwnerOf(UserOwnedEntity $entity): bool
+    public function isAllowedTo(string $permission, mixed $subject): bool
     {
-        return $entity->getUserId() === $this->getId();
+        return $this->security->isGranted($permission, $subject);
     }
 }

@@ -9,7 +9,7 @@ use App\Extension\Messenger\EmitEventTrait;
 use App\Message\Command\ChangePassword;
 use App\Message\Event\UserChangedPassword;
 use App\Repository\UserRepository;
-use App\Service\User\CurrentUserService;
+use App\Service\Security\CurrentUser;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -20,7 +20,7 @@ class ChangePasswordHandler
     use EmitEventTrait;
 
     public function __construct(
-        private CurrentUserService $currentUserService,
+        private CurrentUser $currentUser,
         private UserPasswordHasherInterface $userPasswordHasher,
         private UserRepository $userRepository,
     ) {
@@ -28,7 +28,7 @@ class ChangePasswordHandler
 
     public function __invoke(ChangePassword $message): void
     {
-        $user = $this->currentUserService->getUser();
+        $user = $this->currentUser->getUser();
         $user->setPassword($this->userPasswordHasher->hashPassword($user, $message->newPassword));
         $this->userRepository->save($user);
 

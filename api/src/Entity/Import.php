@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
     'api' => ApiImport::class,
     'file' => FileImport::class,
 ])]
-abstract class Import
+abstract class Import implements Ownable
 {
     use IdTrait;
     use TimestampableTrait;
@@ -117,5 +117,10 @@ abstract class Import
     public function getCompletedAt(): ?DateTimeImmutable
     {
         return $this->completedAt;
+    }
+
+    public function isOwnedBy(UserWithId $user): bool
+    {
+        return $this->userId === $user->getId();
     }
 }

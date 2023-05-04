@@ -7,14 +7,14 @@ namespace App\GraphQL\Mutation;
 use App\Extension\Messenger\HandleTrait;
 use App\GraphQL\TypeRegistry;
 use App\Message\Command\RegisterGoogleOAuthCredentials;
-use App\Service\User\CurrentUserService;
+use App\Service\Security\CurrentUser;
 use GraphQL\Type\Definition\FieldDefinition;
 
 class RegisterDataProviderMutation extends FieldDefinition
 {
     use HandleTrait;
 
-    public function __construct(TypeRegistry $type, private CurrentUserService $currentUserService)
+    public function __construct(TypeRegistry $type, private CurrentUser $currentUser)
     {
         parent::__construct([
             'name' => 'registerDataProvider',
@@ -32,7 +32,7 @@ class RegisterDataProviderMutation extends FieldDefinition
     {
         $this->handle(
             new RegisterGoogleOAuthCredentials(
-                $this->currentUserService->getId(),
+                $this->currentUser->getId(),
                 $args['type'],
                 $args['oauthRefreshToken']
             )
