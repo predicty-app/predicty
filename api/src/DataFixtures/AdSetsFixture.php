@@ -11,7 +11,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class AdSetsFixtures extends Fixture implements DependentFixtureInterface
+class AdSetsFixture extends Fixture implements DependentFixtureInterface
 {
     public const ADSET_1 = 'ADSET1';
     public const ADSET_2 = 'ADSET2';
@@ -20,9 +20,9 @@ class AdSetsFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        $campaign1 = $this->getReference(CampaignFixtures::CAMPAIGN_1, Campaign::class);
-        $campaign2 = $this->getReference(CampaignFixtures::CAMPAIGN_2, Campaign::class);
-        $campaign3 = $this->getReference(CampaignFixtures::CAMPAIGN_3, Campaign::class);
+        $campaign1 = $this->getReference(CampaignFixture::CAMPAIGN_1, Campaign::class);
+        $campaign2 = $this->getReference(CampaignFixture::CAMPAIGN_2, Campaign::class);
+        $campaign3 = $this->getReference(CampaignFixture::CAMPAIGN_3, Campaign::class);
 
         $userId = $campaign1->getUserId();
 
@@ -54,7 +54,7 @@ class AdSetsFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            CampaignFixtures::class,
+            CampaignFixture::class,
         ];
     }
 }

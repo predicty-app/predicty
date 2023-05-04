@@ -10,7 +10,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class ConversationCommentFixtures extends Fixture implements DependentFixtureInterface
+class ConversationCommentFixture extends Fixture implements DependentFixtureInterface
 {
     public const COMMENT_1 = 'COMMENT_1';
     public const COMMENT_2 = 'COMMENT_2';
@@ -21,7 +21,7 @@ class ConversationCommentFixtures extends Fixture implements DependentFixtureInt
 
     public function load(ObjectManager $manager): void
     {
-        $conversation = $this->getReference(ConversationFixtures::CONVERSATION_1, Conversation::class);
+        $conversation = $this->getReference(ConversationFixture::CONVERSATION_1, Conversation::class);
         $comment1 = new ConversationComment(
             conversationId: $conversation->getId(),
             userId: $conversation->getUserId(),
@@ -45,7 +45,7 @@ class ConversationCommentFixtures extends Fixture implements DependentFixtureInt
     public function getDependencies(): array
     {
         return [
-            ConversationFixtures::class,
+            ConversationFixture::class,
         ];
     }
 }

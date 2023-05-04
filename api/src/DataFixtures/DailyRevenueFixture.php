@@ -13,7 +13,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class DailyRevenueFixtures extends Fixture implements DependentFixtureInterface
+class DailyRevenueFixture extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -38,7 +38,7 @@ class DailyRevenueFixtures extends Fixture implements DependentFixtureInterface
             ['2023-01-18', 166960, 1812],
         ];
 
-        $user = $this->getReference(UserFixtures::JOHN);
+        $user = $this->getReference(UserFixture::JOHN);
         assert($user instanceof User);
 
         $currency = Currency::of('PLN');
@@ -60,7 +60,7 @@ class DailyRevenueFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            UserFixtures::class,
+            UserFixture::class,
         ];
     }
 }

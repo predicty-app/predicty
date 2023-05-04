@@ -13,7 +13,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class AdStatsFixtures extends Fixture implements DependentFixtureInterface
+class AdStatsFixture extends Fixture implements DependentFixtureInterface
 {
     public function __construct()
     {
@@ -21,9 +21,9 @@ class AdStatsFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        $ad1 = $this->getReference(AdFixtures::AD_1, Ad::class);
-        $ad2 = $this->getReference(AdFixtures::AD_2, Ad::class);
-        $ad4 = $this->getReference(AdFixtures::AD_4, Ad::class);
+        $ad1 = $this->getReference(AdFixture::AD_1, Ad::class);
+        $ad2 = $this->getReference(AdFixture::AD_2, Ad::class);
+        $ad4 = $this->getReference(AdFixture::AD_4, Ad::class);
 
         $data = [
             // ad, day, results, cpr (as int, in the smallest currency unit)
@@ -98,7 +98,7 @@ class AdStatsFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            AdFixtures::class,
+            AdFixture::class,
         ];
     }
 }

@@ -11,7 +11,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class CampaignFixtures extends Fixture implements DependentFixtureInterface
+class CampaignFixture extends Fixture implements DependentFixtureInterface
 {
     public const CAMPAIGN_1 = 'CAMPAIGN1';
     public const CAMPAIGN_2 = 'CAMPAIGN2';
@@ -20,7 +20,7 @@ class CampaignFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         /** @var User $user */
-        $user = $this->getReference(UserFixtures::JOHN);
+        $user = $this->getReference(UserFixture::JOHN);
 
         $rows = [
             [self::CAMPAIGN_1, 'external-id-1', $user->getId(), 'Campaign 1', '2023-01-02 00:00:00', '2023-01-18 23:59:59'],
@@ -47,7 +47,7 @@ class CampaignFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            UserFixtures::class,
+            UserFixture::class,
         ];
     }
 }

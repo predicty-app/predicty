@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\GraphQL\Mutation;
 
-use App\DataFixtures\UserFixtures;
+use App\DataFixtures\UserFixture;
 use App\Entity\AdStats;
 use App\Test\GraphQLTestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -19,7 +19,7 @@ class UploadFacebookCsvTest extends GraphQLTestCase
         parent::setUp();
 
         $this->loadFixtures([
-            UserFixtures::class,
+            UserFixture::class,
         ]);
     }
 

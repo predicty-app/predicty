@@ -11,7 +11,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Psr\Clock\ClockInterface;
 
-class AdCollectionFixtures extends Fixture implements DependentFixtureInterface
+class AdCollectionFixture extends Fixture implements DependentFixtureInterface
 {
     public const AD_COLLECTION_1 = 'AD_COLLECTION_1';
     public const AD_COLLECTION_2 = 'AD_COLLECTION_2';
@@ -23,10 +23,10 @@ class AdCollectionFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        $ad1 = $this->getReference(AdFixtures::AD_1, Ad::class);
-        $ad2 = $this->getReference(AdFixtures::AD_2, Ad::class);
-        $ad3 = $this->getReference(AdFixtures::AD_3, Ad::class);
-        $ad4 = $this->getReference(AdFixtures::AD_4, Ad::class);
+        $ad1 = $this->getReference(AdFixture::AD_1, Ad::class);
+        $ad2 = $this->getReference(AdFixture::AD_2, Ad::class);
+        $ad3 = $this->getReference(AdFixture::AD_3, Ad::class);
+        $ad4 = $this->getReference(AdFixture::AD_4, Ad::class);
 
         // all adds belong to the same user
         $userId = $ad1->getUserId();
@@ -55,7 +55,7 @@ class AdCollectionFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            AdFixtures::class,
+            AdFixture::class,
         ];
     }
 }

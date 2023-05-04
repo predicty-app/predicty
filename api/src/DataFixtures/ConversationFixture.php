@@ -12,7 +12,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class ConversationFixtures extends Fixture implements DependentFixtureInterface
+class ConversationFixture extends Fixture implements DependentFixtureInterface
 {
     public const CONVERSATION_1 = 'CONVERSATION_1';
 
@@ -22,7 +22,7 @@ class ConversationFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        $user = $this->getReference(UserFixtures::JOHN, User::class);
+        $user = $this->getReference(UserFixture::JOHN, User::class);
         $conversation = new Conversation(
             userId: $user->getId(),
             date: DateHelper::fromString('2021-01-05'),
@@ -37,7 +37,7 @@ class ConversationFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            UserFixtures::class,
+            UserFixture::class,
         ];
     }
 }

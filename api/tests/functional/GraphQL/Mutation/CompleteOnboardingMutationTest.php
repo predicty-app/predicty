@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\GraphQL\Mutation;
 
-use App\DataFixtures\UserFixtures;
+use App\DataFixtures\UserFixture;
 use App\Entity\User;
 use App\Test\GraphQLTestCase;
 
@@ -16,8 +16,8 @@ class CompleteOnboardingMutationTest extends GraphQLTestCase
 {
     public function test_complete_onboarding(): void
     {
-        $this->loadFixtures([UserFixtures::class]);
-        $user = $this->getReference(UserFixtures::JOHN, User::class);
+        $this->loadFixtures([UserFixture::class]);
+        $user = $this->getReference(UserFixture::JOHN, User::class);
         $this->authenticate($user);
 
         $mutation = <<<'EOF'

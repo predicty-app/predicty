@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\GraphQL\Mutation\AddConversationComment;
 
-use App\DataFixtures\UserFixtures;
+use App\DataFixtures\UserFixture;
 use App\Entity\ConversationComment;
 use App\Test\GraphQLTestCase;
 
@@ -36,7 +36,7 @@ class AddConversationCommentMutationTest extends GraphQLTestCase
 
     public function test_add_comment_to_other_users_conversation_is_not_allowed(): void
     {
-        $this->authenticate(UserFixtures::JANE);
+        $this->authenticate(UserFixture::JANE);
 
         $mutation = <<<'EOF'
             mutation {

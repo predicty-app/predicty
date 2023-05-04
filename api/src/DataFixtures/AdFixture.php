@@ -11,7 +11,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class AdFixtures extends Fixture implements DependentFixtureInterface
+class AdFixture extends Fixture implements DependentFixtureInterface
 {
     public const AD_1 = 'AD1';
     public const AD_2 = 'AD2';
@@ -26,10 +26,10 @@ class AdFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        $adSet1 = $this->getReference(AdSetsFixtures::ADSET_1, AdSet::class);
-        $adSet2 = $this->getReference(AdSetsFixtures::ADSET_2, AdSet::class);
-        $adSet3 = $this->getReference(AdSetsFixtures::ADSET_3, AdSet::class);
-        $adSet4 = $this->getReference(AdSetsFixtures::ADSET_4, AdSet::class);
+        $adSet1 = $this->getReference(AdSetsFixture::ADSET_1, AdSet::class);
+        $adSet2 = $this->getReference(AdSetsFixture::ADSET_2, AdSet::class);
+        $adSet3 = $this->getReference(AdSetsFixture::ADSET_3, AdSet::class);
+        $adSet4 = $this->getReference(AdSetsFixture::ADSET_4, AdSet::class);
 
         $data = [
             ['ad-external-id-1', $adSet1, 'Dummy Ad 1', self::AD_1, '2023-01-02 00:00:00', '2023-01-18 23:59:59'],
@@ -61,7 +61,7 @@ class AdFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            AdSetsFixtures::class,
+            AdSetsFixture::class,
         ];
     }
 }

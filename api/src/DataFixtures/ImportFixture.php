@@ -14,7 +14,7 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class ImportFixtures extends Fixture implements DependentFixtureInterface
+class ImportFixture extends Fixture implements DependentFixtureInterface
 {
     public const IMPORT_1 = 'IMPORT1';
     public const IMPORT_2 = 'IMPORT2';
@@ -28,7 +28,7 @@ class ImportFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager): void
     {
-        $user = $this->getReference(UserFixtures::JOHN, User::class);
+        $user = $this->getReference(UserFixture::JOHN, User::class);
         assert($user instanceof User);
 
         $import1 = new FileImport($user->getId(), 'dummy-import-1.csv', FileImportType::FACEBOOK_CSV);
@@ -64,7 +64,7 @@ class ImportFixtures extends Fixture implements DependentFixtureInterface
     public function getDependencies(): array
     {
         return [
-            UserFixtures::class,
+            UserFixture::class,
         ];
     }
 }

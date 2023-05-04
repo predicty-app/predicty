@@ -8,7 +8,7 @@ use App\Entity\Factory\UserFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
-class UserFixtures extends Fixture
+class UserFixture extends Fixture
 {
     public const JOHN = 'john.doe@example.com';
     public const JANE = 'jane.doe@example.com';
