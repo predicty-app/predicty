@@ -26,9 +26,10 @@ class GoogleAnalyticsCsvHandlerTest extends TestCase
             'Currency' => 'PLN',
         ];
 
-        $context = new FileImportContext(123, new FileImportMetadata());
+        $context = new FileImportContext(1, 123, new FileImportMetadata());
         $dataImportApi = $this->createMock(DataImportApi::class);
         $dataImportApi->expects($this->once())->method('getOrCreateDailyRevenue')->with(
+            $this->equalTo(1),
             $this->equalTo(123),
             $this->equalTo(new DateTimeImmutable('2021-01-01')),
             $this->equalTo(Money::of(100, 'PLN')),
@@ -48,9 +49,10 @@ class GoogleAnalyticsCsvHandlerTest extends TestCase
             'Currency' => 'USD',
         ];
 
-        $context = new FileImportContext(123, new FileImportMetadata());
+        $context = new FileImportContext(1, 123, new FileImportMetadata());
         $dataImportApi = $this->createMock(DataImportApi::class);
         $dataImportApi->expects($this->once())->method('getOrCreateDailyRevenue')->with(
+            $this->equalTo(1),
             $this->equalTo(123),
             $this->equalTo(new DateTimeImmutable('2021-01-01')),
             $this->equalTo(Money::of(100, 'USD')),

@@ -30,6 +30,10 @@ class CreateAdCollectionMutation extends FieldDefinition
 
     private function resolve(array $args): AdCollection
     {
-        return $this->handle(new CreateAdCollection($this->currentUser->getId(), $args['name']));
+        return $this->handle(new CreateAdCollection(
+            $this->currentUser->getId(),
+            $this->currentUser->getAccountId(),
+            $args['name']
+        ));
     }
 }

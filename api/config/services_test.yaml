@@ -1,0 +1,3 @@
+parameters:
+services:
+    App\Service\Security\Account\AccountSwitcherStorage: '@App\Service\Security\Account\Storage\InMemoryStorage'

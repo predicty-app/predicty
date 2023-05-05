@@ -25,8 +25,8 @@ class DailyRevenueType extends ObjectType
                     'type' => $type->money(),
                 ],
                 'date' => [
-                    'type' => $type->string(),
-                    'resolve' => fn (DailyRevenue $adStats) => $adStats->getDate()->format('Y-m-d'),
+                    'type' => $type->date(),
+                    'resolve' => fn (DailyRevenue $dailyRevenue) => $dailyRevenue->getDate()->format('Y-m-d'),
                 ],
             ],
         ]);

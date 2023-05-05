@@ -42,9 +42,9 @@ class AdCollectionRepository
     /**
      * @return array<AdCollection>
      */
-    public function findAllByUserId(int $userId): array
+    public function findAllByAccountId(int $accountId): array
     {
-        return $this->repository->findBy(['userId' => $userId]);
+        return $this->repository->findBy(['accountId' => $accountId]);
     }
 
     public function findById(int $adCollectionId): ?AdCollection

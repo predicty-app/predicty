@@ -1,0 +1,10 @@
+{
+  "data": {
+    "me": {
+      "email": "john.doe@example.com",
+      "isEmailVerified": "@boolean@",
+      "isOnboardingComplete": "@boolean@",
+      "uid": "@string@"
+    }
+  }
+}

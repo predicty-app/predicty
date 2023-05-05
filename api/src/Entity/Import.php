@@ -10,14 +10,17 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
+#[ORM\Index(fields: ['userId'])]
+#[ORM\Index(fields: ['accountId'])]
 #[ORM\InheritanceType('SINGLE_TABLE')]
 #[ORM\DiscriminatorColumn(name: 'type', type: 'string')]
 #[ORM\DiscriminatorMap([
     'api' => ApiImport::class,
     'file' => FileImport::class,
 ])]
-abstract class Import implements Ownable
+abstract class Import implements Ownable, BelongsToAccount
 {
+    use BelongsToAccountTrait;
     use IdTrait;
     use TimestampableTrait;
 
@@ -44,6 +47,7 @@ abstract class Import implements Ownable
 
     public function __construct(
         int $userId,
+        int $accountId,
         DataProvider $dataProvider,
     ) {
         $this->userId = $userId;
@@ -51,6 +55,7 @@ abstract class Import implements Ownable
         $this->dataProvider = $dataProvider;
         $this->createdAt = Clock::now();
         $this->changedAt = Clock::now();
+        $this->accountId = $accountId;
     }
 
     public function getUserId(): int

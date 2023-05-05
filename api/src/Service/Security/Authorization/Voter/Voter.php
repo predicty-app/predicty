@@ -4,17 +4,32 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Authorization\Voter;
 
+use App\Entity\Account;
+use App\Entity\Ownable;
 use App\Entity\User;
+use Psr\Log\LoggerInterface;
+use Psr\Log\NullLogger;
 use RuntimeException;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\CacheableVoterInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
+use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
 
 /**
  * @template T of object
  */
 abstract class Voter implements VoterInterface, CacheableVoterInterface
 {
+    private ?User $user = null;
+    private LoggerInterface $logger;
+
+    public function __construct(
+        private RoleHierarchyInterface $roleHierarchy,
+        ?LoggerInterface $securityLogger = null
+    ) {
+        $this->logger = $securityLogger ?? new NullLogger();
+    }
+
     /**
      * @param null|T        $subject
      * @param array<string> $attributes
@@ -22,20 +37,42 @@ abstract class Voter implements VoterInterface, CacheableVoterInterface
     public function vote(TokenInterface $token, mixed $subject, array $attributes): int
     {
         $vote = self::ACCESS_ABSTAIN;
+        $user = $token->getUser();
 
         foreach ($attributes as $attribute) {
             $vote = self::ACCESS_DENIED;
-            $user = $token->getUser();
 
             if ($user !== null && !$user instanceof User) {
-                throw new RuntimeException('User must be instance of '.User::class.' or null');
+                throw new RuntimeException('User must be an instance of '.User::class.' or null');
             }
 
+            $this->user = $user;
             if ($this->voteOnAttribute($attribute, $subject, $user)) {
                 // grant access as soon as at least one attribute returns a positive response
-                return self::ACCESS_GRANTED;
+                $vote = self::ACCESS_GRANTED;
+
+                break;
             }
         }
+
+        $message = match ($vote) {
+            self::ACCESS_GRANTED => 'Voter "%s" granted access to %s for attributes "%s" on subject "%s"',
+            self::ACCESS_DENIED => 'Voter "%s" denied access to %s for attributes "%s" on subject "%s"',
+            default => 'Voter "%s" abstained from voting to %s for attributes "%s" on subject "%s"',
+        };
+
+        $subjectName = get_debug_type($subject);
+        if (is_object($subject) && method_exists($subject, 'getId')) {
+            $subjectName = sprintf('%s #%d', $subjectName, $subject->getId());
+        }
+
+        $this->logger->debug(sprintf(
+            $message,
+            static::class,
+            $user ? sprintf('user "%s"', $user->getUserIdentifier()) : 'an anonymous user',
+            implode(', ', $attributes),
+            $subjectName
+        ));
 
         return $vote;
     }
@@ -47,12 +84,66 @@ abstract class Voter implements VoterInterface, CacheableVoterInterface
 
     public function supportsType(string $subjectType): bool
     {
-        return
-            $subjectType === $this->getSupportedType()
-            // this is important as sometimes we will get doctrine proxy classes
-            || is_subclass_of($subjectType, $this->getSupportedType())
-            // symfony asks about nulls, we allow them by default and leave it up to the voter to decide
-            || $subjectType === 'null';
+        if ($this->isNullSubjectAllowed() && $subjectType === 'null') {
+            return true;
+        }
+
+        $supportedType = $this->getSupportedType();
+
+        return $subjectType === $supportedType || is_subclass_of($subjectType, $supportedType);
+    }
+
+    /**
+     * Helper method to check if the current user has a specific role.
+     * Note, that this also checks for role hierarchy.
+     *
+     * This method implies that the user is present, therefore it will return false otherwise.
+     */
+    protected function hasRole(string $role, Account|int|null $account = null): bool
+    {
+        if ($this->user === null) {
+            return false;
+        }
+
+        $roles = $this->user->getRoles();
+
+        if ($account !== null) {
+            // getRoles will return roles assigned to the user in the current account context,
+            // therefore we need to check for permissions that the user will have with the subject account and not the one from the context
+            $roles = $this->user->getRolesForAccount($account);
+        }
+
+        return in_array($role, $this->roleHierarchy->getReachableRoleNames($roles), true);
+    }
+
+    /**
+     * Helper method to check if the current user is an owner of the given subject.
+     * For this method to work, subject must be an instance of {@see Ownable}.
+     *
+     * This method implies that the user is present, therefore it will return false otherwise.
+     *
+     * @see Ownable
+     */
+    protected function isAnOwnerOf(mixed $subject): bool
+    {
+        if ($this->user === null) {
+            return false;
+        }
+
+        if ($subject instanceof Ownable) {
+            return $subject->isOwnedBy($this->user);
+        }
+
+        throw new RuntimeException('Subject must be an instance of '.Ownable::class);
+    }
+
+    /**
+     * Override this method to change the default behavior of the voter.
+     * This will allow the voter to handle permission checks for null subjects.
+     */
+    protected function isNullSubjectAllowed(): bool
+    {
+        return false;
     }
 
     /**

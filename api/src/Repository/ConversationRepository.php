@@ -40,9 +40,9 @@ class ConversationRepository
     /**
      * @return array<Conversation>
      */
-    public function findAllByUserId(int $userId): array
+    public function findAllByAccountId(int $accountId): array
     {
-        return $this->repository->findBy(['userId' => $userId], ['id' => 'DESC']);
+        return $this->repository->findBy(['accountId' => $accountId], ['id' => 'DESC']);
     }
 
     public function save(Conversation $conversation): void

@@ -11,7 +11,7 @@ use App\Extension\Messenger\DispatchCommandTrait;
 use App\Message\Command\AddConversationComment;
 use App\Message\Command\StartConversation;
 use App\Repository\ConversationRepository;
-use App\Repository\UserRepository;
+use App\Repository\UserWithAccountRepository;
 use App\Service\Security\Authorization\AuthorizationCheckerTrait;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -23,25 +23,25 @@ class StartConversationHandler
 
     public function __construct(
         private ConversationRepository $conversationRepository,
-        private UserRepository $userRepository,
+        private UserWithAccountRepository $userWithAccountRepository
     ) {
     }
 
     // @todo implement locking so that there will are no conflicts when creating new conversations
+    // @todo transactions
     public function __invoke(StartConversation $command): void
     {
-        $user = $this->userRepository->getById($command->userId);
+        $user = $this->userWithAccountRepository->get($command->userId, $command->accountId);
         $conversation = $this->conversationRepository->findByUserIdAndDate($command->userId, $command->date);
 
         if ($conversation === null) {
-            $this->denyAccessUnlessGranted($user, Permission::START_CONVERSATION);
-            $conversation = new Conversation($command->userId, $command->date, Color::fromString($command->color));
+            $this->denyAccessUnlessGranted($user, Permission::START_CONVERSATION, $user->getAccount());
+            $conversation = new Conversation($command->userId, $command->accountId, $command->date, Color::fromString($command->color));
             $this->conversationRepository->save($conversation);
         }
 
         if ($command->comment !== '') {
-            $this->denyAccessUnlessGranted($user, Permission::ADD_CONVERSATION_COMMENT, $conversation);
-            $this->dispatch(new AddConversationComment($conversation->getId(), $command->userId, $command->comment));
+            $this->dispatch(new AddConversationComment($conversation->getId(), $command->userId, $command->accountId, $command->comment));
         }
     }
 }

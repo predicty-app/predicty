@@ -32,6 +32,7 @@ class SimplifiedCsvHandler extends AbstractCsvFileImportHandler
 
         $campaign = $this->dataImportApi->getOrCreateCampaign(
             userId: $context->getUserId(),
+            accountId: $context->getAccountId(),
             name: $campaignName,
             externalId: $campaignExternalId
         );

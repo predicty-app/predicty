@@ -36,10 +36,11 @@ class ImportTrackingServiceTest extends TestCase
         $logger = new NullLogger();
         $service = new ImportTrackingService($importRepository, $dataImportApi, $eventBus, $logger);
 
-        $fileImport = $service->createNewFileImport(1, 'test.csv', FileImportType::FACEBOOK_CSV);
+        $fileImport = $service->createNewFileImport(1, 123, 'test.csv', FileImportType::FACEBOOK_CSV);
 
         $this->assertInstanceOf(Import::class, $fileImport);
         $this->assertSame(1, $fileImport->getUserId());
+        $this->assertSame(123, $fileImport->getAccountId());
         $this->assertSame('test.csv', $fileImport->getFilename());
         $this->assertSame(FileImportType::FACEBOOK_CSV, $fileImport->getFileImportType());
     }

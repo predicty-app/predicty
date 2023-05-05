@@ -14,8 +14,7 @@ class AppFixture extends Fixture implements DependentFixtureInterface
     {
         // $product = new Product();
         // $manager->persist($product);
-
-        $manager->flush();
+        //        $manager->flush();
     }
 
     public function getDependencies(): array

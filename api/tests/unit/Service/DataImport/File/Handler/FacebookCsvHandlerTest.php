@@ -31,11 +31,12 @@ class FacebookCsvHandlerTest extends TestCase
             'Campaign ID' => 'campaign-id-100',
         ];
 
-        $context = new FileImportContext(123, new FileImportMetadata());
+        $context = new FileImportContext(123, 456, new FileImportMetadata());
 
         $dataImportApi = $this->createMock(DataImportApi::class);
         $dataImportApi->expects($this->once())->method('getOrCreateCampaign')->with(
             $this->equalTo(123),
+            $this->equalTo(456),
             $this->equalTo('Test Campaign'),
             $this->equalTo('campaign-id-100')
         );
@@ -58,7 +59,7 @@ class FacebookCsvHandlerTest extends TestCase
             'Campaign ID' => 'campaign-id-100',
         ];
 
-        $context = new FileImportContext(123, new FileImportMetadata());
+        $context = new FileImportContext(123, 456, new FileImportMetadata());
         $dataImportApi = $this->createMock(DataImportApi::class);
         $dataImportApi->expects($this->once())->method('getOrCreateAdSet')->with(
             $this->isInstanceOf(Campaign::class),
@@ -84,7 +85,7 @@ class FacebookCsvHandlerTest extends TestCase
             'Campaign ID' => 'campaign-id-100',
         ];
 
-        $context = new FileImportContext(123, new FileImportMetadata());
+        $context = new FileImportContext(123, 456, new FileImportMetadata());
         $dataImportApi = $this->createMock(DataImportApi::class);
         $dataImportApi->expects($this->once())->method('getOrCreateAd')->with(
             $this->isInstanceOf(AdSet::class),

@@ -42,6 +42,7 @@ class AdStatsTest extends TestCase
 
         return new AdStats(
             userId: 123,
+            accountId: 456,
             adId: 456,
             results: 14,
             costPerResult: $cpr,

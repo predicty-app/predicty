@@ -11,7 +11,7 @@ use App\Message\Event\UserResetPassword;
 use App\Repository\UserRepository;
 use App\Service\Security\PasswordReset\PasswordResetTokenValidator;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface as UserPasswordHasher;
 
 #[AsMessageHandler]
 class ResetPasswordHandler
@@ -20,7 +20,7 @@ class ResetPasswordHandler
 
     public function __construct(
         private PasswordResetTokenValidator $resetPasswordTokenValidator,
-        private UserPasswordHasherInterface $userPasswordHasher,
+        private UserPasswordHasher $userPasswordHasher,
         private UserRepository $userRepository,
     ) {
     }

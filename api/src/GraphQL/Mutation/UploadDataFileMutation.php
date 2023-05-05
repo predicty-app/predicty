@@ -48,6 +48,7 @@ class UploadDataFileMutation extends FieldDefinition
         $this->commandBus->dispatch(
             new ScheduleFileImport(
                 userId: $this->currentUser->getId(),
+                accountId: $this->currentUser->getAccountId(),
                 dataProvider: $fileImportType->getDataProvider(),
                 fileImportType: $fileImportType,
                 filename: $filename,

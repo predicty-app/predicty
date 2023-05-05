@@ -12,11 +12,14 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Index(fields: ['userId'])]
+#[ORM\Index(fields: ['accountId'])]
 #[ORM\Index(fields: ['date'])]
-class DailyRevenue implements Importable
+class DailyRevenue implements Importable, BelongsToAccount, Ownable
 {
+    use BelongsToAccountTrait;
     use IdTrait;
     use ImportableTrait;
+    use OwnableTrait;
     use TimestampableTrait;
 
     #[ORM\Column]
@@ -34,7 +37,7 @@ class DailyRevenue implements Importable
     #[ORM\Column(length: 3)]
     private string $currency;
 
-    public function __construct(int $userId, DateTimeImmutable $date, Money $revenue, Money $averageOrderValue)
+    public function __construct(int $userId, int $accountId, DateTimeImmutable $date, Money $revenue, Money $averageOrderValue)
     {
         assert(
             $revenue->getCurrency() === $averageOrderValue->getCurrency(),
@@ -48,6 +51,7 @@ class DailyRevenue implements Importable
         $this->currency = $averageOrderValue->getCurrency()->getCurrencyCode();
         $this->createdAt = Clock::now();
         $this->changedAt = Clock::now();
+        $this->accountId = $accountId;
     }
 
     public function getUserId(): int

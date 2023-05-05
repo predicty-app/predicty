@@ -8,9 +8,13 @@ use App\Service\Clock\Clock;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
-class ConnectedAccount
+#[ORM\Index(fields: ['userId'])]
+#[ORM\Index(fields: ['accountId'])]
+class ConnectedAccount implements Ownable, BelongsToAccount
 {
+    use BelongsToAccountTrait;
     use IdTrait;
+    use OwnableTrait;
     use TimestampableTrait;
 
     #[ORM\Column]
@@ -25,8 +29,9 @@ class ConnectedAccount
     #[ORM\Column]
     private bool $isEnabled = true;
 
-    public function __construct(int $userId, DataProvider $dataProvider, array $credentials = [], bool $isEnabled = true)
+    public function __construct(int $accountId, int $userId, DataProvider $dataProvider, array $credentials = [], bool $isEnabled = true)
     {
+        $this->accountId = $accountId;
         $this->userId = $userId;
         $this->dataProvider = $dataProvider;
         $this->credentials = $credentials;

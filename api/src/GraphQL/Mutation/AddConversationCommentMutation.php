@@ -33,6 +33,7 @@ class AddConversationCommentMutation extends FieldDefinition
         $this->handle(new AddConversationComment(
             (int) $args['conversationId'],
             $this->currentUser->getId(),
+            $this->currentUser->getAccountId(),
             $args['comment'],
         ));
 

@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\GraphQL\Mutation;
 
-use App\Repository\UserRepository;
 use App\Test\GraphQLTestCase;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @covers \App\GraphQL\Mutation\RegisterDataProviderMutation
@@ -16,12 +14,7 @@ class RegisterDataProviderMutationTest extends GraphQLTestCase
 {
     public function test_register_data_provider(): void
     {
-        $client = static::createClient();
-        $users = static::getContainer()->get(UserRepository::class);
-        $user = $users->findByUsername('john.doe@example.com');
-        assert($user instanceof UserInterface);
-
-        $client->loginUser($user);
+        $this->authenticate();
 
         $mutation = <<<'EOF'
                 mutation {
@@ -36,12 +29,7 @@ class RegisterDataProviderMutationTest extends GraphQLTestCase
 
     public function test_register_two_data_providers_in_one_api_call(): void
     {
-        $client = static::createClient();
-        $users = static::getContainer()->get(UserRepository::class);
-        $user = $users->findByUsername('john.doe@example.com');
-        assert($user instanceof UserInterface);
-
-        $client->loginUser($user);
+        $this->authenticate();
 
         $mutation = <<<'EOF'
                 mutation {

@@ -24,7 +24,7 @@ return (new PhpCsFixer\Config())
         'combine_consecutive_unsets' => true,
         'compact_nullable_typehint' => true,
         'heredoc_to_nowdoc' => true,
-        'list_syntax' => ['syntax' => 'long'],
+        'list_syntax' => ['syntax' => 'short'],
         'no_null_property_initialization' => true,
         'no_superfluous_elseif' => true,
         'no_unneeded_curly_braces' => true,

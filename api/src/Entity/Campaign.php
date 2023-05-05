@@ -11,13 +11,16 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Index(fields: ['userId'])]
+#[ORM\Index(fields: ['accountId'])]
 #[ORM\Index(fields: ['externalId'])]
 #[ORM\Index(fields: ['startedAt'])]
 #[ORM\UniqueConstraint(fields: ['userId', 'externalId'])]
-class Campaign implements Importable
+class Campaign implements Importable, Ownable, BelongsToAccount
 {
+    use BelongsToAccountTrait;
     use IdTrait;
     use ImportableTrait;
+    use OwnableTrait;
     use TimestampableTrait;
 
     #[ORM\Column]
@@ -41,6 +44,7 @@ class Campaign implements Importable
     public function __construct(
         string $externalId,
         int $userId,
+        int $accountId,
         string $name,
         DataProvider $dataProvider = DataProvider::OTHER,
         ?int $importId = null,
@@ -56,6 +60,7 @@ class Campaign implements Importable
         $this->importId = $importId;
         $this->startedAt = $startedAt;
         $this->endedAt = $endedAt;
+        $this->accountId = $accountId;
     }
 
     public function getUserId(): int

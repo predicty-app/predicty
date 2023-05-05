@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace App\Tests\Functional\GraphQL\Mutation\AddConversationComment;
 
 use App\DataFixtures\UserFixture;
+use App\Entity\Conversation;
 use App\Entity\ConversationComment;
 use App\Test\GraphQLTestCase;
 
 /**
  * @covers \App\GraphQL\Mutation\StartConversationMutation
- * @covers \App\MessageHandler\Command\StartConversationHandler
+ * @covers \App\MessageHandler\Command\AddConversationCommentHandler
  */
 class AddConversationCommentMutationTest extends GraphQLTestCase
 {
@@ -18,13 +19,15 @@ class AddConversationCommentMutationTest extends GraphQLTestCase
     {
         $this->authenticate();
 
+        $conversationId = $this->getRepository(Conversation::class)->findOneBy([], ['id' => 'DESC'])?->getId();
+
         $mutation = <<<'EOF'
-            mutation {
-              addConversationComment(conversationId: 1, comment: "This is some test comment")
+            mutation($var1: ID!) {
+              addConversationComment(conversationId: $var1, comment: "This is some test comment")
             }
             EOF;
 
-        $this->executeMutation($mutation);
+        $this->executeMutation($mutation, ['var1' => $conversationId]);
         $this->assertResponseIsSuccessful();
         $this->assertResponseMatchesPattern('{"data":{"addConversationComment":"OK"}}');
 
@@ -34,17 +37,19 @@ class AddConversationCommentMutationTest extends GraphQLTestCase
         $this->assertSame('This is some test comment', $comment->getComment());
     }
 
-    public function test_add_comment_to_other_users_conversation_is_not_allowed(): void
+    public function test_add_comment_to_other_users_conversation_in_another_account_is_not_allowed(): void
     {
         $this->authenticate(UserFixture::JANE);
 
+        $conversationId = $this->getRepository(Conversation::class)->findOneBy([], ['id' => 'DESC'])?->getId();
+
         $mutation = <<<'EOF'
-            mutation {
-              addConversationComment(conversationId: 1, comment: "This is some test comment")
+            mutation($var1: ID!) {
+              addConversationComment(conversationId: $var1, comment: "This is some test comment")
             }
             EOF;
 
-        $this->executeMutation($mutation);
+        $this->executeMutation($mutation, ['var1' => $conversationId]);
         $this->assertResponseIsSuccessful();
         $this->assertResponseMatchesJsonFile(__DIR__.'/AddCommentNotAllowed.json');
     }

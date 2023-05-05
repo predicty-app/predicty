@@ -25,10 +25,10 @@ class ConversationCommentType extends ObjectType
                     'type' => $type->id(),
                 ],
                 'createdAt' => [
-                    'type' => $type->date(),
+                    'type' => $type->dateTime(),
                 ],
                 'changedAt' => [
-                    'type' => $type->date(),
+                    'type' => $type->dateTime(),
                 ],
                 'user' => [
                     'type' => $type->user(),

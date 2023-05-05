@@ -11,11 +11,14 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Index(fields: ['userId'])]
+#[ORM\Index(fields: ['accountId'])]
 #[ORM\Index(fields: ['name'])]
 #[ORM\Index(fields: ['startedAt'])]
-class AdCollection implements Ownable
+class AdCollection implements Ownable, BelongsToAccount
 {
+    use BelongsToAccountTrait;
     use IdTrait;
+    use OwnableTrait;
     use TimestampableTrait;
 
     #[ORM\Column]
@@ -35,20 +38,20 @@ class AdCollection implements Ownable
 
     public function __construct(
         int $userId,
+        int $accountId,
         string $name,
         array $adsIds = [],
-        ?DateTimeImmutable $createdAt = null,
-        ?DateTimeImmutable $changedAt = null,
         ?DateTimeImmutable $startedAt = null,
         ?DateTimeImmutable $endedAt = null,
     ) {
         $this->userId = $userId;
         $this->name = $name;
         $this->adsIds = $adsIds;
-        $this->createdAt = $createdAt ?? Clock::now();
-        $this->changedAt = $changedAt ?? Clock::now();
+        $this->createdAt = Clock::now();
+        $this->changedAt = Clock::now();
         $this->startedAt = $startedAt;
         $this->endedAt = $endedAt;
+        $this->accountId = $accountId;
     }
 
     public function getUserId(): int

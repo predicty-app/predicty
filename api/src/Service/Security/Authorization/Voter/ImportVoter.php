@@ -6,6 +6,7 @@ namespace App\Service\Security\Authorization\Voter;
 
 use App\Entity\Import;
 use App\Entity\Permission;
+use App\Entity\Role;
 use App\Entity\User;
 
 /**
@@ -22,6 +23,7 @@ class ImportVoter extends Voter
     {
         return [
             Permission::WITHDRAW_IMPORT,
+            Permission::DOWNLOAD_IMPORTED_FILE,
         ];
     }
 
@@ -32,6 +34,10 @@ class ImportVoter extends Voter
             return false;
         }
 
-        return $permission === Permission::WITHDRAW_IMPORT && $subject->isOwnedBy($user);
+        return match ($permission) {
+            Permission::WITHDRAW_IMPORT => $this->hasRole(Role::ROLE_ACCOUNT_MEMBER, $subject->getAccountId()),
+            Permission::DOWNLOAD_IMPORTED_FILE => $this->hasRole(Role::ROLE_ACCOUNT_OWNER, $subject->getAccountId()),
+            default => false,
+        };
     }
 }

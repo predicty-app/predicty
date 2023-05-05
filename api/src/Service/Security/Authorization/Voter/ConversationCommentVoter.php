@@ -6,6 +6,7 @@ namespace App\Service\Security\Authorization\Voter;
 
 use App\Entity\ConversationComment;
 use App\Entity\Permission;
+use App\Entity\Role;
 use App\Entity\User;
 
 /**
@@ -33,12 +34,7 @@ class ConversationCommentVoter extends Voter
             return false;
         }
 
-        // we do not support above permissions without a comment
-        if ($subject === null) {
-            return false;
-        }
-
-        // we support removing comments and editing them, but only if the user owns them
-        return $subject->isOwnedBy($user);
+        // only account owners and comment owners can change comments
+        return $this->hasRole(Role::ROLE_ACCOUNT_OWNER) || $this->isAnOwnerOf($subject);
     }
 }

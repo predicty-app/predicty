@@ -1,0 +1,18 @@
+{
+  "data": {
+    "me": {
+      "currentAccount": {
+        "connectedAccounts": [
+          {
+            "connectedAt": "@datetime@",
+            "dataProvider": {
+              "id": "GOOGLE_ANALYTICS"
+            },
+            "id": "@integer@",
+            "isEnabled": false
+          }
+        ]
+      }
+    }
+  }
+}

@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\GraphQL\Mutation;
 
-use App\DataFixtures\AdCollectionFixture;
-use App\DataFixtures\AdFixture;
 use App\Entity\Ad;
 use App\Entity\AdCollection;
 use App\Test\GraphQLTestCase;
+use AssertionError;
 
 /**
  * @covers \App\GraphQL\Mutation\RemoveAdFromCollectionMutation
@@ -24,12 +23,11 @@ class RemoveAdFromCollectionMutationTest extends GraphQLTestCase
     {
         parent::setUp();
 
-        $this->loadFixtures([
-            AdCollectionFixture::class,
-        ]);
+        $adCollection = $this->getRepository(AdCollection::class)->findOneBy(['name' => 'Red Collection']) ?? throw new AssertionError('AdCollection not found');
+        $ad = $this->getRepository(Ad::class)->find($adCollection->getAdsIds()[0]) ?? throw new AssertionError('Ad not found');
 
-        $this->adCollectionId = $this->getReference(AdCollectionFixture::AD_COLLECTION_1, AdCollection::class)->getId();
-        $this->adsIds[] = $this->getReference(AdFixture::AD_1, Ad::class)->getId();
+        $this->adCollectionId = $adCollection->getId();
+        $this->adsIds[] = $ad->getId();
 
         $this->mutation = <<<'EOF'
             mutation($var1: ID!, $var2: [ID]!) {

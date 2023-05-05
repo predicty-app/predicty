@@ -10,12 +10,12 @@ use GraphQL\Type\Definition\FieldDefinition;
 
 class MeQuery extends FieldDefinition
 {
-    public function __construct(TypeRegistry $type, CurrentUser $currentUser)
+    public function __construct(TypeRegistry $type, CurrentUser $user)
     {
         parent::__construct([
             'name' => 'me',
             'type' => $type->user(),
-            'resolve' => fn () => $currentUser->getUser(),
+            'resolve' => fn () => $user,
             'description' => 'Find currently logged in user',
         ]);
     }

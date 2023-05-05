@@ -39,8 +39,9 @@ class ConnectGoogleAccountCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('userId', InputArgument::OPTIONAL, 'User account Id that you would like to connect.')
-            ->addArgument('service', InputArgument::OPTIONAL, 'Service name: GOOGLE_ADS, GOOGLE_ANALYTICS')
+            ->addArgument('userId', InputArgument::REQUIRED, 'User id that you would like to be the owner of the connection.')
+            ->addArgument('accountId', InputArgument::REQUIRED, 'Account id that you would like assign the connection to.')
+            ->addArgument('service', InputArgument::REQUIRED, 'Service name: GOOGLE_ADS, GOOGLE_ANALYTICS')
         ;
     }
 
@@ -51,6 +52,11 @@ class ConnectGoogleAccountCommand extends Command
         $userId = (int) $input->getArgument('userId');
         if ($userId === 0) {
             $userId = (int) $io->ask('User id');
+        }
+
+        $accountId = (int) $input->getArgument('accountId');
+        if ($accountId === 0) {
+            $accountId = (int) $io->ask('Account id');
         }
 
         $service = $input->getArgument('service');
@@ -83,7 +89,7 @@ class ConnectGoogleAccountCommand extends Command
             sleep(1);
         }
 
-        $this->bus->dispatch(new RegisterGoogleOAuthCredentials($user->getId(), $dataProvider, $refreshToken));
+        $this->bus->dispatch(new RegisterGoogleOAuthCredentials($user->getId(), $accountId, $dataProvider, $refreshToken));
         $io->success('Refresh token was saved in the database. You can now connect using credentials stored with this user\'s account.');
 
         return Command::SUCCESS;

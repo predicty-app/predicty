@@ -50,9 +50,9 @@ class DailyRevenueRepository
     /**
      * @return array<DailyRevenue>
      */
-    public function findAllByUserId(int $userId): array
+    public function findAllByAccountId(int $accountId): array
     {
-        return $this->repository->findBy(['userId' => $userId], ['date' => 'DESC']);
+        return $this->repository->findBy(['accountId' => $accountId], ['date' => 'DESC']);
     }
 
     public function save(DailyRevenue $revenue): void

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\GraphQL\Mutation;
 
-use App\DataFixtures\UserFixture;
 use App\Entity\Ad;
 use App\Entity\AdSet;
 use App\Entity\Campaign;
@@ -17,15 +16,6 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  */
 class UploadSimplifiedCsvTest extends GraphQLTestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->loadFixtures([
-            UserFixture::class,
-        ]);
-    }
-
     public function test_upload_csv_file(): void
     {
         $this->authenticate();
@@ -62,18 +52,18 @@ class UploadSimplifiedCsvTest extends GraphQLTestCase
         $this->assertResponseMatchesJsonFile(__DIR__.'/response/UploadSimplifiedCsvSuccess.json');
         $this->assertCount(1, $filesystem->listContents('uploads')->toArray());
 
-        $campaign = $this->getRepository(Campaign::class)->findOneBy([]);
+        $campaign = $this->getRepository(Campaign::class)->findOneBy([], ['id' => 'DESC']);
         $this->assertInstanceOf(Campaign::class, $campaign);
         $this->assertSame('Test campaign', $campaign->getName());
         $this->assertSame(DataProvider::OTHER, $campaign->getDataProvider());
         $this->assertSame('e7593cd7c1d265bd1cbf7d7ae83759b8', $campaign->getExternalId());
 
-        $adSet = $this->getRepository(AdSet::class)->findAll();
+        $adSet = $this->getRepository(AdSet::class)->findBy(['campaignId' => $campaign->getId()]);
         $this->assertCount(1, $adSet);
         $this->assertSame('Test campaign ad set', $adSet[0]->getName());
         $this->assertSame('dad5755afb5b17f677f6e15566b80442', $adSet[0]->getExternalId());
 
-        $ads = $this->getRepository(Ad::class)->findAll();
+        $ads = $this->getRepository(Ad::class)->findBy(['campaignId' => $campaign->getId()]);
         $this->assertCount(2, $ads);
         $this->assertSame('Test Ad 1', $ads[0]->getName());
         $this->assertSame('Test Ad 2', $ads[1]->getName());

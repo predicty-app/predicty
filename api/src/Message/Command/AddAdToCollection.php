@@ -6,14 +6,13 @@ namespace App\Message\Command;
 
 use App\Entity\Ad;
 use App\Entity\AdCollection;
-use App\Entity\User;
 use App\Validator as AssertCustom;
 use App\Validator\EntityExists;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class AddAdToCollection
 {
-    #[AssertCustom\EntityExists(entity: User::class, message: 'User does not exist')]
+    #[AssertCustom\UserExists]
     public int $userId;
 
     #[Assert\All([new EntityExists(Ad::class)])]
@@ -22,10 +21,14 @@ class AddAdToCollection
     #[EntityExists(AdCollection::class)]
     public int $adCollectionId;
 
-    public function __construct(int $userId, int $adCollectionId, array $adsIds)
+    #[AssertCustom\AccountExists]
+    public int $accountId;
+
+    public function __construct(int $userId, int $accountId, int $adCollectionId, array $adsIds)
     {
         $this->adsIds = $adsIds;
         $this->adCollectionId = $adCollectionId;
         $this->userId = $userId;
+        $this->accountId = $accountId;
     }
 }

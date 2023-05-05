@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Service\Security\Passcode;
 
-use App\Entity\User;
+use App\Entity\DoctrineUser;
 use App\Service\Security\Passcode\CacheBasedPasscodeService;
 use PHPUnit\Framework\TestCase;
 use Psr\SimpleCache\CacheInterface;
@@ -17,7 +17,7 @@ class CacheBasedPasscodeServiceTest extends TestCase
 {
     public function test_generate(): void
     {
-        $user = $this->createMock(User::class);
+        $user = $this->createMock(DoctrineUser::class);
         $user->method('getUuid')->willReturn(Uuid::fromString('0a2681a2-850b-44ab-a5f1-9afc15ab35d0'));
 
         $cache = $this->createMock(CacheInterface::class);
@@ -29,7 +29,7 @@ class CacheBasedPasscodeServiceTest extends TestCase
 
     public function test_verify(): void
     {
-        $user = $this->createMock(User::class);
+        $user = $this->createMock(DoctrineUser::class);
         $user->method('getUuid')->willReturn(Uuid::fromString('0a2681a2-850b-44ab-a5f1-9afc15ab35d0'));
 
         $storedKey = null;
@@ -56,7 +56,7 @@ class CacheBasedPasscodeServiceTest extends TestCase
 
     public function test_verify_default_passcode_on_dev_environment(): void
     {
-        $user = $this->createMock(User::class);
+        $user = $this->createMock(DoctrineUser::class);
         $cache = $this->createMock(CacheInterface::class);
         $service = new CacheBasedPasscodeService($cache, 'dev');
 

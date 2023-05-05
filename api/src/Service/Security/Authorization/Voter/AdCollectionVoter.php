@@ -6,6 +6,7 @@ namespace App\Service\Security\Authorization\Voter;
 
 use App\Entity\AdCollection;
 use App\Entity\Permission;
+use App\Entity\Role;
 use App\Entity\User;
 
 /**
@@ -23,20 +24,22 @@ class AdCollectionVoter extends Voter
         return [
             Permission::ADD_AD_TO_AD_COLLECTION,
             Permission::REMOVE_AD_FROM_AD_COLLECTION,
-            Permission::CREATE_AD_COLLECTION,
         ];
     }
 
+    /**
+     * @param AdCollection $subject
+     */
     protected function voteOnAttribute(string $permission, mixed $subject, ?User $user): bool
     {
+        // user must be present
         if ($user === null) {
             return false;
         }
 
-        if ($subject === null) {
-            return $permission === Permission::CREATE_AD_COLLECTION;
-        }
-
-        return $subject->isOwnedBy($user);
+        return match ($permission) {
+            Permission::ADD_AD_TO_AD_COLLECTION, Permission::REMOVE_AD_FROM_AD_COLLECTION => $this->hasRole(Role::ROLE_ACCOUNT_MEMBER, $subject->getAccountId()),
+            default => false,
+        };
     }
 }

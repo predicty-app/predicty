@@ -6,6 +6,7 @@ namespace App\Service\Security\Authorization\Voter;
 
 use App\Entity\Conversation;
 use App\Entity\Permission;
+use App\Entity\Role;
 use App\Entity\User;
 
 /**
@@ -21,12 +22,14 @@ class ConversationVoter extends Voter
     protected function getSupportedPermissions(): array
     {
         return [
-            Permission::START_CONVERSATION,
             Permission::REMOVE_CONVERSATION,
             Permission::ADD_CONVERSATION_COMMENT,
         ];
     }
 
+    /**
+     * @param Conversation $subject
+     */
     protected function voteOnAttribute(string $permission, mixed $subject, ?User $user): bool
     {
         // we do not support manipulating conversations without a user
@@ -34,12 +37,10 @@ class ConversationVoter extends Voter
             return false;
         }
 
-        // we support starting conversations without a subject, any user is allowed
-        if ($subject === null) {
-            return $permission === Permission::START_CONVERSATION;
-        }
-
-        // we support removing conversations and adding comments to them, but only if the user owns them
-        return $subject->isOwnedBy($user);
+        return match ($permission) {
+            Permission::REMOVE_CONVERSATION => $this->isAnOwnerOf($subject) || $this->hasRole(Role::ROLE_ACCOUNT_OWNER, $subject->getAccountId()),
+            Permission::ADD_CONVERSATION_COMMENT => $this->hasRole(Role::ROLE_ACCOUNT_MEMBER, $subject->getAccountId()),
+            default => false,
+        };
     }
 }

@@ -8,7 +8,7 @@ use App\Entity\AdCollection;
 use App\Entity\Permission;
 use App\Message\Command\AddAdToCollection;
 use App\Repository\AdCollectionRepository;
-use App\Repository\UserRepository;
+use App\Repository\UserWithAccountRepository;
 use App\Service\Security\Authorization\AuthorizationCheckerTrait;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -19,13 +19,13 @@ class AddAdToCollectionHandler
 
     public function __construct(
         private AdCollectionRepository $adCollectionRepository,
-        private UserRepository $userRepository
+        private UserWithAccountRepository $userWithAccountRepository,
     ) {
     }
 
     public function __invoke(AddAdToCollection $message): AdCollection
     {
-        $user = $this->userRepository->getById($message->userId);
+        $user = $this->userWithAccountRepository->get($message->userId, $message->accountId);
         $adCollection = $this->adCollectionRepository->getById($message->adCollectionId);
 
         $this->denyAccessUnlessGranted($user, Permission::ADD_AD_TO_AD_COLLECTION, $adCollection);

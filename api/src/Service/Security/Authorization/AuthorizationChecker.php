@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Service\Security\Authorization;
 
-use App\Entity\User;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Simplified authorization checker that can be used not only during request.
@@ -20,12 +20,12 @@ class AuthorizationChecker
     {
     }
 
-    public function isGranted(User $user, string $permission, mixed $subject = null): bool
+    public function isGranted(UserInterface $user, string $permission, mixed $subject = null): bool
     {
         return $this->accessDecisionManager->decide(new AuthorizationToken($user), [$permission], $subject);
     }
 
-    public function denyAccessUnlessGranted(User $user, string $permission, mixed $subject = null, string $message = 'Access Denied.'): void
+    public function denyAccessUnlessGranted(UserInterface $user, string $permission, mixed $subject = null, string $message = 'Access Denied.'): void
     {
         if (!$this->isGranted($user, $permission, $subject)) {
             $exception = new AccessDeniedException($message);

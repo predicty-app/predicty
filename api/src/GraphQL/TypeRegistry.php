@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\GraphQL;
 
+use App\GraphQL\Type\AccountType;
 use App\GraphQL\Type\AdCollectionType;
 use App\GraphQL\Type\AdSetType;
 use App\GraphQL\Type\AdStatsType;
@@ -59,6 +60,7 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
  * @method ConversationCommentType conversationComment()
  * @method ColorType               color()
  * @method ConnectedAccountType    connectedAccount()
+ * @method AccountType             account()
  */
 class TypeRegistry
 {

@@ -14,6 +14,7 @@ final class FileImportContext
      */
     public function __construct(
         private readonly int $userId,
+        private readonly int $accountId,
         private readonly FileImportMetadata $metadata,
         private readonly array $headers = []
     ) {
@@ -23,6 +24,11 @@ final class FileImportContext
     {
         return $this->userId;
     }
+
+public function getAccountId(): int
+{
+    return $this->accountId;
+}
 
     public function getHeaders(): array
     {

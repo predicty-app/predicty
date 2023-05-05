@@ -4,9 +4,15 @@ declare(strict_types=1);
 
 namespace App\Message\Command;
 
+use App\Validator as AssertCustom;
+
 class SyncGoogleAnalytics
 {
-    public function __construct(public int $userId)
+    #[AssertCustom\AccountExists]
+    public int $accountId;
+
+    public function __construct(public int $userId, int $accountId)
     {
+        $this->accountId = $accountId;
     }
 }
