@@ -9,7 +9,7 @@ use App\Test\GraphQLTestCase;
 
 /**
  * @covers \App\GraphQL\Mutation\RemoveConversationCommentMutation
- * @covers \App\Message\CommandHandler\RemoveConversationCommentHandler
+ * @covers \App\MessageHandler\Command\RemoveConversationCommentHandler
  */
 class RemoveConversationCommentMutationTest extends GraphQLTestCase
 {

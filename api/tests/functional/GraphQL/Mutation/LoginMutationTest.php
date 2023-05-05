@@ -10,7 +10,7 @@ use App\Test\GraphQLTestCase;
 
 /**
  * @covers \App\GraphQL\Mutation\LoginMutation
- * @covers \App\Message\CommandHandler\LoginHandler
+ * @covers \App\MessageHandler\Command\LoginHandler
  */
 class LoginMutationTest extends GraphQLTestCase
 {

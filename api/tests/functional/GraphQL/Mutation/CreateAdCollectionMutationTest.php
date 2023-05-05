@@ -8,7 +8,7 @@ use App\Test\GraphQLTestCase;
 
 /**
  * @covers \App\GraphQL\Mutation\CreateAdCollectionMutation
- * @covers \App\Message\CommandHandler\CreateAdCollectionHandler
+ * @covers \App\MessageHandler\Command\CreateAdCollectionHandler
  */
 class CreateAdCollectionMutationTest extends GraphQLTestCase
 {

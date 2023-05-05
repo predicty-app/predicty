@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\GraphQL\Query;
 
-use App\DataFixtures\UserFixtures;
+use App\DataFixtures\UserFixture;
 use App\Test\GraphQLTestCase;
 
 /**
@@ -168,7 +168,7 @@ class DashboardQueryTest extends GraphQLTestCase
 
     public function test_user_cannot_see_other_users_dashboard_data(): void
     {
-        $this->authenticate(UserFixtures::JANE);
+        $this->authenticate(UserFixture::JANE);
 
         $query = <<<'EOF'
             query {
