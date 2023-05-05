@@ -23,11 +23,12 @@ class SyncGoogleAnalyticsHandlerTest extends TestCase
         $importTrackingService = $this->createMock(ImportTrackingService::class);
         $importTrackingService->expects($this->once())->method('createAndRunNewApiImport')->with(
             $this->equalTo(3),
+            $this->equalTo(123),
             $this->equalTo(DataProvider::GOOGLE_ANALYTICS),
             $this->isInstanceOf(Closure::class)
         );
 
         $handler = new SyncGoogleAnalyticsHandler($updater, $importTrackingService);
-        $handler->__invoke(new SyncGoogleAnalytics(3));
+        $handler->__invoke(new SyncGoogleAnalytics(3, 123));
     }
 }

@@ -33,6 +33,7 @@ class GoogleAdsCsvHandler extends AbstractCsvFileImportHandler
     {
         $campaign = $this->dataImportApi->getOrCreateCampaign(
             $context->getUserId(),
+            $context->getAccountId(),
             $record[self::HEADER_CAMPAIGN_NAME],
             $record[self::HEADER_CAMPAIGN_ID],
         );

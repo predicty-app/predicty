@@ -7,13 +7,14 @@ namespace App\GraphQL\Mutation;
 use App\Extension\Messenger\HandleTrait;
 use App\GraphQL\TypeRegistry;
 use App\Message\Command\ChangePassword;
+use App\Service\Security\CurrentUser;
 use GraphQL\Type\Definition\FieldDefinition;
 
 class ChangePasswordMutation extends FieldDefinition
 {
     use HandleTrait;
 
-    public function __construct(TypeRegistry $type)
+    public function __construct(TypeRegistry $type, private CurrentUser $currentUser)
     {
         parent::__construct([
             'name' => 'changePassword',
@@ -29,7 +30,7 @@ class ChangePasswordMutation extends FieldDefinition
 
     private function resolve(array $args): string
     {
-        $this->handle(new ChangePassword($args['oldPassword'], $args['newPassword']));
+        $this->handle(new ChangePassword($this->currentUser->getId(), $args['oldPassword'], $args['newPassword']));
 
         return 'OK';
     }

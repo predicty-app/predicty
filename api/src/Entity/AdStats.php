@@ -12,13 +12,17 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
+#[ORM\Index(fields: ['userId'])]
+#[ORM\Index(fields: ['accountId'])]
 #[ORM\Index(fields: ['date'])]
 #[ORM\Index(fields: ['adId'])]
 #[ORM\UniqueConstraint(fields: ['adId', 'date'])]
-class AdStats implements Importable
+class AdStats implements Importable, Ownable, BelongsToAccount
 {
+    use BelongsToAccountTrait;
     use IdTrait;
     use ImportableTrait;
+    use OwnableTrait;
     use TimestampableTrait;
 
     #[ORM\Column]
@@ -44,6 +48,7 @@ class AdStats implements Importable
 
     public function __construct(
         int $userId,
+        int $accountId,
         int $adId,
         int $results,
         Money $costPerResult,
@@ -59,6 +64,7 @@ class AdStats implements Importable
         $this->date = $date;
         $this->createdAt = Clock::now();
         $this->changedAt = Clock::now();
+        $this->accountId = $accountId;
     }
 
     public function getUserId(): int

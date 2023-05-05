@@ -23,7 +23,7 @@ class AdRepository
     /**
      * @return array<Ad>
      */
-    public function findAllByUserId(int $userId): array
+    public function findAllByAccountId(int $userId): array
     {
         return $this->repository->findBy(['userId' => $userId]);
     }

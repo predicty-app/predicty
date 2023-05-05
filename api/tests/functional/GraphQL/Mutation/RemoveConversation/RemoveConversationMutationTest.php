@@ -18,6 +18,7 @@ class RemoveConversationMutationTest extends GraphQLTestCase
     {
         $this->authenticate();
         $conversation = $this->getRepository(Conversation::class)->findOneBy([], ['id' => 'DESC']);
+        $conversationId = $conversation?->getId();
         $this->assertNotNull($conversation);
 
         $mutation = <<<'EOF'
@@ -26,11 +27,11 @@ class RemoveConversationMutationTest extends GraphQLTestCase
             }
             EOF;
 
-        $this->executeMutation($mutation, ['conversationId' => $conversation->getId()]);
+        $this->executeMutation($mutation, ['conversationId' => $conversationId]);
         $this->assertResponseIsSuccessful();
         $this->assertResponseMatchesPattern('{"data":{"removeConversation":"OK"}}');
 
-        $this->assertNull($this->getRepository(Conversation::class)->findOneBy([]));
-        $this->assertEmpty($this->getRepository(ConversationComment::class)->findAll());
+        $this->assertNull($this->getRepository(Conversation::class)->find($conversationId));
+        $this->assertEmpty($this->getRepository(ConversationComment::class)->findBy(['conversationId' => $conversationId]));
     }
 }

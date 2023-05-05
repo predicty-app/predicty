@@ -10,13 +10,12 @@ use Brick\Money\Money;
 
 class MoneyHelper
 {
-    public static function amount(string|float $amount, Currency $currency): Money
+    public static function amount(string|float $amount, Currency|string $currency): Money
     {
-        return Money::of($amount, $currency, roundingMode: RoundingMode::DOWN);
-    }
+        if (is_string($currency)) {
+            $currency = Currency::of($currency);
+        }
 
-    public function currency(string $currency): Currency
-    {
-        return Currency::of($currency);
+        return Money::of($amount, $currency, roundingMode: RoundingMode::DOWN);
     }
 }

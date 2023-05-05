@@ -18,7 +18,7 @@ use DateTimeImmutable;
  */
 interface DataImportApi
 {
-    public function getOrCreateCampaign(int $userId, string $name, string $externalId): Campaign;
+    public function getOrCreateCampaign(int $userId, int $accountId, string $name, string $externalId): Campaign;
 
     public function getOrCreateAd(AdSet $adSet, string $name, string $externalId): Ad;
 
@@ -26,7 +26,7 @@ interface DataImportApi
 
     public function getOrCreateAdStats(Ad $ad, DateTimeImmutable $date, int $results, Money $costPerResult, Money $amountSpent): AdStats;
 
-    public function getOrCreateDailyRevenue(int $userId, DateTimeImmutable $date, Money $revenue, Money $averageOrderValue): DailyRevenue;
+    public function getOrCreateDailyRevenue(int $userId, int $accountId, DateTimeImmutable $date, Money $revenue, Money $averageOrderValue): DailyRevenue;
 
-    public function createDailyRevenueIfNotExists(int $userId, DateTimeImmutable $date, Money $revenue, Money $averageOrderValue): ?DailyRevenue;
+    public function createDailyRevenueIfNotExists(int $userId, int $accountId, DateTimeImmutable $date, Money $revenue, Money $averageOrderValue): ?DailyRevenue;
 }

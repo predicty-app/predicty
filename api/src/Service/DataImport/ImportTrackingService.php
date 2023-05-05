@@ -31,25 +31,25 @@ class ImportTrackingService
     ) {
     }
 
-    public function createNewFileImport(int $userId, string $filename, FileImportType $fileImportType): FileImport
+    public function createNewFileImport(int $userId, int $accountId, string $filename, FileImportType $fileImportType): FileImport
     {
-        $import = new FileImport($userId, $filename, $fileImportType);
+        $import = new FileImport($userId, $accountId, $filename, $fileImportType);
         $this->importRepository->save($import);
 
         return $import;
     }
 
-    public function createNewApiImport(int $userId, DataProvider $dataProvider): Import
+    public function createNewApiImport(int $userId, int $accountId, DataProvider $dataProvider): Import
     {
-        $import = new ApiImport($userId, $dataProvider);
+        $import = new ApiImport($userId, $accountId, $dataProvider);
         $this->importRepository->save($import);
 
         return $import;
     }
 
-    public function createAndRunNewApiImport(int $userId, DataProvider $dataProvider, callable $callback): void
+    public function createAndRunNewApiImport(int $userId, int $accountId, DataProvider $dataProvider, callable $callback): void
     {
-        $import = $this->createNewApiImport($userId, $dataProvider);
+        $import = $this->createNewApiImport($userId, $accountId, $dataProvider);
         $this->run($import->getId(), $callback);
     }
 

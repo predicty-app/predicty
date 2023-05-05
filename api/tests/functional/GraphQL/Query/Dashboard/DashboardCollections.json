@@ -1,0 +1,20 @@
+{
+  "data": {
+    "dashboard": {
+      "collections": [
+        {
+          "id": "@integer@",
+          "name": "Red Collection"
+        },
+        {
+          "id": "@integer@",
+          "name": "Green Collection"
+        },
+        {
+          "id": "@integer@",
+          "name": "Blue Collection"
+        }
+      ]
+    }
+  }
+}

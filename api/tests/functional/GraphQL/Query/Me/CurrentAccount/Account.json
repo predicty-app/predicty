@@ -1,0 +1,12 @@
+{
+  "data": {
+    "me": {
+      "currentAccount": {
+        "id": "@integer@",
+        "name": "Account 1",
+        "connectedAccounts": "@array@",
+        "users": "@array@"
+      }
+    }
+  }
+}

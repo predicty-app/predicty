@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\GraphQL\Mutation;
 
-use App\DataFixtures\AdCollectionFixture;
-use App\DataFixtures\AdFixture;
+use App\DataFixtures\Account1\AdCollectionFixture;
+use App\DataFixtures\Account1\AdFixture;
 use App\Entity\Ad;
 use App\Entity\AdCollection;
 use App\Test\GraphQLTestCase;

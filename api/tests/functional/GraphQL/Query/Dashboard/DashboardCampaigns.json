@@ -1,0 +1,20 @@
+{
+  "data": {
+    "dashboard": {
+      "campaigns": [
+        {
+          "id": "@integer@",
+          "name": "Campaign 1"
+        },
+        {
+          "id": "@integer@",
+          "name": "Campaign 2"
+        },
+        {
+          "id": "@integer@",
+          "name": "Campaign 3"
+        }
+      ]
+    }
+  }
+}

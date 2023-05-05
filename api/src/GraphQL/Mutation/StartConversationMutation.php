@@ -33,6 +33,7 @@ class StartConversationMutation extends FieldDefinition
     {
         $this->handle(new StartConversation(
             $this->currentUser->getId(),
+            $this->currentUser->getAccountId(),
             $args['date'],
             $args['comment'] ?? '',
             $args['color'] ?? '#ffffff',

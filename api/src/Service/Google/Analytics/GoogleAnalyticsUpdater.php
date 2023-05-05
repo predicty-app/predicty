@@ -19,11 +19,12 @@ class GoogleAnalyticsUpdater
     ) {
     }
 
-    public function update(int $userId): void
+    public function update(int $userId, int $accountId): void
     {
         foreach ($this->googleAnalyticsApi->getDailyRevenue($userId) as $revenue) {
             $this->dataImportApi->createDailyRevenueIfNotExists(
                 userId: $userId,
+                accountId: $accountId,
                 date: DateHelper::fromString($revenue['date'], self::GA_DATE_FORMAT),
                 revenue: MoneyHelper::amount($revenue['revenue'], Currency::of('USD')),
                 averageOrderValue: MoneyHelper::amount($revenue['averageOrderValue'], Currency::of('USD')),

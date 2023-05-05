@@ -33,9 +33,9 @@ class StartAndEndDateRecalculationService
         $this->recalculateAdCollections($userId);
     }
 
-    private function recalculateAds(int $userId): void
+    private function recalculateAds(int $accountId): void
     {
-        $ads = $this->adRepository->findAllByUserId($userId);
+        $ads = $this->adRepository->findAllByAccountId($accountId);
 
         foreach ($ads as $ad) {
             $dates = $this->adStatsRepository->findStartAndEndDateForAnAd($ad->getId());
@@ -52,9 +52,9 @@ class StartAndEndDateRecalculationService
         }
     }
 
-    private function recalculateAdSets(int $userId): void
+    private function recalculateAdSets(int $accountId): void
     {
-        $adSets = $this->adSetRepository->findAllByUserId($userId);
+        $adSets = $this->adSetRepository->findAllByAccountId($accountId);
 
         foreach ($adSets as $adSet) {
             $dates = $this->adStatsRepository->findStartAndEndDateForAnAdSet($adSet->getId());
@@ -73,7 +73,7 @@ class StartAndEndDateRecalculationService
 
     private function recalculateCampaigns(int $userId): void
     {
-        $campaigns = $this->campaignRepository->findAllByUserId($userId);
+        $campaigns = $this->campaignRepository->findAllByAccountId($userId);
 
         foreach ($campaigns as $campaign) {
             $dates = $this->adStatsRepository->findStartAndEndDateForACampaign($campaign->getId());
@@ -92,7 +92,7 @@ class StartAndEndDateRecalculationService
 
     private function recalculateAdCollections(int $userId): void
     {
-        $adCollections = $this->adCollectionRepository->findAllByUserId($userId);
+        $adCollections = $this->adCollectionRepository->findAllByAccountId($userId);
 
         foreach ($adCollections as $adCollection) {
             $dates = $this->adStatsRepository->findStartAndEndDateForAnAdCollection($adCollection->getAdsIds());

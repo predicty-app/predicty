@@ -1,24 +1,32 @@
 security:
+    role_hierarchy:
+        ROLE_ACCOUNT_MEMBER: ROLE_USER
+        ROLE_ACCOUNT_OWNER: ROLE_ACCOUNT_MEMBER
+        ROLE_SYSTEM_ADMIN: ROLE_ACCOUNT_OWNER # all admins have by default the same access to any account as their owners
+        ROLE_SYSTEM_SUPER_ADMIN: ROLE_SYSTEM_ADMIN
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
         # used to reload user from session & other features (e.g. switch_user)
-        app_user_provider:
-            entity:
-                class: App\Entity\User
-                property: email
+        default:
+            id: App\Service\Security\Authorization\UserProvider\DefaultUserProvider
+        account_aware:
+            id: App\Service\Security\Authorization\UserProvider\AccountAwareUserProvider
+        all_users:
+            chain:
+                providers: [account_aware, default]
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             lazy: true
-            provider: app_user_provider
+            provider: all_users
             custom_authenticators:
-                - App\Service\Security\PasscodeAuthenticator
-                - App\Service\Security\PasswordAuthenticator
+                - App\Service\Security\Authentication\PasscodeAuthenticator
+                - App\Service\Security\Authentication\PasswordAuthenticator
 
             login_throttling:
                 max_attempts: 3

@@ -27,7 +27,7 @@ class EmailUniqueValidator extends ConstraintValidator
 
         if ($this->userRepository->findByEmail($value) !== null) {
             $this->context->buildViolation($constraint->message)
-                ->setParameter('{{ string }}', $value)
+                ->setParameter('%email%', $value)
                 ->addViolation();
         }
     }

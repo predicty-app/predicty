@@ -11,10 +11,12 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Index(fields: ['userId'])]
+#[ORM\Index(fields: ['accountId'])]
 #[ORM\Index(fields: ['date'])]
-#[ORM\UniqueConstraint(fields: ['userId', 'date'])]
-class Conversation implements Ownable
+#[ORM\UniqueConstraint(fields: ['userId', 'accountId', 'date'])]
+class Conversation implements Ownable, BelongsToAccount
 {
+    use BelongsToAccountTrait;
     use IdTrait;
     use TimestampableTrait;
 
@@ -27,13 +29,14 @@ class Conversation implements Ownable
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private DateTimeImmutable $date;
 
-    public function __construct(int $userId, DateTimeImmutable $date, Color $color)
+    public function __construct(int $userId, int $accountId, DateTimeImmutable $date, Color $color)
     {
         $this->userId = $userId;
         $this->color = $color->toHexString();
         $this->date = $date;
         $this->createdAt = Clock::now();
         $this->changedAt = Clock::now();
+        $this->accountId = $accountId;
     }
 
     public function getUserId(): int

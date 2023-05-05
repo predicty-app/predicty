@@ -21,11 +21,6 @@ class ConnectedAccountRepository
         $this->repository = $this->em->getRepository(ConnectedAccount::class);
     }
 
-    public function findOrCreate(int $userId, DataProvider $type): ConnectedAccount
-    {
-        return $this->find($userId, $type) ?? new ConnectedAccount($userId, $type);
-    }
-
     public function find(int $userId, DataProvider $type): ?ConnectedAccount
     {
         return $this->repository->findOneBy(['userId' => $userId, 'dataProvider' => $type]);
@@ -43,6 +38,14 @@ class ConnectedAccountRepository
         }
 
         return $this->repository->findBy($args);
+    }
+
+    /**
+     * @return ConnectedAccount[]
+     */
+    public function findAllByAccountId(int $accountId): array
+    {
+        return $this->repository->findBy(['accountId' => $accountId]);
     }
 
     public function save(ConnectedAccount $entity): void

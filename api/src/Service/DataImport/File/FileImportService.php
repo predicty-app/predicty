@@ -28,6 +28,7 @@ class FileImportService
 
     public function import(
         int $userId,
+        int $accountId,
         string $filename,
         FileImportType $fileImportType,
         ?FileImportMetadata $metadata = null
@@ -42,7 +43,7 @@ class FileImportService
         $records = $stmt->process($csv, array_map('trim', $csv->getHeader()));
 
         $metadata ??= new FileImportMetadata();
-        $context = new FileImportContext($userId, $metadata, $records->getHeader());
+        $context = new FileImportContext($userId, $accountId, $metadata, $records->getHeader());
 
         foreach ($records as $record) {
             $this->batch[] = function () use ($record, $fileImportHandler, $context): void {

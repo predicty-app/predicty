@@ -12,7 +12,7 @@ use Psr\SimpleCache\CacheInterface;
  */
 class PasswordResetService implements PasswordResetTokenValidator, PasswordResetTokenGenerator
 {
-    private const CACHE_PREFIX = 'PasswordResetService_';
+    private const CACHE_PREFIX = 'PasswordResetService';
     private const CACHE_TTL = 3600;
 
     public function __construct(private string $secret, private CacheInterface $cache)

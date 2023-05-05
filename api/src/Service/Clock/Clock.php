@@ -15,7 +15,7 @@ class Clock
 {
     private static ?ClockInterface $clock = null;
 
-    public function __construct(ClockInterface $clock)
+    public function __construct(ClockInterface $clock = null)
     {
         self::$clock = $clock;
     }
@@ -37,5 +37,10 @@ class Clock
         }
 
         return self::$clock;
+    }
+
+    public static function reset(): void
+    {
+        self::$clock = null;
     }
 }

@@ -11,14 +11,17 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Index(fields: ['userId'])]
+#[ORM\Index(fields: ['accountId'])]
 #[ORM\Index(fields: ['campaignId'])]
 #[ORM\Index(fields: ['externalId'])]
 #[ORM\Index(fields: ['startedAt'])]
 #[ORM\UniqueConstraint(fields: ['userId', 'externalId'])]
-class AdSet implements Importable
+class AdSet implements Importable, Ownable, BelongsToAccount
 {
+    use BelongsToAccountTrait;
     use IdTrait;
     use ImportableTrait;
+    use OwnableTrait;
     use TimestampableTrait;
 
     #[ORM\Column]
@@ -42,6 +45,7 @@ class AdSet implements Importable
     public function __construct(
         string $externalId,
         int $userId,
+        int $accountId,
         int $campaignId,
         string $name,
         ?int $importId = null,
@@ -57,6 +61,7 @@ class AdSet implements Importable
         $this->importId = $importId;
         $this->startedAt = $startedAt;
         $this->endedAt = $endedAt;
+        $this->accountId = $accountId;
     }
 
     public function getExternalId(): string

@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraint;
 #[Attribute(Attribute::TARGET_PROPERTY)]
 class EmailUnique extends Constraint
 {
-    public string $message = 'The email "{{ string }}" cannot be used anymore. Use different email.';
+    public string $message = 'The email "%email%" cannot be used anymore. Use different email.';
 
     public function validatedBy(): string
     {

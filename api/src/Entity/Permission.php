@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ReflectionClass;
+use ReflectionClassConstant;
+
 /**
  * List of permission attributes.
  */
@@ -20,4 +23,19 @@ final class Permission
     public const CREATE_AD_COLLECTION = 'CREATE_AD_COLLECTION';
 
     public const WITHDRAW_IMPORT = 'WITHDRAW_IMPORT';
+
+    public const CREATE_ACCOUNT = 'CREATE_ACCOUNT';
+    public const MANAGE_ACCOUNT = 'MANAGE_ACCOUNT';
+    public const SWITCH_ACCOUNT = 'SWITCH_ACCOUNT';
+
+    public const DOWNLOAD_IMPORTED_FILE = 'DOWNLOAD_IMPORTED_FILE';
+    public const VIEW_DASHBOARD = 'VIEW_DASHBOARD';
+
+    /**
+     * Get all available permissions.
+     */
+    public static function getPermissions(): array
+    {
+        return array_keys((new ReflectionClass(self::class))->getConstants(ReflectionClassConstant::IS_PUBLIC));
+    }
 }

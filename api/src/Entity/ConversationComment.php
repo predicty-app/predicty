@@ -9,10 +9,12 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
 #[ORM\Index(fields: ['userId'])]
+#[ORM\Index(fields: ['accountId'])]
 #[ORM\Index(fields: ['conversationId'])]
 #[ORM\Index(fields: ['createdAt'])]
-class ConversationComment implements Ownable
+class ConversationComment implements Ownable, BelongsToAccount
 {
+    use BelongsToAccountTrait;
     use IdTrait;
     use TimestampableTrait;
 
@@ -25,13 +27,14 @@ class ConversationComment implements Ownable
     #[ORM\Column]
     private string $comment;
 
-    public function __construct(int $conversationId, int $userId, string $comment)
+    public function __construct(int $conversationId, int $userId, int $accountId, string $comment)
     {
         $this->conversationId = $conversationId;
         $this->userId = $userId;
         $this->comment = $comment;
         $this->createdAt = Clock::now();
         $this->changedAt = Clock::now();
+        $this->accountId = $accountId;
     }
 
     public function getConversationId(): int

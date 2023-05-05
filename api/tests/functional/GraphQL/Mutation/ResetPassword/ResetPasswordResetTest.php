@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Tests\Functional\GraphQL\Mutation\ResetPassword;
 
 use App\DataFixtures\UserFixture;
-use App\Entity\User;
+use App\Entity\DoctrineUser;
 use App\Message\Event\UserResetPassword;
 use App\Service\Security\PasswordReset\PasswordResetService;
 use App\Test\GraphQLTestCase;
@@ -14,7 +14,7 @@ use Zenstruck\Messenger\Test\InteractsWithMessenger;
 
 /**
  * @covers \App\GraphQL\Mutation\ResetPasswordMutation
- * @covers \App\MessageHandler\Command\RequestPasswordResetTokenHandler
+ * @covers \App\MessageHandler\Command\ResetPasswordHandler
  */
 class ResetPasswordResetTest extends GraphQLTestCase
 {
@@ -23,7 +23,7 @@ class ResetPasswordResetTest extends GraphQLTestCase
     public function test_reset_password(): void
     {
         $this->loadFixtures([UserFixture::class]);
-        $user = $this->getReference(UserFixture::JOHN, User::class);
+        $user = $this->getReference(UserFixture::JOHN, DoctrineUser::class);
         $token = static::getContainer()->get(PasswordResetService::class)->createToken($user);
 
         $mutation = <<<'EOF'
@@ -40,7 +40,7 @@ class ResetPasswordResetTest extends GraphQLTestCase
     public function test_request_password_reset_emits_event(): void
     {
         $this->loadFixtures([UserFixture::class]);
-        $user = $this->getReference(UserFixture::JOHN, User::class);
+        $user = $this->getReference(UserFixture::JOHN, DoctrineUser::class);
         $token = static::getContainer()->get(PasswordResetService::class)->createToken($user);
 
         $mutation = <<<'EOF'
@@ -57,7 +57,7 @@ class ResetPasswordResetTest extends GraphQLTestCase
     public function test_request_password_reset_sends_notification_email(): void
     {
         $this->loadFixtures([UserFixture::class]);
-        $user = $this->getReference(UserFixture::JOHN, User::class);
+        $user = $this->getReference(UserFixture::JOHN, DoctrineUser::class);
         $token = static::getContainer()->get(PasswordResetService::class)->createToken($user);
 
         $mutation = <<<'EOF'
@@ -93,7 +93,7 @@ class ResetPasswordResetTest extends GraphQLTestCase
     public function test_request_password_token_works_only_once(): void
     {
         $this->loadFixtures([UserFixture::class]);
-        $user = $this->getReference(UserFixture::JOHN, User::class);
+        $user = $this->getReference(UserFixture::JOHN, DoctrineUser::class);
         $token = static::getContainer()->get(PasswordResetService::class)->createToken($user);
 
         $mutation = <<<'EOF'

@@ -33,6 +33,7 @@ class RegisterDataProviderMutation extends FieldDefinition
         $this->handle(
             new RegisterGoogleOAuthCredentials(
                 $this->currentUser->getId(),
+                $this->currentUser->getAccountId(),
                 $args['type'],
                 $args['oauthRefreshToken']
             )

@@ -18,10 +18,11 @@ class FileImport extends Import
 
     public function __construct(
         int $userId,
+        int $accountId,
         string $filename,
         FileImportType $fileImportType = FileImportType::OTHER,
     ) {
-        parent::__construct($userId, $fileImportType->getDataProvider());
+        parent::__construct($userId, $accountId, $fileImportType->getDataProvider());
         $this->filename = $filename;
         $this->fileImportType = $fileImportType;
     }

@@ -24,6 +24,7 @@ class ScheduleFileImportHandler
     {
         $import = $this->importTrackingService->createNewFileImport(
             $command->userId,
+            $command->accountId,
             $command->filename,
             $command->fileImportType
         );
@@ -31,6 +32,7 @@ class ScheduleFileImportHandler
         $command = new ImportFile(
             importId: $import->getId(),
             userId: $command->userId,
+            accountId: $command->accountId,
             fileImportType: $command->fileImportType,
             filename: $command->filename,
             metadata: $command->metadata

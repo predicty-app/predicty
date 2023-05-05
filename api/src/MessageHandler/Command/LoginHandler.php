@@ -7,7 +7,7 @@ namespace App\MessageHandler\Command;
 use App\Entity\User;
 use App\Message\Command\Login;
 use App\Repository\UserRepository;
-use App\Service\Security\Authenticator;
+use App\Service\Security\Authentication\Authenticator;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]

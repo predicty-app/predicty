@@ -9,7 +9,7 @@ use App\Entity\Permission;
 use App\Message\Command\AddConversationComment;
 use App\Repository\ConversationCommentRepository;
 use App\Repository\ConversationRepository;
-use App\Repository\UserRepository;
+use App\Repository\UserWithAccountRepository;
 use App\Service\Security\Authorization\AuthorizationCheckerTrait;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
@@ -21,18 +21,18 @@ class AddConversationCommentHandler
     public function __construct(
         private ConversationRepository $conversationRepository,
         private ConversationCommentRepository $conversationCommentRepository,
-        private UserRepository $userRepository
+        private UserWithAccountRepository $userWithAccountRepository,
     ) {
     }
 
     public function __invoke(AddConversationComment $command): void
     {
-        $user = $this->userRepository->getById($command->userId);
+        $user = $this->userWithAccountRepository->get($command->userId, $command->accountId);
         $conversation = $this->conversationRepository->getById($command->conversationId);
 
         $this->denyAccessUnlessGranted($user, Permission::ADD_CONVERSATION_COMMENT, $conversation);
 
-        $comment = new ConversationComment($command->conversationId, $command->userId, $command->comment);
+        $comment = new ConversationComment($command->conversationId, $command->userId, $command->accountId, $command->comment);
         $this->conversationCommentRepository->save($comment);
     }
 }

@@ -29,7 +29,11 @@ class RemoveConversationMutation extends FieldDefinition
 
     private function resolve(array $args): string
     {
-        $this->handle(new RemoveConversation((int) $args['conversationId'], $this->currentUser->getId()));
+        $this->handle(new RemoveConversation(
+            (int) $args['conversationId'],
+            $this->currentUser->getId(),
+            $this->currentUser->getAccountId(),
+        ));
 
         return 'OK';
     }

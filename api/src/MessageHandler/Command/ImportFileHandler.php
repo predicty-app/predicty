@@ -24,6 +24,7 @@ class ImportFileHandler
         $this->importTrackingService->run($command->importId, function () use ($command): void {
             $this->fileImportService->import(
                 userId: $command->userId,
+                accountId: $command->accountId,
                 filename: $command->filename,
                 fileImportType: $command->fileImportType,
                 metadata: new FileImportMetadata($command->metadata)

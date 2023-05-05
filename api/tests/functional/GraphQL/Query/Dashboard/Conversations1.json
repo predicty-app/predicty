@@ -1,0 +1,42 @@
+{
+  "data": {
+    "dashboard": {
+      "conversations": [
+        {
+          "id": "1",
+          "user": {
+            "id": "@integer@"
+          },
+          "date": "@date@",
+          "color": {
+            "hex": "#0099ff",
+            "rgb": "rgb(0,153,255)"
+          },
+          "isRemovable": true,
+          "comments": [
+            {
+              "id": "1",
+              "user": {
+                "id": "@integer@"
+              },
+              "comment": "This is a first comment in that conversation",
+              "createdAt": "@datetime@.isInDateFormat('Y-m-d H:i:s')",
+              "changedAt": "@datetime@.isInDateFormat('Y-m-d H:i:s')",
+              "isEditable": true
+            },
+            {
+              "id": "@integer@",
+              "user": {
+                "id": "@integer@"
+              },
+              "comment": "This is a second comment in that conversation",
+              "createdAt": "@datetime@.isInDateFormat('Y-m-d H:i:s')",
+              "changedAt": "@datetime@.isInDateFormat('Y-m-d H:i:s')",
+              "isEditable": true
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

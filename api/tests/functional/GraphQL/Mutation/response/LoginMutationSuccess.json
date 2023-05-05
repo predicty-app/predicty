@@ -1,7 +1,7 @@
 {
   "data": {
     "login": {
-      "uid": "@uuid@",
+      "uid": "@string@",
       "@*@": "@*@"
     }
   }

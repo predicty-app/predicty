@@ -7,6 +7,7 @@ namespace App\MessageHandler\Command;
 use App\Entity\Factory\UserFactory;
 use App\Extension\Messenger\DispatchCommandTrait;
 use App\Extension\Messenger\EmitEventTrait;
+use App\Message\Command\CreateAccount;
 use App\Message\Command\Register;
 use App\Message\Command\RequestPasscode;
 use App\Message\Event\UserRegistered;
@@ -21,7 +22,7 @@ class RegisterHandler
 
     public function __construct(
         private UserFactory $userFactory,
-        private UserRepository $userRepository,
+        private UserRepository $userRepository
     ) {
     }
 
@@ -32,7 +33,9 @@ class RegisterHandler
         if ($user === null) {
             $user = $this->userFactory->create($message->email);
             $this->userRepository->save($user);
+
             $this->emit(new UserRegistered($user->getId()));
+            $this->dispatch(new CreateAccount($user->getId()));
         }
 
         $this->dispatch(new RequestPasscode($user->getId()));
