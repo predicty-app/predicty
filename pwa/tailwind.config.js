@@ -26,6 +26,9 @@ module.exports = {
       backgroundColor: {
         dynamic: "var(--background)"
       },
+      borderColor: {
+        dynamic: "var(--border)"
+      },
       gridColumnStart: {
         dynamic: "var(--start)"
       },
@@ -41,6 +44,26 @@ module.exports = {
         },
         text: {
           color: "#FFFFFF"
+        }
+      },
+      conversationCommentsCreateLine: {
+        icons: {
+          fill: "#FFFFFF"
+        },
+      },
+      conversationCommentsWindow: {
+        background: "#FFFFFF",
+        icons: {
+          fill: "#111111"
+        },
+        textarea: {
+          background: "#F3F3F3",
+          text: "#A0A0A0"
+        },
+        button: {
+          background: {
+            disabled: "#B5B5B5"
+          }
         }
       },
       modalWindow: {

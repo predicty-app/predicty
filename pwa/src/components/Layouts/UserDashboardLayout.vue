@@ -44,8 +44,10 @@ function handleChangeScrollParams(params: ScrollType) {
       </ScrollbarPanel>
     </div>
     <div
-      class="h-calc select-none grid grid-cols-[auto] grid-rows-[70px_270px_30px_30px_auto]"
+      class="relative h-calc select-none grid grid-cols-[auto] grid-rows-[70px_270px_30px_30px_auto]"
     >
+      <ConversationCommentsMask />
+      <ConversationCommentsLinesWrapper />
       <ScrollbarPanel :scroll-x="globalStore.scrollParams.x">
         <slot name="chart-weeks" />
       </ScrollbarPanel>

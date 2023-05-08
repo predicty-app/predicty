@@ -1,9 +1,16 @@
 import apiService from "@/services/api/api";
+import { useUserDashboardStore } from "@/stores/userDashboard";
 
 type CommentPayloadType = {
   conversationId: string;
   comment: string;
 };
+
+type StartConversationPayloadType = {
+  color: string;
+  comment: string;
+  date: string;
+}
 
 /**
  * Function to handle conversations list.
@@ -28,7 +35,12 @@ async function handleGetConversations() {
   try {
     const response = await apiService.request<any, any>(query);
 
-    return response.errors ? null : response.data.imports;
+    if(!response.errors) {
+      const userDashboard = useUserDashboardStore();
+      userDashboard.conversations = response.data.dashboard.conversations;
+    }
+
+    return response.errors ? null : 'OK';
   } catch (error) {
     return null;
   }
@@ -36,8 +48,9 @@ async function handleGetConversations() {
 
 /**
  * Function to start a conversation.
+ * @param {StartConversationPayloadType} payload
  */
-async function handleStartConversation(comment: string) {
+async function handleStartConversation(payload: StartConversationPayloadType) {
   type ConversationType = {
     color: string;
     comment: string;
@@ -49,13 +62,9 @@ async function handleStartConversation(comment: string) {
     }`;
 
   try {
-    const response = await apiService.request<ConversationType, any>(query, {
-      color: "#E24963",
-      comment: comment,
-      date: new Date().toISOString().split("T")[0]
-    });
+    const response = await apiService.request<ConversationType, any>(query, { ...payload });
 
-    return response.errors ? null : response.data.imports;
+    return response.errors ? null : 'OK';
   } catch (error) {
     return null;
   }
@@ -98,7 +107,7 @@ async function handleAddComment(payload: CommentPayloadType) {
       comment: payload.comment
     });
 
-    return response.errors ? null : response.data.imports;
+    return response.errors ? null : 'OK';
   } catch (error) {
     return null;
   }

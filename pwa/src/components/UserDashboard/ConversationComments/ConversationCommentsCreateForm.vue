@@ -25,8 +25,8 @@ type ColorPickerType = {
 };
 
 const { t } = useI18n();
-const conversationStore = useConversationsStore();
 const isColorPickerVisible = ref<boolean>(false);
+const conversationStore = useConversationsStore();
 const iconNameVisibilityConversations = computed<string>(() =>
   conversationStore.isConversationsVisible ? "hidden" : "visible"
 );
@@ -43,6 +43,10 @@ function toggleStateCreateConversation(state: boolean) {
   }
 }
 
+/**
+ * Function to handle get change color conversation.
+ * @param {ColorPickerType} color 
+ */
 function handleChangeColorConversation(color: ColorPickerType) {
   conversationStore.createdConversationSetting.color = color.hex;
   isColorPickerVisible.value = false;

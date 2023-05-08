@@ -153,6 +153,23 @@
       "conversation-comments": {
         "conversation-comments-create-form": {
           "cancel": "Cancel conversation"
+        },
+        "conversation-comments-window": {
+          "days": {
+            "Mon": "Monday",
+            "Tue": "Tuesday",
+            "Wed": "Wednesday",
+            "Thu": "Thursday",
+            "Fri": "Friday",
+            "Sat": "Saturday",
+            "Sun": "Sunday"
+          },
+          "today": "Today",
+          "day-ago": "day ago",
+          "days-ago": "days ago",
+          "comment": {
+            "placeholder": "Add new comment"
+          }
         }
       },
       "zoom-scale": {
@@ -163,7 +180,7 @@
         "add-to-collection": "Add to Collection",
         "remove-from-collection": "Remove from Collection",
         "hide-element": "Show/Hide element",
-        "select-placeholder": "Select campaning...",
+        "select-placeholder": "Select campaign...",
         "notifications": {
           "create-collection": {
             "success": "Successfully created a collection.",
@@ -175,7 +192,7 @@
           },
           "unassign-ads-from-collection": {
             "success": "Correctly unassigned adverts from collections.",
-            "error": "An error occurred when unassigning adverts from a collection. Please try again in a moment."
+            "error": "An error occurred when unassign adverts from a collection. Please try again in a moment."
           }
         }
       },
@@ -228,20 +245,6 @@
           "TIK_TOK": "TikTok",
           "OTHER": "Other (internal)"
         }
-      },
-      "conversation": {
-        "weekdays": {
-          "0": "Sunday",
-          "1": "Monday",
-          "2": "Tuesday",
-          "3": "Wednesday",
-          "4": "Thursday",
-          "5": "Friday",
-          "6": "Saturday"
-        },
-        "today": "Today",
-        "day-ago": "day ago",
-        "days-ago": "days ago"
       }
     }
   },

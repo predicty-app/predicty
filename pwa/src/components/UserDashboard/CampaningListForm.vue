@@ -16,9 +16,10 @@ const userDashboardStore = useUserDashboardStore();
 
 onMounted(async () => {
   isSpinnerVisible.value = true;
-  const { campaigns, dailyRevenue } = await handleGetCampaigns();
+  const { campaigns, dailyRevenue, conversations } = await handleGetCampaigns();
   userDashboardStore.setCampaignsList(campaigns);
   userDashboardStore.setDailyReveneu(dailyRevenue);
+  userDashboardStore.setConversationsList(conversations);
   nextTick(() => {
     userDashboardStore.handleVirtualizeCampaignsList();
     isSpinnerVisible.value = false;
