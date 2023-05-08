@@ -4,6 +4,7 @@ import { defineAsyncComponent, computed } from "vue";
 type PropsType = {
   name: string;
   className?: any;
+  color?: string;
 };
 
 const props = withDefaults(defineProps<PropsType>(), {
@@ -18,5 +19,9 @@ const iconComponent = computed(() => {
 </script>
 
 <template>
-  <component :class="className" :is="iconComponent" />
+  <component
+    :class="className"
+    :is="iconComponent"
+    v-bind="color && { color }"
+  />
 </template>

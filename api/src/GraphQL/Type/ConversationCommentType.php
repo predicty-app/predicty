@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\GraphQL\Type;
 
 use App\Entity\ConversationComment;
+use App\Entity\Permission;
 use App\GraphQL\TypeRegistry;
 use App\Repository\UserRepository;
-use App\Service\User\CurrentUserService;
+use App\Service\Security\CurrentUser;
 use GraphQL\Type\Definition\ObjectType;
 
 class ConversationCommentType extends ObjectType
@@ -15,7 +16,7 @@ class ConversationCommentType extends ObjectType
     public function __construct(
         TypeRegistry $type,
         UserRepository $userRepository,
-        CurrentUserService $currentUserService
+        CurrentUser $currentUser,
     ) {
         parent::__construct([
             'name' => 'ConversationComment',
@@ -38,7 +39,7 @@ class ConversationCommentType extends ObjectType
                 ],
                 'isEditable' => [
                     'type' => $type->boolean(),
-                    'resolve' => fn (ConversationComment $comment) => $currentUserService->isAnOwnerOf($comment),
+                    'resolve' => fn (ConversationComment $comment) => $currentUser->isAllowedTo(Permission::EDIT_CONVERSATION_COMMENT, $comment),
                 ],
             ],
         ]);

@@ -1,0 +1,19 @@
+{
+  "errors": [
+    {
+      "message": "You are not allowed to do that",
+      "locations": [
+        {
+          "line": 2,
+          "column": 3
+        }
+      ],
+      "path": [
+        "changeConversationComment"
+      ]
+    }
+  ],
+  "data": {
+    "changeConversationComment": null
+  }
+}

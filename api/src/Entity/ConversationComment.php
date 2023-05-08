@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Index(fields: ['userId'])]
 #[ORM\Index(fields: ['conversationId'])]
 #[ORM\Index(fields: ['createdAt'])]
-class ConversationComment implements UserOwnedEntity
+class ConversationComment implements Ownable
 {
     use IdTrait;
     use TimestampableTrait;
@@ -55,7 +55,7 @@ class ConversationComment implements UserOwnedEntity
         $this->changedAt = Clock::now();
     }
 
-    public function isOwnedBy(User $user): bool
+    public function isOwnedBy(UserWithId $user): bool
     {
         return $this->userId === $user->getId();
     }

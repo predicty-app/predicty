@@ -11,7 +11,7 @@ use Zenstruck\Messenger\Test\InteractsWithMessenger;
 
 /**
  * @covers \App\GraphQL\Mutation\RegisterMutation
- * @covers \App\Message\CommandHandler\RegisterHandler
+ * @covers \App\MessageHandler\Command\RegisterHandler
  */
 class RegisterMutationTest extends GraphQLTestCase
 {

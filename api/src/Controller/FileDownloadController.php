@@ -6,7 +6,7 @@ namespace App\Controller;
 
 use App\Entity\FileImport;
 use App\Repository\ImportRepository;
-use App\Service\User\CurrentUserService;
+use App\Service\Security\CurrentUser;
 use League\Flysystem\FilesystemReader;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,7 +20,7 @@ class FileDownloadController extends AbstractController
     public function __construct(
         private ImportRepository $importRepository,
         private FilesystemReader $filesystemReader,
-        private CurrentUserService $currentUserService,
+        private CurrentUser $currentUser,
         private LoggerInterface $logger
     ) {
     }
@@ -28,7 +28,7 @@ class FileDownloadController extends AbstractController
     #[Route('/uploads/file/{importId}', name: 'app_file_download', methods: ['GET'])]
     public function __invoke(int $importId): Response
     {
-        if ($this->currentUserService->isAnonymous()) {
+        if ($this->currentUser->isAnonymous()) {
             $this->logger->info('Anonymous user tried to download a file', ['importId' => $importId]);
 
             throw new NotFoundHttpException('File not found');

@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Index(fields: ['userId'])]
 #[ORM\Index(fields: ['date'])]
 #[ORM\UniqueConstraint(fields: ['userId', 'date'])]
-class Conversation implements UserOwnedEntity
+class Conversation implements Ownable
 {
     use IdTrait;
     use TimestampableTrait;
@@ -51,7 +51,7 @@ class Conversation implements UserOwnedEntity
         return $this->date;
     }
 
-    public function isOwnedBy(User $user): bool
+    public function isOwnedBy(UserWithId $user): bool
     {
         return $this->userId === $user->getId();
     }

@@ -1,3 +1,10 @@
+<script setup lang="ts">
+type PropsType = {
+  color?: string;
+};
+defineProps<PropsType>();
+</script>
+
 <template>
   <svg
     width="12"
@@ -8,7 +15,7 @@
   >
     <path
       d="M11 1L1 11M1 1L11 11"
-      stroke="#9A9A9A"
+      :stroke="color ? color : '#9A9A9A'"
       stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"

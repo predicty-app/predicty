@@ -9,6 +9,7 @@ use GraphQL\Error\Error;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Exception\HandlerFailedException;
 use Symfony\Component\Messenger\Exception\ValidationFailedException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Throwable;
@@ -34,15 +35,16 @@ class ErrorHandler
             $error = $this->normalize($error);
             $previous = $error->getPrevious();
             $logMessage = $previous?->getMessage() ?? $error->getMessage();
+            $context = ['exception' => $error];
 
             if ($error->isClientSafe()) {
                 if ($previous instanceof ClientSafeException) {
                     $logMessage = $previous->getRealMessage();
                 }
 
-                $this->logger->info($logMessage, ['exception' => $error]);
+                $this->logger->info($logMessage, $context);
             } else {
-                $this->logger->error($logMessage, ['exception' => $error]);
+                $this->logger->error($logMessage, $context);
             }
 
             $checkedErrors[] = $error;
@@ -67,6 +69,10 @@ class ErrorHandler
             $previous = $this->wrapAuthenticationException($previous);
         }
 
+        if ($previous instanceof AccessDeniedException) {
+            $previous = $this->wrapAccessDeniedException($previous);
+        }
+
         if ($previous instanceof ValidationFailedException) {
             $previous = $this->wrapValidationFailedException($previous);
         }
@@ -79,6 +85,15 @@ class ErrorHandler
             path: $error->getPath(),
             previous: $previous
         );
+    }
+
+    private function wrapAccessDeniedException(AccessDeniedException $exception): ClientSafeException
+    {
+        $subject = get_debug_type($exception->getSubject());
+        $attributes = implode(', ', $exception->getAttributes());
+        $message = sprintf('Access denied on "%s", permission: "%s"', $subject, $attributes);
+
+        return $this->createClientSafeException('You are not allowed to do that', $message, $exception);
     }
 
     private function wrapAuthenticationException(AuthenticationException $exception): ClientSafeException

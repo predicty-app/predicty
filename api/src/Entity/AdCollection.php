@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Index(fields: ['userId'])]
 #[ORM\Index(fields: ['name'])]
 #[ORM\Index(fields: ['startedAt'])]
-class AdCollection
+class AdCollection implements Ownable
 {
     use IdTrait;
     use TimestampableTrait;
@@ -97,5 +97,10 @@ class AdCollection
     public function setEndedAt(DateTimeImmutable $endedAt): void
     {
         $this->endedAt = $endedAt;
+    }
+
+    public function isOwnedBy(UserWithId $user): bool
+    {
+        return $this->userId === $user->getId();
     }
 }
