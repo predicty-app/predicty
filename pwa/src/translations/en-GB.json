@@ -150,6 +150,11 @@
       }
     },
     "user-dashboard": {
+      "conversation-comments": {
+        "conversation-comments-create-form": {
+          "cancel": "Cancel conversation"
+        }
+      },
       "zoom-scale": {
         "title": "current zoom: "
       },

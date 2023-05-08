@@ -136,6 +136,7 @@ const addComment = async () => {
         <div
           class="py-2 border-b border-b-divider-default last:border-0 text-[10px] leading-3"
           v-for="comment in conversation.comments"
+          :key="comment.comment"
           data-testid="conversation__comment"
         >
           <p class="font-bold mb-2">
