@@ -3,8 +3,8 @@ import { ref } from "vue";
 import { useConversationsStore } from "@/stores/conversations";
 import { TypesWindowConversation } from "@/stores/conversations";
 
-const conversationStore = useConversationsStore();
 const yLinePosition = ref<number>(0);
+const conversationStore = useConversationsStore();
 
 /**
  * Function yo move button create conversation.

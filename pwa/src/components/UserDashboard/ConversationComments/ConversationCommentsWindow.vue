@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { computed, ref } from "vue";
-import { until } from '@vueuse/core'; 
+import { until } from "@vueuse/core";
 import { hCommentDate } from "@/helpers/utils";
 import { useConversationsStore } from "@/stores/conversations";
 import type { ConversationsType } from "@/stores/userDashboard";
@@ -95,9 +95,11 @@ async function handleCreateConversationOrAssignComment() {
       date: conversationStore.createdConversationSetting.date
     });
 
-    notificationMessageModel.value.type = 'success';
+    notificationMessageModel.value.type = "success";
     notificationMessageModel.value.visible = true;
-    notificationMessageModel.value.message = t('components.user-dashboard.conversation-comments.conversation-comments-window.notifications.create-conversation.success');
+    notificationMessageModel.value.message = t(
+      "components.user-dashboard.conversation-comments.conversation-comments-window.notifications.create-conversation.success"
+    );
 
     await until(ref).toBe(true, { timeout: 1800 });
   }
@@ -108,9 +110,11 @@ async function handleCreateConversationOrAssignComment() {
       conversationId: props.conversationElement.id
     });
 
-    notificationMessageModel.value.type = 'success';
+    notificationMessageModel.value.type = "success";
     notificationMessageModel.value.visible = true;
-    notificationMessageModel.value.message = t('components.user-dashboard.conversation-comments.conversation-comments-window.notifications.create-comment.success');
+    notificationMessageModel.value.message = t(
+      "components.user-dashboard.conversation-comments.conversation-comments-window.notifications.create-comment.success"
+    );
 
     await until(ref).toBe(true, { timeout: 1000 });
   }

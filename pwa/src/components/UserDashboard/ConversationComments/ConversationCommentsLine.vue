@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import { until } from '@vueuse/core';
+import { until } from "@vueuse/core";
+import { ref, watch, onMounted } from "vue";
 import { useGlobalStore } from "@/stores/global";
-import { ref, watch, onMounted, computed } from "vue";
 import { useUserDashboardStore } from "@/stores/userDashboard";
 import { useConversationsStore } from "@/stores/conversations";
 import type { ConversationsType } from "@/stores/userDashboard";
 import { TypesWindowConversation } from "@/stores/conversations";
-import { handleRemoveConversation, handleGetConversations } from '@/services/api/conversation';
+import {
+  handleRemoveConversation,
+  handleGetConversations
+} from "@/services/api/conversation";
 
 type PropsType = {
   conversationDate: string;
@@ -60,7 +63,9 @@ watch(
         conversationStore.createdConversationSetting.mousePosition.x <
           xPositionEnd
       ) {
-        conversationStore.canCreateConversation =  conversationElement.value ? false : true;
+        conversationStore.canCreateConversation = conversationElement.value
+          ? false
+          : true;
 
         conversationStore.createdConversationSetting.linePosition.x =
           leftPosition;
@@ -111,7 +116,7 @@ function handleMoveButtonCreateConversation(eventMouse: MouseEvent) {
  * @param {boolean} state
  */
 function handleToggleHoverElementState(state: boolean) {
-  if(isModalWindowVisible.value) {
+  if (isModalWindowVisible.value) {
     isHoverElement.value = false;
     return;
   }
@@ -136,10 +141,11 @@ async function handleSubmitRemoveConversation() {
   isSpinnerVisible.value = true;
 
   await handleRemoveConversation(conversationElement.value.id);
-  notificationMessageModel.value.type = 'success';
+  notificationMessageModel.value.type = "success";
   notificationMessageModel.value.visible = true;
-  notificationMessageModel.value.message = t('components.user-dashboard.conversation-comments.conversation-comments-line.notifications.remove-conversation.success');
-
+  notificationMessageModel.value.message = t(
+    "components.user-dashboard.conversation-comments.conversation-comments-line.notifications.remove-conversation.success"
+  );
 
   await until(ref).toBe(true, { timeout: 1800 });
   await handleGetConversations();
@@ -170,7 +176,10 @@ async function handleSubmitRemoveConversation() {
         }
       ]"
     >
-      <div class="z-[20] w-6 h-6 bg-dynamic rounded-full text-xs font-medium absolute left-[50%] translate-x-[-50%] top-3 flex items-center justify-center text-conversationCommentsCreateForm-text-color" :style="{'--background': conversationElement.color.hex }">
+      <div
+        class="z-[20] w-6 h-6 bg-dynamic rounded-full text-xs font-medium absolute left-[50%] translate-x-[-50%] top-3 flex items-center justify-center text-conversationCommentsCreateForm-text-color"
+        :style="{ '--background': conversationElement.color.hex }"
+      >
         {{ conversationElement.comments.length }}
       </div>
       <div
@@ -195,23 +204,39 @@ async function handleSubmitRemoveConversation() {
     </div>
   </div>
   <Teleport to="body" v-if="isEditModeVisible">
-      <ModalWindow v-model="isModalWindowVisible">
-        <div
-          class="flex flex-col gap-y-6 justify-center text-center header-dashboard__modal"
-        >
-          <HeaderText
-            :header-title="t('components.user-dashboard.conversation-comments.conversation-comments-line.remove.header.title')"
-            :header-description="t('components.user-dashboard.conversation-comments.conversation-comments-line.remove.header.description')"
-          />
-          <div class="flex gap-x-4 w-96 justify-center items-center m-auto">
-            <ButtonForm @click="isModalWindowVisible = false">
-              {{ t('components.user-dashboard.conversation-comments.conversation-comments-line.remove.buttons.cancel') }}
-            </ButtonForm>
-            <ButtonForm @click="handleSubmitRemoveConversation" type="success">
-              {{ t('components.user-dashboard.conversation-comments.conversation-comments-line.remove.buttons.remove') }}
-            </ButtonForm>
-          </div>
+    <ModalWindow v-model="isModalWindowVisible">
+      <div
+        class="flex flex-col gap-y-6 justify-center text-center header-dashboard__modal"
+      >
+        <HeaderText
+          :header-title="
+            t(
+              'components.user-dashboard.conversation-comments.conversation-comments-line.remove.header.title'
+            )
+          "
+          :header-description="
+            t(
+              'components.user-dashboard.conversation-comments.conversation-comments-line.remove.header.description'
+            )
+          "
+        />
+        <div class="flex gap-x-4 w-96 justify-center items-center m-auto">
+          <ButtonForm @click="isModalWindowVisible = false">
+            {{
+              t(
+                "components.user-dashboard.conversation-comments.conversation-comments-line.remove.buttons.cancel"
+              )
+            }}
+          </ButtonForm>
+          <ButtonForm @click="handleSubmitRemoveConversation" type="success">
+            {{
+              t(
+                "components.user-dashboard.conversation-comments.conversation-comments-line.remove.buttons.remove"
+              )
+            }}
+          </ButtonForm>
         </div>
-      </ModalWindow>
-    </Teleport>
+      </div>
+    </ModalWindow>
+  </Teleport>
 </template>

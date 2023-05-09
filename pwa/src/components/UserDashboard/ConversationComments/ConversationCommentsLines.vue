@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import {
+  gapGrid,
   scaleGrid,
   scaleFirstGrid,
-  gapGrid,
   handleVirtualizationElement
 } from "@/helpers/timeline";
 import { ref, onMounted, watch } from "vue";
@@ -38,7 +38,12 @@ watch(
     ))
 );
 
-function parseDateByDay(day: number): string {
+/**
+ * Function to parse date by day. Add day to date.
+ * @param {number} day
+ * @return {string}
+ */
+function addDayToDate(day: number): string {
   const dateToParse = `${props.conversationDate.slice(
     6,
     10
@@ -61,8 +66,8 @@ function parseDateByDay(day: number): string {
     v-if="isElementVisible"
   >
     <ConversationCommentsLine
-      :key="parseDateByDay(day - 1)"
-      :conversation-date="parseDateByDay(day - 1)"
+      :key="addDayToDate(day - 1)"
+      :conversation-date="addDayToDate(day - 1)"
       v-for="day in 7"
     />
   </div>

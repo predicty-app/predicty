@@ -13,11 +13,14 @@ defineProps<PropsType>();
     v-if="modelValue"
   >
     <div
-      :class="['max-w-xl', {
-        'w-full': !width,
-        'w-dynamic': width
-      }]"
-      :style="{'--height': `${width}px`}"
+      :class="[
+        'max-w-xl',
+        {
+          'w-full': !width,
+          'w-dynamic': width
+        }
+      ]"
+      :style="{ '--height': `${width}px` }"
     >
       <CardPanel
         type="default"

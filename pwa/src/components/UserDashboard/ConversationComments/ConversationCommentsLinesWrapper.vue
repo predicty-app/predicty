@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { scaleLines, mainWidthGrid } from "@/helpers/timeline";
 import { useGlobalStore } from "@/stores/global";
+import { scaleLines, mainWidthGrid } from "@/helpers/timeline";
 
 const globalStore = useGlobalStore();
 </script>

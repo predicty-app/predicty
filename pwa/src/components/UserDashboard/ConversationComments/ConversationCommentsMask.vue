@@ -26,6 +26,8 @@ function handleGetPositionCreatedConversationLine(eventMouse: MouseEvent) {
     v-if="conversationStore.isCreateConversationActive"
     class="absolute w-full h-[98.5%] z-[9999] left-0 top-0"
   >
-    <ConversationCommentsCreateLine v-if="conversationStore.canCreateConversation"/>
+    <ConversationCommentsCreateLine
+      v-if="conversationStore.canCreateConversation"
+    />
   </div>
 </template>
