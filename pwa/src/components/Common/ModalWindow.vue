@@ -2,9 +2,6 @@
 type PropsType = {
   modelValue: boolean;
   width?: number;
-  isConversation?: boolean;
-  x?: number;
-  y?: number;
 };
 
 defineProps<PropsType>();
@@ -12,37 +9,22 @@ defineProps<PropsType>();
 
 <template>
   <div
-    class="flex fixed z-20 w-full h-full top-0 left-0 items-center justify-center bg-modalWindow-mask-background animate-fade-in"
-    :class="{ 'border-2 border-red p-3': isConversation }"
+    class="flex fixed z-[100] w-full h-full top-0 left-0 items-center justify-center bg-modalWindow-mask-background animate-fade-in"
     v-if="modelValue"
   >
     <div
-      :class="[{ fixed: x && y }, width ? `w-[${width}px]` : 'w-full max-w-xl']"
-      :style="[
-        width
-          ? {
-              width: `${width}px`
-            }
-          : '',
-        x && y
-          ? {
-              top: `${y}px`,
-              left: `${x}px`
-            }
-          : ''
+      :class="[
+        'max-w-xl',
+        {
+          'w-full': !width,
+          'w-dynamic': width
+        }
       ]"
+      :style="{ '--height': `${width}px` }"
     >
       <CardPanel
-        :type="isConversation ? 'comments' : 'default'"
+        type="default"
         class="scroll-bar overflow-x-hidden overflow-y-auto"
-        :style="[
-          y
-            ? {
-                'max-height': `calc(100vh - ${y}px - 10px)`,
-                'overflow-y': 'auto'
-              }
-            : ''
-        ]"
       >
         <slot />
       </CardPanel>

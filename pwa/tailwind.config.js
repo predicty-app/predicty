@@ -23,6 +23,12 @@ module.exports = {
         calc: "calc(100vh - 60px)",
         dynamic: "var(--height)"
       },
+      backgroundColor: {
+        dynamic: "var(--background)"
+      },
+      borderColor: {
+        dynamic: "var(--border)"
+      },
       gridColumnStart: {
         dynamic: "var(--start)"
       },
@@ -31,6 +37,35 @@ module.exports = {
       }
     },
     colors: {
+      conversationCommentsCreateForm: {
+        background: "#404040",
+        icons: {
+          fill: "#FFFFFF"
+        },
+        text: {
+          color: "#FFFFFF"
+        }
+      },
+      conversationCommentsCreateLine: {
+        icons: {
+          fill: "#FFFFFF"
+        },
+      },
+      conversationCommentsWindow: {
+        background: "#FFFFFF",
+        icons: {
+          fill: "#111111"
+        },
+        textarea: {
+          background: "#F3F3F3",
+          text: "#A0A0A0"
+        },
+        button: {
+          background: {
+            disabled: "#B5B5B5"
+          }
+        }
+      },
       modalWindow: {
         mask: {
           background: "#00000030"
@@ -356,7 +391,7 @@ module.exports = {
         "repeating-linear-gradient( to right, #fff 0 calc((100% / 7) - 1px), rgb(233, 233, 233) calc((100% / 7) - 1px) calc(100% / 7) )",
       dark: "repeating-linear-gradient( to right, #f4f4f6 0 calc((100% / 7) - 1px), rgb(233, 233, 233) calc((100% / 7) - 1px) calc(100% / 7) )",
       one: "repeating-linear-gradient(to right,rgb(233, 233, 233) 0 1px,#fff 1px calc(v-bind(scaleLines) / 7),rgb(233, 233, 233) calc(v-bind(scaleLines) / 7) calc((v-bind(scaleLines) / 7) + 1px),#fff calc((v-bind(scaleLines) / 7) + 1px) calc(2 * (v-bind(scaleLines) / 7)), rgb(233, 233, 233) calc(2 * (v-bind(scaleLines) / 7)) calc(2 * (v-bind(scaleLines) / 7) + 1px),#fff calc(2 * (v-bind(scaleLines) / 7) + 1px) calc(3 * (v-bind(scaleLines) / 7)),rgb(233, 233, 233) calc(3 * (v-bind(scaleLines) / 7)) calc(3 * (v-bind(scaleLines) / 7) + 1px),#fff calc(3 * (v-bind(scaleLines) / 7) + 1px) calc(4 * (v-bind(scaleLines) / 7)),rgb(233, 233, 233) calc(4 * (v-bind(scaleLines) / 7)) calc(4 * (v-bind(scaleLines) / 7) + 1px),#fff calc(4 * (v-bind(scaleLines) / 7) + 1px) calc(5 * (v-bind(scaleLines) / 7)),rgb(233, 233, 233) calc(5 * (v-bind(scaleLines) / 7)) calc(5 * (v-bind(scaleLines) / 7) + 1px),#fff calc(5 * (v-bind(scaleLines) / 7) + 1px) calc(6 * (v-bind(scaleLines) / 7)),rgb(233, 233, 233) calc(6 * (v-bind(scaleLines) / 7)) calc(6 * (v-bind(scaleLines) / 7) + 1px),#fff calc(6 * (v-bind(scaleLines) / 7) + 1px) calc(7 * (v-bind(scaleLines) / 7)),rgb(233, 233, 233) calc(7 * (v-bind(scaleLines) / 7)) calc(7 * (v-bind(scaleLines) / 7) + 1px),#f4f4f6 calc(7 * (v-bind(scaleLines) / 7) + 1px) calc(8 * (v-bind(scaleLines) / 7)),rgb(233, 233, 233) calc(8 * (v-bind(scaleLines) / 7)) calc(8 * (v-bind(scaleLines) / 7) + 1px),#f4f4f6 calc(8 * (v-bind(scaleLines) / 7) + 1px) calc(9 * (v-bind(scaleLines) / 7)),rgb(233, 233, 233) calc(9 * (v-bind(scaleLines) / 7)) calc(9 * (v-bind(scaleLines) / 7) + 1px),#f4f4f6 calc(9 * (v-bind(scaleLines) / 7) + 1px) calc(10 * (v-bind(scaleLines) / 7)),rgb(233, 233, 233) calc(10 * (v-bind(scaleLines) / 7)) calc(10 * (v-bind(scaleLines) / 7) + 1px),#f4f4f6 calc(10 * (v-bind(scaleLines) / 7) + 1px) calc(11 * (v-bind(scaleLines) / 7)),rgb(233, 233, 233) calc(11 * (v-bind(scaleLines) / 7)) calc(11 * (v-bind(scaleLines) / 7) + 1px),#f4f4f6 calc(11 * (v-bind(scaleLines) / 7) + 1px) calc(12 * (v-bind(scaleLines) / 7)),rgb(233, 233, 233) calc(12 * (v-bind(scaleLines) / 7)) calc(12 * (v-bind(scaleLines) / 7) + 1px),#f4f4f6 calc(12 * (v-bind(scaleLines) / 7) + 1px) calc(13 * (v-bind(scaleLines) / 7)),rgb(233, 233, 233) calc(13 * (v-bind(scaleLines) / 7)) calc(13 * (v-bind(scaleLines) / 7) + 1px),#f4f4f6 calc(13 * (v-bind(scaleLines) / 7) + 1px) calc(14 * (v-bind(scaleLines) / 7)))"
-    }
+    },
   },
   variants: {
     extend: {}

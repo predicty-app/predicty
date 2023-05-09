@@ -345,3 +345,46 @@ export function hGetParseDate(date?: string): string {
     day < 10 ? `0${day}` : day
   ].join("-");
 }
+
+/**
+ * Function to format date.
+ * @param {string} d
+ * @returns {string}
+ */
+export function hDateFormat(d?: string): string {
+  const date = d ? new Date(d) : new Date();
+
+  return `${date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()}.${
+    date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
+  }`;
+}
+
+/**
+ *
+ * @param date
+ * @param t
+ * @returns
+ */
+
+export function hCommentDate(date: string, t: any): string {
+  const today = new Date();
+  const difference =
+    (today.getTime() - new Date(date).getTime()) / (1000 * 60 * 60 * 24);
+  let result = null;
+
+  if (hDateFormat(date) === hDateFormat(today.toString())) {
+    result = t(
+      "components.user-dashboard.conversation-comments.conversation-comments-window.today"
+    );
+  } else if (difference >= 1 && difference < 2) {
+    result = `1 ${t(
+      "components.user-dashboard.conversation-comments.conversation-comments-window.day-ago"
+    )}`;
+  } else {
+    result = `${Math.floor(difference)} ${t(
+      "components.user-dashboard.conversation-comments.conversation-comments-window.days-ago"
+    )}`;
+  }
+
+  return result;
+}
