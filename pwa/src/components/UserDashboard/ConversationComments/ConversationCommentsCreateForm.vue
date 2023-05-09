@@ -45,7 +45,7 @@ function toggleStateCreateConversation(state: boolean) {
 
 /**
  * Function to handle get change color conversation.
- * @param {ColorPickerType} color 
+ * @param {ColorPickerType} color
  */
 function handleChangeColorConversation(color: ColorPickerType) {
   conversationStore.createdConversationSetting.color = color.hex;

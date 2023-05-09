@@ -154,6 +154,23 @@
         "conversation-comments-create-form": {
           "cancel": "Cancel conversation"
         },
+        "conversation-comments-line": {
+          "remove": {
+            "header": {
+              "title": "Remove conversation",
+              "description": "Are you sure you want to remove the selected conversation from the timeline ?"
+            },
+            "buttons": {
+              "cancel": "Cancel",
+              "remove": "Remove"
+            }
+          },
+          "notifications": {
+            "remove-conversation": {
+              "success": "Conversation remove correctly."
+            }
+          }
+        },
         "conversation-comments-window": {
           "days": {
             "Mon": "Monday",
@@ -169,6 +186,14 @@
           "days-ago": "days ago",
           "comment": {
             "placeholder": "Add new comment"
+          },
+          "notifications": {
+            "create-conversation": {
+              "success": "New conversation created correctly."
+            },
+            "create-comment": {
+              "success": "New comment created correctly."
+            }
           }
         }
       },

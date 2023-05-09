@@ -1,9 +1,9 @@
 import { defineStore } from "pinia";
 
 export enum TypesWindowConversation {
-  CREATE = 'create',
-  PREVIEW = 'preview',
-  DETAILS = 'details'
+  CREATE = "create",
+  PREVIEW = "preview",
+  DETAILS = "details"
 }
 
 type ConversationPositionType = {
@@ -20,10 +20,11 @@ type CreatedConversationSettingType = {
 };
 
 type StateType = {
-  createdConversationSetting: CreatedConversationSettingType;
+  canCreateConversation: boolean;
   isConversationsVisible: boolean;
   isCreateConversationActive: boolean;
   isProcessCreateConversationActive: boolean;
+  createdConversationSetting: CreatedConversationSettingType;
 };
 
 export const useConversationsStore = defineStore({
@@ -44,7 +45,8 @@ export const useConversationsStore = defineStore({
       },
       isProcessCreateConversationActive: false,
       isCreateConversationActive: false,
-      isConversationsVisible: true
+      isConversationsVisible: true,
+      canCreateConversation: true
     } as StateType),
   actions: {
     /**
@@ -56,14 +58,14 @@ export const useConversationsStore = defineStore({
       this.isConversationsVisible = true;
 
       this.createdConversationSetting.color = "#E24963";
-      this.createdConversationSetting.comment = '';
+      this.createdConversationSetting.comment = "";
       this.createdConversationSetting.linePosition = {
         x: 0,
-        y: 0,
-      }
+        y: 0
+      };
       this.createdConversationSetting.mousePosition = {
-        x: 0,
-      }
+        x: 0
+      };
     }
-  },
+  }
 });

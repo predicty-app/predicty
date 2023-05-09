@@ -10,7 +10,7 @@ type StartConversationPayloadType = {
   color: string;
   comment: string;
   date: string;
-}
+};
 
 /**
  * Function to handle conversations list.
@@ -35,12 +35,12 @@ async function handleGetConversations() {
   try {
     const response = await apiService.request<any, any>(query);
 
-    if(!response.errors) {
+    if (!response.errors) {
       const userDashboard = useUserDashboardStore();
       userDashboard.conversations = response.data.dashboard.conversations;
     }
 
-    return response.errors ? null : 'OK';
+    return response.errors ? null : "OK";
   } catch (error) {
     return null;
   }
@@ -62,9 +62,11 @@ async function handleStartConversation(payload: StartConversationPayloadType) {
     }`;
 
   try {
-    const response = await apiService.request<ConversationType, any>(query, { ...payload });
+    const response = await apiService.request<ConversationType, any>(query, {
+      ...payload
+    });
 
-    return response.errors ? null : 'OK';
+    return response.errors ? null : "OK";
   } catch (error) {
     return null;
   }
@@ -107,7 +109,7 @@ async function handleAddComment(payload: CommentPayloadType) {
       comment: payload.comment
     });
 
-    return response.errors ? null : 'OK';
+    return response.errors ? null : "OK";
   } catch (error) {
     return null;
   }
