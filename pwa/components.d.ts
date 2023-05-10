@@ -59,6 +59,7 @@ declare module "@vue/runtime-core" {
     HeaderDashboard: typeof import("./src/components/UserDashboard/HeaderDashboard.vue")["default"];
     HeaderText: typeof import("./src/components/Common/HeaderText.vue")["default"];
     HistoryImportedFilesForm: typeof import("./src/components/Shared/HistoryImportedFilesForm.vue")["default"];
+    HotKeys: typeof import("./src/components/Common/HotKeys.vue")["default"];
     IconSvg: typeof import("./src/components/Common/IconSvg.vue")["default"];
     InputForm: typeof import("./src/components/Common/InputForm.vue")["default"];
     LegendDescription: typeof import("./src/components/UserDashboard/LegendDescription.vue")["default"];

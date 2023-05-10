@@ -4,6 +4,7 @@ import { computed, ref } from "vue";
 import { ColorPicker } from "vue-color-kit";
 import "vue-color-kit/dist/vue-color-kit.css";
 import { useConversationsStore } from "@/stores/conversations";
+import { ActionHotkeyType } from "@/stores/conversations";
 
 type HSVType = {
   h: number;
@@ -51,9 +52,19 @@ function handleChangeColorConversation(color: ColorPickerType) {
   conversationStore.createdConversationSetting.color = color.hex;
   isColorPickerVisible.value = false;
 }
+
+/**
+ * Function to handle hotkey action.
+ * @param {ActionHotkeyType} action
+ */
+function handleHotkeyAction(action: ActionHotkeyType) {
+  const state = action === ActionHotkeyType.ACTIVE_CONVERSATION;
+  toggleStateCreateConversation(state);
+}
 </script>
 
 <template>
+  <HotKeys @handleAction="handleHotkeyAction" />
   <div
     class="animate-fade-in-up fixed bottom-2 left-2 bg-conversationCommentsCreateForm-background p-3 z-50 rounded-lg"
   >

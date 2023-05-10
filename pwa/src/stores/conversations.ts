@@ -6,6 +6,11 @@ export enum TypesWindowConversation {
   DETAILS = "details"
 }
 
+export enum ActionHotkeyType {
+  ACTIVE_CONVERSATION = "active_conversation",
+  DEACTIVATION_CONVERSATION = "deactivation_conversation"
+}
+
 type ConversationPositionType = {
   x: number;
   y?: number;
