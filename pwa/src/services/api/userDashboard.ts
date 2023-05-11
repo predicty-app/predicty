@@ -115,7 +115,7 @@ async function handleGetCampaigns() {
 
   try {
     const response = await apiService.request<ProvidersType, any>(query);
-    let campaigns = CampaignsService.parseCampaignsList(
+    let campaigns = await CampaignsService.parseCampaignsList(
       response.data.dashboard.campaigns
     );
 

@@ -61,25 +61,27 @@ class CampaignsService {
    * Function to parse campaigns list.
    * @param {CampaignNonParsedType[]} campaigns
    */
-  public parseCampaignsList(
+  public async parseCampaignsList(
     campaigns: CampaignNonParsedType[]
-  ): CampaignType[] {
-    const parsedList: CampaignType[] = campaigns
-      .map(
-        (campaign: CampaignNonParsedType) =>
-          ({
-            uid: campaign.id,
-            name: campaign.name,
-            externalId: campaign.externalId,
-            adsets: this.#setAdSetsList(campaign),
-            dataProvider: [campaign.dataProvider.id],
-            color: hLightenDarkenColor(hRandomColor(), -50)
-          } as CampaignType)
-      )
-      .filter((campaign: CampaignType) => campaign.adsets.length > 0);
+  ): Promise<CampaignType[]> {
+    return new Promise((resolve) => {
+      const parsedList: CampaignType[] = campaigns
+        .map(
+          (campaign: CampaignNonParsedType) =>
+            ({
+              uid: campaign.id,
+              name: campaign.name,
+              externalId: campaign.externalId,
+              adsets: this.#setAdSetsList(campaign),
+              dataProvider: [campaign.dataProvider.id],
+              color: hLightenDarkenColor(hRandomColor(), -50)
+            } as CampaignType)
+        )
+        .filter((campaign: CampaignType) => campaign.adsets.length > 0);
 
-    this.#prepareTimelineParams(parsedList);
-    return parsedList;
+      this.#prepareTimelineParams(parsedList);
+      resolve(parsedList);
+    });
   }
 
   /**
