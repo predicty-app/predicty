@@ -32,7 +32,8 @@ watch(
   () => [
     userDashboardStore.activeProviders.length,
     userDashboardStore.hiddenAds.length,
-    userDashboardStore.typeChart
+    userDashboardStore.typeChart,
+    userDashboardStore.campaigns.length
   ],
   async () => {
     await calcualteAll();
