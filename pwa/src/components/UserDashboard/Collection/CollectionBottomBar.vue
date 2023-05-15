@@ -2,10 +2,10 @@
 import { ref, watch } from "vue";
 import { useGlobalStore } from "@/stores/global";
 import { useUserDashboardStore } from "@/stores/userDashboard";
-import type { AdSetsType, AdsType } from "@/stores/userDashboard";
+import type { SelectedCollectionType, AdsType } from "@/stores/userDashboard";
 
 type PropsType = {
-  collection?: AdSetsType;
+  selectedCollection?: SelectedCollectionType;
 };
 
 const props = defineProps<PropsType>();
@@ -14,11 +14,11 @@ const heightContent = ref<string>("0px");
 const userDashboardStore = useUserDashboardStore();
 
 const emit = defineEmits<{
-  (e: "handleCloseDetials"): void;
+  (e: "handleCloseDetails"): void;
 }>();
 
 watch(
-  () => props.collection,
+  () => props.selectedCollection,
   () => {
     const height = globalStore.scrollTimeline.getBoundingClientRect().height;
     heightContent.value = `${height + 23}px`;
@@ -26,14 +26,16 @@ watch(
 );
 
 /**
- * Function to handle cloe detials collection.
+ * Function to handle close details collection.
  */
-function handleCloseDetialcCollection() {
+function handleCloseDetailsCollection() {
   userDashboardStore.removeVisibilityAds(
-    userDashboardStore.selectedCollection.ads.map((ad: AdsType) => ad.uid)
+    userDashboardStore.selectedCollection.collection.ads.map(
+      (ad: AdsType) => ad.id
+    )
   );
   userDashboardStore.selectedCollectionAdsList.ads = [];
-  emit("handleCloseDetials");
+  emit("handleCloseDetails");
 
   globalStore.scrollTimeline.scrollLeft = globalStore.scrollParams.x;
 }
@@ -41,19 +43,19 @@ function handleCloseDetialcCollection() {
 
 <template>
   <div
-    v-if="collection"
+    v-if="selectedCollection"
     class="collection-bottom-bar animate-fade-in-up fixed display-flex left-0 right-0 bottom-0 z-50 rounded-t-2xl bg-text-white shadow-bottombar"
     data-testid="collection-bottom-bar"
   >
     <UserDashboardDetialsLayout :height-inner="heightContent">
       <template #collection-settings>
-        <CollectionHeader :collection="collection" />
+        <CollectionHeader :collection="selectedCollection.collection" />
       </template>
       <template #collection-ads-list>
-        <CollectionAdsList :collection="collection" />
+        <CollectionAdsList :collection="selectedCollection.collection" />
       </template>
       <template #collection-providers-list>
-        <CollectionProvidersList :collection="collection" />
+        <CollectionProvidersList :collection="selectedCollection.collection" />
       </template>
       <template #collection-ads-weeks>
         <CollectionWeeks />
@@ -63,20 +65,20 @@ function handleCloseDetialcCollection() {
           <CollectionTimelineItem
             type="ad"
             :element="ad"
-            :uid="ad.uid"
+            :uid="ad.id"
             :is-visible="true"
-            :color="collection.color"
-            v-for="ad in collection.ads"
-            :key="`collection-${ad.uid}`"
-            :end="globalStore.dictionaryTimeline[ad.end]"
-            :start="globalStore.dictionaryTimeline[ad.start]"
+            :color="selectedCollection.color"
+            v-for="ad in selectedCollection.collection.ads"
+            :key="`collection-${ad.id}`"
+            :end="globalStore.dictionaryTimeline[ad.adStats.at(-1).date]"
+            :start="globalStore.dictionaryTimeline[ad.adStats.at(0).date]"
           />
         </CollectionTimeline>
       </template>
     </UserDashboardDetialsLayout>
     <button
       class="p-2 focus:bg-bottombar-hover/50 hover:bg-bottombar-hover/50 absolute right-4 z-10 top-2 rounded-md m-l-auto self-baseline"
-      @click="() => handleCloseDetialcCollection()"
+      @click="() => handleCloseDetailsCollection()"
       data-testid="collection-bottom-bar__close"
     >
       <IconSvg name="close" class="w-[12px] h-[12px]" />

@@ -120,13 +120,13 @@ function parseDateforAd(ads: string[]) {
         return;
       }
 
-      campaign.adsets.forEach((adsets: AdSetsType) => {
+      campaign.adSets.forEach((adsets: AdSetsType) => {
         adsets.ads.forEach((ad: AdsType) => {
           if (
-            ad.uid === adSelected &&
-            !userDashboardStore.hiddenAds.includes(ad.uid)
+            ad.id === adSelected &&
+            !userDashboardStore.hiddenAds.includes(ad.id)
           ) {
-            addingResults(ad.status);
+            addingResults(ad.adStats);
           }
         });
       });
@@ -195,9 +195,9 @@ function concatResultsPerDay() {
   }
 
   if (userDashboardStore.selectedCollection) {
-    const ads = (userDashboardStore.selectedCollection as AdSetsType).ads.map(
-      (ad: AdsType) => ad.uid
-    );
+    const ads = (
+      userDashboardStore.selectedCollection.collection as AdSetsType
+    ).ads.map((ad: AdsType) => ad.id);
     parseDateforAd(ads);
   }
 }
@@ -226,11 +226,11 @@ function setDailyRevenue() {
 function concatAllAdSetsToOne(): AdsType[] {
   return userDashboardStore.campaigns
     .filter((campaign: CampaignType) => !campaign.isCollection)
-    .map((campaign: CampaignType) => campaign.adsets)
+    .map((campaign: CampaignType) => campaign.adSets)
     .flat(1)
     .map((adset: AdSetsType) => adset.ads)
     .flat(1)
-    .filter((ad: AdsType) => !userDashboardStore.hiddenAds.includes(ad.uid));
+    .filter((ad: AdsType) => !userDashboardStore.hiddenAds.includes(ad.id));
 }
 
 /**
@@ -242,7 +242,7 @@ function setSpentInvestment() {
 
   const adsList = concatAllAdSetsToOne();
   adsList.forEach((ad: AdsType) => {
-    ad.status.forEach((adStat: AdStatusType) => {
+    ad.adStats.forEach((adStat: AdStatusType) => {
       for (let i = 0; i < 7; i++) {
         const createdDate = parseCurrentDate(i);
         if (adStat.date === createdDate) {

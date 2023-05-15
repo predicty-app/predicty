@@ -27,15 +27,42 @@ onMounted(async () => {
 });
 
 /**
+ * Function to calculate active adsets.
+ * @param {CampaignType} campaign
+ * @return {number}
+ */
+function calculateActiveCurrentAdSets(campaign: CampaignType): number {
+  let count = 0;
+  campaign.adSets.forEach((adSets: AdSetsType) => {
+    const currentDate = Date.now();
+    const toDate = Date.parse(adSets.startedAt);
+    const fromDate = Date.parse(adSets.endedAt);
+
+    if (currentDate >= fromDate && currentDate <= toDate) {
+      count++;
+    }
+  });
+
+  return count;
+}
+
+/**
  * Function to calculate active ads.
  * @param {CampaignType} campaign
  * @return {number}
  */
 function calculateActiveCurrentAds(campaign: CampaignType): number {
   let count = 0;
-  const adsets = campaign.adsets.filter((adset: AdSetsType) => adset.isActive);
-  adsets.forEach((adset: AdSetsType) => {
-    count += adset.ads.filter((ad: AdsType) => ad.isActive).length;
+  campaign.adSets.forEach((adSets: AdSetsType) => {
+    adSets.ads.forEach((ad: AdsType) => {
+      const currentDate = Date.now();
+      const toDate = Date.parse(ad.adStats.at(-1).date);
+      const fromDate = Date.parse(ad.adStats.at(0).date);
+
+      if (currentDate >= fromDate && currentDate <= toDate) {
+        count++;
+      }
+    });
   });
 
   return count;
@@ -53,7 +80,7 @@ function calculateActiveCurrentAds(campaign: CampaignType): number {
       }"
       :header="campaign.name"
       :color="campaign.color"
-      :key="campaign.uid"
+      :key="campaign.id"
       v-for="campaign in userDashboardStore.parsedCampaignsList"
     >
       <div v-if="campaign.isCollection">
@@ -61,9 +88,7 @@ function calculateActiveCurrentAds(campaign: CampaignType): number {
           t(
             "components.user-dashboard.campaning-list-form.active_ad_collection",
             {
-              count: campaign.adsets.filter(
-                (adset: AdSetsType) => adset.isActive
-              ).length
+              count: 0
             }
           )
         }}
@@ -71,8 +96,7 @@ function calculateActiveCurrentAds(campaign: CampaignType): number {
       <div>
         {{
           t("components.user-dashboard.campaning-list-form.active_ad_sets", {
-            count: campaign.adsets.filter((adset: AdSetsType) => adset.isActive)
-              .length
+            count: calculateActiveCurrentAdSets(campaign)
           })
         }}
       </div>

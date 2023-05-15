@@ -1,27 +1,12 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
 import { useGlobalStore } from "@/stores/global";
 import {
   scaleLines,
-  scaleLinesGradient,
-  mainWidthGrid
+  mainWidthGrid,
+  scaleLinesGradient
 } from "@/helpers/timeline";
 
 const globalStore = useGlobalStore();
-let firstWeekChart;
-
-onMounted(() => {
-  firstWeekChart = globalStore.numberFirstWeek - 1;
-});
-
-/**
- * Function calculate week.
- * @return {number}
- */
-function calculateWeek(): number {
-  firstWeekChart = firstWeekChart >= 52 ? 1 : (firstWeekChart += 1);
-  return firstWeekChart;
-}
 </script>
 
 <template>
@@ -34,7 +19,7 @@ function calculateWeek(): number {
       v-for="(item, index) in globalStore.currentsCountWeeks"
       :style="{ '--start': index + 1, '--end': index + 2 }"
     >
-      W{{ calculateWeek() }}
+      W1
     </BarChartWeeksItem>
   </div>
 </template>

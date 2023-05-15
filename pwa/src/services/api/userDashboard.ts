@@ -1,8 +1,6 @@
 import apiService from "@/services/api/api";
 import CampaignsService from "@/services/campaigns";
-import CollectionService from "@/services/collections";
 import { useUserDashboardStore } from "@/stores/userDashboard";
-import type { CampaignNonParsedType } from "@/services/campaigns";
 
 type ManagementCollectionPayloadType = {
   campaignUid: string;
@@ -107,21 +105,12 @@ async function handleGetCampaigns() {
     }
   }`;
 
-  type ProvidersType = {
-    data: {
-      dashboard: CampaignNonParsedType[];
-    };
-  };
-
   try {
-    const response = await apiService.request<ProvidersType, any>(query);
-    let campaigns = await CampaignsService.parseCampaignsList(
-      response.data.dashboard.campaigns
-    );
+    const response = await apiService.request<any, any>(query);
 
-    campaigns = CollectionService.parseCollectionList(
-      response.data.dashboard.collections,
-      campaigns
+    const campaigns = await CampaignsService.createCollectionList(
+      response.data.dashboard.campaigns,
+      response.data.dashboard.collections
     );
 
     return response.errors
@@ -162,7 +151,7 @@ async function handleCreateCollection(
       {
         name: `Collection ${
           userDashboardStore.campaigns[0].isCollection
-            ? userDashboardStore.campaigns[0].adsets.length + 1
+            ? userDashboardStore.campaigns[0].adSets.length + 1
             : 1
         }`
       }

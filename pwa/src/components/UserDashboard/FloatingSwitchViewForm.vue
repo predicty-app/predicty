@@ -31,8 +31,8 @@ const notificationMessageModel = ref<NotificationMessageType>({
 });
 const userDashboardStore = useUserDashboardStore();
 const optionsCollectionList = computed<OptionsType[]>(() => {
-  return userDashboardStore.campaigns[0].adsets.map((adsets: AdSetsType) => ({
-    key: adsets.uid,
+  return userDashboardStore.campaigns[0].adSets.map((adsets: AdSetsType) => ({
+    key: adsets.id,
     label: adsets.name
   }));
 });
@@ -55,7 +55,7 @@ const optionsButtons = computed<OptionsType[]>(() => {
 
   if (
     userDashboardStore.campaigns[0].isCollection &&
-    userDashboardStore.campaigns[0].adsets.length > 0 &&
+    userDashboardStore.campaigns[0].adSets.length > 0 &&
     !userDashboardStore.selectedCollection
   ) {
     options.push({
@@ -158,17 +158,17 @@ async function handleFiredAction(actionName: OptionsName) {
         isSpinnerVisible.value = true;
         const response = await handleUnAssignAdFromCollection({
           campaignUid: null,
-          collectionUid: userDashboardStore.selectedCollection.uid,
+          collectionUid: userDashboardStore.selectedCollection.collection.id,
           ads: userDashboardStore.selectedCollectionAdsList.ads
         });
 
         await setResponseFiredAction("unassign-ads-from-collection", response);
-        const collection = userDashboardStore.campaigns[0].adsets.find(
-          (adsets: AdSetsType) =>
-            adsets.uid === userDashboardStore.selectedCollection.uid
+        const collection = userDashboardStore.campaigns[0].adSets.find(
+          (adSets: AdSetsType) =>
+            adSets.id === userDashboardStore.selectedCollection.collection.id
         );
         if (collection) {
-          userDashboardStore.selectedCollection = JSON.parse(
+          userDashboardStore.selectedCollection.collection = JSON.parse(
             JSON.stringify(collection)
           );
         } else {

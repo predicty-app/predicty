@@ -9,7 +9,7 @@ type PropsType = {
 
 defineProps<PropsType>();
 
-const pathImages = "/public/assets/images/providers";
+const pathImages = "/assets/images/providers";
 const parsedHeightContent = computed<string>(
   () => `${Number(heightCollectionContent.value.slice(0, -2)) + 50}px`
 );
@@ -34,7 +34,7 @@ function formatDate(date: string): string {
     <div class="collection-ads-list absolute w-full">
       <div
         class="px-9 flex gap-x-2 [&:nth-child(2n+1)]:bg-bottombar-side-background items-center h-[47px]"
-        :key="`collection-ad-${ad.uid}`"
+        :key="`collection-ad-${ad.id}`"
         v-for="ad in collection.ads"
       >
         <div>
@@ -51,7 +51,8 @@ function formatDate(date: string): string {
             class="text-xs text-bottombar-side-grey"
             data-testid="collection-side-item__dates"
           >
-            {{ formatDate(ad.start) }} - {{ formatDate(ad.end) }}
+            {{ formatDate(ad.adStats.at(0).date) }} -
+            {{ formatDate(ad.adStats.at(-1).date) }}
           </p>
         </div>
       </div>

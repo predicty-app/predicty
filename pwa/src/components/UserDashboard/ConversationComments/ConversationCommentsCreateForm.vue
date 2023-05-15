@@ -5,6 +5,7 @@ import { ColorPicker } from "vue-color-kit";
 import "vue-color-kit/dist/vue-color-kit.css";
 import { useConversationsStore } from "@/stores/conversations";
 import { ActionHotkeyType } from "@/stores/conversations";
+import { useUserDashboardStore } from "@/stores/userDashboard";
 
 type HSVType = {
   h: number;
@@ -31,6 +32,7 @@ const conversationStore = useConversationsStore();
 const iconNameVisibilityConversations = computed<string>(() =>
   conversationStore.isConversationsVisible ? "hidden" : "visible"
 );
+const userDashboard = useUserDashboardStore();
 
 /**
  * Function to change state of creating new conversation.
@@ -58,6 +60,9 @@ function handleChangeColorConversation(color: ColorPickerType) {
  * @param {ActionHotkeyType} action
  */
 function handleHotkeyAction(action: ActionHotkeyType) {
+  if (userDashboard.selectedCollection) {
+    return;
+  }
   const state = action === ActionHotkeyType.ACTIVE_CONVERSATION;
   toggleStateCreateConversation(state);
 }
