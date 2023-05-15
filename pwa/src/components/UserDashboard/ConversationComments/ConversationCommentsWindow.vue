@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
 import { until } from "@vueuse/core";
 import { hCommentDate } from "@/helpers/utils";
 import { useConversationsStore } from "@/stores/conversations";
-import type { ConversationsType } from "@/stores/userDashboard";
+import type { CommentType, ConversationsType } from "@/stores/userDashboard";
 import { TypesWindowConversation } from "@/stores/conversations";
 import {
   handleStartConversation,
@@ -49,6 +49,12 @@ const backgroundButtonColor = computed<string>(() =>
     ? props.conversationElement.color.hex
     : conversationStore.createdConversationSetting.color
 );
+let commentList = [];
+
+onMounted(() => {
+  commentList = props.conversationElement.comments;
+  commentList.sort((commentA: CommentType, commentB: CommentType) => Date.parse(commentB.createdAt) - Date.parse(commentA.createdAt));
+});
 
 const emit = defineEmits<{
   (e: "handleExitEditMode"): void;
@@ -164,7 +170,7 @@ async function handleCreateConversationOrAssignComment() {
           class="font-normal"
           v-if="[TypesWindowConversation.PREVIEW].includes(typeWindow)"
           >{{
-            hCommentDate(props.conversationElement.comments.at(-1).createdAt, t)
+            hCommentDate(props.conversationElement.comments.at(0).createdAt, t)
           }}</span
         >
       </div>
@@ -198,11 +204,11 @@ async function handleCreateConversationOrAssignComment() {
       v-if="[TypesWindowConversation.PREVIEW].includes(typeWindow)"
     >
       {{
-        props.conversationElement.comments.at(-1).comment.length > 40
+        props.conversationElement.comments.at(0).comment.length > 40
           ? `${props.conversationElement.comments
-              .at(-1)
+              .at(0)
               .comment.slice(0, 40)}...`
-          : props.conversationElement.comments.at(-1).comment
+          : props.conversationElement.comments.at(0).comment
       }}
     </div>
     <div
@@ -216,7 +222,7 @@ async function handleCreateConversationOrAssignComment() {
       >
         <div
           :key="comment.comment"
-          v-for="(comment, index) in props.conversationElement.comments"
+          v-for="(comment, index) in commentList"
           class="flex flex-col gap-y-2 pr-4"
         >
           <div class="text-[10px] font-bold">
