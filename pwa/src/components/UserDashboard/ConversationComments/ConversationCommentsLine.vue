@@ -34,7 +34,6 @@ const notificationMessageModel = ref<NotificationMessageType>({
   type: "success",
   message: ""
 });
-const isModalWindowVisible = ref<boolean>(false);
 const conversationStore = useConversationsStore();
 const userDashboardStore = useUserDashboardStore();
 const elementInstance = ref<HTMLDivElement | null>(null);
@@ -116,10 +115,6 @@ function handleMoveButtonCreateConversation(eventMouse: MouseEvent) {
  * @param {boolean} state
  */
 function handleToggleHoverElementState(state: boolean) {
-  if (isModalWindowVisible.value) {
-    isHoverElement.value = false;
-    return;
-  }
   isHoverElement.value = state;
   isEditModeVisible.value = false;
 }
@@ -137,7 +132,6 @@ function handleExitEditMode() {
  * Function to handle remove conversation.
  */
 async function handleSubmitRemoveConversation() {
-  isModalWindowVisible.value = false;
   isSpinnerVisible.value = true;
 
   await handleRemoveConversation(conversationElement.value.id);
@@ -196,47 +190,12 @@ async function handleSubmitRemoveConversation() {
         :position-y="yLinePosition"
         :conversation-element="conversationElement"
         @handleExitEditMode="handleExitEditMode()"
-        @handleShowPromptRemoveConversation="isModalWindowVisible = true"
+        @handleShowPromptRemoveConversation="handleSubmitRemoveConversation"
         :type-window="
           TypesWindowConversation[isEditModeVisible ? 'DETAILS' : 'PREVIEW']
         "
       />
     </div>
   </div>
-  <Teleport to="body" v-if="isEditModeVisible">
-    <ModalWindow v-model="isModalWindowVisible">
-      <div
-        class="flex flex-col gap-y-6 justify-center text-center header-dashboard__modal"
-      >
-        <HeaderText
-          :header-title="
-            t(
-              'components.user-dashboard.conversation-comments.conversation-comments-line.remove.header.title'
-            )
-          "
-          :header-description="
-            t(
-              'components.user-dashboard.conversation-comments.conversation-comments-line.remove.header.description'
-            )
-          "
-        />
-        <div class="flex gap-x-4 w-96 justify-center items-center m-auto">
-          <ButtonForm @click="isModalWindowVisible = false">
-            {{
-              t(
-                "components.user-dashboard.conversation-comments.conversation-comments-line.remove.buttons.cancel"
-              )
-            }}
-          </ButtonForm>
-          <ButtonForm @click="handleSubmitRemoveConversation" type="success">
-            {{
-              t(
-                "components.user-dashboard.conversation-comments.conversation-comments-line.remove.buttons.remove"
-              )
-            }}
-          </ButtonForm>
-        </div>
-      </div>
-    </ModalWindow>
-  </Teleport>
+  <Teleport to="body" v-if="isEditModeVisible"> </Teleport>
 </template>

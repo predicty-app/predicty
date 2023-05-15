@@ -69,9 +69,11 @@ export const heightCollectionContent = computed<string>(() => {
     return `0px`;
   }
 
-  (userDashboardStore.selectedCollection as AdSetsType).ads.forEach(() => {
-    height += 57;
-  });
+  (userDashboardStore.selectedCollection.collection as AdSetsType).ads.forEach(
+    () => {
+      height += 57;
+    }
+  );
 
   return `${height + 10}px`;
 });
@@ -101,7 +103,7 @@ export function calculateItemHeight(
 ): number {
   let height = 0;
 
-  campaign.adsets.forEach((adset: AdSetsType) => {
+  campaign.adSets.forEach((adset: AdSetsType) => {
     height += campaign.isCollection
       ? 100
       : adset.ads.length * 36 + adset.ads.length * 5 + modifierHeight;
@@ -149,11 +151,11 @@ export function calculateItemPosition(
   let previousHeightElement = 0;
   const campaigns = hCheckIsCollectionExist(userDashboardStore.campaigns);
   const index = campaigns.findIndex(
-    (item: CampaignType) => item.uid === campaign.uid
+    (item: CampaignType) => item.id === campaign.id
   );
 
   for (let i = 0; i < index; i++) {
-    campaigns[i].adsets.forEach((adset: AdSetsType) => {
+    campaigns[i].adSets.forEach((adset: AdSetsType) => {
       previousHeightElement += campaigns[i].isCollection
         ? 110 + 4
         : adset.ads.length * 36 + adset.ads.length * 5 + modifierHeight;

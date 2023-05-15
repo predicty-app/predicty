@@ -11,6 +11,7 @@ type PropsType = {
   color?: string;
   isVisible?: boolean;
   campaingUid?: string;
+  dataProvider?: string;
   type?: "ad" | "collection";
   element: AdsType | AdSetsType;
 };
@@ -27,12 +28,12 @@ const isElementVisible = ref<boolean>(true);
 const boundingBoxElement = ref<DOMRect | null>(null);
 const timelineItemInstance = ref<HTMLDivElement | null>(null);
 const isSelectedElement = computed<boolean>(() =>
-  userStore.selectedAdsList.ads.includes(props.element.uid)
+  userStore.selectedAdsList.ads.includes(props.element.id)
 );
 const tooltipPositionX = ref<string>("0px");
 const tooltipPositionY = ref<string>("0px");
 const isTooltipVisible = ref<boolean>(false);
-const tooltTipReference = ref<HTMLDivElement | null>(null);
+const toolTipReference = ref<HTMLDivElement | null>(null);
 
 const parseStart = computed<number>(() =>
   props.start > props.end ? props.end : props.start
@@ -44,13 +45,13 @@ const parseEnd = computed<number>(() =>
 const isElementAssignCheckedCollection = computed<boolean>(() => {
   return (
     userStore.selectedAdsList.ads.length > 0 &&
-    !userStore.selectedAdsList.ads.includes(props.element.uid)
+    !userStore.selectedAdsList.ads.includes(props.element.id)
   );
 });
 
 const currentColor = computed<string>(() =>
   hLightenDarkenColor(
-    userStore.hiddenAds.includes(props.element.uid) ? "#d1d1d1" : props.color,
+    userStore.hiddenAds.includes(props.element.id) ? "#d1d1d1" : props.color,
     isSelectedElement.value ? -30 : 0
   )
 );
@@ -71,7 +72,13 @@ watch(
 );
 
 const emit = defineEmits<{
-  (e: "collectionSelected", value: AdSetsType): void;
+  (
+    e: "collectionSelected",
+    value: {
+      collection: AdSetsType;
+      color: string;
+    }
+  ): void;
 }>();
 
 /**
@@ -108,15 +115,15 @@ function handleVisibleElement() {
 /**
  * Function to handle select ad.
  */
-function handleToogleSelectAd() {
+function handleToggleSelectAd() {
   if (
     props.type !== "ad" ||
-    !userStore.activeProviders.includes(props.element.dataProvider[0])
+    !userStore.activeProviders.includes(props.dataProvider)
   ) {
     return;
   }
   emit("collectionSelected", null);
-  userStore.toogleAssignAdsAction(props.campaingUid, props.element.uid);
+  userStore.toogleAssignAdsAction(props.campaingUid, props.element.id);
 }
 
 /**
@@ -128,18 +135,23 @@ function handleSelectCollection() {
 
   userStore.selectedCollection = null;
 
-  emit("collectionSelected", props.element as AdSetsType);
+  emit("collectionSelected", {
+    collection: props.element as AdSetsType,
+    color: props.color
+  });
 }
 
+/**
+ * Function to handle show tooltip position.
+ * @param {MouseEvent} event
+ */
 function handleShowTooltipPosition(event: MouseEvent) {
-  if (tooltTipReference.value) {
+  if (toolTipReference.value) {
     tooltipPositionX.value = `${
-      event.clientX - tooltTipReference.value.getBoundingClientRect().width / 2
+      event.clientX - toolTipReference.value.getBoundingClientRect().width / 2
     }px`;
     tooltipPositionY.value = `${
-      event.clientY -
-      tooltTipReference.value.getBoundingClientRect().height -
-      20
+      event.clientY - toolTipReference.value.getBoundingClientRect().height - 20
     }px`;
   }
 }
@@ -148,19 +160,17 @@ function handleShowTooltipPosition(event: MouseEvent) {
 <template>
   <div
     ref="timelineItemInstance"
-    v-if="isElementVisible && element.dataProvider"
+    v-if="isElementVisible"
     :class="[
       `col-start-dynamic col-end-dynamic p-[1.5px] rounded-[6px] h-fit my-auto transition-all`,
       {
         'border-[2px] border-timeline-item-border': type === 'collection',
         'opacity-50': isElementAssignCheckedCollection,
         'blur-[0.5px] opacity-20 grayscale cursor-default':
-          !userStore.activeProviders.includes(element.dataProvider[0]) &&
-          type === 'ad',
+          !userStore.activeProviders.includes(dataProvider) && type === 'ad',
         'cursor-pointer':
           type === 'collection' ||
-          (userStore.activeProviders.includes(element.dataProvider[0]) &&
-            type === 'ad')
+          (userStore.activeProviders.includes(dataProvider) && type === 'ad')
       }
     ]"
     v-on="
@@ -179,18 +189,18 @@ function handleShowTooltipPosition(event: MouseEvent) {
           'shadow-lg shadow-timeline-shadow': isSelectedElement
         }
       ]"
-      @click="handleToogleSelectAd"
+      @click="handleToggleSelectAd"
       @mouseenter="isTooltipVisible = true"
       @mouseleave="isTooltipVisible = false"
       @mousemove="handleShowTooltipPosition"
       :style="{ '--color': currentColor }"
     >
       <div
-        ref="tooltTipReference"
+        ref="toolTipReference"
         v-if="
           isTooltipVisible &&
           parseEnd - parseStart < 5 &&
-          userStore.activeProviders.includes(element.dataProvider[0])
+          userStore.activeProviders.includes(dataProvider)
         "
         class="bg-popover-background drop-shadow-md rounded-xl z-[9999] text-chartBar-text fixed animate-fade-in text-center py-[10px] px-3 top-dynamic"
         :style="{ top: tooltipPositionY, left: tooltipPositionX }"

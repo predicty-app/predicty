@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<PropsType>(), {
 
 const userStore = useUserDashboardStore();
 const isSelectedElement = computed<boolean>(() =>
-  userStore.selectedCollectionAdsList.ads.includes(props.element.uid)
+  userStore.selectedCollectionAdsList.ads.includes(props.element.id)
 );
 const timelineItemInstance = ref<HTMLDivElement | null>(null);
 
@@ -35,13 +35,13 @@ const parseEnd = computed<number>(() =>
 const isElementAssignCheckedCollection = computed<boolean>(() => {
   return (
     userStore.selectedCollectionAdsList.ads.length > 0 &&
-    !userStore.selectedCollectionAdsList.ads.includes(props.element.uid)
+    !userStore.selectedCollectionAdsList.ads.includes(props.element.id)
   );
 });
 
 const currentColor = computed<string>(() =>
   hLightenDarkenColor(
-    userStore.hiddenAds.includes(props.element.uid) ? "#d1d1d1" : props.color,
+    userStore.hiddenAds.includes(props.element.id) ? "#d1d1d1" : props.color,
     isSelectedElement.value ? -30 : 0
   )
 );
@@ -50,7 +50,7 @@ const currentColor = computed<string>(() =>
  * Function to handle select ad.
  */
 function handleToogleSelectAd() {
-  userStore.toogleAssignAdsCollectionAction(props.element.uid);
+  userStore.toogleAssignAdsCollectionAction(props.element.id);
 }
 </script>
 

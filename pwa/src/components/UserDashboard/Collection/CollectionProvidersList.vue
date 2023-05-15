@@ -18,7 +18,7 @@ const { t } = useI18n();
 const pathImages = "/public/assets/images/providers";
 
 const providersList = computed<OptionsType[]>(() =>
-  props.collection.dataProvider.map((provider: string) => ({
+  (props.collection.dataProvider as string[]).map((provider: string) => ({
     key: provider,
     icon: `${pathImages}/${provider.toLocaleLowerCase()}.png`
   }))

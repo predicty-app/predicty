@@ -3,12 +3,20 @@ import { computed, nextTick, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useGlobalStore } from "@/stores/global";
 import type { AdsType, CampaignType } from "@/stores/userDashboard";
-import { useUserDashboardStore } from "@/stores/userDashboard";
-import { TypeOptionsChart, type AdSetsType } from "@/stores/userDashboard";
+import {
+  type DataProviderType,
+  useUserDashboardStore
+} from "@/stores/userDashboard";
+import {
+  TypeOptionsChart,
+  type AdSetsType,
+  type SelectedCollectionType
+} from "@/stores/userDashboard";
 import {
   handleAssignAdToCollection,
   handleGetCampaigns
 } from "@/services/api/userDashboard";
+import { hGetStartEndAtDate } from "@/helpers/utils";
 
 const { t } = useI18n();
 
@@ -76,19 +84,20 @@ const isSpinnerVisible = ref<boolean>(false);
  */
 function checkIsAdInCollection(adUid: string): boolean {
   return userDashboardStore.campaigns[0].isCollection &&
-    userDashboardStore.campaigns[0].adsets.find((adsSet: AdSetsType) =>
-      adsSet.ads.find((ad: AdsType) => ad.uid === adUid)
+    userDashboardStore.campaigns[0].adSets.find((adsSet: AdSetsType) =>
+      adsSet.ads.find((ad: AdsType) => ad.id === adUid)
     )
     ? false
     : true;
 }
 
 /**
- * Function to toogle collection.
+ * Function to toggle collection.
  * @param {AdsType | AdSetsType} value
+ * @param {string} color
  */
-function toggleCollection(value?: AdSetsType) {
-  userDashboardStore.selectedCollection = value ? value : null;
+function toggleCollection(collection: SelectedCollectionType) {
+  userDashboardStore.selectedCollection = collection ? collection : null;
 }
 
 /**
@@ -115,7 +124,7 @@ function handleStartDrag(e: DragEvent, ad: AdsType) {
   }
 
   userDashboardStore.isDragAndDrop = true;
-  userDashboardStore.draggedAd = ad.uid;
+  userDashboardStore.draggedAd = ad.id;
 }
 
 /**
@@ -136,8 +145,8 @@ async function handleDropElement(
 ) {
   isSpinnerVisible.value = true;
   await handleAssignAdToCollection({
-    campaignUid: campaign.uid,
-    collectionUid: collection.uid,
+    campaignUid: campaign.id,
+    collectionUid: collection.id,
     ads: [
       userDashboardStore.draggedAd,
       ...userDashboardStore.selectedAdsList.ads
@@ -211,44 +220,51 @@ async function setResponseFiredAction() {
       <ChartTimelineWrapper>
         <ChartTimelineContent
           :campaign="campaign"
-          :key="campaign.uid"
+          :key="campaign.id"
           v-for="campaign in userDashboardStore.parsedCampaignsList"
         >
-          <template v-if="campaign.isCollection && campaign.adsets.length > 0">
+          <template v-if="campaign.isCollection && campaign.adSets.length > 0">
             <ChartTimelineItem
-              :element="adset"
+              :element="adSet"
               type="collection"
-              @drop="handleDropElement(adset, campaign)"
+              @drop="handleDropElement(adSet, campaign)"
               @dragover.prevent
               @dragenter.prevent
               :is-visible="true"
-              :uid="adset.uid"
+              :uid="adSet.id"
               :color="campaign.color"
-              :key="`${adset.uid}_${Math.random()}`"
+              :key="`${adSet.id}_${Math.random()}`"
               @collectionSelected="toggleCollection"
-              v-for="adset in userDashboardStore.campaigns[0].adsets"
-              :start="globalStore.dictionaryTimeline[adset.start]"
-              :campaing-uid="campaign.uid"
-              :end="globalStore.dictionaryTimeline[adset.end]"
+              v-for="adSet in userDashboardStore.campaigns[0].adSets"
+              :start="
+                globalStore.dictionaryTimeline[hGetStartEndAtDate(adSet.ads, 0)]
+              "
+              :campaing-uid="campaign.id"
+              :end="
+                globalStore.dictionaryTimeline[
+                  hGetStartEndAtDate(adSet.ads, -1)
+                ]
+              "
             />
           </template>
           <template v-if="!campaign.isCollection">
-            <template :key="adsSet.uid" v-for="adsSet in campaign.adsets">
+            <template :key="adsSet.uid" v-for="adsSet in campaign.adSets">
               <ChartTimelineItem
                 :element="ad"
                 type="ad"
                 draggable="true"
                 @dragstart="handleStartDrag($event, ad)"
                 @dragend="handleEndDrag"
-                :is-visible="checkIsAdInCollection(ad.uid)"
-                :uid="ad.uid"
+                :is-visible="checkIsAdInCollection(ad.id)"
+                :uid="ad.id"
+                :data-provider="(campaign.dataProvider as DataProviderType).id"
                 :color="campaign.color"
-                :key="`${ad.uid}_${Math.random()}`"
+                :key="`${ad.id}_${Math.random()}`"
                 @collectionSelected="toggleCollection"
                 v-for="ad in adsSet.ads"
-                :start="globalStore.dictionaryTimeline[ad.start]"
-                :campaing-uid="campaign.uid"
-                :end="globalStore.dictionaryTimeline[ad.end]"
+                :start="globalStore.dictionaryTimeline[ad.adStats.at(0).date]"
+                :campaing-uid="campaign.id"
+                :end="globalStore.dictionaryTimeline[ad.adStats.at(-1).date]"
               />
             </template>
           </template>
@@ -257,7 +273,7 @@ async function setResponseFiredAction() {
     </template>
   </UserDashboardLayout>
   <CollectionBottomBar
-    :collection="userDashboardStore.selectedCollection"
-    @handleCloseDetials="toggleCollection()"
+    :selected-collection="userDashboardStore.selectedCollection"
+    @handleCloseDetails="toggleCollection(null)"
   />
 </template>

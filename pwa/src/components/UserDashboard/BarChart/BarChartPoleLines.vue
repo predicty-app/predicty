@@ -9,7 +9,8 @@ import {
 import {
   useUserDashboardStore,
   TypeOptionsChart,
-  type DailyRevenueType
+  type DailyRevenueType,
+  type DataProviderType
 } from "@/stores/userDashboard";
 import type {
   CampaignType,
@@ -25,23 +26,22 @@ const investmentNumber = ref<number[]>([]);
 const instanceLines = ref<SVGElement | null>(null);
 
 onMounted(async () => {
-  await calcualteAll();
+  await calculateAll();
 });
 
 watch(
   () => [
     userDashboardStore.activeProviders.length,
     userDashboardStore.hiddenAds.length,
-    userDashboardStore.typeChart,
-    userDashboardStore.campaigns.length
+    userDashboardStore.typeChart
   ],
   async () => {
-    await calcualteAll();
+    await calculateAll();
   }
 );
 
 /**
- * Functon to fill array of investments.
+ * Function to fill array of investments.
  */
 async function insertInvestmentArray() {
   investmentNumber.value = [];
@@ -61,7 +61,7 @@ async function insertInvestmentArray() {
 /**
  * Function calculate height of bars.
  */
-async function calcualteAll() {
+async function calculateAll() {
   await insertInvestmentArray();
   await setSpentInvestment();
 
@@ -135,14 +135,16 @@ function parseCurrentDate(firstDayWeek: string, index: number): string {
 function concatAllAdSetsToOne(): AdsType[] {
   return userDashboardStore.campaigns
     .filter((campaign: CampaignType) => !campaign.isCollection)
-    .map((campaign: CampaignType) => campaign.adsets)
+    .filter((campaign: CampaignType) =>
+      userDashboardStore.activeProviders.includes(
+        (campaign.dataProvider as DataProviderType).id
+      )
+    )
+    .map((campaign: CampaignType) => campaign.adSets)
     .flat(1)
-    .map((adset: AdSetsType) => adset.ads)
+    .map((adSet: AdSetsType) => adSet.ads)
     .flat(1)
-    .filter((ad: AdsType) => !userDashboardStore.hiddenAds.includes(ad.uid))
-    .filter((ad: AdsType) =>
-      userDashboardStore.activeProviders.includes(ad.dataProvider[0])
-    );
+    .filter((ad: AdsType) => !userDashboardStore.hiddenAds.includes(ad.id));
 }
 
 /**
@@ -155,7 +157,7 @@ async function setSpentInvestment() {
     (firstDayWeek: string, index: number) => {
       const currentIndex = index * 7;
       adsList.forEach((ad: AdsType) => {
-        ad.status.forEach((adStat: AdStatusType) => {
+        ad.adStats.forEach((adStat: AdStatusType) => {
           for (let i = 0; i < 7; i++) {
             const createdDate = parseCurrentDate(firstDayWeek, i);
             if (adStat.date === createdDate) {

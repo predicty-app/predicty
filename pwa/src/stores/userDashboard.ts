@@ -35,39 +35,46 @@ export type AdStatusType = {
   id: string;
 };
 
-export type AdsType = {
-  uid: string;
-  end: string;
+export type CollectionType = {
+  id: string;
+  ads: AdsType[];
   name: string;
-  start: string;
-  creation: string;
-  isActive: boolean;
-  status: AdStatusType[];
-  dataProvider: string[];
+  startAt?: string;
+  endAt?: string;
+  dataProvider?: DataProviderType | string[];
+};
+
+export type AdsType = {
+  id: string;
+  externalId: string;
+  name: string;
+  campaignId?: string;
+  adStats: AdStatusType[];
+  dataProvider?: DataProviderType | string[];
 };
 
 export type AdSetsType = {
-  uid: string;
-  name: string;
-  color?: string;
-  externalId: string;
-  start: string;
-  campaignId?: string;
-  isActive: boolean;
-  end: string;
-  dataProvider?: string[];
+  id: string;
   ads: AdsType[];
+  name: string;
+  endedAt: string;
+  externalId: string;
+  startedAt?: string;
+  dataProvider?: DataProviderType | string[];
+};
+
+export type DataProviderType = {
+  id: string;
 };
 
 export type CampaignType = {
-  uid: string;
+  id: string;
+  externalId: string;
+  dataProvider: DataProviderType | string[];
   name: string;
-  adsets: AdSetsType[];
+  adSets: AdSetsType[];
   color?: string;
   isCollection?: boolean;
-  campaignId?: string;
-  externalId: string;
-  dataProvider: string[];
 };
 
 type CheckedAdsToCollectionType = {
@@ -106,6 +113,11 @@ export type ConversationsType = {
   comments: CommentType[];
 };
 
+export type SelectedCollectionType = {
+  color: string;
+  collection: AdSetsType;
+};
+
 type StateType = {
   scaleChart: number;
   hiddenAds: string[];
@@ -114,10 +126,10 @@ type StateType = {
   campaigns: CampaignType[];
   activeProviders: string[];
   typeChart: TypeOptionsChart;
-  selectedCollection: AdSetsType;
   dailyRevenue: DailyRevenueType[];
   conversations: ConversationsType[];
   parsedCampaignsList: CampaignType[];
+  selectedCollection: SelectedCollectionType;
   selectedAdsList: CheckedAdsToCollectionType;
   authenticatedUserParams: AuthenticatedUserParamsType;
   selectedCollectionAdsList: Pick<CheckedAdsToCollectionType, "ads">;
@@ -137,6 +149,7 @@ export const useUserDashboardStore = defineStore({
       hiddenAds: [],
       isDragAndDrop: false,
       draggedAd: null,
+      selectedCollection: null,
       activeProviders: [
         "GOOGLE_ADS",
         "FACEBOOK_ADS",
@@ -261,7 +274,7 @@ export const useUserDashboardStore = defineStore({
         (campaign: CampaignType, index: number) => {
           let currentHeightElement = 0;
 
-          campaign.adsets.forEach((adset: AdSetsType) => {
+          campaign.adSets.forEach((adset: AdSetsType) => {
             currentHeightElement += campaign.isCollection
               ? 110
               : adset.ads.length * 36 + adset.ads.length * 5 + 10;
@@ -269,7 +282,7 @@ export const useUserDashboardStore = defineStore({
 
           let previousHeightElement = 0;
           for (let i = 0; i < index; i++) {
-            this.campaigns[i].adsets.forEach((adset: AdSetsType) => {
+            this.campaigns[i].adSets.forEach((adset: AdSetsType) => {
               previousHeightElement += this.campaigns[i].isCollection
                 ? 110
                 : adset.ads.length * 36 + adset.ads.length * 5 + 12;
