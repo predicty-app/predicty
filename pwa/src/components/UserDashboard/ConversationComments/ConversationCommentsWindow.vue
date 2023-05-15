@@ -151,11 +151,11 @@ async function handleCreateConversationOrAssignComment() {
         :class="[
           'font-bold',
           {
-            'text-base': [
+            'text-sm': [
               TypesWindowConversation.CREATE,
               TypesWindowConversation.DETAILS
             ].includes(typeWindow),
-            'text-[10px]': typeWindow === TypesWindowConversation.PREVIEW
+            'text-[12px]': typeWindow === TypesWindowConversation.PREVIEW
           }
         ]"
       >
@@ -189,7 +189,12 @@ async function handleCreateConversationOrAssignComment() {
       </div>
     </div>
     <div
-      class="text-[10px]"
+      :class="[
+        {
+          'text-xs': [TypesWindowConversation.PREVIEW].includes(typeWindow),
+          'text-sm': [TypesWindowConversation.DETAILS].includes(typeWindow)
+        }
+      ]"
       v-if="[TypesWindowConversation.PREVIEW].includes(typeWindow)"
     >
       {{
@@ -218,7 +223,7 @@ async function handleCreateConversationOrAssignComment() {
             {{ hCommentDate(comment.createdAt, t) }}
           </div>
           <p
-            class="text-[10px] w-[190px] leading-4"
+            class="text-[12px] w-[190px] leading-4"
             style="white-space: break-spaces"
           >
             {{ comment.comment }}
