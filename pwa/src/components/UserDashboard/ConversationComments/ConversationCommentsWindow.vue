@@ -189,10 +189,12 @@ async function handleCreateConversationOrAssignComment() {
       </div>
     </div>
     <div
-      :class="[{
-        'text-xs': [TypesWindowConversation.PREVIEW].includes(typeWindow),
-        'text-sm': [TypesWindowConversation.DETAILS].includes(typeWindow)
-      }]"
+      :class="[
+        {
+          'text-xs': [TypesWindowConversation.PREVIEW].includes(typeWindow),
+          'text-sm': [TypesWindowConversation.DETAILS].includes(typeWindow)
+        }
+      ]"
       v-if="[TypesWindowConversation.PREVIEW].includes(typeWindow)"
     >
       {{
