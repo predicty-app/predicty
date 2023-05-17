@@ -93,7 +93,7 @@ function handleSelectFile(e: Event) {
   />
   <div class="flex flex-col gap-y-4">
     <div data-testid="upload-file" class="flex items-center gap-x-1">
-      <h3 class="font-ibm-sans text-lg font-bold mr-2">
+      <h3 class="font-ibm-sans text-lg font-bold mr-2 text-violet-100">
         {{ t("components.common.upload-file.header") }}
       </h3>
       <TagPin :key="item" v-for="item in filesType">
@@ -101,7 +101,7 @@ function handleSelectFile(e: Event) {
       </TagPin>
     </div>
     <div
-      class="text-upload-text gap-y-3 text-base relative bg-upload-background border border-upload-border border-dashed flex flex-col items-center justify-center w-full py-6"
+      class="text-gray-1200 gap-y-3 text-base relative bg-basic-white border border-blue-100 border-dashed flex flex-col items-center justify-center w-full py-6"
     >
       <IconSvg
         v-if="isFileUploaded && canRemove"
@@ -119,12 +119,12 @@ function handleSelectFile(e: Event) {
       />
       <div
         v-if="!isFileUploaded"
-        class="bg-upload-button-background animate-fade-in rounded-[6px] px-4 py-[10px] text-base items-center justify-center text-upload-button-text flex gap-x-3"
+        class="bg-violet-100 animate-fade-in rounded-[6px] px-4 py-[10px] text-base items-center justify-center text-basic-white flex gap-x-3"
       >
-        <IconSvg name="upload" />
+        <IconSvg name="upload"/>
         {{ t("components.common.upload-file.button") }}
       </div>
-      <div v-if="isFileUploaded" class="animate-fade-in">
+      <div v-if="isFileUploaded" class="animate-fade-in text-gray-1200">
         {{ fileName }}
       </div>
     </div>

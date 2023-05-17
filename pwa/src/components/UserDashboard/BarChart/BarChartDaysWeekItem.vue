@@ -57,8 +57,8 @@ watch(
       :class="[
         'rotate-[-90deg] text-[8px] font-medium flex justify-center',
         {
-          ' text-chartBar-weeks-text': day !== 'sun',
-          ' text-chartBar-weeks-sunday': day === 'sun'
+          'text-gray-900': day !== 'sun',
+          'text-red-100': day === 'sun'
         }
       ]"
       :key="`${Math.random()}_${day}`"

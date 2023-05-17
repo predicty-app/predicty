@@ -59,7 +59,7 @@ function handleStartCreatingConversation() {
     >
       <IconSvg
         name="plus"
-        class-name="w-4 h-4 fill-conversationCommentsCreateLine-icons-fill"
+        class-name="w-4 h-4 fill-basic-white"
       />
     </div>
     <ConversationCommentsWindow

@@ -18,7 +18,7 @@ const globalStore = useGlobalStore();
 <template>
   <div
     v-if="Object.keys(globalStore.dictionaryFirstDaysWeek).length > 0"
-    class="collection-timeline-weeks pb-5 pt-1 px-2 text-sm font-bold text-timeline-lines-text"
+    class="collection-timeline-weeks pb-5 pt-1 px-2 text-sm font-bold text-gray-700"
   >
     <div
       :key="`week_${item}`"

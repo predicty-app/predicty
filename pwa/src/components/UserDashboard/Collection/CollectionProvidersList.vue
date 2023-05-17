@@ -27,12 +27,12 @@ const providersList = computed<OptionsType[]>(() =>
 
 <template>
   <div class="py-[18px] flex items-center gap-x-[10px]">
-    <span class="text-xs font-medium text-bottombar-providers-text">{{
+    <span class="text-xs font-medium text-gray-900">{{
       t("components.user-dashboard.collection-providers-list.source")
     }}</span>
     <div
       :key="`collection-provider-${provider.key}`"
-      class="w-9 h-9 cursor-pointer hover:border-bottombar-providers-hover-border transition border-bottombar-providers-border border rounded bg-bottombar-providers-background flex items-center justify-center"
+      class="w-9 h-9 cursor-pointer hover:border-green-400 transition border-gray-300 border rounded bg-basic-white flex items-center justify-center"
       v-for="provider in providersList"
     >
       <img class="w-5 h-5" :src="provider.icon" />

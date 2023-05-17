@@ -1,3 +1,3 @@
 <template>
-  <div class="w-full border-t border-t-divider-default"></div>
+  <div class="w-full border-t border-solid border-t-gray-500"></div>
 </template>

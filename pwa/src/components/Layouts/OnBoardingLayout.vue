@@ -9,7 +9,7 @@ const globalStore = useGlobalStore();
 <template>
   <SpinnerBar :is-visible="globalStore.isSpinnerVisible" :is-global="true" />
   <div
-    class="h-full flex flex-col items-center min-h-full animate-fade-in bg-layout-onboarding-background"
+    class="h-full flex flex-col items-center min-h-full animate-fade-in bg-gray-100"
   >
     <div v-if="slots.header" class="pt-12 flex justify-center pb-6">
       <slot name="header" />

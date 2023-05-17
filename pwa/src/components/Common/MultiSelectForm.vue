@@ -73,11 +73,11 @@ watch(
 <template>
   <div class="relative" tabindex="0" @focusout="isSelectOpened = false">
     <div
-      class="text-select-input-text bg-select-input-background border-select-input-border border py-2 px-3 text-xs rounded relative cursor-pointer"
+      class="bg-basic-white text-gray-900 border border-solid outline-none border-blue-100 py-2 px-3 text-xs rounded relative cursor-pointer"
       @click="isSelectOpened = !isSelectOpened"
     >
       <span
-        class="text-select-input-placeholder"
+        class="text-gray-900"
         v-if="modelValue.length === 0"
       >
         {{ t("components.common.multiselect.placeholder") }}
@@ -92,7 +92,7 @@ watch(
       <IconSvg
         name="arrowright"
         :class-name="[
-          'fill-select-input-text w-2 h-2 absolute top-0 bottom-0 right-3 m-auto transition-all',
+          'fill-gray-900 w-2 h-2 absolute top-0 bottom-0 right-3 m-auto transition-all',
           {
             'rotate-90':
               (isSelectOpened && position === 'bottom') ||
@@ -107,7 +107,7 @@ watch(
     <div
       v-if="isSelectOpened"
       :class="[
-        'absolute left-0 w-full z-10 animate-fade-in shadow-sm bg-select-input-background border-select-overlayer-border border rounded',
+        'absolute left-0 w-full z-10 animate-fade-in shadow-sm  bg-basic-white border-blue-100 border rounded',
         {
           'bottom-[110%]': position === 'top',
           'top-[110%]': position === 'bottom'
@@ -116,12 +116,12 @@ watch(
     >
       <div
         :class="[
-          'p-2 transition-all flex items-center justify-between hover:bg-multiselect-element-hover-background',
+          'p-2 transition-all flex items-center justify-between hover:bg-green-100',
           {
             'cursor-pointer':
               !selectedElements.find((element) => element === item.key) &&
               !isSelectionDisabled,
-            'bg-multiselect-element-disabled-background hover:bg-multiselect-element-disabled-background grayscale':
+            'grayscale':
               isSelectionDisabled &&
               selectedElements.find((element) => element === item.key)
           }
@@ -136,18 +136,18 @@ watch(
         "
       >
         <div
-          class="flex items-center gap-x-[5px] text-xs font-semibold text-multiselect-lable-color"
+          class="flex items-center gap-x-[5px] text-xs font-semibold text-gray-1100"
         >
           <img v-if="item.icon" :src="item.icon" class="w-4" />
           {{ item.label }}
         </div>
         <div
           v-if="selectedElements.find((element) => element === item.key)"
-          class="animate-fade-in rounded-full w-3 h-3 bg-multiselect-icon-background flex items-center justify-center"
+          class="animate-fade-in rounded-full w-3 h-3 bg-green-400 flex items-center justify-center"
         >
           <IconSvg
             name="check"
-            class-name="w-[6px] h-2 fill-multiselect-icon-color"
+            class-name="w-[6px] h-2 fill-basic-white"
           />
         </div>
       </div>

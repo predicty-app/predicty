@@ -201,7 +201,7 @@ async function handleFiredActionFile(
           >
             <div class="col-start-2">
               <p>
-                <span class="text-imports-green font-bold"
+                <span class="text-green-600 font-bold"
                   >{{ importFile.result.createdAds }}
                   {{
                     importFile.result.createdAds === 1
@@ -220,7 +220,7 @@ async function handleFiredActionFile(
                 }}.
               </p>
               <p>
-                <span class="text-imports-green font-bold"
+                <span class="text-green-600 font-bold"
                   >{{ importFile.result.createdCampaigns }}
                   {{
                     importFile.result.createdCampaigns === 1
@@ -244,7 +244,7 @@ async function handleFiredActionFile(
               </p>
             </div>
             <div
-              class="col-start-2 text-imports-grey"
+              class="col-start-2 text-gray-900"
               v-if="importFile.completedAt"
             >
               <p>{{ importFile.completedAt }}</p>

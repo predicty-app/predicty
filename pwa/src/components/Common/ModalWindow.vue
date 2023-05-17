@@ -9,7 +9,7 @@ defineProps<PropsType>();
 
 <template>
   <div
-    class="flex fixed z-[100] w-full h-full top-0 left-0 items-center justify-center bg-modalWindow-mask-background animate-fade-in"
+    class="flex fixed z-[100] w-full h-full top-0 left-0 items-center justify-center bg-gray-400/50 animate-fade-in"
     v-if="modelValue"
   >
     <div

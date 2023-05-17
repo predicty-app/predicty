@@ -13,7 +13,7 @@ import {
 <template>
   <div
     tabindex="0"
-    class="collection-timeline outline-none bg-timeline-background grid grid-rows-[1fr] w-fit h-full whitespace-nowrap relative"
+    class="collection-timeline outline-none bg-gray-700 grid grid-rows-[1fr] w-fit h-full whitespace-nowrap relative"
   >
     <div
       ref="timelineGridInstance"

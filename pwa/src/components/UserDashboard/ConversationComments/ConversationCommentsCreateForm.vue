@@ -71,7 +71,7 @@ function handleHotkeyAction(action: ActionHotkeyType) {
 <template>
   <HotKeys @handleAction="handleHotkeyAction" />
   <div
-    class="animate-fade-in-up fixed bottom-2 left-2 bg-conversationCommentsCreateForm-background p-3 z-50 rounded-lg"
+    class="animate-fade-in-up fixed bottom-2 left-2 bg-gray-1100 p-3 z-50 rounded-lg"
   >
     <div
       v-if="!conversationStore.isCreateConversationActive"
@@ -79,13 +79,13 @@ function handleHotkeyAction(action: ActionHotkeyType) {
     >
       <IconSvg
         name="conversation"
-        class-name="animate-fade-in w-6 h-6 fill-conversationCommentsCreateForm-icons-fill cursor-pointer"
+        class-name="animate-fade-in w-6 h-6 fill-basic-white cursor-pointer"
         @click="toggleStateCreateConversation(true)"
       />
       <div class="w-7 h-6 animate-fade-in pl-1">
         <IconSvg
           :name="iconNameVisibilityConversations"
-          class-name="w-6 h-6 fill-conversationCommentsCreateForm-icons-fill cursor-pointer"
+          class-name="w-6 h-6 fill-basic-white cursor-pointer"
           @click="
             conversationStore.isConversationsVisible =
               !conversationStore.isConversationsVisible
@@ -116,7 +116,7 @@ function handleHotkeyAction(action: ActionHotkeyType) {
         @click="isColorPickerVisible = !isColorPickerVisible"
       />
       <span
-        class="cursor-pointer animate-fade-in text-sm font-bold text-conversationCommentsCreateForm-text-color"
+        class="cursor-pointer animate-fade-in text-sm font-bold text-basic-white"
         @click="toggleStateCreateConversation(false)"
       >
         {{

@@ -33,7 +33,7 @@ function formatDate(date: string): string {
   >
     <div class="collection-ads-list absolute w-full">
       <div
-        class="px-9 flex gap-x-2 [&:nth-child(2n+1)]:bg-bottombar-side-background items-center h-[47px]"
+        class="px-9 flex gap-x-2 [&:nth-child(2n+1)]:bg-gray-400/50 items-center h-[47px]"
         :key="`collection-ad-${ad.id}`"
         v-for="ad in collection.ads"
       >
@@ -44,11 +44,11 @@ function formatDate(date: string): string {
           />
         </div>
         <div>
-          <p class="text-xs text-bottombar-side-dark_grey font-medium">
+          <p class="text-xs text-gray-900 font-medium">
             {{ ad.name }}
           </p>
           <p
-            class="text-xs text-bottombar-side-grey"
+            class="text-xs text-gray-900"
             data-testid="collection-side-item__dates"
           >
             {{ formatDate(ad.adStats.at(0).date) }} -

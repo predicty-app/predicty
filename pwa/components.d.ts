@@ -44,7 +44,6 @@ declare module '@vue/runtime-core' {
     ConnectAccountForm: typeof import('./src/components/OnBoarding/ConnectAccountForm.vue')['default']
     ConnectMoreServicesFileSettingsForm: typeof import('./src/components/Shared/ConnectMoreServicesFileSettingsForm.vue')['default']
     ConnectMoreServicesForm: typeof import('./src/components/OnBoarding/ConnectMoreServicesForm.vue')['default']
-    Conversation: typeof import("./src/components/UserDashboard/ConversationComments/Conversation.vue")["default"]
     ConversationCommentsCreateForm: typeof import('./src/components/UserDashboard/ConversationComments/ConversationCommentsCreateForm.vue')['default']
     ConversationCommentsCreateLine: typeof import('./src/components/UserDashboard/ConversationComments/ConversationCommentsCreateLine.vue')['default']
     ConversationCommentsLine: typeof import('./src/components/UserDashboard/ConversationComments/ConversationCommentsLine.vue')['default']

@@ -296,7 +296,7 @@ function handlePreviousStepAction() {
 
     <div
       v-if="currentStep === StepValues.UPLOAD_FILE"
-      class="animate-fade-in flex flex-col gap-y-6 text-base text-connectMoreMedia-text"
+      class="animate-fade-in flex flex-col gap-y-6 text-base  text-gray-1200"
     >
       <p
         v-html="

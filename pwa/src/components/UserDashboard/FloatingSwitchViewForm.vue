@@ -199,7 +199,7 @@ async function handleFiredAction(actionName: OptionsName) {
     :type="notificationMessageModel.type"
   />
   <FloatingPanel
-    class="absolute bottom-3 right-3 m-auto animate-fade-in-up z-20"
+    class="absolute bottom-3 right-3 m-auto animate-fade-in-up z-[300]"
     :selected-elements="
       userDashboardStore.selectedCollection
         ? userDashboardStore.selectedCollectionAdsList.ads.length

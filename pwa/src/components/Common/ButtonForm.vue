@@ -20,11 +20,11 @@ withDefaults(defineProps<PropsType>(), {
       {
         'text-xs px-3 py-2 h-[31px]': isSmall,
         'py-[18px]': !isSmall,
-        'bg-button-default border border-button-border hover:bg-button-hover-default active:bg-button-active-default':
+        'bg-gray-100 border border-solid border-blue-100 hover:bg-blue-100 active:bg-blue-100 ':
           type === 'default',
-        'bg-button-success text-text-white hover:bg-button-hover-success active:bg-button-active-success':
+        'bg-green-200 text-basic-white hover:bg-green-400 active:bg-green-500 border-0 border-green-200 outline-green-200':
           type === 'success',
-        'cursor-not-allowed text-text-white bg-button-disabled border-button-disabled hover:bg-button-disabled active:bg-button-disabled':
+        'cursor-not-allowed text-basic-white bg-gray-700 border-solid outline-none border-gray-700 hover:bg-gray-700 active:bg-gray-700':
           type === 'disabled'
       }
     ]"

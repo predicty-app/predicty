@@ -25,21 +25,22 @@ defineEmits<{
       v-for="option in options"
       :style="{ '--color': option.color }"
       :class="[
-        'flex gap-x-3 text-base px-5 py-3 items-center cursor-pointer hover:bg-menuList-hover-background',
+        'flex gap-x-3 text-base px-5 py-3 items-center cursor-pointer hover:bg-gray-300',
         {
-          'text-menuList-text': !option.color,
-          'text-menuList-color': option.color
+          'text-gray-1200': !option.color,
+          'text-dynamic': option.color
         }
       ]"
     >
       <IconSvg
         v-if="option.icon"
         :name="option.icon"
+        :style="{ '--fill': option.color }"
         :class-name="[
           'w-[14px] h-[14px]',
           {
-            'fill-menuList-text': !option.color,
-            'fill-menuList-color': option.color
+            'fill-gray-1200': !option.color,
+            'fill-dynamic': option.color
           }
         ]"
       />

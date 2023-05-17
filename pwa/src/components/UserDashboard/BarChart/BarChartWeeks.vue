@@ -11,7 +11,7 @@ const globalStore = useGlobalStore();
 
 <template>
   <div
-    class="bar-chart-weeks text-center w-full pb-8 pt-6 text-chartBar-text text-xs font-medium"
+    class="bar-chart-weeks text-center w-full pb-8 pt-6 text-gray-700 text-xs font-medium"
   >
     <BarChartWeeksItem
       :key="`days_${item}`"

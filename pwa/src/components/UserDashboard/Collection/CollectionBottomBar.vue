@@ -44,7 +44,7 @@ function handleCloseDetailsCollection() {
 <template>
   <div
     v-if="selectedCollection"
-    class="collection-bottom-bar animate-fade-in-up fixed display-flex left-0 right-0 bottom-0 z-50 rounded-t-2xl bg-text-white shadow-bottombar"
+    class="collection-bottom-bar animate-fade-in-up bg-basic-white fixed display-flex left-0 right-0 bottom-0 z-[200] rounded-t-2xl bg-text-white shadow-bottombar"
     data-testid="collection-bottom-bar"
   >
     <UserDashboardDetialsLayout :height-inner="heightContent">
@@ -77,7 +77,7 @@ function handleCloseDetailsCollection() {
       </template>
     </UserDashboardDetialsLayout>
     <button
-      class="p-2 focus:bg-bottombar-hover/50 hover:bg-bottombar-hover/50 absolute right-4 z-10 top-2 rounded-md m-l-auto self-baseline"
+      class="p-2 focus:bg-gray-400/50 hover:bg-gray-400/50 absolute right-4 z-10 top-2 rounded-md m-l-auto self-baseline"
       @click="() => handleCloseDetailsCollection()"
       data-testid="collection-bottom-bar__close"
     >

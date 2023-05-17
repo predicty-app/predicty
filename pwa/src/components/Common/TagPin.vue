@@ -15,16 +15,16 @@ withDefaults(defineProps<PropsType>(), {
     :class="[
       'px-2 rounded text-[10px] border justify-center flex  gap-x-1 items-center',
       {
-        'bg-tag-background-default border-tag-border-default text-tag-text-default':
+        'bg-blue-100 border-blue-100 text-gray-1200':
           type === 'default',
-        'bg-tag-background-success border-tag-border-success text-tag-text-success':
+        'bg-tag-background border-tag-border text-tag-text':
           type === 'success',
-        'bg-tag-background-primary border-tag-border-primary text-tag-text-primary':
+        ' bg-green-200 text-basic-white border border-solid border-green-300':
           type === 'primary'
       }
     ]"
   >
-    <IconSvg v-if="type === 'success'" class-name="w-3 h-3" name="check" />
+    <IconSvg v-if="type === 'success'" class-name="w-3 h-3 fill-green-200" name="check" />
     <slot />
   </div>
 </template>

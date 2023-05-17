@@ -6,10 +6,10 @@ import type { AdsType, AdSetsType } from "@/stores/userDashboard";
 
 type PropsType = {
   end: number;
+  type?: "ad";
   start: number;
   color?: string;
   isVisible?: boolean;
-  type?: "ad";
   element: AdsType | AdSetsType;
 };
 
@@ -49,7 +49,7 @@ const currentColor = computed<string>(() =>
 /**
  * Function to handle select ad.
  */
-function handleToogleSelectAd() {
+function handleToggleSelectAd() {
   userStore.toogleAssignAdsCollectionAction(props.element.id);
 }
 </script>
@@ -71,13 +71,13 @@ function handleToogleSelectAd() {
   >
     <div
       :class="[
-        'p-2 text-xs overflow-hidden cursor-pointer rounded-[5px] shadow-sm text-text-white font-semibold bg-timeline-item-background',
+        'p-2 text-xs overflow-hidden cursor-pointer rounded-[5px] shadow-sm text-basic-white font-semibold bg-dynamic',
         {
           'shadow-lg shadow-timeline-shadow': isSelectedElement
         }
       ]"
-      @click="handleToogleSelectAd"
-      :style="{ '--color': currentColor }"
+      @click="handleToggleSelectAd"
+      :style="{ '--background': currentColor }"
     >
       <div class="pr-4 flex gap-x-1 items-center">
         <CheckboxForm :color="currentColor" :is-checked="isSelectedElement" />

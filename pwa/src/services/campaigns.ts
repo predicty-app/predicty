@@ -32,6 +32,7 @@ class CampaignsService {
     collections: CollectionType[]
   ): CampaignType[] {
     if (collections.length === 0) {
+      this.#prepareTimelineParams(campaigns);
       return campaigns;
     }
 
@@ -72,7 +73,6 @@ class CampaignsService {
     } as CampaignType);
 
     this.#prepareTimelineParams(campaigns);
-
     return campaigns.map((campaign: CampaignType) => {
       const color = hLightenDarkenColor(hRandomColor(), -50);
       campaign.color = color;

@@ -42,10 +42,10 @@ watch(
 
 <template>
   <div
-    class="h-full relative flex flex-col min-h-full items-end pr-7 pt-[15px] pb-[10px] bg-legendDescription-background border-b border-b-legendDescription-border"
+    class="h-full relative flex flex-col min-h-full items-end pr-7 pt-[15px] pb-[10px] bg-basic-white border-b border-gray-100"
   >
     <div
-      class="text-[10px] font-medium text-legendDescription-header pb-[10px]"
+      class="text-[10px] font-medium text-gray-700 pb-[10px]"
     >
       <SelectForm
         class="w-20"
@@ -56,7 +56,7 @@ watch(
     <div class="h-full flex flex-col justify-between relative w-full">
       <div
         :class="[
-          'text-[10px] font-medium text-legendDescription-scale-text absolute right-0 w-[100px] text-right',
+          'text-[10px] font-medium text-gray-700 absolute right-0 w-[100px] text-right',
           {
             'top-0': index === 0,
             'top-0 bottom-0 m-auto h-[1px]': index === 1,
@@ -73,7 +73,7 @@ watch(
       <div
         :key="option.label"
         v-for="option in options"
-        class="uppercase text-[10px] font-medium text-legendDescription-option text-right"
+        class="uppercase text-[10px] font-medium text-dynamic text-right"
         :style="{ '--color': option.color }"
       >
         {{ option.label }}

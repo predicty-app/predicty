@@ -14,7 +14,7 @@ defineProps<PropsType>();
       {{ collection.name }}
     </h1>
     <span
-      class="ml-2 py-0.5 px-1 bg-bottombar-grey rounded text-bottombar-text text-xs"
+      class="ml-2 py-0.5 px-1 bg-gray-300 rounded text-gray-1000 text-xs"
     >
       {{ collection.ads.length }}
     </span>
