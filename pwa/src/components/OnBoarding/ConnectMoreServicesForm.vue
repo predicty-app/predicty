@@ -68,10 +68,7 @@ function parseServiceName(service: FileType): string {
           <div
             class="bg-basic-white rounded-full w-7 h-7 flex items-center justify-center"
           >
-            <IconSvg
-              name="check"
-              class-name="w-4 h-4 fill-green-400"
-            />
+            <IconSvg name="check" class-name="w-4 h-4 fill-green-400" />
           </div>
         </div>
       </CardPanel>

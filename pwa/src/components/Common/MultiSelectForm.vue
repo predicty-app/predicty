@@ -76,10 +76,7 @@ watch(
       class="bg-basic-white text-gray-900 border border-solid outline-none border-blue-100 py-2 px-3 text-xs rounded relative cursor-pointer"
       @click="isSelectOpened = !isSelectOpened"
     >
-      <span
-        class="text-gray-900"
-        v-if="modelValue.length === 0"
-      >
+      <span class="text-gray-900" v-if="modelValue.length === 0">
         {{ t("components.common.multiselect.placeholder") }}
       </span>
       <span v-if="modelValue.length > 0" class="font-semibold">
@@ -121,7 +118,7 @@ watch(
             'cursor-pointer':
               !selectedElements.find((element) => element === item.key) &&
               !isSelectionDisabled,
-            'grayscale':
+            grayscale:
               isSelectionDisabled &&
               selectedElements.find((element) => element === item.key)
           }
@@ -145,10 +142,7 @@ watch(
           v-if="selectedElements.find((element) => element === item.key)"
           class="animate-fade-in rounded-full w-3 h-3 bg-green-400 flex items-center justify-center"
         >
-          <IconSvg
-            name="check"
-            class-name="w-[6px] h-2 fill-basic-white"
-          />
+          <IconSvg name="check" class-name="w-[6px] h-2 fill-basic-white" />
         </div>
       </div>
     </div>

@@ -43,10 +43,7 @@ function handleSelectElement(item: string | number) {
       class="select-form-content text-gray-900 bg-basic-white border border-solid outline-none border-blue-100 py-2 px-3 text-xs rounded relative cursor-pointer"
       @click="isSelectOpened = !isSelectOpened"
     >
-      <span
-        class="text-gray-900-text"
-        v-if="!modelValue && placeholder"
-      >
+      <span class="text-gray-900-text" v-if="!modelValue && placeholder">
         {{ placeholder }}
       </span>
       <span v-if="modelValue" class="font-semibold">
@@ -85,8 +82,7 @@ function handleSelectElement(item: string | number) {
           {
             'text-gray-1200 bg-basic-white hover:bg-green-100 cursor-pointer':
               option.key !== modelValue,
-            'bg-green-100 cursor-default':
-              option.key === modelValue
+            'bg-green-100 cursor-default': option.key === modelValue
           }
         ]"
         :key="option.key"

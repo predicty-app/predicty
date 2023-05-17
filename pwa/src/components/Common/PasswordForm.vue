@@ -42,7 +42,7 @@ function changeValue(event: Event) {
       :value="modelValue"
       @input="changeValue"
       :class="[
-        'w-full p-4 font-normal bg-basic-white text-gray-900 text-base border border-solid outline-none border-blue-100 rounded-[10px] transition-all',
+        'w-full p-4 font-normal bg-basic-white text-gray-900 text-base border border-solid outline-none border-blue-100 rounded-[10px] transition-all'
       ]"
       :placeholder="placeholder"
     />

@@ -28,7 +28,9 @@ const nextStepPath = "/onboarding/account-creation";
       >
         {{ t("views.start-screen.button") }}
       </ButtonForm>
-      <div class="text-base flex justify-center items-center gap-x-1 text-gray-1200">
+      <div
+        class="text-base flex justify-center items-center gap-x-1 text-gray-1200"
+      >
         {{ t("views.start-screen.login.description") }}
         <button
           class="font-bold cursor-pointer underline border-0 text-gray-1200 hover:text-green-400 transition-all"

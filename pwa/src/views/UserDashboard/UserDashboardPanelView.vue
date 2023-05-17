@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, nextTick, ref, watch } from "vue";
+import { computed, nextTick, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useGlobalStore } from "@/stores/global";
 import type { AdsType, CampaignType } from "@/stores/userDashboard";

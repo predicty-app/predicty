@@ -57,10 +57,7 @@ function handleStartCreatingConversation() {
       @click="handleStartCreatingConversation"
       v-if="!conversationStore.isProcessCreateConversationActive"
     >
-      <IconSvg
-        name="plus"
-        class-name="w-4 h-4 fill-basic-white"
-      />
+      <IconSvg name="plus" class-name="w-4 h-4 fill-basic-white" />
     </div>
     <ConversationCommentsWindow
       :type-window="TypesWindowConversation.CREATE"

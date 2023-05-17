@@ -10,9 +10,7 @@ const globalStore = useGlobalStore();
 </script>
 
 <template>
-  <div
-    class="bar-chart-days-week pb-5 pt-1 text-sm font-bold"
-  >
+  <div class="bar-chart-days-week pb-5 pt-1 text-sm font-bold">
     <BarChartDaysWeekItem
       :key="`days_${item}`"
       class="col-start-dynamic col-end-dynamic"

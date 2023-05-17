@@ -121,7 +121,7 @@ function handleShowTooltipPosition(event: MouseEvent) {
               userDashboardStore.selectedCollection
             "
             :class="[
-              'bottom-0 h-dynamic absolute transition-all bg-green-400 w-[100%] rounded-b group-hover:bg-green-200 group-hover:drop-shadow-[0_0px_3px_rgba(65,203,89,1)]',
+              'bottom-0 h-dynamic absolute transition-all bg-green-400 w-[100%] rounded-b group-hover:bg-green-200 group-hover:drop-shadow-[0_0px_3px_rgba(65,203,89,1)]'
             ]"
             :style="{ '--height': `${currentHeightActive}px` }"
           ></div>
@@ -148,8 +148,7 @@ function handleShowTooltipPosition(event: MouseEvent) {
             :class="[
               'bottom-0 h-dynamic absolute transition-all w-[100%] rounded-b',
               {
-                ' drop-shadow-lg':
-                  isHoverElement
+                ' drop-shadow-lg': isHoverElement
               }
             ]"
             :style="{ '--height': `${currentHeightActive}px` }"

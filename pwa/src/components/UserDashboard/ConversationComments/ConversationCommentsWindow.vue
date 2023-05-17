@@ -53,9 +53,14 @@ const backgroundButtonColor = computed<string>(() =>
 let commentList = [];
 
 onMounted(() => {
-  commentList = props.conversationElement ? props.conversationElement.comments : [];
-  if(commentList.length > 0) { 
-    commentList.sort((commentA: CommentType, commentB: CommentType) => Date.parse(commentB.createdAt) - Date.parse(commentA.createdAt));
+  commentList = props.conversationElement
+    ? props.conversationElement.comments
+    : [];
+  if (commentList.length > 0) {
+    commentList.sort(
+      (commentA: CommentType, commentB: CommentType) =>
+        Date.parse(commentB.createdAt) - Date.parse(commentA.createdAt)
+    );
   }
 });
 
@@ -259,18 +264,20 @@ async function handleCreateConversationOrAssignComment() {
             'components.user-dashboard.conversation-comments.conversation-comments-window.comment.placeholder'
           )
         "
-        :class="['text-[10px] resize-none w-full scroll-bar h-28 p-3 rounded-xl outline-none bg-gray-300/50 text-gray-900 transition-all overflow-hidden focus:h-28 focus:overflow-auto', {
-          'h-28 overflow-auto': commentMessage,
-          'h-10': !commentMessage
-        }]"
+        :class="[
+          'text-[10px] resize-none w-full scroll-bar h-28 p-3 rounded-xl outline-none bg-gray-300/50 text-gray-900 transition-all overflow-hidden focus:h-28 focus:overflow-auto',
+          {
+            'h-28 overflow-auto': commentMessage,
+            'h-10': !commentMessage
+          }
+        ]"
       />
       <button
         :class="[
           'rounded-full w-6 h-6 absolute bottom-3 right-1 flex items-center justify-center',
           {
             'bg-dynamic': commentMessage,
-            'bg-gray-600':
-              !commentMessage
+            'bg-gray-600': !commentMessage
           }
         ]"
         :style="{ '--background': backgroundButtonColor }"

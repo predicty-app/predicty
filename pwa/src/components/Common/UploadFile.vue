@@ -121,7 +121,7 @@ function handleSelectFile(e: Event) {
         v-if="!isFileUploaded"
         class="bg-violet-100 animate-fade-in rounded-[6px] px-4 py-[10px] text-base items-center justify-center text-basic-white flex gap-x-3"
       >
-        <IconSvg name="upload"/>
+        <IconSvg name="upload" />
         {{ t("components.common.upload-file.button") }}
       </div>
       <div v-if="isFileUploaded" class="animate-fade-in text-gray-1200">

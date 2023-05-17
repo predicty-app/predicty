@@ -11,7 +11,7 @@ withDefaults(defineProps<PropsType>(), {
 
 <template>
   <div
-    class="flex flex-col px-3 gap-y-2 border-l-dynamic  border-l-[3px] pb-5"
+    class="flex flex-col px-3 gap-y-2 border-l-dynamic border-l-[3px] pb-5"
     :style="{ '--border': color }"
   >
     <h3

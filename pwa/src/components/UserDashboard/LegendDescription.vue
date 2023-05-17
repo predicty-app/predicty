@@ -44,9 +44,7 @@ watch(
   <div
     class="h-full relative flex flex-col min-h-full items-end pr-7 pt-[15px] pb-[10px] bg-basic-white border-b border-gray-100"
   >
-    <div
-      class="text-[10px] font-medium text-gray-700 pb-[10px]"
-    >
+    <div class="text-[10px] font-medium text-gray-700 pb-[10px]">
       <SelectForm
         class="w-20"
         :options="typeChartOptions"

@@ -16,10 +16,7 @@ const { t } = useI18n();
 
 <template>
   <div class="flex flex-col gap-y-[5px] items-center">
-    <div
-      v-if="date"
-      class="text-[8px] text-gray-900 text-center leading-3"
-    >
+    <div v-if="date" class="text-[8px] text-gray-900 text-center leading-3">
       <div>{{ date }}</div>
       <div>{{ day }}</div>
     </div>
@@ -39,9 +36,7 @@ const { t } = useI18n();
       >
         {{ t("components.user-dashboard.sales-number.investment") }}
       </div>
-      <div
-        class="text-base font-bold text-gray-1200 font-ibm-sans"
-      >
+      <div class="text-base font-bold text-gray-1200 font-ibm-sans">
         {{ currency }}{{ investment }}
       </div>
     </div>

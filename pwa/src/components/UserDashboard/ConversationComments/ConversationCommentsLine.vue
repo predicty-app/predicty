@@ -177,9 +177,12 @@ async function handleSubmitRemoveConversation() {
         {{ conversationElement.comments.length }}
       </div>
       <div
-        :class="['h-full bg-dynamic w-[16px] transition-all opacity-0', {
-          'opacity-10': isHoverElement
-        }]"
+        :class="[
+          'h-full bg-dynamic w-[16px] transition-all opacity-0',
+          {
+            'opacity-10': isHoverElement
+          }
+        ]"
         :style="{ '--background': conversationElement.color.hex }"
       />
       <div

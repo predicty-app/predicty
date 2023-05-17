@@ -29,9 +29,7 @@ const emit = defineEmits<{
   <div
     class="bg-gray-1100 text- rounded-lg px-3 py-2 shadow-lg flex items-center max-w-max gap-x-[10px] floating-panel transition-all"
   >
-    <div
-      class="text-basic-white items-center gap-x-1 flex font-bold text-sm"
-    >
+    <div class="text-basic-white items-center gap-x-1 flex font-bold text-sm">
       {{ selectedElements }}
       {{
         t("components.common.foating-panel.count-elements", {
