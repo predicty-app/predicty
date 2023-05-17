@@ -19,7 +19,7 @@ withDefaults(defineProps<PropsType>(), {
       :class="[
         'flex-auto h-[6px]',
         {
-          'bg-progress-active': activeStep >= step
+          'bg-violet-100': activeStep >= step
         }
       ]"
     ></div>

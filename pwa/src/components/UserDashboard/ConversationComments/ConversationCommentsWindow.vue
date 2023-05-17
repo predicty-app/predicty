@@ -34,6 +34,7 @@ const notificationMessageModel = ref<NotificationMessageType>({
   type: "success",
   message: ""
 });
+const windowInstance = ref<HTMLDivElement | null>(null);
 const borderColor = computed<string>(() =>
   props.typeWindow !== TypesWindowConversation.CREATE
     ? props.conversationElement.color.hex
@@ -52,8 +53,15 @@ const backgroundButtonColor = computed<string>(() =>
 let commentList = [];
 
 onMounted(() => {
-  commentList = props.conversationElement.comments;
-  commentList.sort((commentA: CommentType, commentB: CommentType) => Date.parse(commentB.createdAt) - Date.parse(commentA.createdAt));
+  commentList = props.conversationElement
+    ? props.conversationElement.comments
+    : [];
+  if (commentList.length > 0) {
+    commentList.sort(
+      (commentA: CommentType, commentB: CommentType) =>
+        Date.parse(commentB.createdAt) - Date.parse(commentA.createdAt)
+    );
+  }
 });
 
 const emit = defineEmits<{
@@ -126,7 +134,6 @@ async function handleCreateConversationOrAssignComment() {
   }
 
   await handleGetConversations();
-  emit("handleExitEditMode");
   commentMessage.value = "";
   isSpinnerVisible.value = false;
   conversationStore.resetSettingsCreateConversationAction();
@@ -140,8 +147,9 @@ async function handleCreateConversationOrAssignComment() {
     :type="notificationMessageModel.type"
   />
   <div
+    ref="windowInstance"
     :class="[
-      'animate-fade-in w-[230px] rounded-xl border-dynamic p-3 border-2 absolute bg-conversationCommentsWindow-background drop-shadow-md flex flex-col gap-y-1',
+      'animate-fade-in w-[230px] rounded-xl border-dynamic p-3 border-2 absolute bg-basic-white drop-shadow-md flex flex-col gap-y-1',
       {
         'left-[50%] translate-x-[-50%]': TypesWindowConversation.CREATE,
         'translate-x-[2%]': [
@@ -178,7 +186,7 @@ async function handleCreateConversationOrAssignComment() {
         <IconSvg
           v-if="[TypesWindowConversation.DETAILS].includes(typeWindow)"
           name="trash"
-          class-name="w-3 h-3 fill-conversationCommentsWindow-icons-fill cursor-pointer"
+          class-name="w-3 h-3 fill-gray-1300 cursor-pointer"
           @click="emit('handleShowPromptRemoveConversation')"
         />
         <IconSvg
@@ -189,7 +197,7 @@ async function handleCreateConversationOrAssignComment() {
             ].includes(typeWindow)
           "
           name="close"
-          class-name="w-3 h-3 fill-conversationCommentsWindow-icons-fill cursor-pointer"
+          class-name="w-3 h-3 fill-gray-1300 cursor-pointer"
           @click="handleReloadCreatingConversation"
         />
       </div>
@@ -204,10 +212,10 @@ async function handleCreateConversationOrAssignComment() {
       v-if="[TypesWindowConversation.PREVIEW].includes(typeWindow)"
     >
       {{
-        props.conversationElement.comments.at(0).comment.length > 40
+        props.conversationElement.comments.at(0).comment.length > 30
           ? `${props.conversationElement.comments
               .at(0)
-              .comment.slice(0, 40)}...`
+              .comment.slice(0, 30)}...`
           : props.conversationElement.comments.at(0).comment
       }}
     </div>
@@ -256,15 +264,20 @@ async function handleCreateConversationOrAssignComment() {
             'components.user-dashboard.conversation-comments.conversation-comments-window.comment.placeholder'
           )
         "
-        class="text-[10px] resize-none w-full h-28 p-3 rounded-xl outline-none bg-conversationCommentsWindow-textarea-background text-conversationCommentsWindow-textarea-text"
+        :class="[
+          'text-[10px] resize-none w-full scroll-bar h-28 p-3 rounded-xl outline-none bg-gray-300/50 text-gray-900 transition-all overflow-hidden focus:h-28 focus:overflow-auto',
+          {
+            'h-28 overflow-auto': commentMessage,
+            'h-10': !commentMessage
+          }
+        ]"
       />
       <button
         :class="[
           'rounded-full w-6 h-6 absolute bottom-3 right-1 flex items-center justify-center',
           {
             'bg-dynamic': commentMessage,
-            'bg-conversationCommentsWindow-button-background-disabled':
-              !commentMessage
+            'bg-gray-600': !commentMessage
           }
         ]"
         :style="{ '--background': backgroundButtonColor }"

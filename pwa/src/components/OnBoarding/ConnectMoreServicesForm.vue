@@ -62,22 +62,19 @@ function parseServiceName(service: FileType): string {
       >
         <div class="flex flex-col items-center gap-y-4">
           <span
-            class="text-xs font-bold text-center"
+            class="text-xs font-bold text-center text-basic-white"
             v-html="parseServiceName(service)"
           ></span>
           <div
-            class="bg-connectMoreMedia-icon-background rounded-full w-7 h-7 flex items-center justify-center"
+            class="bg-basic-white rounded-full w-7 h-7 flex items-center justify-center"
           >
-            <IconSvg
-              name="check"
-              class-name="w-4 h-4 fill-connectMoreMedia-icon-fill"
-            />
+            <IconSvg name="check" class-name="w-4 h-4 fill-green-400" />
           </div>
         </div>
       </CardPanel>
       <CardPanel
         @click="router.push(addFileStepPath)"
-        class="w-[90px] h-[100px] p-0 flex items-center justify-center cursor-pointer"
+        class="w-[90px] h-[100px] p-0 flex items-center justify-center cursor-pointer text-gray-1200"
         :key="`service_add`"
       >
         <div

@@ -52,7 +52,7 @@ function handleShowTooltipPosition(event: MouseEvent) {
         <div
           ref="tooltTipReference"
           v-if="isTooltipVisible"
-          class="bg-popover-background drop-shadow-md rounded-xl z-[9999] fixed animate-fade-in text-center py-[10px] px-3 top-dynamic"
+          class="bg-basic-white drop-shadow-md rounded-xl z-[9999] fixed animate-fade-in text-center py-[10px] px-3 top-dynamic"
           :style="{ top: tooltipPositionY, left: tooltipPositionX }"
         >
           <IconSvg
@@ -76,7 +76,7 @@ function handleShowTooltipPosition(event: MouseEvent) {
           @mouseleave="isTooltipVisible = false"
           @mousemove="handleShowTooltipPosition"
           :class="[
-            'h-dynamic z-[1000] absolute animate-fade-in hover:shadow-md hover:shadow-charBarPole-hover-shadow transition-colors hover:bg-charBarPole-hover-background',
+            'h-dynamic z-[1000] absolute animate-fade-in transition-colors hover:bg-blue-300 hover:drop-shadow-[0_0px_3px_rgba(65,132,255,1)]',
             {
               'w-[80%] rounded-3xl': type === TypeOptionsChart.DAYS,
               'w-[95%] left-1 rounded-xl': type === TypeOptionsChart.WEEKS
@@ -90,10 +90,8 @@ function handleShowTooltipPosition(event: MouseEvent) {
             !userDashboardStore.selectedCollection
           "
           :class="[
-            'h-dynamic absolute animate-fade-in hover:shadow-md hover:shadow-charBarPole-hover-shadow transition-colors bg-charBarPole-background-primary hover:bg-charBarPole-hover-background',
+            'h-dynamic absolute animate-fade-in transition-colors from-blue-200 to-blue-100 bg-gradient-linear',
             {
-              'bg-gradient-to-b from-charBarPole-background-primary to-charBarPole-background-secondary':
-                !isHoverElement,
               'w-[80%] rounded-3xl': type === TypeOptionsChart.DAYS,
               'w-[95%] left-1 rounded-xl': type === TypeOptionsChart.WEEKS
             }
@@ -109,9 +107,8 @@ function handleShowTooltipPosition(event: MouseEvent) {
           @mouseleave="isTooltipVisible = false"
           @mousemove="handleShowTooltipPosition"
           :class="[
-            'h-dynamic z-[1000] overflow-hidden absolute hover:shadow-md hover:bg-charBarPole-hover-disabled ',
+            'h-dynamic z-[1000] overflow-hidden bg-gray-400/50 absolute hover:bg-gray-400 group',
             {
-              'bg-charBarPole-hover-disabled': isHoverElement,
               'w-[80%] rounded-3xl': type === TypeOptionsChart.DAYS,
               'w-[95%] left-1 rounded-xl': type === TypeOptionsChart.WEEKS
             }
@@ -124,11 +121,7 @@ function handleShowTooltipPosition(event: MouseEvent) {
               userDashboardStore.selectedCollection
             "
             :class="[
-              'bottom-0 h-dynamic absolute transition-all bg-charBarPole-background-active w-[100%] rounded-b',
-              {
-                ' drop-shadow-lg shadow-charBarPole-hover-active bg-charBarPole-hover-active':
-                  isHoverElement
-              }
+              'bottom-0 h-dynamic absolute transition-all bg-green-400 w-[100%] rounded-b group-hover:bg-green-200 group-hover:drop-shadow-[0_0px_3px_rgba(65,203,89,1)]'
             ]"
             :style="{ '--height': `${currentHeightActive}px` }"
           ></div>
@@ -139,9 +132,8 @@ function handleShowTooltipPosition(event: MouseEvent) {
             userDashboardStore.selectedCollection
           "
           :class="[
-            'h-dynamic overflow-hidden absolute hover:shadow-md hover:bg-charBarPole-hover-disabled bg-charBarPole-background-disabled',
+            'h-dynamic overflow-hidden absolute',
             {
-              'bg-charBarPole-hover-disabled': isHoverElement,
               'w-[80%] rounded-3xl': type === TypeOptionsChart.DAYS,
               'w-[95%] left-1 rounded-xl': type === TypeOptionsChart.WEEKS
             }
@@ -154,10 +146,9 @@ function handleShowTooltipPosition(event: MouseEvent) {
               userDashboardStore.selectedCollection
             "
             :class="[
-              'bottom-0 h-dynamic absolute transition-all bg-charBarPole-background-active w-[100%] rounded-b',
+              'bottom-0 h-dynamic absolute transition-all w-[100%] rounded-b',
               {
-                ' drop-shadow-lg shadow-charBarPole-hover-active bg-charBarPole-hover-active':
-                  isHoverElement
+                ' drop-shadow-lg': isHoverElement
               }
             ]"
             :style="{ '--height': `${currentHeightActive}px` }"

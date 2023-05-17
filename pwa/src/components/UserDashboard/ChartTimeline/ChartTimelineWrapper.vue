@@ -20,7 +20,7 @@ defineProps<PropsType>();
   <div
     tabindex="0"
     ref="timelineContent"
-    class="chart-timeline-wrapper outline-none bg-timeline-background grid grid-rows-[1fr] w-fit h-full whitespace-nowrap relative"
+    class="chart-timeline-wrapper outline-none grid grid-rows-[1fr] w-fit h-full whitespace-nowrap relative"
     :class="{ 'chart-timeline-wrapper--weekdays': hasWeekdays }"
   >
     <div

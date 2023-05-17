@@ -23,7 +23,7 @@ const isVisibleOverlayer = ref<boolean>(false);
     </div>
     <div
       v-if="isVisibleOverlayer"
-      class="w-max bg-popover-background rounded-xl absolute bottom-[108%] animate-fade-in text-center py-[10px] px-3 translate-x-[-50%] left-[50%]"
+      class="w-max bg-basic-white rounded-xl absolute bottom-[108%] animate-fade-in text-center py-[10px] px-3 translate-x-[-50%] left-[50%]"
     >
       <IconSvg
         name="triangle"

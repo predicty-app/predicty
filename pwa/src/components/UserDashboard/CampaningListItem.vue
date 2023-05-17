@@ -11,12 +11,12 @@ withDefaults(defineProps<PropsType>(), {
 
 <template>
   <div
-    class="flex flex-col px-3 gap-y-2 border-l-campaign-item-border border-l-[3px] pb-5"
-    :style="{ '--color': color }"
+    class="flex flex-col px-3 gap-y-2 border-l-dynamic border-l-[3px] pb-5"
+    :style="{ '--border': color }"
   >
     <h3
       v-if="header"
-      class="font-bold text-base text-campaign-item-header-color"
+      class="font-bold text-base text-dynamic"
       :style="{ '--color': color }"
     >
       <template v-if="header.length > 25">
@@ -28,7 +28,7 @@ withDefaults(defineProps<PropsType>(), {
         {{ header }}
       </template>
     </h3>
-    <div class="font-semibold text-xs text-campaign-item-content-color">
+    <div class="font-semibold text-xs text-gray-600">
       <slot />
     </div>
   </div>

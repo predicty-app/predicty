@@ -164,7 +164,7 @@ function handleShowTooltipPosition(event: MouseEvent) {
     :class="[
       `col-start-dynamic col-end-dynamic p-[1.5px] rounded-[6px] h-fit my-auto transition-all`,
       {
-        'border-[2px] border-timeline-item-border': type === 'collection',
+        'border-[2px] border-dynamic': type === 'collection',
         'opacity-50': isElementAssignCheckedCollection,
         'blur-[0.5px] opacity-20 grayscale cursor-default':
           !userStore.activeProviders.includes(dataProvider) && type === 'ad',
@@ -179,21 +179,22 @@ function handleShowTooltipPosition(event: MouseEvent) {
     :style="{
       '--start': parseStart,
       '--end': parseEnd - parseStart < 2 ? parseEnd + 5 : parseEnd,
-      '--color': currentColor
+      '--color': currentColor,
+      '--border': currentColor
     }"
   >
     <div
       :class="[
-        'p-2 text-xs overflow-hidden relative rounded-[5px] shadow-sm text-text-white font-semibold bg-timeline-item-background',
+        'p-2 text-xs overflow-hidden relative rounded-[5px] shadow-sm text-basic-white font-semibold bg-dynamic',
         {
-          'shadow-lg shadow-timeline-shadow': isSelectedElement
+          'shadow-lg shadow-dynamic': isSelectedElement
         }
       ]"
       @click="handleToggleSelectAd"
       @mouseenter="isTooltipVisible = true"
       @mouseleave="isTooltipVisible = false"
       @mousemove="handleShowTooltipPosition"
-      :style="{ '--color': currentColor }"
+      :style="{ '--background': currentColor, '--shadow': currentColor }"
     >
       <div
         ref="toolTipReference"
@@ -202,7 +203,7 @@ function handleShowTooltipPosition(event: MouseEvent) {
           parseEnd - parseStart < 5 &&
           userStore.activeProviders.includes(dataProvider)
         "
-        class="bg-popover-background drop-shadow-md rounded-xl z-[9999] text-chartBar-text fixed animate-fade-in text-center py-[10px] px-3 top-dynamic"
+        class="bg-basic-white drop-shadow-md rounded-xl z-[9999] text-gray-1000 fixed animate-fade-in text-center py-[10px] px-3 top-dynamic"
         :style="{ top: tooltipPositionY, left: tooltipPositionX }"
       >
         <IconSvg
@@ -232,7 +233,7 @@ function handleShowTooltipPosition(event: MouseEvent) {
         </svg>
         <div
           v-if="type === 'collection'"
-          class="rounded font-semibold text-xs min-w-[18px] w-[14px] py-[1px] bg-timeline-collection-count flex items-center justify-center"
+          class="rounded font-semibold text-xs min-w-[18px] w-[14px] py-[1px] bg-gray-1100/50 flex items-center justify-center"
         >
           {{ (element as AdSetsType).ads.length }}
         </div>

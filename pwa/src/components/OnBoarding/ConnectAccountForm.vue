@@ -18,9 +18,9 @@ type ProviderType = {
   token?: string;
 };
 
+const router = useRouter();
 const onBoardingStore = useOnBoardingStore();
 const providersImagesPath = "/assets/images/providers/";
-const router = useRouter();
 const nextStepPath = "/onboarding/more-media-integration";
 
 const providersList = ref<ProviderType[]>([
@@ -120,9 +120,9 @@ async function handleToogleConnecttoProvider(provider: ProviderType) {
       </h3>
       <div
         v-if="provider.status"
-        class="w-7 h-7 min-h-[26px] bg-text-white rounded-full flex items-center justify-center"
+        class="w-7 h-7 min-h-[26px] bg-basic-white rounded-full flex items-center justify-center"
       >
-        <IconSvg name="check" class-name="w-4 h-4" />
+        <IconSvg name="check" class-name="w-4 h-4 fill-green-200" />
       </div>
       <TagPin
         v-if="!provider.status"
@@ -145,7 +145,7 @@ async function handleToogleConnecttoProvider(provider: ProviderType) {
     <Teleport to="#next-button">
       <div class="flex items-center gap-x-[27px]">
         <div
-          class="text-base font-normal w-[200px] cursor-pointer"
+          class="text-base font-normal w-[200px] cursor-pointer text-gray-1200 hover:text-green-400 transition-all"
           @click="router.push(nextStepPath)"
         >
           {{ t("views.basic-media-integration.skip") }}

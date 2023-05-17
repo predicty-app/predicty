@@ -65,19 +65,19 @@ function handleChangeScale(eventWheel: WheelEvent) {
 <template>
   <div
     @wheel.prevent="handleChangeScale"
-    class="bar-chart-wrapper bg-timeline-background grid grid-rows-[1fr] w-fit h-full whitespace-nowrap relative"
+    class="bar-chart-wrapper grid grid-rows-[1fr] w-fit h-full whitespace-nowrap relative"
   >
     <div
       class="w-max absolute top-0 left-0 z-[1] pt-0 pb-0 justify-between h-full flex flex-col min-h-full"
     >
       <div
-        class="h-[1px] w-max border-t border-t-chartBar-lines absolute top-[0px]"
+        class="h-[1px] w-max border-t border-t-gray-300 absolute top-[0px]"
       ></div>
       <div
-        class="h-[1px] w-max border-t border-t-chartBar-lines absolute bottom-0 top-0 m-auto"
+        class="h-[1px] w-max border-t border-t-gray-300 absolute bottom-0 top-0 m-auto"
       ></div>
       <div
-        class="h-[1px] w-max border-t border-t-chartBar-lines pb-[0px] absolute bottom-[70px]"
+        class="h-[1px] w-max border-t border-t-gray-300 pb-[0px] absolute bottom-[70px]"
       ></div>
     </div>
     <BarChartPoleWrapper />

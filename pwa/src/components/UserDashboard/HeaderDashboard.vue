@@ -77,12 +77,12 @@ async function handleLogoutUser() {
 <template>
   <SpinnerBar :is-visible="isSpinnerLoadingVisible" :is-global="true" />
   <div
-    class="header-dashboard h-[60px] flex items-center bg-text-white drop-shadow-md px-5 justify-between relative z-10"
+    class="header-dashboard h-[60px] flex items-center bg-basic-white drop-shadow-md px-5 justify-between relative z-10"
   >
     <AppLogo class="ml-6" />
     <DropdownMenu>
       <div class="flex flex-col items-end gap leading-3">
-        <span class="text-sm text-header-text inline-block"
+        <span class="text-sm text-gray-1200 inline-block"
           >Data update: Today at 6:24 AM</span
         >
         <span class="text-[10px]">

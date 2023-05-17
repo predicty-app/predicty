@@ -40,13 +40,10 @@ function handleSelectElement(item: string | number) {
     @focusout="isSelectOpened = false"
   >
     <div
-      class="select-form-content text-select-input-text bg-select-input-background border-select-input-border border py-2 px-3 text-xs rounded relative cursor-pointer"
+      class="select-form-content text-gray-900 bg-basic-white border border-solid outline-none border-blue-100 py-2 px-3 text-xs rounded relative cursor-pointer"
       @click="isSelectOpened = !isSelectOpened"
     >
-      <span
-        class="text-select-input-placeholder"
-        v-if="!modelValue && placeholder"
-      >
+      <span class="text-gray-900-text" v-if="!modelValue && placeholder">
         {{ placeholder }}
       </span>
       <span v-if="modelValue" class="font-semibold">
@@ -57,7 +54,7 @@ function handleSelectElement(item: string | number) {
       <IconSvg
         name="arrowright"
         :class-name="[
-          'fill-select-input-text w-2 h-2 absolute top-0 bottom-0 right-3 m-auto transition-all',
+          'fill-gray-900 w-2 h-2 absolute top-0 bottom-0 right-3 m-auto transition-all',
           {
             'rotate-90':
               (isSelectOpened && position === 'bottom') ||
@@ -72,7 +69,7 @@ function handleSelectElement(item: string | number) {
     <div
       v-if="isSelectOpened"
       :class="[
-        'absolute z-50 left-0 w-full animate-fade-in shadow-sm bg-select-input-background border-select-overlayer-border border rounded',
+        'absolute z-50 left-0 w-full animate-fade-in shadow-sm bg-basic-white border-blue-100 border rounded',
         {
           'bottom-[110%]': position === 'top',
           'top-[110%]': position === 'bottom'
@@ -83,10 +80,9 @@ function handleSelectElement(item: string | number) {
         :class="[
           'p-2 font-normal text-xs transition-all',
           {
-            ' text-select-options-default-text bg-select-options-default-background hover:bg-select-options-default-hover cursor-pointer':
+            'text-gray-1200 bg-basic-white hover:bg-green-100 cursor-pointer':
               option.key !== modelValue,
-            '  bg-select-options-active-background cursor-default':
-              option.key === modelValue
+            'bg-green-100 cursor-default': option.key === modelValue
           }
         ]"
         :key="option.key"

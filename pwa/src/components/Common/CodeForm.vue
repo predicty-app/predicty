@@ -116,7 +116,7 @@ watch(
         @onChange="(param) => handleChangeValue('number_three', param, 2)"
         mask="#"
       />
-      <div class="w-[10px] h-[2px] bg-codeForm-dash-background"></div>
+      <div class="w-[10px] h-[2px] bg-gray-1300"></div>
       <InputForm
         ref="elementInputFour"
         class="w-[45px]"

@@ -22,7 +22,7 @@ const signupStepPath = "/onboarding/account-creation/email";
       <AuthenticationLoginForm />
       <div class="text-base flex items-center justify-between">
         <button
-          class="font-bold cursor-pointer underline"
+          class="font-bold cursor-pointer underline border-0 text-gray-1200 hover:text-green-400 transition-all"
           @click="router.push(forgotStepPath)"
         >
           {{ t("views.authentication-login.buttons.forgot") }}
@@ -30,7 +30,7 @@ const signupStepPath = "/onboarding/account-creation/email";
         <div class="flex justify-center items-center gap-x-1">
           {{ t("views.authentication-login.buttons.sign-up.description") }}
           <button
-            class="font-bold cursor-pointer underline"
+            class="font-bold cursor-pointer underline border-0 text-gray-1200 hover:text-green-400 transition-all"
             @click="router.push(signupStepPath)"
           >
             {{ t("views.authentication-login.buttons.sign-up.button") }}

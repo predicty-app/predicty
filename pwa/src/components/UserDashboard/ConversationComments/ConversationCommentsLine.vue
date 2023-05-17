@@ -166,18 +166,23 @@ async function handleSubmitRemoveConversation() {
         'bg-dynamic h-[100%] relative w-[16px] top-0 animate-fade-in',
         {
           'z-[20]': !isHoverElement,
-          'z-[100]': isHoverElement
+          'z-[100] cursor-pointer': isHoverElement
         }
       ]"
     >
       <div
-        class="z-[20] w-6 h-6 bg-dynamic rounded-full text-xs font-medium absolute left-[50%] translate-x-[-50%] top-3 flex items-center justify-center text-conversationCommentsCreateForm-text-color"
+        class="z-[20] w-6 h-6 bg-dynamic rounded-full text-xs font-medium absolute left-[50%] translate-x-[-50%] top-3 flex items-center justify-center text-basic-white"
         :style="{ '--background': conversationElement.color.hex }"
       >
         {{ conversationElement.comments.length }}
       </div>
       <div
-        class="h-full opacity-10 bg-dynamic w-[16px]"
+        :class="[
+          'h-full bg-dynamic w-[16px] transition-all opacity-0',
+          {
+            'opacity-10': isHoverElement
+          }
+        ]"
         :style="{ '--background': conversationElement.color.hex }"
       />
       <div

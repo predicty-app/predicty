@@ -6,7 +6,7 @@ const isMenuVisible = ref<boolean>(false);
 
 <template>
   <div
-    :class="['relative z-20 bg-dropdown-background']"
+    :class="['relative z-20 bg-basic-white']"
     tabindex="0"
     @focusout="isMenuVisible = false"
   >
@@ -23,7 +23,7 @@ const isMenuVisible = ref<boolean>(false);
     </div>
     <div
       v-if="isMenuVisible"
-      class="absolute top-full text-left w-full shadow-lg z-40 bg-dropdown-background rounded-b-lg animate-fade-in"
+      class="absolute top-full text-left w-full shadow-lg z-40 bg-basic-white rounded-b-lg animate-fade-in"
     >
       <DividerLine />
       <div class="py-3">
@@ -33,7 +33,7 @@ const isMenuVisible = ref<boolean>(false);
     <IconSvg
       name="arrowright"
       :class-name="[
-        'fill-select-input-text w-2 h-2 absolute top-0 bottom-0 right-[10px] m-auto transition-all',
+        'fill-gray-1200 w-2 h-2 absolute top-0 bottom-0 right-[10px] m-auto transition-all',
         {
           'rotate-90': isMenuVisible,
           'rotate-[-90deg]': !isMenuVisible
