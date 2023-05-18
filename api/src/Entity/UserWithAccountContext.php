@@ -6,6 +6,8 @@ namespace App\Entity;
 
 use Closure;
 use DateTimeInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
 
 /**
@@ -15,7 +17,7 @@ use Symfony\Component\Uid\Uuid;
  *
  * @internal
  */
-class UserWithAccountContext implements User, AccountAwareUser, WrappedUser
+class UserWithAccountContext implements User, AccountAwareUser, WrappedUser, EquatableInterface
 {
     public function __construct(private User|Closure $user, private Account|Closure $account)
     {
@@ -163,5 +165,37 @@ class UserWithAccountContext implements User, AccountAwareUser, WrappedUser
     public function getPassword(): ?string
     {
         return $this->getUser()->getPassword();
+    }
+
+    public function hasAgreedToNewsletter(): bool
+    {
+        return $this->getUser()->hasAgreedToNewsletter();
+    }
+
+    public function setAgreedToNewsletter(): void
+    {
+        $this->getUser()->setAgreedToNewsletter();
+    }
+
+    public function hasAgreedToTerms(int $version): bool
+    {
+        return $this->getUser()->hasAgreedToTerms($version);
+    }
+
+    public function setAgreedToTerms(int $version): void
+    {
+        $this->getUser()->setAgreedToTerms($version);
+    }
+
+    public function getAcceptedTermsOfServiceVersion(): int
+    {
+        return $this->getUser()->getAcceptedTermsOfServiceVersion();
+    }
+
+    public function isEqualTo(UserInterface $user): bool
+    {
+        return
+            $this->getUserIdentifier() === $user->getUserIdentifier() &&
+            $this->getRoles() === $user->getRoles();
     }
 }

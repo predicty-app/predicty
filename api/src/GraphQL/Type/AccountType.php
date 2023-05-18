@@ -39,6 +39,7 @@ class AccountType extends ObjectType
                             }
                         }
                     },
+                    'description' => 'External accounts connected to this account',
                 ],
                 'users' => fn () => [
                     'type' => $type->listOf($type->user()),
@@ -49,6 +50,7 @@ class AccountType extends ObjectType
                             }
                         }
                     },
+                    'description' => 'Users that are members of this account',
                 ],
                 'createdAt' => [
                     'type' => $type->dateTime(),

@@ -4,23 +4,27 @@ declare(strict_types=1);
 
 namespace App\GraphQL;
 
+use App\Entity\UserActions;
 use App\GraphQL\Type\AccountType;
 use App\GraphQL\Type\AdCollectionType;
 use App\GraphQL\Type\AdSetType;
 use App\GraphQL\Type\AdStatsType;
 use App\GraphQL\Type\AdType;
 use App\GraphQL\Type\ApiImportType;
+use App\GraphQL\Type\AppType;
 use App\GraphQL\Type\CampaignType;
 use App\GraphQL\Type\ColorType;
 use App\GraphQL\Type\ConnectedAccountType;
 use App\GraphQL\Type\ConversationCommentType;
 use App\GraphQL\Type\ConversationType;
+use App\GraphQL\Type\CurrentUserType;
 use App\GraphQL\Type\DailyRevenueType;
 use App\GraphQL\Type\DashboardType;
 use App\GraphQL\Type\DataProviderIdType;
 use App\GraphQL\Type\DataProviderType;
 use App\GraphQL\Type\FileImportType;
 use App\GraphQL\Type\FileImportTypeType;
+use App\GraphQL\Type\GenericUserType;
 use App\GraphQL\Type\ImportResultType;
 use App\GraphQL\Type\ImportStatusType;
 use App\GraphQL\Type\ImportType;
@@ -38,6 +42,8 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
 
 /**
  * @method UserType                user()
+ * @method CurrentUserType         currentUser()
+ * @method GenericUserType         genericUser()
  * @method DashboardType           dashboard()
  * @method CampaignType            campaign()
  * @method AdSetType               adSet()
@@ -61,6 +67,8 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
  * @method ColorType               color()
  * @method ConnectedAccountType    connectedAccount()
  * @method AccountType             account()
+ * @method AppType                 app()
+ * @method UserActions             userActions()
  */
 class TypeRegistry
 {

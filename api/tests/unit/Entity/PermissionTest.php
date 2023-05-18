@@ -29,6 +29,7 @@ class PermissionTest extends TestCase
                 'MANAGE_ACCOUNT',
                 'SWITCH_ACCOUNT',
                 'DOWNLOAD_IMPORTED_FILE',
+                'VIEW_DASHBOARD',
             ],
             Permission::getPermissions()
         );

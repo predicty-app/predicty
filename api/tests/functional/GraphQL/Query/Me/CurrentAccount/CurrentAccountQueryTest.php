@@ -18,7 +18,7 @@ class CurrentAccountQueryTest extends GraphQLTestCase
         $query = <<<'EOF'
             query {
               me {
-                currentAccount {
+                account {
                   id
                   name
                   connectedAccounts {
