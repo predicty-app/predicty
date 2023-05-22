@@ -38,11 +38,17 @@ class DoctrineUser implements UserInterface, EmailRecipient, PasswordAuthenticat
     #[ORM\Column]
     private string $password = '';
 
-    #[ORM\Column(options: ['default' => 0])]
+    #[ORM\Column(options: ['default' => false])]
     private bool $isEmailVerified = false;
 
-    #[ORM\Column(options: ['default' => 0])]
+    #[ORM\Column(options: ['default' => false])]
     private bool $isOnboardingComplete = false;
+
+    #[ORM\Column(options: ['default' => false])]
+    private bool $hasAgreedToNewsletter = false;
+
+    #[ORM\Column(options: ['default' => 0])]
+    private int $acceptedTermsOfServiceVersion = 0;
 
     public function __construct(string $email)
     {
@@ -125,7 +131,7 @@ class DoctrineUser implements UserInterface, EmailRecipient, PasswordAuthenticat
         $this->changedAt = Clock::now();
     }
 
-    public function isEmailVerified(): bool
+    public function hasVerifiedEmail(): bool
     {
         return $this->isEmailVerified;
     }
@@ -136,7 +142,34 @@ class DoctrineUser implements UserInterface, EmailRecipient, PasswordAuthenticat
         $this->changedAt = Clock::now();
     }
 
-    public function isOnboardingComplete(): bool
+    public function hasAgreedToNewsletter(): bool
+    {
+        return $this->hasAgreedToNewsletter;
+    }
+
+    public function setAgreedToNewsletter(): void
+    {
+        $this->hasAgreedToNewsletter = true;
+        $this->changedAt = Clock::now();
+    }
+
+    public function hasAgreedToTerms(int $version): bool
+    {
+        return $this->acceptedTermsOfServiceVersion === $version;
+    }
+
+    public function setAgreedToTerms(int $version): void
+    {
+        $this->acceptedTermsOfServiceVersion = $version;
+        $this->changedAt = Clock::now();
+    }
+
+    public function getAcceptedTermsOfServiceVersion(): int
+    {
+        return $this->acceptedTermsOfServiceVersion;
+    }
+
+    public function hasCompletedOnboarding(): bool
     {
         return $this->isOnboardingComplete;
     }

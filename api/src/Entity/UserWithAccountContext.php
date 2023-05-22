@@ -73,14 +73,14 @@ class UserWithAccountContext implements User, AccountAwareUser, WrappedUser
         return $this->getUser()->getEmail();
     }
 
-    public function isEmailVerified(): bool
+    public function hasVerifiedEmail(): bool
     {
-        return $this->getUser()->isEmailVerified();
+        return $this->getUser()->hasVerifiedEmail();
     }
 
-    public function isOnboardingComplete(): bool
+    public function hasCompletedOnboarding(): bool
     {
-        return $this->getUser()->isOnboardingComplete();
+        return $this->getUser()->hasCompletedOnboarding();
     }
 
     public function isMemberOf(Account|int $account): bool
@@ -163,5 +163,30 @@ class UserWithAccountContext implements User, AccountAwareUser, WrappedUser
     public function getPassword(): ?string
     {
         return $this->getUser()->getPassword();
+    }
+
+    public function hasAgreedToNewsletter(): bool
+    {
+        return $this->getUser()->hasAgreedToNewsletter();
+    }
+
+    public function setAgreedToNewsletter(): void
+    {
+        $this->getUser()->setAgreedToNewsletter();
+    }
+
+    public function hasAgreedToTerms(int $version): bool
+    {
+        return $this->getUser()->hasAgreedToTerms($version);
+    }
+
+    public function setAgreedToTerms(int $version): void
+    {
+        $this->getUser()->setAgreedToTerms($version);
+    }
+
+    public function getAcceptedTermsOfServiceVersion(): int
+    {
+        return $this->getUser()->getAcceptedTermsOfServiceVersion();
     }
 }

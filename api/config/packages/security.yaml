@@ -9,14 +9,15 @@ security:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
-        # used to reload user from session & other features (e.g. switch_user)
+        # order here matters, the first provider that returns a user will be used
+        all_users:
+            chain:
+                providers: [account_aware, default]
         default:
             id: App\Service\Security\Authorization\UserProvider\DefaultUserProvider
         account_aware:
             id: App\Service\Security\Authorization\UserProvider\AccountAwareUserProvider
-        all_users:
-            chain:
-                providers: [account_aware, default]
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/

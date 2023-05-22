@@ -7,6 +7,7 @@ namespace App\Service\Security;
 use App\Entity\Account;
 use App\Entity\Role;
 use App\Entity\User;
+use App\Entity\UserActions;
 use App\Entity\UserWithAccountContext;
 use App\Entity\UserWithId;
 use App\Service\Security\Account\AccountContextProvider;
@@ -48,6 +49,11 @@ class CurrentUserService extends UserWithAccountContext implements CurrentUser
     public function isTheSameUserAs(UserWithId $user): bool
     {
         return !$this->isAnonymous() && $this->getId() === $user->getId();
+    }
+
+    public function getActions(): UserActions
+    {
+        return new UserActions($this->getUser());
     }
 
     private function lazilyLoadUser(): User

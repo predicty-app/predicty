@@ -25,8 +25,6 @@ class UserExistsValidator extends ConstraintValidator
             return;
         }
 
-        if ($this->userRepository->findById($value) === null) {
-            $this->context->buildViolation($constraint->message)->addViolation();
-        }
+        $this->userRepository->findById($value) ?? $this->context->buildViolation($constraint->message)->addViolation();
     }
 }

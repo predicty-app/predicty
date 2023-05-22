@@ -25,8 +25,6 @@ class AccountExistsValidator extends ConstraintValidator
             return;
         }
 
-        if ($this->accountRepository->findById($value) === null) {
-            $this->context->buildViolation($constraint->message)->addViolation();
-        }
+        $this->accountRepository->findById($value) ?? $this->context->buildViolation($constraint->message)->addViolation();
     }
 }

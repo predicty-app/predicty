@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\DataFixtures;
 
 use App\Entity\DoctrineUser;
+use App\Service\Predicty\PredictySettings;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -20,7 +21,8 @@ class UserFixture extends Fixture
 
     public function __construct(
         private UuidFactory $uuidFactory,
-        private UserPasswordHasherInterface $passwordHasher
+        private UserPasswordHasherInterface $passwordHasher,
+        private PredictySettings $predictySettings,
     ) {
     }
 
@@ -38,6 +40,13 @@ class UserFixture extends Fixture
             $entity = new DoctrineUser($user);
             $entity->setUuid($this->uuidFactory->create());
             $entity->setPassword($this->passwordHasher->hashPassword($entity, '123456'));
+
+            if ($user === self::JOHN) {
+                $entity->setAgreedToNewsletter();
+                $entity->setAgreedToTerms($this->predictySettings->getCurrentTermsOfServiceVersion());
+                $entity->setOnboardingComplete();
+                $entity->setEmailVerified();
+            }
 
             $manager->persist($entity);
             $this->addReference($user, $entity);

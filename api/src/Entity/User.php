@@ -21,9 +21,9 @@ interface User extends UserWithId, AccountMember, EmailRecipient, UserInterface,
 {
     public function getUuid(): Uuid;
 
-    public function isEmailVerified(): bool;
+    public function hasVerifiedEmail(): bool;
 
-    public function isOnboardingComplete(): bool;
+    public function hasCompletedOnboarding(): bool;
 
     public function getChangedAt(): DateTimeInterface;
 
@@ -36,4 +36,14 @@ interface User extends UserWithId, AccountMember, EmailRecipient, UserInterface,
     public function setEmailVerified(): void;
 
     public function setOnboardingComplete(): void;
+
+    public function hasAgreedToNewsletter(): bool;
+
+    public function setAgreedToNewsletter(): void;
+
+    public function hasAgreedToTerms(int $version): bool;
+
+    public function setAgreedToTerms(int $version): void;
+
+    public function getAcceptedTermsOfServiceVersion(): int;
 }
