@@ -27,7 +27,6 @@ class AccountVoter extends Voter
             Permission::MANAGE_ACCOUNT,
             Permission::SWITCH_ACCOUNT,
             Permission::CREATE_AD_COLLECTION,
-            Permission::VIEW_DASHBOARD,
         ];
     }
 
@@ -40,7 +39,6 @@ class AccountVoter extends Voter
         if ($subject === null) {
             return match ($permission) {
                 Permission::CREATE_ACCOUNT => true,
-                Permission::VIEW_DASHBOARD => $this->hasRole(Role::ROLE_ACCOUNT_MEMBER),
                 default => $this->hasRole(Role::ROLE_ACCOUNT_OWNER),
             };
         }

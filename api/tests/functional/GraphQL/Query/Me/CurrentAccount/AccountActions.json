@@ -1,0 +1,11 @@
+{
+  "data": {
+    "me": {
+      "actions": {
+        "hasToAcceptTermsOfService": false,
+        "hasToVerifyEmail": false,
+        "hasToCompleteOnboarding": false
+      }
+    }
+  }
+}

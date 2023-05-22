@@ -182,7 +182,7 @@ class RegisterMutationTest extends GraphQLTestCase
         $this->assertResponseMatchesJsonFile(__DIR__.'/RegisterMutationFailedNotAcceptedTerms.json');
     }
 
-    public function test_register_newsletter_is_by_default_disagreed_to(): void
+    public function test_register_newsletter_is_by_opted_out(): void
     {
         $mutation = <<<'EOF'
                 mutation {

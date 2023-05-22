@@ -36,4 +36,25 @@ class CurrentAccountQueryTest extends GraphQLTestCase
         $this->assertResponseIsSuccessful();
         $this->assertResponseMatchesJsonFile(__DIR__.'/Account.json');
     }
+
+    public function test_current_account_actions(): void
+    {
+        $this->authenticate();
+
+        $query = <<<'EOF'
+            query {
+              me {
+                actions {
+                  hasToAcceptTermsOfService
+                  hasToVerifyEmail
+                  hasToCompleteOnboarding
+                }
+              }
+            }
+            EOF;
+
+        $this->executeQuery($query);
+        $this->assertResponseIsSuccessful();
+        $this->assertResponseMatchesJsonFile(__DIR__.'/AccountActions.json');
+    }
 }

@@ -37,7 +37,7 @@ class EntityExistsValidator extends ConstraintValidator
             $constraint->property => $value,
         ]);
 
-        if (null === $entity) {
+        if ($entity === null) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('%entity%', (new ReflectionClass($constraint->entity))->getShortName())
                 ->setParameter('%property%', $constraint->property)

@@ -131,7 +131,7 @@ class DoctrineUser implements UserInterface, EmailRecipient, PasswordAuthenticat
         $this->changedAt = Clock::now();
     }
 
-    public function isEmailVerified(): bool
+    public function hasVerifiedEmail(): bool
     {
         return $this->isEmailVerified;
     }
@@ -169,7 +169,7 @@ class DoctrineUser implements UserInterface, EmailRecipient, PasswordAuthenticat
         return $this->acceptedTermsOfServiceVersion;
     }
 
-    public function isOnboardingComplete(): bool
+    public function hasCompletedOnboarding(): bool
     {
         return $this->isOnboardingComplete;
     }

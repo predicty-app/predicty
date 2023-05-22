@@ -38,18 +38,20 @@ class GenericUserType extends InterfaceType
                 'isEmailVerified' => [
                     'type' => $type->boolean(),
                     'deprecationReason' => 'Use hasVerifiedEmail instead',
+                    'resolve' => fn (User $user) => $user->hasVerifiedEmail(),
                 ],
                 'isOnboardingComplete' => [
                     'type' => $type->boolean(),
                     'deprecationReason' => 'Use hasCompletedOnboarding instead',
+                    'resolve' => fn (User $user) => $user->hasCompletedOnboarding(),
                 ],
                 'hasCompletedOnboarding' => [
                     'type' => $type->boolean(),
-                    'resolve' => fn (User $user) => $user->isOnboardingComplete(),
+                    'resolve' => fn (User $user) => $user->hasCompletedOnboarding(),
                 ],
                 'hasVerifiedEmail' => [
                     'type' => $type->boolean(),
-                    'resolve' => fn (User $user) => $user->isEmailVerified(),
+                    'resolve' => fn (User $user) => $user->hasVerifiedEmail(),
                 ],
                 'hasAgreedToNewsletter' => [
                     'type' => $type->boolean(),

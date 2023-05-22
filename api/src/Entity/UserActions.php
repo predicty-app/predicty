@@ -20,6 +20,11 @@ class UserActions
 
     public function hasToVerifyEmail(): bool
     {
-        return $this->user->isEmailVerified() === false;
+        return $this->user->hasVerifiedEmail() === false;
+    }
+
+    public function hasToCompleteOnboarding(): bool
+    {
+        return $this->user->hasCompletedOnboarding() === false;
     }
 }

@@ -21,10 +21,6 @@ class TermsOfServiceVersionValidator extends ConstraintValidator
             throw new LogicException(\sprintf('You can only pass %s constraint to this validator.', TermsOfServiceVersion::class));
         }
 
-        if (null === $value || '' === $value) {
-            return;
-        }
-
         if ($this->predictySettings->getCurrentTermsOfServiceVersion() !== $value) {
             $this->context->buildViolation($constraint->message)->addViolation();
         }

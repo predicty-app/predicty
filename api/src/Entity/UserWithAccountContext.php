@@ -6,8 +6,6 @@ namespace App\Entity;
 
 use Closure;
 use DateTimeInterface;
-use Symfony\Component\Security\Core\User\EquatableInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
 
 /**
@@ -17,7 +15,7 @@ use Symfony\Component\Uid\Uuid;
  *
  * @internal
  */
-class UserWithAccountContext implements User, AccountAwareUser, WrappedUser, EquatableInterface
+class UserWithAccountContext implements User, AccountAwareUser, WrappedUser
 {
     public function __construct(private User|Closure $user, private Account|Closure $account)
     {
@@ -75,14 +73,14 @@ class UserWithAccountContext implements User, AccountAwareUser, WrappedUser, Equ
         return $this->getUser()->getEmail();
     }
 
-    public function isEmailVerified(): bool
+    public function hasVerifiedEmail(): bool
     {
-        return $this->getUser()->isEmailVerified();
+        return $this->getUser()->hasVerifiedEmail();
     }
 
-    public function isOnboardingComplete(): bool
+    public function hasCompletedOnboarding(): bool
     {
-        return $this->getUser()->isOnboardingComplete();
+        return $this->getUser()->hasCompletedOnboarding();
     }
 
     public function isMemberOf(Account|int $account): bool
@@ -190,12 +188,5 @@ class UserWithAccountContext implements User, AccountAwareUser, WrappedUser, Equ
     public function getAcceptedTermsOfServiceVersion(): int
     {
         return $this->getUser()->getAcceptedTermsOfServiceVersion();
-    }
-
-    public function isEqualTo(UserInterface $user): bool
-    {
-        return
-            $this->getUserIdentifier() === $user->getUserIdentifier() &&
-            $this->getRoles() === $user->getRoles();
     }
 }

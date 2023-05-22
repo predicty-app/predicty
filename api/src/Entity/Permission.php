@@ -29,7 +29,6 @@ final class Permission
     public const SWITCH_ACCOUNT = 'SWITCH_ACCOUNT';
 
     public const DOWNLOAD_IMPORTED_FILE = 'DOWNLOAD_IMPORTED_FILE';
-    public const VIEW_DASHBOARD = 'VIEW_DASHBOARD';
 
     /**
      * Get all available permissions.

@@ -21,9 +21,9 @@ interface User extends UserWithId, AccountMember, EmailRecipient, UserInterface,
 {
     public function getUuid(): Uuid;
 
-    public function isEmailVerified(): bool;
+    public function hasVerifiedEmail(): bool;
 
-    public function isOnboardingComplete(): bool;
+    public function hasCompletedOnboarding(): bool;
 
     public function getChangedAt(): DateTimeInterface;
 
