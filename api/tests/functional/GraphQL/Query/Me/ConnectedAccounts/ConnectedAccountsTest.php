@@ -19,7 +19,7 @@ class ConnectedAccountsTest extends GraphQLTestCase
         $query = <<<'EOF'
             query {
               me {
-                currentAccount {
+                account {
                   connectedAccounts {
                     id
                     isEnabled

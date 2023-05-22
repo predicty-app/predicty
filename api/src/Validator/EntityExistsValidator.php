@@ -33,11 +33,11 @@ class EntityExistsValidator extends ConstraintValidator
             throw new LogicException(\sprintf('Must set "entity" on "%s" validator', EntityExists::class));
         }
 
-        $data = $this->entityManager->getRepository($constraint->entity)->findOneBy([
+        $entity = $this->entityManager->getRepository($constraint->entity)->findOneBy([
             $constraint->property => $value,
         ]);
 
-        if (null === $data) {
+        if ($entity === null) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('%entity%', (new ReflectionClass($constraint->entity))->getShortName())
                 ->setParameter('%property%', $constraint->property)

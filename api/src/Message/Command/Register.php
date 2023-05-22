@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Message\Command;
 
+use App\Validator as AssertCustom;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class Register
@@ -12,8 +13,15 @@ class Register
     #[Assert\NotBlank(message: 'You must provide an email')]
     public readonly string $email;
 
-    public function __construct(string $email)
+    #[AssertCustom\TermsOfServiceVersion]
+    public readonly int $acceptedTermsOfServiceVersion;
+
+    public readonly bool $hasAgreedToNewsletter;
+
+    public function __construct(string $email, int $acceptedTermsOfServiceVersion, bool $hasAgreedToNewsletter)
     {
         $this->email = $email;
+        $this->acceptedTermsOfServiceVersion = $acceptedTermsOfServiceVersion;
+        $this->hasAgreedToNewsletter = $hasAgreedToNewsletter;
     }
 }

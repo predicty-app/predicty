@@ -16,14 +16,25 @@ class MeQueryTest extends GraphQLTestCase
         $this->authenticate();
 
         $query = <<<'EOF'
-                query {
-                  me {
-                    uid
-                    email
-                    isEmailVerified
-                    isOnboardingComplete
-                  }
+            query {
+              me {
+                isEmailVerified
+                isOnboardingComplete
+                hasAgreedToNewsletter
+                hasAcceptedTermsOfService
+                hasVerifiedEmail
+                hasCompletedOnboarding
+                acceptedTermsOfServiceVersion
+                account {
+                  id
+                  name
                 }
+                actions {
+                  hasToAcceptTermsOfService
+                  hasToVerifyEmail
+                }
+              }
+            }
             EOF;
 
         $this->executeQuery($query);

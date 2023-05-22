@@ -20,6 +20,14 @@ class RegisterMutation extends FieldDefinition
             'type' => $type->string(),
             'args' => [
                 'email' => $type->nonNull($type->string()),
+                'acceptedTermsOfServiceVersion' => [
+                    'type' => $type->int(),
+                    'description' => 'User must provide the latest terms of service version number',
+                ],
+                'hasAgreedToNewsletter' => [
+                    'type' => $type->boolean(),
+                    'description' => 'User must agree to receive the newsletter',
+                ],
             ],
             'resolve' => fn (mixed $root, array $args) => $this->resolve($args),
             'description' => 'Register a new account',
@@ -28,7 +36,14 @@ class RegisterMutation extends FieldDefinition
 
     private function resolve(array $args): string
     {
-        $this->handle(new Register($args['email']));
+        $args['acceptedTermsOfServiceVersion'] ??= 0;
+        $args['hasAgreedToNewsletter'] ??= false;
+
+        $this->handle(new Register(
+            email: $args['email'],
+            acceptedTermsOfServiceVersion: $args['acceptedTermsOfServiceVersion'],
+            hasAgreedToNewsletter: $args['hasAgreedToNewsletter']
+        ));
 
         return 'OK';
     }

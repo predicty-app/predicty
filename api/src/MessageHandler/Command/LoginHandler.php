@@ -23,7 +23,7 @@ class LoginHandler
             $message->username,
             $message->passcode,
             function (User $user): void {
-                if ($user->isEmailVerified() === false) {
+                if ($user->hasVerifiedEmail() === false) {
                     $user->setEmailVerified();
                     $this->userRepository->save($user);
                 }

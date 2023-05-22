@@ -1,10 +1,21 @@
 {
   "data": {
     "me": {
-      "email": "john.doe@example.com",
-      "isEmailVerified": "@boolean@",
-      "isOnboardingComplete": "@boolean@",
-      "uid": "@string@"
+      "isEmailVerified": true,
+      "isOnboardingComplete": true,
+      "hasAgreedToNewsletter": true,
+      "hasAcceptedTermsOfService": true,
+      "hasVerifiedEmail": true,
+      "hasCompletedOnboarding": true,
+      "acceptedTermsOfServiceVersion": 1,
+      "account": {
+        "id": "@integer@",
+        "name": "Account 1"
+      },
+      "actions": {
+        "hasToAcceptTermsOfService": false,
+        "hasToVerifyEmail": false
+      }
     }
   }
 }

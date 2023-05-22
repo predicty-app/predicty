@@ -1,7 +1,7 @@
 {
   "data": {
     "me": {
-      "currentAccount": {
+      "account": {
         "id": "@integer@",
         "name": "Account 1",
         "connectedAccounts": "@array@",

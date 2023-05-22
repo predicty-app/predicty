@@ -26,7 +26,7 @@ class RegisterMutationTest extends GraphQLTestCase
     {
         $mutation = <<<'EOF'
                 mutation {
-                  register(email: "john.doe2@example.com")
+                  register(email: "john.doe2@example.com", acceptedTermsOfServiceVersion: 1, hasAgreedToNewsletter: true)
                 }
             EOF;
 
@@ -36,13 +36,15 @@ class RegisterMutationTest extends GraphQLTestCase
 
         $user = $this->getRepository(DoctrineUser::class)->findOneBy(['email' => 'john.doe2@example.com']);
         $this->assertInstanceOf(DoctrineUser::class, $user);
+        $this->assertSame(1, $user->getAcceptedTermsOfServiceVersion());
+        $this->assertTrue($user->hasAgreedToNewsletter());
     }
 
     public function test_register_creates_a_new_account_and_adds_account_owner_role(): void
     {
         $mutation = <<<'EOF'
                 mutation {
-                  register(email: "john.doe2@example.com")
+                  register(email: "john.doe2@example.com", acceptedTermsOfServiceVersion: 1, hasAgreedToNewsletter: true)
                 }
             EOF;
 
@@ -66,7 +68,7 @@ class RegisterMutationTest extends GraphQLTestCase
     {
         $mutation = <<<'EOF'
                 mutation {
-                  register(email: "john.doe2@example.com")
+                  register(email: "john.doe2@example.com", acceptedTermsOfServiceVersion: 1, hasAgreedToNewsletter: true)
                 }
             EOF;
 
@@ -78,7 +80,7 @@ class RegisterMutationTest extends GraphQLTestCase
     {
         $mutation = <<<'EOF'
                 mutation {
-                  register(email: "john.doe2@example.com")
+                  register(email: "john.doe2@example.com", acceptedTermsOfServiceVersion: 1, hasAgreedToNewsletter: true)
                 }
             EOF;
 
@@ -95,7 +97,7 @@ class RegisterMutationTest extends GraphQLTestCase
     {
         $mutation = <<<'EOF'
                 mutation {
-                  register(email: "john.doe2@example.com")
+                  register(email: "john.doe2@example.com", acceptedTermsOfServiceVersion: 1, hasAgreedToNewsletter: true)
                 }
             EOF;
 
@@ -112,7 +114,7 @@ class RegisterMutationTest extends GraphQLTestCase
     {
         $mutation = <<<'EOF'
                 mutation {
-                  register(email: "john.doe@example.com")
+                  register(email: "john.doe@example.com", acceptedTermsOfServiceVersion: 1, hasAgreedToNewsletter: true)
                 }
             EOF;
 
@@ -132,7 +134,7 @@ class RegisterMutationTest extends GraphQLTestCase
     {
         $mutation = <<<'EOF'
                 mutation {
-                  register(email: "asdf")
+                  register(email: "asdf", acceptedTermsOfServiceVersion: 1, hasAgreedToNewsletter: true)
                 }
             EOF;
 
@@ -145,12 +147,56 @@ class RegisterMutationTest extends GraphQLTestCase
     {
         $mutation = <<<'EOF'
                 mutation {
-                  register(email: "")
+                  register(email: "", acceptedTermsOfServiceVersion: 1, hasAgreedToNewsletter: true)
                 }
             EOF;
 
         $this->executeMutation($mutation);
         $this->assertResponseIsSuccessful();
         $this->assertResponseMatchesJsonFile(__DIR__.'/RegisterMutationFailedEmptyEmail.json');
+    }
+
+    public function test_register_returns_error_if_user_did_not_accept_the_terms(): void
+    {
+        $mutation = <<<'EOF'
+                mutation {
+                  register(email: "john.doe2@example.com", acceptedTermsOfServiceVersion: null, hasAgreedToNewsletter: true)
+                }
+            EOF;
+
+        $this->executeMutation($mutation);
+        $this->assertResponseIsSuccessful();
+        $this->assertResponseMatchesJsonFile(__DIR__.'/RegisterMutationFailedNotAcceptedTerms.json');
+    }
+
+    public function test_register_returns_error_if_client_does_not_provide_terms_version(): void
+    {
+        $mutation = <<<'EOF'
+                mutation {
+                  register(email: "john.doe2@example.com")
+                }
+            EOF;
+
+        $this->executeMutation($mutation);
+        $this->assertResponseIsSuccessful();
+        $this->assertResponseMatchesJsonFile(__DIR__.'/RegisterMutationFailedNotAcceptedTerms.json');
+    }
+
+    public function test_register_newsletter_is_by_opted_out(): void
+    {
+        $mutation = <<<'EOF'
+                mutation {
+                  register(email: "john.doe2@example.com", acceptedTermsOfServiceVersion: 1)
+                }
+            EOF;
+
+        $this->executeMutation($mutation);
+        $this->assertResponseIsSuccessful();
+        $this->assertResponseMatchesJsonFile(__DIR__.'/RegisterMutationDefaultNewsletterSetting.json');
+
+        $user = $this->getRepository(DoctrineUser::class)->findOneBy(['email' => 'john.doe2@example.com']);
+        $this->assertNotNull($user);
+
+        $this->assertFalse($user->hasAgreedToNewsletter());
     }
 }

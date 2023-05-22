@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\MessageHandler\Command;
 
 use App\Entity\Factory\UserFactory;
+use App\Entity\User;
 use App\Extension\Messenger\DispatchCommandTrait;
 use App\Extension\Messenger\EmitEventTrait;
 use App\Message\Command\CreateAccount;
@@ -29,15 +30,23 @@ class RegisterHandler
     public function __invoke(Register $message): void
     {
         $user = $this->userRepository->findByUsername($message->email);
+        $callbacks[] = fn (User $user) => $this->dispatch(new RequestPasscode($user->getId()));
 
         if ($user === null) {
             $user = $this->userFactory->create($message->email);
-            $this->userRepository->save($user);
-
-            $this->emit(new UserRegistered($user->getId()));
-            $this->dispatch(new CreateAccount($user->getId()));
+            $callbacks[] = fn (User $user) => $this->dispatch(new CreateAccount($user->getId()));
+            $callbacks[] = fn (User $user) => $this->emit(new UserRegistered($user->getId(), $user->getAcceptedTermsOfServiceVersion(), $user->hasAgreedToNewsletter()));
         }
 
-        $this->dispatch(new RequestPasscode($user->getId()));
+        if ($message->hasAgreedToNewsletter) {
+            $user->setAgreedToNewsletter();
+        }
+
+        $user->setAgreedToTerms($message->acceptedTermsOfServiceVersion);
+        $this->userRepository->save($user);
+
+        foreach ($callbacks as $callback) {
+            $callback($user);
+        }
     }
 }

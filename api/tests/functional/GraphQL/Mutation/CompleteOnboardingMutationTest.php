@@ -30,6 +30,6 @@ class CompleteOnboardingMutationTest extends GraphQLTestCase
 
         $user = $this->getRepository(DoctrineUser::class)->findOneBy(['email' => UserFixture::JOHN]);
         $this->assertNotNull($user);
-        $this->assertTrue($user->isOnboardingComplete());
+        $this->assertTrue($user->hasCompletedOnboarding());
     }
 }
