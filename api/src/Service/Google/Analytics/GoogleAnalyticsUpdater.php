@@ -20,9 +20,9 @@ class GoogleAnalyticsUpdater
     ) {
     }
 
-    public function update(Ulid $userId, Ulid $accountId): void
+    public function update(Ulid $userId, Ulid $accountId, Ulid $connectedAccountId): void
     {
-        foreach ($this->googleAnalyticsApi->getDailyRevenue($userId) as $revenue) {
+        foreach ($this->googleAnalyticsApi->getDailyRevenue($connectedAccountId) as $revenue) {
             $this->dataImportApi->createDailyRevenueIfNotExists(
                 userId: $userId,
                 accountId: $accountId,

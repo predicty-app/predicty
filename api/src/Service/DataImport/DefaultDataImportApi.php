@@ -66,7 +66,7 @@ class DefaultDataImportApi implements DataImportApi, TrackableDataImportApi
 
     public function createDailyRevenueIfNotExists(Ulid $userId, Ulid $accountId, DateTimeImmutable $date, Money $revenue, Money $averageOrderValue): ?DailyRevenue
     {
-        $entity = $this->dailyRevenueRepository->findByDay($userId, $date);
+        $entity = $this->dailyRevenueRepository->findByDay($accountId, $date);
 
         if ($entity === null) {
             $entity = new DailyRevenue(new Ulid(), $userId, $accountId, $date, $revenue, $averageOrderValue);
@@ -80,7 +80,7 @@ class DefaultDataImportApi implements DataImportApi, TrackableDataImportApi
 
     public function getOrCreateAd(AdSet $adSet, string $name, string $externalId): Ad
     {
-        $entity = $this->adRepository->findByUserIdAndExternalId($adSet->getUserId(), $externalId);
+        $entity = $this->adRepository->findByAccountIdAndExternalId($adSet->getAccountId(), $externalId);
 
         if ($entity === null) {
             $entity = new Ad(
@@ -102,7 +102,7 @@ class DefaultDataImportApi implements DataImportApi, TrackableDataImportApi
 
     public function getOrCreateAdSet(Campaign $campaign, string $name, string $externalId): AdSet
     {
-        $entity = $this->adSetRepository->findByCampaignIdAndExternalId($campaign->getUserId(), $campaign->getId(), $externalId);
+        $entity = $this->adSetRepository->findByCampaignIdAndExternalId($campaign->getAccountId(), $campaign->getId(), $externalId);
 
         if ($entity === null) {
             $entity = new AdSet(

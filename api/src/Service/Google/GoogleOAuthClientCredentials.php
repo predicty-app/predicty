@@ -6,6 +6,9 @@ namespace App\Service\Google;
 
 use RuntimeException;
 
+/**
+ * Provides Google OAuth credentials for current app.
+ */
 class GoogleOAuthClientCredentials
 {
     private string $clientId;

@@ -12,6 +12,7 @@ use App\Entity\DataProvider;
 use App\Entity\DoctrineUser;
 use App\Entity\FileImport;
 use App\Entity\FileImportType;
+use App\Entity\GoogleAnalyticsConnectedAccount;
 use App\Entity\ImportResult;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -37,6 +38,7 @@ class ImportFixture extends Fixture implements DependentFixtureInterface
     {
         $user = $this->getReference(UserFixture::JOHN, DoctrineUser::class);
         $account = $this->getReference(AccountFixture::ACCOUNT_1, Account::class);
+        $connectedAccount = $this->getReference(ConnectedAccountFixture::CONNECTED_ACCOUNT_1, GoogleAnalyticsConnectedAccount::class);
         assert($user instanceof DoctrineUser);
 
         $import1 = new FileImport(Ulid::fromString(self::IMPORT_1), $user->getId(), $account->getId(), 'dummy-import-1.csv', FileImportType::FACEBOOK_CSV);
@@ -51,7 +53,7 @@ class ImportFixture extends Fixture implements DependentFixtureInterface
         $import3->fail('Import failed');
         $this->addReference(self::IMPORT_3, $import3);
 
-        $import4 = new ApiImport(Ulid::fromString(self::IMPORT_4), $user->getId(), $account->getId(), DataProvider::GOOGLE_ADS);
+        $import4 = new ApiImport(Ulid::fromString(self::IMPORT_4), $user->getId(), $account->getId(), $connectedAccount->getId(), DataProvider::GOOGLE_ADS);
         $import4->start();
         $this->addReference(self::IMPORT_4, $import4);
 
@@ -73,6 +75,7 @@ class ImportFixture extends Fixture implements DependentFixtureInterface
     {
         return [
             UserFixture::class,
+            ConnectedAccountFixture::class,
         ];
     }
 }

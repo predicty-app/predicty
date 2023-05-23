@@ -29,13 +29,7 @@ class AccountRepository
 
     public function getById(Ulid $accountId): Account
     {
-        $account = $this->findById($accountId);
-
-        if ($account === null) {
-            throw new RuntimeException('Account not found');
-        }
-
-        return $account;
+        return $this->findById($accountId) ?? throw new RuntimeException('Account not found');
     }
 
     /**

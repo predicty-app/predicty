@@ -22,17 +22,19 @@ class SyncGoogleAnalyticsHandlerTest extends TestCase
     {
         $userId = Ulid::fromString('01H1VECDYVB5BRQVPTSVJP3BZA');
         $accountId = Ulid::fromString('01H1VEC8SYM3K6TSDAPFN25XZV');
+        $connectedAccountId = Ulid::fromString('01H26NCW4DG3G87ZJ673BPDB5S');
 
         $updater = $this->createMock(GoogleAnalyticsUpdater::class);
         $importTrackingService = $this->createMock(ImportTrackingService::class);
         $importTrackingService->expects($this->once())->method('createAndRunNewApiImport')->with(
             $this->equalTo($userId),
             $this->equalTo($accountId),
+            $this->equalTo($connectedAccountId),
             $this->equalTo(DataProvider::GOOGLE_ANALYTICS),
             $this->isInstanceOf(Closure::class)
         );
 
         $handler = new SyncGoogleAnalyticsHandler($updater, $importTrackingService);
-        $handler->__invoke(new SyncGoogleAnalytics($userId, $accountId));
+        $handler->__invoke(new SyncGoogleAnalytics($userId, $accountId, $connectedAccountId));
     }
 }

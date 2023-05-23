@@ -23,7 +23,7 @@ class ImportCompletedHandler
         $import = $this->importRepository->findById($event->importId);
 
         if ($import !== null) {
-            $this->startAndEndDateRecalculationService->recalculate($import->getUserId());
+            $this->startAndEndDateRecalculationService->recalculate($import->getAccountId());
         }
     }
 }

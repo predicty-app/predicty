@@ -40,17 +40,17 @@ class ImportTrackingService
         return $import;
     }
 
-    public function createNewApiImport(Ulid $userId, Ulid $accountId, DataProvider $dataProvider): Import
+    public function createNewApiImport(Ulid $userId, Ulid $accountId, Ulid $connectedAccountId, DataProvider $dataProvider): Import
     {
-        $import = new ApiImport(new Ulid(), $userId, $accountId, $dataProvider);
+        $import = new ApiImport(new Ulid(), $userId, $accountId, $connectedAccountId, $dataProvider);
         $this->importRepository->save($import);
 
         return $import;
     }
 
-    public function createAndRunNewApiImport(Ulid $userId, Ulid $accountId, DataProvider $dataProvider, callable $callback): void
+    public function createAndRunNewApiImport(Ulid $userId, Ulid $accountId, Ulid $connectedAccountId, DataProvider $dataProvider, callable $callback): void
     {
-        $import = $this->createNewApiImport($userId, $accountId, $dataProvider);
+        $import = $this->createNewApiImport($userId, $accountId, $connectedAccountId, $dataProvider);
         $this->run($import->getId(), $callback);
     }
 

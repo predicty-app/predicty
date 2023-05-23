@@ -6,7 +6,7 @@ namespace App\Command;
 
 use App\Entity\GoogleAnalyticsConnectedAccount;
 use App\Extension\Messenger\DispatchCommandTrait;
-use App\Message\Command\SyncGoogleAnalytics;
+use App\Message\Command\SyncGoogleAds;
 use App\Repository\AccountRepository;
 use App\Repository\ConnectedAccountRepository;
 use App\Repository\UserRepository;
@@ -19,10 +19,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Uid\Ulid;
 
 #[AsCommand(
-    name: 'app:sync:google-analytics',
-    description: 'Synchronize revenue data from Google Analytics',
+    name: 'app:sync:google-ads',
+    description: 'Synchronize data from Google Ads',
 )]
-class SyncGoogleAnalyticsDataCommand extends Command
+class SyncGoogleAdsDataCommand extends Command
 {
     use DispatchCommandTrait;
 
@@ -37,8 +37,8 @@ class SyncGoogleAnalyticsDataCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('userId', InputArgument::OPTIONAL, 'User id that you would like to connect to Google Analytics')
-            ->addArgument('accountId', InputArgument::OPTIONAL, 'User account id that you would like to use')
+            ->addArgument('userId', InputArgument::OPTIONAL, 'User id that you would like to run the sync process as')
+            ->addArgument('accountId', InputArgument::OPTIONAL, 'User account id that you would like to be synced')
         ;
     }
 
@@ -66,12 +66,12 @@ class SyncGoogleAnalyticsDataCommand extends Command
         $connectedAccount = $this->connectedAccountRepository->findByAccountId($account->getId(), GoogleAnalyticsConnectedAccount::class);
 
         if ($connectedAccount === null) {
-            $io->error('No connected Google Analytics account found for this user and account id');
+            $io->error('No connected Google Ads account found for this user and account id');
 
             return Command::FAILURE;
         }
 
-        $this->dispatch(new SyncGoogleAnalytics($user->getId(), $account->getId(), $connectedAccount->getId()));
+        $this->dispatch(new SyncGoogleAds($user->getId(), $account->getId(), $connectedAccount->getId()));
 
         return Command::SUCCESS;
     }

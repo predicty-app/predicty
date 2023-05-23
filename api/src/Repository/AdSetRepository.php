@@ -38,10 +38,10 @@ class AdSetRepository
         return $this->repository->findBy(['campaignId' => $campaignId], ['startedAt' => 'ASC']);
     }
 
-    public function findByCampaignIdAndExternalId(Ulid $userId, Ulid $campaignId, mixed $externalId): ?AdSet
+    public function findByCampaignIdAndExternalId(Ulid $accountId, Ulid $campaignId, mixed $externalId): ?AdSet
     {
         return $this->repository->findOneBy([
-            'userId' => $userId,
+            'accountId' => $accountId,
             'campaignId' => $campaignId,
             'externalId' => $externalId,
         ]);

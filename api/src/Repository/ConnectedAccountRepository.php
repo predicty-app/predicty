@@ -8,6 +8,7 @@ use App\Entity\ConnectedAccount;
 use App\Entity\DataProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use RuntimeException;
 use Symfony\Component\Uid\Ulid;
 
 class ConnectedAccountRepository
@@ -22,9 +23,28 @@ class ConnectedAccountRepository
         $this->repository = $this->em->getRepository(ConnectedAccount::class);
     }
 
-    public function find(Ulid $accountId, DataProvider $type): ?ConnectedAccount
+    public function findById(Ulid $id): ?ConnectedAccount
     {
-        return $this->repository->findOneBy(['accountId' => $accountId, 'dataProvider' => $type]);
+        return $this->repository->find($id);
+    }
+
+    public function getById(Ulid $accountId): ConnectedAccount
+    {
+        return $this->findById($accountId) ?? throw new RuntimeException('Connected account not found');
+    }
+
+    /**
+     * @template T of ConnectedAccount
+     *
+     * @param class-string<T> $connectedAccountType
+     *
+     * @return T
+     */
+    public function findByAccountId(Ulid $accountId, string $connectedAccountType): ?ConnectedAccount
+    {
+        assert(is_subclass_of($connectedAccountType, ConnectedAccount::class));
+
+        return $this->em->getRepository($connectedAccountType)->findOneBy(['accountId' => $accountId]);
     }
 
     /**

@@ -24,14 +24,14 @@ class DailyRevenueRepository
         $this->repository = $em->getRepository(DailyRevenue::class);
     }
 
-    public function findByDay(Ulid $userId, DateTimeInterface $date): ?DailyRevenue
+    public function findByDay(Ulid $accountId, DateTimeInterface $date): ?DailyRevenue
     {
-        return $this->repository->findOneBy(['userId' => $userId, 'date' => $date]);
+        return $this->repository->findOneBy(['accountId' => $accountId, 'date' => $date]);
     }
 
     public function getDailyRevenueFor(AdStats $adStats): Money
     {
-        $revenue = $this->findByDay($adStats->getUserId(), $adStats->getDate());
+        $revenue = $this->findByDay($adStats->getAccountId(), $adStats->getDate());
 
         if ($revenue === null) {
             return Money::of(0, $adStats->getCurrency());
