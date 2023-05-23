@@ -7,7 +7,7 @@ namespace App\Message\Command;
 use App\Validator as AssertCustom;
 use Symfony\Component\Uid\Ulid;
 
-class SyncGoogleAnalytics
+class SyncGoogleAds
 {
     #[AssertCustom\UserExists]
     public Ulid $userId;

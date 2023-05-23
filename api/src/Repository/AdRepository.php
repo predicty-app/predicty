@@ -29,9 +29,9 @@ class AdRepository
         return $this->repository->findBy(['userId' => $userId]);
     }
 
-    public function findByUserIdAndExternalId(Ulid $userId, string $externalId): ?Ad
+    public function findByAccountIdAndExternalId(Ulid $userId, string $externalId): ?Ad
     {
-        return $this->repository->findOneBy(['userId' => $userId, 'externalId' => $externalId]);
+        return $this->repository->findOneBy(['accountId' => $userId, 'externalId' => $externalId]);
     }
 
     /**

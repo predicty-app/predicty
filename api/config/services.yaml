@@ -32,6 +32,7 @@ services:
             - '../src/Validator/EntityExists.php'
             - '../src/Service/DataImport/File/FileImportContext.php'
             - '../src/Service/Security/Authorization/AuthorizationToken.php'
+            - '../src/Service/Google/Ads/GoogleAdsClient.php'
 
     _instanceof:
         GraphQL\Type\Definition\Type:
@@ -66,9 +67,9 @@ services:
     MLL\GraphQLScalars\Date: ~
     MLL\GraphQLScalars\DateTime: ~
 
-    App\Service\Google\GoogleAdsClient:
-        factory: [App\Service\Google\GoogleAdsClientFactory, build]
-
+    App\Service\Security\ConnectedAccountCredentials\GoogleAdsCredentialsProvider:
+        arguments:
+            $developerToken: '%env(GOOGLE_ADS_DEVELOPER_TOKEN)%'
     App\Service\Google\GoogleOAuthClientCredentials:
         arguments: ['%env(GOOGLE_CLIENT_ID)%', '%env(GOOGLE_CLIENT_SECRET)%']
 

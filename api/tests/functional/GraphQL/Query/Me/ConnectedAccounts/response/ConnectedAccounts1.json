@@ -9,7 +9,7 @@
               "id": "GOOGLE_ANALYTICS"
             },
             "id": "@ulid@",
-            "isEnabled": false
+            "isEnabled": "@boolean@"
           }
         ]
       }

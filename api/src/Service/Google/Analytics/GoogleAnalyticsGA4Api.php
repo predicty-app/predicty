@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\Service\Google\Analytics;
 
-use App\Entity\DataProvider;
 use App\Service\Clock\Clock;
 use App\Service\Google\GoogleOAuth;
-use App\Service\Security\ConnectedAccountCredentials\ConnectedAccountCredentialsProvider;
 use DateInterval;
 use DatePeriod;
 use Google\Analytics\Data\V1beta\BetaAnalyticsDataClient;
@@ -20,7 +18,7 @@ use Symfony\Component\Uid\Ulid;
 class GoogleAnalyticsGA4Api
 {
     public function __construct(
-        private ConnectedAccountCredentialsProvider $dataProviderCredentialsProvider,
+        private GoogleAnalyticsCredentialsProvider $credentialsProvider,
         private GoogleOAuth $googleOAuth,
     ) {
     }
@@ -28,14 +26,15 @@ class GoogleAnalyticsGA4Api
     /**
      * @return iterable<array{date: string, revenue: string, averageOrderValue: string}>
      */
-    public function getDailyRevenue(Ulid $accountId): iterable
+    public function getDailyRevenue(Ulid $connectedAccountId): iterable
     {
-        $this->authenticate($accountId);
+        $credentials = $this->credentialsProvider->getCredentials($connectedAccountId);
+        $this->googleOAuth->fetchAccessToken($credentials->getRefreshToken());
 
         $data = $this->getDefaults();
         $client = new BetaAnalyticsDataClient(['credentials' => $this->googleOAuth->getOAuth()]);
         $response = $client->runReport([
-            'property' => 'properties/'. 369182464,
+            'property' => 'properties/'.$credentials->getGA4Id(),
             'dateRanges' => [
                 new DateRange(['start_date' => '7daysAgo', 'end_date' => 'yesterday']),
             ],
@@ -78,11 +77,5 @@ class GoogleAnalyticsGA4Api
         }
 
         return $defaults;
-    }
-
-    private function authenticate(Ulid $accountId): void
-    {
-        $credentials = $this->dataProviderCredentialsProvider->getCredentials($accountId, DataProvider::GOOGLE_ANALYTICS);
-        $this->googleOAuth->fetchAccessToken($credentials->getCredentials()['token']);
     }
 }

@@ -19,17 +19,17 @@ class ImportCompletedHandlerTest extends TestCase
 {
     public function test_run_recalculation_on_completed_import(): void
     {
-        $userId = Ulid::fromString('01H1VECDYVB5BRQVPTSVJP3BZA');
+        $accountId = Ulid::fromString('01H1VECDYVB5BRQVPTSVJP3BZA');
         $importId = Ulid::fromString('01H1VEC8SYM3K6TSDAPFN25XZV');
 
         $import = $this->createMock(Import::class);
-        $import->method('getUserId')->willReturn($userId);
+        $import->method('getAccountId')->willReturn($accountId);
 
         $importRepository = $this->createMock(ImportRepository::class);
         $importRepository->method('findById')->willReturn($import);
 
         $startAndEndDateRecalculationService = $this->createMock(StartAndEndDateRecalculationService::class);
-        $startAndEndDateRecalculationService->expects($this->once())->method('recalculate')->with($userId);
+        $startAndEndDateRecalculationService->expects($this->once())->method('recalculate')->with($accountId);
 
         $handler = new ImportCompletedHandler($importRepository, $startAndEndDateRecalculationService);
 

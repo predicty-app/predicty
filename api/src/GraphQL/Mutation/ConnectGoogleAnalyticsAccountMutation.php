@@ -6,36 +6,39 @@ namespace App\GraphQL\Mutation;
 
 use App\Extension\Messenger\HandleTrait;
 use App\GraphQL\TypeRegistry;
-use App\Message\Command\RegisterGoogleOAuthCredentials;
+use App\Message\Command\ConnectGoogleAnalytics;
 use App\Service\Security\CurrentUser;
 use GraphQL\Type\Definition\FieldDefinition;
 
-class RegisterDataProviderMutation extends FieldDefinition
+class ConnectGoogleAnalyticsAccountMutation extends FieldDefinition
 {
     use HandleTrait;
 
     public function __construct(TypeRegistry $type, private CurrentUser $currentUser)
     {
         parent::__construct([
-            'name' => 'registerDataProvider',
+            'name' => 'connectGoogleAnalyticsAccount',
             'type' => $type->string(),
             'args' => [
+                'ga4id' => [
+                    'type' => $type->nonNullString(),
+                    'description' => 'GA4 Google tag ID (https://support.google.com/analytics/answer/9539598?hl=en)',
+                ],
                 'oauthRefreshToken' => $type->nonNullString(),
-                'type' => $type->nonNull($type->dataProviderId()),
             ],
             'resolve' => fn (mixed $root, array $args) => $this->resolve($args),
-            'description' => 'Register a new data provider. Returns "OK" on success',
+            'description' => 'Register Google Analytics account. Returns "OK" on success',
         ]);
     }
 
     private function resolve(array $args): string
     {
         $this->handle(
-            new RegisterGoogleOAuthCredentials(
+            new ConnectGoogleAnalytics(
                 $this->currentUser->getId(),
                 $this->currentUser->getAccountId(),
-                $args['type'],
-                $args['oauthRefreshToken']
+                $args['oauthRefreshToken'],
+                $args['ga4id'],
             )
         );
 
