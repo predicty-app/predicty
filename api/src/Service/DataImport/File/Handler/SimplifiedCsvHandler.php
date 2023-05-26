@@ -30,33 +30,42 @@ class SimplifiedCsvHandler extends AbstractCsvFileImportHandler
         $campaignExternalId = md5($campaignName);
         $adSetExternalId = md5('adset'.$campaignName);
 
-        $campaign = $this->dataImportApi->getOrCreateCampaign(
+        $campaign = $this->dataImportApi->upsertCampaign(
             userId: $context->getUserId(),
             accountId: $context->getAccountId(),
             name: $campaignName,
             externalId: $campaignExternalId
         );
 
-        $adset = $this->dataImportApi->getOrCreateAdSet(
-            campaign: $campaign,
-            name: sprintf('%s ad set', $campaignName),
+        $adset = $this->dataImportApi->upsertAdSet(
+            userId: $context->getUserId(),
+            accountId: $context->getAccountId(),
+            campaignId: $campaign->getId(),
             externalId: $adSetExternalId,
+            name: sprintf('%s ad set', $campaignName),
         );
 
-        $ad = $this->dataImportApi->getOrCreateAd(
-            adSet: $adset,
-            name: $record[self::HEADER_AD_NAME],
+        $ad = $this->dataImportApi->upsertAd(
+            userId: $context->getUserId(),
+            accountId: $context->getAccountId(),
+            campaignId: $campaign->getId(),
+            adSetId: $adset->getId(),
             externalId: md5($record[self::HEADER_AD_NAME]),
+            name: $record[self::HEADER_AD_NAME],
         );
 
         $currency = Currency::of($record[self::HEADER_CURRENCY]);
-        $this->dataImportApi->getOrCreateAdStats(
-            ad: $ad,
-            date: DateHelper::fromString($record[self::HEADER_DATE]),
+        $this->dataImportApi->upsertAdStats(
+            userId: $context->getUserId(),
+            accountId: $context->getAccountId(),
+            adId: $ad->getId(),
             results: 0,
             costPerResult: Money::zero($currency),
-            amountSpent: MoneyHelper::amount((float) $record[self::HEADER_SPENT], $currency)
+            amountSpent: MoneyHelper::amount((float) $record[self::HEADER_SPENT], $currency),
+            date: DateHelper::fromString($record[self::HEADER_DATE])
         );
+
+        $this->dataImportApi->flush();
     }
 
     protected function getFileImportType(): FileImportType

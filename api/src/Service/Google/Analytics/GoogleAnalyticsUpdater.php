@@ -23,7 +23,7 @@ class GoogleAnalyticsUpdater
     public function update(Ulid $userId, Ulid $accountId, Ulid $connectedAccountId): void
     {
         foreach ($this->googleAnalyticsApi->getDailyRevenue($connectedAccountId) as $revenue) {
-            $this->dataImportApi->createDailyRevenueIfNotExists(
+            $this->dataImportApi->upsertDailyRevenue(
                 userId: $userId,
                 accountId: $accountId,
                 date: DateHelper::fromString($revenue['date'], self::GA_DATE_FORMAT),

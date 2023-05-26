@@ -31,7 +31,7 @@ class GoogleAnalyticsCsvHandlerTest extends TestCase
 
         $context = new FileImportContext($userId, $accountId);
         $dataImportApi = $this->createMock(DataImportApi::class);
-        $dataImportApi->expects($this->once())->method('getOrCreateDailyRevenue')->with(
+        $dataImportApi->expects($this->once())->method('upsertDailyRevenue')->with(
             $this->equalTo($userId),
             $this->equalTo($accountId),
             $this->equalTo(new DateTimeImmutable('2021-01-01')),
@@ -57,7 +57,7 @@ class GoogleAnalyticsCsvHandlerTest extends TestCase
 
         $context = new FileImportContext($userId, $accountId);
         $dataImportApi = $this->createMock(DataImportApi::class);
-        $dataImportApi->expects($this->once())->method('getOrCreateDailyRevenue')->with(
+        $dataImportApi->expects($this->once())->method('upsertDailyRevenue')->with(
             $this->equalTo($userId),
             $this->equalTo($accountId),
             $this->equalTo(new DateTimeImmutable('2021-01-01')),

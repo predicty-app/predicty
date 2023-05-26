@@ -200,6 +200,9 @@
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/rate-limiter" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/symfony/translation" />
       <excludeFolder url="file://$MODULE_DIR$/api/vendor/spatie/color" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/facebook/php-business-sdk" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/league/oauth2-client" />
+      <excludeFolder url="file://$MODULE_DIR$/api/vendor/league/oauth2-facebook" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

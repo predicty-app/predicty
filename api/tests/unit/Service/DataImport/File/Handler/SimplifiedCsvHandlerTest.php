@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Service\DataImport\File\Handler;
 
-use App\Entity\Ad;
-use App\Entity\AdSet;
-use App\Entity\Campaign;
 use App\Service\DataImport\DataImportApi;
 use App\Service\DataImport\File\FileImportContext;
 use App\Service\DataImport\File\FileImportMetadata;
@@ -35,7 +32,7 @@ class SimplifiedCsvHandlerTest extends TestCase
 
         $context = new FileImportContext($userId, $accountId, new FileImportMetadata(['campaignName' => 'test']));
         $dataImportApi = $this->createMock(DataImportApi::class);
-        $dataImportApi->expects($this->once())->method('getOrCreateCampaign')->with(
+        $dataImportApi->expects($this->once())->method('upsertCampaign')->with(
             $this->equalTo($userId),
             $this->equalTo($accountId),
             $this->equalTo('test'),
@@ -61,10 +58,12 @@ class SimplifiedCsvHandlerTest extends TestCase
         $context = new FileImportContext($userId, $accountId, new FileImportMetadata(['campaignName' => 'test']));
 
         $dataImportApi = $this->createMock(DataImportApi::class);
-        $dataImportApi->expects($this->once())->method('getOrCreateAdSet')->with(
-            $this->isInstanceOf(Campaign::class),
+        $dataImportApi->expects($this->once())->method('upsertAdSet')->with(
+            $this->equalTo($userId),
+            $this->equalTo($accountId),
+            $this->isInstanceOf(Ulid::class),
+            $this->equalTo('d821729c549c4bd281bf89d10a868061'),
             $this->equalTo('test ad set'),
-            $this->equalTo('d821729c549c4bd281bf89d10a868061')
         );
         $handler = new SimplifiedCsvHandler($dataImportApi);
         $handler->processRecord($record, $context);
@@ -85,10 +84,13 @@ class SimplifiedCsvHandlerTest extends TestCase
         $context = new FileImportContext($userId, $accountId, new FileImportMetadata(['campaignName' => 'test']));
 
         $dataImportApi = $this->createMock(DataImportApi::class);
-        $dataImportApi->expects($this->once())->method('getOrCreateAd')->with(
-            $this->isInstanceOf(AdSet::class),
+        $dataImportApi->expects($this->once())->method('upsertAd')->with(
+            $this->equalTo($userId),
+            $this->equalTo($accountId),
+            $this->isInstanceOf(Ulid::class),
+            $this->isInstanceOf(Ulid::class),
+            $this->equalTo('098f6bcd4621d373cade4e832627b4f6'),
             $this->equalTo('test'),
-            $this->equalTo('098f6bcd4621d373cade4e832627b4f6')
         );
 
         $handler = new SimplifiedCsvHandler($dataImportApi);
@@ -110,12 +112,14 @@ class SimplifiedCsvHandlerTest extends TestCase
         $context = new FileImportContext($userId, $accountId, new FileImportMetadata(['campaignName' => 'test']));
 
         $dataImportApi = $this->createMock(DataImportApi::class);
-        $dataImportApi->expects($this->once())->method('getOrCreateAdStats')->with(
-            $this->isInstanceOf(Ad::class),
-            $this->equalTo(new DateTimeImmutable('2021-01-01')),
+        $dataImportApi->expects($this->once())->method('upsertAdStats')->with(
+            $this->equalTo($userId),
+            $this->equalTo($accountId),
+            $this->isInstanceOf(Ulid::class),
             $this->equalTo(0),
             $this->equalTo(Money::zero('PLN')),
-            $this->equalTo(Money::ofMinor(10000, 'PLN'))
+            $this->equalTo(Money::ofMinor(10000, 'PLN')),
+            $this->equalTo(new DateTimeImmutable('2021-01-01')),
         );
 
         $handler = new SimplifiedCsvHandler($dataImportApi);

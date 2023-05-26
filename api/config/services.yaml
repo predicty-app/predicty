@@ -33,6 +33,8 @@ services:
             - '../src/Service/DataImport/File/FileImportContext.php'
             - '../src/Service/Security/Authorization/AuthorizationToken.php'
             - '../src/Service/Google/Ads/GoogleAdsClient.php'
+            - '../src/Service/Facebook/FacebookAdsClient.php'
+            - '../src/Service/Facebook/SymfonyFacebookBridgeAdapter.php'
 
     _instanceof:
         GraphQL\Type\Definition\Type:
@@ -73,6 +75,9 @@ services:
     App\Service\Google\GoogleOAuthClientCredentials:
         arguments: ['%env(GOOGLE_CLIENT_ID)%', '%env(GOOGLE_CLIENT_SECRET)%']
 
+    App\Service\Facebook\FacebookOAuthClientCredentials:
+        arguments: ['%env(FACEBOOK_CLIENT_ID)%', '%env(FACEBOOK_CLIENT_SECRET)%']
+
     Symfony\Component\Cache\Psr16Cache: ~
     Psr\SimpleCache\CacheInterface: '@Symfony\Component\Cache\Psr16Cache'
 
@@ -98,6 +103,11 @@ services:
 
     Symfony\Component\Security\Core\User\UserProviderInterface:
         alias: 'security.user.provider.concrete.all_users'
+
+    App\Service\DataImport\TraceableDataImportApi:
+        arguments: ['@App\Service\DataImport\DefaultDataImportApi']
+
+    App\Service\DataImport\DataImportApi: '@App\Service\DataImport\TraceableDataImportApi'
 
     Symfony\Component\Uid\Command\GenerateUlidCommand: ~
     Symfony\Component\Uid\Command\GenerateUuidCommand: ~

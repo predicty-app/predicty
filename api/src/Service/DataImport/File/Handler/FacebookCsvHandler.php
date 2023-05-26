@@ -33,32 +33,41 @@ class FacebookCsvHandler extends AbstractCsvFileImportHandler
     {
         $currency = Currency::of('PLN');
 
-        $campaign = $this->dataImportApi->getOrCreateCampaign(
+        $campaign = $this->dataImportApi->upsertCampaign(
             $context->getUserId(),
             $context->getAccountId(),
             $record[self::HEADER_CAMPAIGN_NAME],
             $record[self::HEADER_CAMPAIGN_ID],
         );
 
-        $adSet = $this->dataImportApi->getOrCreateAdSet(
-            $campaign,
-            '',
-            $record[self::HEADER_AD_SET_ID]
+        $adSet = $this->dataImportApi->upsertAdSet(
+            $context->getUserId(),
+            $context->getAccountId(),
+            $campaign->getId(),
+            $record[self::HEADER_AD_SET_ID],
+            ''
         );
 
-        $ad = $this->dataImportApi->getOrCreateAd(
-            $adSet,
-            $record[self::HEADER_AD_NAME],
+        $ad = $this->dataImportApi->upsertAd(
+            $context->getUserId(),
+            $context->getAccountId(),
+            $campaign->getId(),
+            $adSet->getId(),
             $record[self::HEADER_AD_ID],
+            $record[self::HEADER_AD_NAME],
         );
 
-        $this->dataImportApi->getOrCreateAdStats(
-            ad: $ad,
-            date: DateHelper::fromString($record[self::HEADER_DAY]),
+        $this->dataImportApi->upsertAdStats(
+            userId: $context->getUserId(),
+            accountId: $context->getAccountId(),
+            adId: $ad->getId(),
             results: (int) $record[self::HEADER_RESULTS],
             costPerResult: MoneyHelper::amount((float) $record[self::HEADER_COST_PER_RESULT], $currency),
-            amountSpent: MoneyHelper::amount((float) $record[self::HEADER_AMOUNT_SPENT_PLN], $currency)
+            amountSpent: MoneyHelper::amount((float) $record[self::HEADER_AMOUNT_SPENT_PLN], $currency),
+            date: DateHelper::fromString($record[self::HEADER_DAY])
         );
+
+        $this->dataImportApi->flush();
     }
 
     protected function getFileImportType(): FileImportType

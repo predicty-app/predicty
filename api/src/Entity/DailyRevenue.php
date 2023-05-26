@@ -69,6 +69,16 @@ class DailyRevenue implements Importable, AccountOwnable, UserOwnable
         return $this->date;
     }
 
+    public function setRevenue(Money $revenue): void
+    {
+        $this->revenue = $revenue->getMinorAmount()->toInt();
+    }
+
+    public function setAverageOrderValue(Money $averageOrderValue): void
+    {
+        $this->averageOrderValue = $averageOrderValue->getMinorAmount()->toInt();
+    }
+
     public function getRevenue(): Money
     {
         return Money::ofMinor($this->revenue, $this->currency);

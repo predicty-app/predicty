@@ -16,12 +16,12 @@ trait TimeDurationTrait
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
     private ?DateTimeImmutable $endedAt;
 
-    public function setStartedAt(DateTimeImmutable $startedAt): void
+    public function setStartedAt(?DateTimeImmutable $startedAt): void
     {
         $this->startedAt = $startedAt;
     }
 
-    public function setEndedAt(DateTimeImmutable $endedAt): void
+    public function setEndedAt(?DateTimeImmutable $endedAt): void
     {
         $this->endedAt = $endedAt;
     }

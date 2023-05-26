@@ -56,6 +56,9 @@ enum DataProvider: string
             self::GOOGLE_ANALYTICS => [
                 'https://www.googleapis.com/auth/analytics.readonly',
             ],
+            self::FACEBOOK_ADS => [
+                'ads_read',
+            ],
             default => []
         };
     }

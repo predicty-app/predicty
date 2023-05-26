@@ -34,9 +34,9 @@ class CampaignRepository
         return $this->repository->findBy(['accountId' => $accountId], ['startedAt' => 'ASC']);
     }
 
-    public function findByUserIdAndExternalId(Ulid $userId, string $externalId): ?Campaign
+    public function findByAccountIdAndExternalId(Ulid $accountId, string $externalId): ?Campaign
     {
-        return $this->repository->findOneBy(['userId' => $userId, 'externalId' => $externalId]);
+        return $this->repository->findOneBy(['accountId' => $accountId, 'externalId' => $externalId]);
     }
 
     /**
