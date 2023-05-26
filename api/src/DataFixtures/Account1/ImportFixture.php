@@ -50,7 +50,7 @@ class ImportFixture extends Fixture implements DependentFixtureInterface
 
         $import3 = new FileImport(Ulid::fromString(self::IMPORT_3), $user->getId(), $account->getId(), 'dummy-import-3.csv', FileImportType::GOOGLE_ADS_CSV);
         $import3->start();
-        $import3->fail('Import failed');
+        $import3->fail(ImportResult::empty(), 'Import failed');
         $this->addReference(self::IMPORT_3, $import3);
 
         $import4 = new ApiImport(Ulid::fromString(self::IMPORT_4), $user->getId(), $account->getId(), $connectedAccount->getId(), DataProvider::GOOGLE_ADS);

@@ -25,13 +25,15 @@ class GoogleAnalyticsCsvHandler extends AbstractCsvFileImportHandler
     public function processRecord(array $record, FileImportContext $context): void
     {
         $currency = Currency::of($record[self::HEADER_CURRENCY]);
-        $this->dataImportApi->getOrCreateDailyRevenue(
+        $this->dataImportApi->upsertDailyRevenue(
             userId: $context->getUserId(),
             accountId: $context->getAccountId(),
             date: DateHelper::fromString($record[self::HEADER_DATE]),
             revenue: Money::of((float) $record[self::HEADER_REVENUE], $currency),
             averageOrderValue: Money::of((float) $record[self::HEADER_AOV], $currency)
         );
+
+        $this->dataImportApi->flush();
     }
 
     protected function getFileImportType(): FileImportType

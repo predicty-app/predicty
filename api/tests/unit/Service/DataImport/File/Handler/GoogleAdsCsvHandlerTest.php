@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Service\DataImport\File\Handler;
 
-use App\Entity\Ad;
-use App\Entity\AdSet;
-use App\Entity\Campaign;
 use App\Service\DataImport\DataImportApi;
 use App\Service\DataImport\File\FileImportContext;
 use App\Service\DataImport\File\FileImportMetadata;
@@ -40,7 +37,7 @@ class GoogleAdsCsvHandlerTest extends TestCase
 
         $context = new FileImportContext($userId, $accountId, new FileImportMetadata(['campaignName' => 'test']));
         $dataImportApi = $this->createMock(DataImportApi::class);
-        $dataImportApi->expects($this->once())->method('getOrCreateCampaign')->with(
+        $dataImportApi->expects($this->once())->method('upsertCampaign')->with(
             $this->equalTo($userId),
             $this->equalTo($accountId),
             $this->equalTo('test'),
@@ -59,7 +56,7 @@ class GoogleAdsCsvHandlerTest extends TestCase
             'Cost' => '100',
             'Ad ID' => '100',
             'Ad group' => 'test ad group',
-            'Ad group ID' => '100',
+            'Ad group ID' => 'adg100',
             'Campaign ID' => '098f6bcd4621d373cade4e832627b4f6',
             'Currency code' => 'PLN',
             'Day' => '2021-01-01',
@@ -70,10 +67,12 @@ class GoogleAdsCsvHandlerTest extends TestCase
 
         $context = new FileImportContext($userId, $accountId);
         $dataImportApi = $this->createMock(DataImportApi::class);
-        $dataImportApi->expects($this->once())->method('getOrCreateAdSet')->with(
-            $this->isInstanceOf(Campaign::class),
+        $dataImportApi->expects($this->once())->method('upsertAdSet')->with(
+            $this->equalTo($userId),
+            $this->equalTo($accountId),
+            $this->isInstanceOf(Ulid::class),
+            $this->equalTo('adg100'),
             $this->equalTo('test ad group'),
-            $this->equalTo('100')
         );
 
         $handler = new GoogleAdsCsvHandler($dataImportApi);
@@ -99,10 +98,13 @@ class GoogleAdsCsvHandlerTest extends TestCase
 
         $context = new FileImportContext($userId, $accountId);
         $dataImportApi = $this->createMock(DataImportApi::class);
-        $dataImportApi->expects($this->once())->method('getOrCreateAd')->with(
-            $this->isInstanceOf(AdSet::class),
+        $dataImportApi->expects($this->once())->method('upsertAd')->with(
+            $this->equalTo($userId),
+            $this->equalTo($accountId),
+            $this->isInstanceOf(Ulid::class),
+            $this->isInstanceOf(Ulid::class),
+            $this->equalTo('ad-id-100'),
             $this->equalTo('Ad no. ad-id-100'),
-            $this->equalTo('ad-id-100')
         );
 
         $handler = new GoogleAdsCsvHandler($dataImportApi);
@@ -128,12 +130,14 @@ class GoogleAdsCsvHandlerTest extends TestCase
 
         $context = new FileImportContext($userId, $accountId);
         $dataImportApi = $this->createMock(DataImportApi::class);
-        $dataImportApi->expects($this->once())->method('getOrCreateAdStats')->with(
-            $this->isInstanceOf(Ad::class),
-            $this->equalTo(new DateTimeImmutable('2021-01-01')),
+        $dataImportApi->expects($this->once())->method('upsertAdStats')->with(
+            $this->equalTo($userId),
+            $this->equalTo($accountId),
+            $this->isInstanceOf(Ulid::class),
             $this->equalTo(100),
             $this->equalTo(Money::of(1, 'PLN')),
             $this->equalTo(Money::of(100, 'PLN')),
+            $this->equalTo(new DateTimeImmutable('2021-01-01')),
         );
 
         $handler = new GoogleAdsCsvHandler($dataImportApi);

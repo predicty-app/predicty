@@ -18,6 +18,7 @@ use Symfony\Component\Uid\Ulid;
 #[ORM\DiscriminatorMap([
     'GOOGLE_ANALYTICS' => GoogleAnalyticsConnectedAccount::class,
     'GOOGLE_ADS' => GoogleAdsConnectedAccount::class,
+    'FACEBOOK_ADS' => FacebookAdsConnectedAccount::class,
 ])]
 #[ORM\Index(fields: ['userId'])]
 #[ORM\Index(fields: ['accountId'])]

@@ -10,7 +10,7 @@ use App\Entity\ImportResult;
 use App\Message\Event\ImportCompleted;
 use App\Repository\ImportRepository;
 use App\Service\DataImport\ImportTrackingService;
-use App\Service\DataImport\TrackableDataImportApi;
+use App\Service\DataImport\TraceableDataImportApi;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
 use RuntimeException;
@@ -35,7 +35,7 @@ class ImportTrackingServiceTest extends TestCase
         $eventBus = $this->createMock(MessageBusInterface::class);
         $eventBus->method('dispatch')->willReturnCallback(fn ($message, $stamps) => new Envelope(new stdClass()));
 
-        $dataImportApi = $this->createMock(TrackableDataImportApi::class);
+        $dataImportApi = $this->createMock(TraceableDataImportApi::class);
 
         $logger = new NullLogger();
         $service = new ImportTrackingService($importRepository, $dataImportApi, $eventBus, $logger);
@@ -59,7 +59,7 @@ class ImportTrackingServiceTest extends TestCase
         $eventBus = $this->createMock(MessageBusInterface::class);
         $eventBus->method('dispatch')->willReturnCallback(fn ($message, $stamps) => new Envelope(new stdClass()));
 
-        $dataImportApi = $this->createMock(TrackableDataImportApi::class);
+        $dataImportApi = $this->createMock(TraceableDataImportApi::class);
 
         $logger = new NullLogger();
         $service = new ImportTrackingService($importRepository, $dataImportApi, $eventBus, $logger);
@@ -86,7 +86,7 @@ class ImportTrackingServiceTest extends TestCase
         $eventBus = $this->createMock(MessageBusInterface::class);
         $eventBus->method('dispatch')->willReturnCallback(fn ($message, $stamps) => new Envelope(new stdClass()));
 
-        $dataImportApi = $this->createMock(TrackableDataImportApi::class);
+        $dataImportApi = $this->createMock(TraceableDataImportApi::class);
 
         $logger = new NullLogger();
         $service = new ImportTrackingService($importRepository, $dataImportApi, $eventBus, $logger);
@@ -108,7 +108,7 @@ class ImportTrackingServiceTest extends TestCase
             fn ($message, $stamps) => new Envelope($message)
         );
 
-        $dataImportApi = $this->createMock(TrackableDataImportApi::class);
+        $dataImportApi = $this->createMock(TraceableDataImportApi::class);
 
         $logger = new NullLogger();
         $service = new ImportTrackingService($importRepository, $dataImportApi, $eventBus, $logger);
@@ -130,7 +130,7 @@ class ImportTrackingServiceTest extends TestCase
         $eventBus = $this->createMock(MessageBusInterface::class);
         $eventBus->method('dispatch')->willReturnCallback(fn ($message, $stamps) => new Envelope(new stdClass()));
 
-        $dataImportApi = $this->createMock(TrackableDataImportApi::class);
+        $dataImportApi = $this->createMock(TraceableDataImportApi::class);
 
         $logger = new NullLogger();
         $service = new ImportTrackingService($importRepository, $dataImportApi, $eventBus, $logger);
@@ -146,7 +146,7 @@ class ImportTrackingServiceTest extends TestCase
         $this->expectExceptionMessage('Something went wrong');
 
         $import = $this->createMock(Import::class);
-        $import->expects($this->once())->method('fail')->with('Something went wrong');
+        $import->expects($this->once())->method('fail')->with($this->isInstanceOf(ImportResult::class), 'Something went wrong');
 
         $importRepository = $this->createMock(ImportRepository::class);
         $importRepository->method('findById')->willReturn($import);
@@ -155,7 +155,7 @@ class ImportTrackingServiceTest extends TestCase
         $eventBus = $this->createMock(MessageBusInterface::class);
         $eventBus->method('dispatch')->willReturnCallback(fn ($message, $stamps) => new Envelope(new stdClass()));
 
-        $dataImportApi = $this->createMock(TrackableDataImportApi::class);
+        $dataImportApi = $this->createMock(TraceableDataImportApi::class);
 
         $logger = new NullLogger();
         $service = new ImportTrackingService($importRepository, $dataImportApi, $eventBus, $logger);

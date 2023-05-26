@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Tests\Unit\Service\DataImport\File\Handler;
 
-use App\Entity\AdSet;
-use App\Entity\Campaign;
 use App\Service\DataImport\DataImportApi;
 use App\Service\DataImport\File\FileImportContext;
 use App\Service\DataImport\File\FileImportMetadata;
@@ -38,7 +36,7 @@ class FacebookCsvHandlerTest extends TestCase
         $context = new FileImportContext($userId, $accountId, new FileImportMetadata());
 
         $dataImportApi = $this->createMock(DataImportApi::class);
-        $dataImportApi->expects($this->once())->method('getOrCreateCampaign')->with(
+        $dataImportApi->expects($this->once())->method('upsertCampaign')->with(
             $this->equalTo($userId),
             $this->equalTo($accountId),
             $this->equalTo('Test Campaign'),
@@ -68,10 +66,12 @@ class FacebookCsvHandlerTest extends TestCase
 
         $context = new FileImportContext($userId, $accountId, new FileImportMetadata());
         $dataImportApi = $this->createMock(DataImportApi::class);
-        $dataImportApi->expects($this->once())->method('getOrCreateAdSet')->with(
-            $this->isInstanceOf(Campaign::class),
-            $this->equalTo(''),
+        $dataImportApi->expects($this->once())->method('upsertAdSet')->with(
+            $this->equalTo($userId),
+            $this->equalTo($accountId),
+            $this->isInstanceOf(Ulid::class),
             $this->equalTo('adset-id-100'),
+            $this->equalTo(''),
         );
 
         $handler = new FacebookCsvHandler($dataImportApi);
@@ -97,10 +97,13 @@ class FacebookCsvHandlerTest extends TestCase
 
         $context = new FileImportContext($userId, $accountId, new FileImportMetadata());
         $dataImportApi = $this->createMock(DataImportApi::class);
-        $dataImportApi->expects($this->once())->method('getOrCreateAd')->with(
-            $this->isInstanceOf(AdSet::class),
-            $this->equalTo('Test Ad'),
+        $dataImportApi->expects($this->once())->method('upsertAd')->with(
+            $this->equalTo($userId),
+            $this->equalTo($accountId),
+            $this->isInstanceOf(Ulid::class),
+            $this->isInstanceOf(Ulid::class),
             $this->equalTo('ad-id-100'),
+            $this->equalTo('Test Ad'),
         );
 
         $handler = new FacebookCsvHandler($dataImportApi);

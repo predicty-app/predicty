@@ -33,9 +33,9 @@ class CampaignFixture extends Fixture implements DependentFixtureInterface
         $account = $this->getReference(AccountFixture::ACCOUNT_1, Account::class);
 
         $data = [
-            self::CAMPAIGN_1 => new Campaign(Ulid::fromString(self::CAMPAIGN_1), $user->getId(), $account->getId(), 'external-id-1', 'Campaign 1', DataProvider::OTHER, null, DateHelper::fromString('2023-01-02 00:00:00', 'Y-m-d H:i:s'), DateHelper::fromString('2023-01-18 23:59:59', 'Y-m-d H:i:s')),
-            self::CAMPAIGN_2 => new Campaign(Ulid::fromString(self::CAMPAIGN_2), $user->getId(), $account->getId(), 'external-id-2', 'Campaign 2', DataProvider::OTHER),
-            self::CAMPAIGN_3 => new Campaign(Ulid::fromString(self::CAMPAIGN_3), $user->getId(), $account->getId(), 'external-id-3', 'Campaign 3', DataProvider::OTHER),
+            self::CAMPAIGN_1 => new Campaign(Ulid::fromString(self::CAMPAIGN_1), $user->getId(), $account->getId(), 'external-id-1', 'Campaign 1', DataProvider::FACEBOOK_ADS, DateHelper::fromString('2023-01-02 00:00:00', 'Y-m-d H:i:s'), DateHelper::fromString('2023-01-18 23:59:59', 'Y-m-d H:i:s')),
+            self::CAMPAIGN_2 => new Campaign(Ulid::fromString(self::CAMPAIGN_2), $user->getId(), $account->getId(), 'external-id-2', 'Campaign 2', DataProvider::FACEBOOK_ADS),
+            self::CAMPAIGN_3 => new Campaign(Ulid::fromString(self::CAMPAIGN_3), $user->getId(), $account->getId(), 'external-id-3', 'Campaign 3', DataProvider::GOOGLE_ADS),
         ];
 
         foreach ($data as $reference => $entity) {

@@ -95,12 +95,13 @@ abstract class Import implements UserOwnable, AccountOwnable
         $this->changedAt = Clock::now();
     }
 
-    public function fail(string $message): void
+    public function fail(ImportResult $importResult, string $message): void
     {
         $this->message = $message;
         $this->endedAt = Clock::now();
         $this->changedAt = Clock::now();
         $this->status = ImportStatus::FAILED;
+        $this->result = $importResult->toArray();
     }
 
     public function withdraw(): void

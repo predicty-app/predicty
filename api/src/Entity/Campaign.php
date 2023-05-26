@@ -46,7 +46,6 @@ class Campaign implements Importable, UserOwnable, AccountOwnable
         string $externalId,
         string $name,
         DataProvider $dataProvider = DataProvider::OTHER,
-        ?Ulid $importId = null,
         ?DateTimeImmutable $startedAt = null,
         ?DateTimeImmutable $endedAt = null,
     ) {
@@ -57,7 +56,6 @@ class Campaign implements Importable, UserOwnable, AccountOwnable
         $this->dataProvider = $dataProvider;
         $this->createdAt = Clock::now();
         $this->changedAt = Clock::now();
-        $this->importId = $importId;
         $this->startedAt = $startedAt;
         $this->endedAt = $endedAt;
         $this->accountId = $accountId;

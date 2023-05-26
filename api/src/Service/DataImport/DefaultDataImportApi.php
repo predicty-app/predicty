@@ -9,8 +9,8 @@ use App\Entity\AdSet;
 use App\Entity\AdStats;
 use App\Entity\Campaign;
 use App\Entity\DailyRevenue;
+use App\Entity\DataProvider;
 use App\Entity\Importable;
-use App\Entity\ImportResult;
 use App\Repository\AdRepository;
 use App\Repository\AdSetRepository;
 use App\Repository\AdStatsRepository;
@@ -18,156 +18,149 @@ use App\Repository\CampaignRepository;
 use App\Repository\DailyRevenueRepository;
 use Brick\Money\Money;
 use DateTimeImmutable;
-use Exception;
+use Doctrine\ORM\EntityManagerInterface;
+use RuntimeException;
 use Symfony\Component\Uid\Ulid;
 
-class DefaultDataImportApi implements DataImportApi, TrackableDataImportApi
+class DefaultDataImportApi implements DataImportApi
 {
-    private ImportResult $importResult;
-    private ?Ulid $importId = null;
+    /**
+     * @var null|callable
+     */
+    private mixed $onPersist = null;
+    private DataProvider $dataProvider = DataProvider::OTHER;
 
     public function __construct(
+        private EntityManagerInterface $entityManager,
         private CampaignRepository $campaignRepository,
         private AdSetRepository $adSetRepository,
         private AdRepository $adRepository,
         private AdStatsRepository $adStatsRepository,
-        private DailyRevenueRepository $dailyRevenueRepository
+        private DailyRevenueRepository $dailyRevenueRepository,
     ) {
-        $this->importResult = new ImportResult();
     }
 
-    public function getOrCreateCampaign(Ulid $userId, Ulid $accountId, string $name, string $externalId): Campaign
+    public function setOnPersistCallback(callable $callback): void
     {
-        $entity = $this->campaignRepository->findByUserIdAndExternalId($userId, $externalId);
+        $this->onPersist = $callback;
+    }
+
+    public function setDefaultDataProvider(DataProvider $dataProvider): void
+    {
+        $this->dataProvider = $dataProvider;
+    }
+
+    public function flush(): void
+    {
+        $this->entityManager->flush();
+        $this->entityManager->clear();
+    }
+
+    public function getCampaignByExternalId(Ulid $accountId, string $externalId): Campaign
+    {
+        return $this->campaignRepository->findByAccountIdAndExternalId($accountId, $externalId) ?? throw new RuntimeException('Campaign not found');
+    }
+
+    public function getAdSetByExternalId(Ulid $accountId, string $externalId): AdSet
+    {
+        return $this->adSetRepository->findByAccountIdAndExternalId($accountId, $externalId) ?? throw new RuntimeException('AdSet not found');
+    }
+
+    public function getAdByExternalId(Ulid $accountId, string $externalId): Ad
+    {
+        return $this->adRepository->findByAccountIdAndExternalId($accountId, $externalId) ?? throw new RuntimeException('Ad not found');
+    }
+
+    public function upsertCampaign(Ulid $userId, Ulid $accountId, string $name, string $externalId, ?DateTimeImmutable $startedAt = null, ?DateTimeImmutable $endedAt = null): Campaign
+    {
+        $entity = $this->campaignRepository->findByAccountIdAndExternalId($accountId, $externalId);
 
         if ($entity === null) {
-            $entity = new Campaign(new Ulid(), $userId, $accountId, $externalId, $name);
-
-            $this->doTrack($entity);
-            $this->campaignRepository->save($entity);
+            $entity = new Campaign(new Ulid(), $userId, $accountId, $externalId, $name, $this->dataProvider);
         }
+
+        $entity->setName($name);
+        $entity->setStartedAt($startedAt);
+        $entity->setEndedAt($startedAt);
+
+        $this->persist($entity);
 
         return $entity;
     }
 
-    public function getOrCreateDailyRevenue(Ulid $userId, Ulid $accountId, DateTimeImmutable $date, Money $revenue, Money $averageOrderValue): DailyRevenue
+    public function upsertAdSet(Ulid $userId, Ulid $accountId, Ulid $campaignId, string $externalId, string $name, ?DateTimeImmutable $startedAt = null, ?DateTimeImmutable $endedAt = null): AdSet
     {
-        $entity = $this->dailyRevenueRepository->findByDay($userId, $date);
+        $entity = $this->adSetRepository->findByAccountIdAndExternalId($accountId, $externalId);
 
         if ($entity === null) {
-            $entity = new DailyRevenue(new Ulid(), $userId, $accountId, $date, $revenue, $averageOrderValue);
-
-            $this->doTrack($entity);
-            $this->dailyRevenueRepository->save($entity);
+            $entity = new AdSet(new Ulid(), $userId, $accountId, $campaignId, $externalId, $name, $this->dataProvider);
         }
+
+        $entity->setName($name);
+        $entity->setStartedAt($startedAt);
+        $entity->setEndedAt($endedAt);
+
+        $this->persist($entity);
 
         return $entity;
     }
 
-    public function createDailyRevenueIfNotExists(Ulid $userId, Ulid $accountId, DateTimeImmutable $date, Money $revenue, Money $averageOrderValue): ?DailyRevenue
+    public function upsertAd(Ulid $userId, Ulid $accountId, Ulid $campaignId, Ulid $adSetId, string $externalId, string $name, ?DateTimeImmutable $startedAt = null, ?DateTimeImmutable $endedAt = null): Ad
+    {
+        $entity = $this->adRepository->findByAccountIdAndExternalId($accountId, $externalId);
+
+        if ($entity === null) {
+            $entity = new Ad(new Ulid(), $userId, $accountId, $campaignId, $externalId, $name, $adSetId, $this->dataProvider);
+        }
+
+        $entity->setName($name);
+        $entity->setStartedAt($startedAt);
+        $entity->setEndedAt($endedAt);
+
+        $this->persist($entity);
+
+        return $entity;
+    }
+
+    public function upsertAdStats(Ulid $userId, Ulid $accountId, Ulid $adId, int $results, Money $costPerResult, Money $amountSpent, DateTimeImmutable $date): AdStats
+    {
+        $entity = $this->adStatsRepository->findByAdIdAndDay($adId, $date);
+
+        if ($entity === null) {
+            $entity = new AdStats(new Ulid(), $userId, $accountId, $adId, $results, $costPerResult, $amountSpent, $date);
+        }
+
+        $entity->setResults($results);
+        $entity->setCostPerResult($costPerResult);
+        $entity->setAmountSpent($amountSpent);
+
+        $this->persist($entity);
+
+        return $entity;
+    }
+
+    public function upsertDailyRevenue(Ulid $userId, Ulid $accountId, DateTimeImmutable $date, Money $revenue, Money $averageOrderValue): DailyRevenue
     {
         $entity = $this->dailyRevenueRepository->findByDay($accountId, $date);
 
         if ($entity === null) {
             $entity = new DailyRevenue(new Ulid(), $userId, $accountId, $date, $revenue, $averageOrderValue);
-
-            $this->doTrack($entity);
-            $this->dailyRevenueRepository->save($entity);
         }
+
+        $entity->setRevenue($revenue);
+        $entity->setAverageOrderValue($averageOrderValue);
+
+        $this->persist($entity);
 
         return $entity;
     }
 
-    public function getOrCreateAd(AdSet $adSet, string $name, string $externalId): Ad
+    private function persist(Importable $importable): void
     {
-        $entity = $this->adRepository->findByAccountIdAndExternalId($adSet->getAccountId(), $externalId);
-
-        if ($entity === null) {
-            $entity = new Ad(
-                id: new Ulid(),
-                userId: $adSet->getUserId(),
-                accountId: $adSet->getAccountId(),
-                campaignId: $adSet->getCampaignId(),
-                externalId: $externalId,
-                name: $name,
-                adSetId: $adSet->getId(),
-            );
-
-            $this->doTrack($entity);
-            $this->adRepository->save($entity);
+        if ($this->onPersist !== null) {
+            ($this->onPersist)($importable);
         }
 
-        return $entity;
-    }
-
-    public function getOrCreateAdSet(Campaign $campaign, string $name, string $externalId): AdSet
-    {
-        $entity = $this->adSetRepository->findByCampaignIdAndExternalId($campaign->getAccountId(), $campaign->getId(), $externalId);
-
-        if ($entity === null) {
-            $entity = new AdSet(
-                id: new Ulid(),
-                userId: $campaign->getUserId(),
-                accountId: $campaign->getAccountId(),
-                campaignId: $campaign->getId(),
-                externalId: $externalId,
-                name: $name,
-            );
-
-            $this->doTrack($entity);
-            $this->adSetRepository->save($entity);
-        }
-
-        return $entity;
-    }
-
-    public function getOrCreateAdStats(Ad $ad, DateTimeImmutable $date, int $results, Money $costPerResult, Money $amountSpent): AdStats
-    {
-        $entity = $this->adStatsRepository->findByAdIdAndDay($ad->getId(), $date);
-
-        if ($entity === null) {
-            $entity = new AdStats(
-                id: new Ulid(),
-                userId: $ad->getUserId(),
-                accountId: $ad->getAccountId(),
-                adId: $ad->getId(),
-                results: $results,
-                costPerResult: $costPerResult,
-                amountSpent: $amountSpent,
-                date: $date
-            );
-
-            $this->doTrack($entity);
-            $this->adStatsRepository->save($entity);
-        }
-
-        return $entity;
-    }
-
-    public function track(Ulid $importId, ImportResult $importResult = null): void
-    {
-        $this->importId = $importId;
-        $this->importResult = $importResult ?? new ImportResult();
-    }
-
-    public function getImportResult(): ImportResult
-    {
-        return $this->importResult;
-    }
-
-    private function doTrack(Importable $importable): void
-    {
-        if ($this->importId !== null) {
-            $importable->setImportId($this->importId);
-
-            match (true) {
-                $importable instanceof Campaign => $this->importResult->incrementCreatedCampaigns(),
-                $importable instanceof AdSet => $this->importResult->incrementCreatedAdSets(),
-                $importable instanceof Ad => $this->importResult->incrementCreatedAds(),
-                $importable instanceof AdStats => $this->importResult->incrementCreatedAdStats(),
-                $importable instanceof DailyRevenue => $this->importResult->incrementCreatedDailyRevenues(),
-                default => throw new Exception('Unknown entity type: '.$importable::class),
-            };
-        }
+        $this->entityManager->persist($importable);
     }
 }

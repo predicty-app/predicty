@@ -23,4 +23,17 @@ class DateHelper
 
         return $datetime;
     }
+
+    public static function fromStringOrNull(?string $date, string $format = 'Y-m-d'): ?DateTimeImmutable
+    {
+        if ($date === null) {
+            return null;
+        }
+
+        try {
+            return self::fromString($date, $format);
+        } catch (RuntimeException) {
+            return null;
+        }
+    }
 }

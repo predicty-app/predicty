@@ -30,10 +30,10 @@ class AdSetsFixture extends Fixture implements DependentFixtureInterface
         $campaign3 = $this->getReference(CampaignFixture::CAMPAIGN_3, Campaign::class);
 
         $data = [
-            self::ADSET_1 => new AdSet(Ulid::fromString(self::ADSET_1), $campaign1->getUserId(), $campaign1->getAccountId(), $campaign1->getId(), 'adset-external-id-1', 'Dummy AdSet 1', null, DateHelper::fromString('2023-01-02 00:00:00', 'Y-m-d H:i:s'), DateHelper::fromString('2023-01-18 23:59:59', 'Y-m-d H:i:s')),
-            self::ADSET_2 => new AdSet(Ulid::fromString(self::ADSET_2), $campaign1->getUserId(), $campaign1->getAccountId(), $campaign1->getId(), 'adset-external-id-2', 'Dummy AdSet 2', null, DateHelper::fromString('2023-01-02 00:00:00', 'Y-m-d H:i:s'), DateHelper::fromString('2023-01-18 23:59:59', 'Y-m-d H:i:s')),
-            self::ADSET_3 => new AdSet(Ulid::fromString(self::ADSET_3), $campaign2->getUserId(), $campaign2->getAccountId(), $campaign2->getId(), 'adset-external-id-3', 'Dummy AdSet 3'),
-            self::ADSET_4 => new AdSet(Ulid::fromString(self::ADSET_4), $campaign3->getUserId(), $campaign3->getAccountId(), $campaign3->getId(), 'adset-external-id-4', 'Dummy AdSet 4'),
+            self::ADSET_1 => new AdSet(Ulid::fromString(self::ADSET_1), $campaign1->getUserId(), $campaign1->getAccountId(), $campaign1->getId(), 'adset-external-id-1', 'Dummy AdSet 1', $campaign1->getDataProvider(), DateHelper::fromString('2023-01-02 00:00:00', 'Y-m-d H:i:s'), DateHelper::fromString('2023-01-18 23:59:59', 'Y-m-d H:i:s')),
+            self::ADSET_2 => new AdSet(Ulid::fromString(self::ADSET_2), $campaign1->getUserId(), $campaign1->getAccountId(), $campaign1->getId(), 'adset-external-id-2', 'Dummy AdSet 2', $campaign1->getDataProvider(), DateHelper::fromString('2023-01-02 00:00:00', 'Y-m-d H:i:s'), DateHelper::fromString('2023-01-18 23:59:59', 'Y-m-d H:i:s')),
+            self::ADSET_3 => new AdSet(Ulid::fromString(self::ADSET_3), $campaign2->getUserId(), $campaign2->getAccountId(), $campaign2->getId(), 'adset-external-id-3', 'Dummy AdSet 3', $campaign2->getDataProvider()),
+            self::ADSET_4 => new AdSet(Ulid::fromString(self::ADSET_4), $campaign3->getUserId(), $campaign3->getAccountId(), $campaign3->getId(), 'adset-external-id-4', 'Dummy AdSet 4', $campaign3->getDataProvider()),
         ];
 
         foreach ($data as $reference => $entity) {

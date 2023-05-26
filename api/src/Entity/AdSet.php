@@ -38,6 +38,9 @@ class AdSet implements Importable, UserOwnable, AccountOwnable
     #[ORM\Column(type: UlidType::NAME, unique: false)]
     private Ulid $campaignId;
 
+    #[ORM\Column(options: ['default' => DataProvider::OTHER])]
+    private DataProvider $dataProvider;
+
     #[ORM\Column(length: 255)]
     private string $name;
 
@@ -48,18 +51,18 @@ class AdSet implements Importable, UserOwnable, AccountOwnable
         Ulid $campaignId,
         string $externalId,
         string $name,
-        ?Ulid $importId = null,
+        DataProvider $dataProvider = DataProvider::OTHER,
         ?DateTimeImmutable $startedAt = null,
         ?DateTimeImmutable $endedAt = null,
     ) {
         $this->id = $id;
+        $this->dataProvider = $dataProvider;
         $this->externalId = $externalId;
         $this->userId = $userId;
         $this->campaignId = $campaignId;
         $this->name = $name;
         $this->createdAt = Clock::now();
         $this->changedAt = Clock::now();
-        $this->importId = $importId;
         $this->startedAt = $startedAt;
         $this->endedAt = $endedAt;
         $this->accountId = $accountId;
@@ -75,8 +78,18 @@ class AdSet implements Importable, UserOwnable, AccountOwnable
         return $this->campaignId;
     }
 
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getDataProvider(): DataProvider
+    {
+        return $this->dataProvider;
     }
 }

@@ -78,14 +78,29 @@ class AdStats implements Importable, UserOwnable, AccountOwnable
         return $this->adId;
     }
 
+    public function setResults(int $results): void
+    {
+        $this->results = $results;
+    }
+
     public function getResults(): int
     {
         return $this->results;
     }
 
+    public function setCostPerResult(Money $costPerResult): void
+    {
+        $this->costPerResult = $costPerResult->getMinorAmount()->toInt();
+    }
+
     public function getCostPerResult(): Money
     {
         return Money::ofMinor($this->costPerResult, $this->getCurrency());
+    }
+
+    public function setAmountSpent(Money $amountSpent): void
+    {
+        $this->amountSpent = $amountSpent->getMinorAmount()->toInt();
     }
 
     public function getAmountSpent(): Money

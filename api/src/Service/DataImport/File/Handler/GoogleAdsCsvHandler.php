@@ -31,23 +31,28 @@ class GoogleAdsCsvHandler extends AbstractCsvFileImportHandler
 
     public function processRecord(array $record, FileImportContext $context): void
     {
-        $campaign = $this->dataImportApi->getOrCreateCampaign(
+        $campaign = $this->dataImportApi->upsertCampaign(
             $context->getUserId(),
             $context->getAccountId(),
             $record[self::HEADER_CAMPAIGN_NAME],
             $record[self::HEADER_CAMPAIGN_ID],
         );
 
-        $adSet = $this->dataImportApi->getOrCreateAdSet(
-            $campaign,
-            $record[self::HEADER_AD_SET_NAME],
-            $record[self::HEADER_AD_SET_ID]
+        $adSet = $this->dataImportApi->upsertAdSet(
+            $context->getUserId(),
+            $context->getAccountId(),
+            $campaign->getId(),
+            $record[self::HEADER_AD_SET_ID],
+            $record[self::HEADER_AD_SET_NAME]
         );
 
-        $ad = $this->dataImportApi->getOrCreateAd(
-            $adSet,
-            sprintf('Ad no. %s', $record[self::HEADER_AD_ID]),
+        $ad = $this->dataImportApi->upsertAd(
+            $context->getUserId(),
+            $context->getAccountId(),
+            $campaign->getId(),
+            $adSet->getId(),
             $record[self::HEADER_AD_ID],
+            sprintf('Ad no. %s', $record[self::HEADER_AD_ID])
         );
 
         $currency = Currency::of($record[self::HEADER_CURRENCY]);
@@ -55,13 +60,17 @@ class GoogleAdsCsvHandler extends AbstractCsvFileImportHandler
         $spent = MoneyHelper::amount((float) $record[self::HEADER_AMOUNT_SPENT], $currency);
         $cpr = $spent->isGreaterThan(0) ? $spent->dividedBy($results, RoundingMode::DOWN) : Money::zero($currency);
 
-        $this->dataImportApi->getOrCreateAdStats(
-            ad: $ad,
-            date: DateHelper::fromString($record[self::HEADER_DAY]),
+        $this->dataImportApi->upsertAdStats(
+            userId: $context->getUserId(),
+            accountId: $context->getAccountId(),
+            adId: $ad->getId(),
             results: $results,
             costPerResult: $cpr,
-            amountSpent: $spent
+            amountSpent: $spent,
+            date: DateHelper::fromString($record[self::HEADER_DAY])
         );
+
+        $this->dataImportApi->flush();
     }
 
     public function getOffset(): int

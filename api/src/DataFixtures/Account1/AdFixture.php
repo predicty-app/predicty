@@ -37,12 +37,12 @@ class AdFixture extends Fixture implements DependentFixtureInterface
         $adSet3 = $this->getReference(AdSetsFixture::ADSET_3, AdSet::class);
 
         $data = [
-            self::AD_1 => new Ad(Ulid::fromString(self::AD_1), $adSet1->getUserId(), $adSet1->getAccountId(), $adSet1->getCampaignId(), 'ad-external-id-1', 'Dummy Ad 1', $adSet1->getId(), null, $this->date('2023-01-02 00:00:00'), $this->date('2023-01-18 23:59:59')),
-            self::AD_2 => new Ad(Ulid::fromString(self::AD_2), $adSet1->getUserId(), $adSet1->getAccountId(), $adSet1->getCampaignId(), 'ad-external-id-2', 'Dummy Ad 2', $adSet1->getId(), null, $this->date('2023-01-03 00:00:00'), $this->date('2023-01-09 23:59:59')),
-            self::AD_3 => new Ad(Ulid::fromString(self::AD_3), $adSet1->getUserId(), $adSet1->getAccountId(), $adSet1->getCampaignId(), 'ad-external-id-3', 'Dummy Ad 3', $adSet1->getId()),
-            self::AD_4 => new Ad(Ulid::fromString(self::AD_4), $adSet2->getUserId(), $adSet2->getAccountId(), $adSet2->getCampaignId(), 'ad-external-id-4', 'Dummy Ad 4', $adSet2->getId(), null, $this->date('2023-01-10 00:00:00'), $this->date('2023-01-18 23:59:59')),
-            self::AD_5 => new Ad(Ulid::fromString(self::AD_5), $adSet2->getUserId(), $adSet2->getAccountId(), $adSet2->getCampaignId(), 'ad-external-id-5', 'Dummy Ad 5', $adSet2->getId()),
-            self::AD_6 => new Ad(Ulid::fromString(self::AD_6), $adSet3->getUserId(), $adSet3->getAccountId(), $adSet3->getCampaignId(), 'ad-external-id-6', 'Dummy Ad 6', $adSet3->getId()),
+            self::AD_1 => new Ad(Ulid::fromString(self::AD_1), $adSet1->getUserId(), $adSet1->getAccountId(), $adSet1->getCampaignId(), 'ad-external-id-1', 'Dummy Ad 1', $adSet1->getId(), $adSet1->getDataProvider(), $this->date('2023-01-02 00:00:00'), $this->date('2023-01-18 23:59:59')),
+            self::AD_2 => new Ad(Ulid::fromString(self::AD_2), $adSet1->getUserId(), $adSet1->getAccountId(), $adSet1->getCampaignId(), 'ad-external-id-2', 'Dummy Ad 2', $adSet1->getId(), $adSet1->getDataProvider(), $this->date('2023-01-03 00:00:00'), $this->date('2023-01-09 23:59:59')),
+            self::AD_3 => new Ad(Ulid::fromString(self::AD_3), $adSet1->getUserId(), $adSet1->getAccountId(), $adSet1->getCampaignId(), 'ad-external-id-3', 'Dummy Ad 3', $adSet1->getId(), $adSet1->getDataProvider()),
+            self::AD_4 => new Ad(Ulid::fromString(self::AD_4), $adSet2->getUserId(), $adSet2->getAccountId(), $adSet2->getCampaignId(), 'ad-external-id-4', 'Dummy Ad 4', $adSet2->getId(), $adSet2->getDataProvider(), $this->date('2023-01-10 00:00:00'), $this->date('2023-01-18 23:59:59')),
+            self::AD_5 => new Ad(Ulid::fromString(self::AD_5), $adSet2->getUserId(), $adSet2->getAccountId(), $adSet2->getCampaignId(), 'ad-external-id-5', 'Dummy Ad 5', $adSet2->getId(), $adSet2->getDataProvider()),
+            self::AD_6 => new Ad(Ulid::fromString(self::AD_6), $adSet3->getUserId(), $adSet3->getAccountId(), $adSet3->getCampaignId(), 'ad-external-id-6', 'Dummy Ad 6', $adSet3->getId(), $adSet3->getDataProvider()),
         ];
 
         foreach ($data as $reference => $entity) {
