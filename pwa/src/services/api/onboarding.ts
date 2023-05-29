@@ -2,6 +2,8 @@ import apiService from "@/services/api/api";
 
 export type RegisterUserPayloadType = {
   email: string;
+  acceptedTermsOfServiceVersion: number;
+  hasAgreedToNewsletter: boolean;
 };
 
 export type ResetPasswordPayloadType = {
@@ -36,15 +38,19 @@ export type ConfirmResetPasswordPayloadType = {
 async function handleRegisterUser(payload: RegisterUserPayloadType) {
   type RegisterParamsType = {
     email: string;
+    acceptedTermsOfServiceVersion: number;
+    hasAgreedToNewsletter: boolean;
   };
 
-  const query = `mutation register($email: String!) {
-    register(email: $email)
+  const query = `mutation register($email: String!, $acceptedTermsOfServiceVersion: Int, $hasAgreedToNewsletter: Boolean) {
+    register(email: $email, acceptedTermsOfServiceVersion: $acceptedTermsOfServiceVersion, hasAgreedToNewsletter: $hasAgreedToNewsletter)
   }`;
 
   try {
     const response = await apiService.request<RegisterParamsType, any>(query, {
-      email: payload.email
+      email: payload.email,
+      acceptedTermsOfServiceVersion: payload.acceptedTermsOfServiceVersion,
+      hasAgreedToNewsletter: payload.hasAgreedToNewsletter
     });
 
     return response.errors
