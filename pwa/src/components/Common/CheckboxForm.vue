@@ -2,6 +2,7 @@
 type PropsType = {
   isChecked: boolean;
   color?: string;
+  borderColor?: string;
 };
 
 withDefaults(defineProps<PropsType>(), {
@@ -17,10 +18,13 @@ const emit = defineEmits<{
 <template>
   <div
     @click="emit('onChange', !isChecked)"
+    :style="{ '--border': borderColor }"
     :class="[
-      'w-[17px] h-[17px] min-w-[17px] min-h-[17px] flex items-center justify-center rounded-[3px] border-basic-white opacity-90 border-2 cursor-pointer',
+      'w-[17px] h-[17px] min-w-[17px] min-h-[17px] flex items-center justify-center rounded-[3px]  opacity-90 border-2 cursor-pointer',
       {
-        'bg-basic-white': isChecked
+        'bg-basic-white': isChecked,
+        'border-basic-white': !borderColor,
+        'border-dynamic': borderColor
       }
     ]"
   >

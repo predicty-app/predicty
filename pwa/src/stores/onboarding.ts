@@ -22,9 +22,15 @@ export type FileType = {
   fileImportTypes: string;
 };
 
+export type TermsType = {
+  fileVersionId: number;
+  newsletter: boolean;
+}
+
 type StateType = {
   email: null | string;
   file: FileType;
+  terms: TermsType;
   password: null | string;
   moreServices: FileType[];
   providers: {};
@@ -35,6 +41,10 @@ export const useOnBoardingStore = defineStore({
   state: () =>
     ({
       email: null,
+      terms: {
+        fileVersionId: 0,
+        newsletter: false,
+      },
       moreServices: [],
       password: null,
       providers: {}
