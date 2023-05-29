@@ -354,7 +354,7 @@ function handlePreviousStepAction() {
 <style scoped lang="scss">
 .connect-more-services-file-settings {
   :deep(.select-form-content) {
-    @apply p-4 text-base rounded-[10px] border-default-outline;
+    @apply p-4 text-base rounded-[10px] border-gray-600;
   }
 }
 </style>

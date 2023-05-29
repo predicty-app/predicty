@@ -5,7 +5,7 @@ const slots = useSlots();
 
 <template>
   <div
-    class="h-full flex flex-col min-h-full animate-fade-in bg-layout-onboarding-background"
+    class="h-full flex flex-col min-h-full animate-fade-in bg-gray-100"
   >
     <HeaderDashboard />
     <div
