@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service\Security\Authorization\Voter;
 
 use App\Entity\Account;
+use App\Entity\AccountAwareUser;
 use App\Entity\Ownable;
 use App\Entity\User;
 use Psr\Log\LoggerInterface;
@@ -98,6 +99,7 @@ abstract class Voter implements VoterInterface, CacheableVoterInterface
      * Note, that this also checks for role hierarchy.
      *
      * This method implies that the user is present, therefore it will return false otherwise.
+     * If no account is provided, voter will attempt to get it from the user.
      */
     protected function hasRole(string $role, Account|int|null $account = null): bool
     {
@@ -106,6 +108,11 @@ abstract class Voter implements VoterInterface, CacheableVoterInterface
         }
 
         $roles = $this->user->getRoles();
+
+        // if account is not provided, try to get it from the user
+        if ($account === null && $this->user instanceof AccountAwareUser) {
+            $account = $this->user->getAccount();
+        }
 
         if ($account !== null) {
             // getRoles will return roles assigned to the user in the current account context,
