@@ -6,6 +6,7 @@ namespace App\MessageHandler\Command;
 
 use App\Entity\Account;
 use App\Entity\Permission;
+use App\Entity\Role;
 use App\Extension\Messenger\EmitEventTrait;
 use App\Message\Command\CreateAccount;
 use App\Message\Event\AccountCreated;

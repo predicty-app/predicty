@@ -189,4 +189,9 @@ class UserWithAccountContext implements User, AccountAwareUser, WrappedUser
     {
         return $this->getUser()->getAcceptedTermsOfServiceVersion();
     }
+
+    public function setAccountRole(int $accountId, string $role): void
+    {
+        $this->getUser()->setAccountRole($accountId, $role);
+    }
 }

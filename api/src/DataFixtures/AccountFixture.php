@@ -6,6 +6,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Account;
 use App\Entity\DoctrineUser;
+use App\Entity\Role;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -44,9 +45,6 @@ class AccountFixture extends Fixture implements DependentFixtureInterface
         $user1->setAsAccountOwner($account2->getId());
         $user2->setAsAccountMember($account1->getId());
         $user3->setAsAccountMember($account1->getId());
-
-        // only John has two accounts, one is empty
-        $user1->setAsAccountOwner($account2->getId());
 
         $manager->persist($user1);
         $manager->persist($user2);
