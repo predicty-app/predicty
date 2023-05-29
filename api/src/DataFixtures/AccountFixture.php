@@ -45,9 +45,6 @@ class AccountFixture extends Fixture implements DependentFixtureInterface
         $user2->setAsAccountMember($account1->getId());
         $user3->setAsAccountMember($account1->getId());
 
-        // only John has two accounts, one is empty
-        $user1->setAsAccountOwner($account2->getId());
-
         $manager->persist($user1);
         $manager->persist($user2);
         $manager->persist($user3);

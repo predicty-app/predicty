@@ -208,11 +208,11 @@ class DoctrineUser implements UserInterface, EmailRecipient, PasswordAuthenticat
         return $ids;
     }
 
-    private function setAccountRole(int $accountId, string $role): void
+    public function setAccountRole(int $accountId, string $role): void
     {
-        foreach ($this->accountIds as $account) {
+        foreach ($this->accountIds as $index => $account) {
             if ($account['id'] === $accountId) {
-                $account['roles'] = array_unique(array_merge($account['roles'], [$role]));
+                $this->accountIds[$index]['roles'] = [$role];
 
                 return;
             }

@@ -33,6 +33,8 @@ interface User extends UserWithId, AccountMember, EmailRecipient, UserInterface,
 
     public function setAsAccountMember(int $accountId): void;
 
+    public function setAccountRole(int $accountId, string $role): void;
+
     public function setEmailVerified(): void;
 
     public function setOnboardingComplete(): void;
