@@ -299,6 +299,15 @@ export const useUserDashboardStore = defineStore({
           );
         }
       );
+
+      this.parsedCampaignsList = this.parsedCampaignsList.map((campaign: CampaignType) => {
+        campaign.adSets = campaign.adSets.map((adSet: AdSetsType) => {
+          adSet.ads = adSet.ads.filter((ad: AdsType) => ad.adStats.length > 0);
+          return adSet;
+        })
+
+        return campaign;
+      });
     }
   }
 });

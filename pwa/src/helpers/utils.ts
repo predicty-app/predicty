@@ -66,7 +66,7 @@ export function hCheckIsCollectionExist(list: CampaignType[]): CampaignType[] {
 export function hGetStartEndAtDate(ads: AdsType[], type: number): string {
   const dates = [];
 
-  ads.forEach((ad: AdsType) => {
+  ads.filter((ad: AdsType) => ad.adStats.length > 0).forEach((ad: AdsType) => {
     dates.push(
       parseInt(ad.adStats.at(type).date.replace("-", "").replace("-", ""), 10)
     );

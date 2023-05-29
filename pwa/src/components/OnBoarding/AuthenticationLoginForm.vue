@@ -65,9 +65,6 @@ async function handleSubmitForm() {
     modelValue.value.password as string,
     t
   );
-  errorMessage.value.password = !errorMessage.value.password
-    ? isPasswordValidation(modelValue.value.password as string)
-    : errorMessage.value.password;
 
   if (!errorMessage.value.email && !errorMessage.value.password) {
     globalStore.toogleSpinnerState();

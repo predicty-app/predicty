@@ -57,14 +57,14 @@ export default class GuardService {
       (async () => {
         if (pathThatRequiresAuth) {
           const state = await handleAuthenticatedUser();
-          if (state) {
+          if (state.me) {
             next();
           } else {
             next(pathWithLogin as any);
           }
         } else if (to.name === (pathWithLogin && pathWithLogin.name)) {
           const state = await handleAuthenticatedUser();
-          if (state) {
+          if (state.me) {
             next(
               this.getPathByName(router.options.routes, "after", null) as any
             );
@@ -73,7 +73,7 @@ export default class GuardService {
           }
         } else {
           const state = await handleAuthenticatedUser();
-          if (state) {
+          if (state.me) {
             const isDashboard = to.matched.some(
               (record) => record.meta.authorizationType === "dashboard"
             );
