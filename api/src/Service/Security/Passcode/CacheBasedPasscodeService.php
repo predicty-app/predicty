@@ -51,6 +51,6 @@ class CacheBasedPasscodeService implements PasscodeVerifier, PasscodeGenerator
 
     private static function key(User $user): string
     {
-        return self::CACHE_PREFIX.((string) $user->getUuid());
+        return self::CACHE_PREFIX.((string) $user->getId());
     }
 }

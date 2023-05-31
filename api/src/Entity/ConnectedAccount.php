@@ -4,21 +4,23 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Entity\Trait\AccountOwnableTrait;
+use App\Entity\Trait\IdTrait;
+use App\Entity\Trait\TimestampableTrait;
+use App\Entity\Trait\UserOwnableTrait;
 use App\Service\Clock\Clock;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity]
 #[ORM\Index(fields: ['userId'])]
 #[ORM\Index(fields: ['accountId'])]
-class ConnectedAccount implements Ownable, BelongsToAccount
+class ConnectedAccount implements UserOwnable, AccountOwnable
 {
-    use BelongsToAccountTrait;
+    use AccountOwnableTrait;
     use IdTrait;
-    use OwnableTrait;
     use TimestampableTrait;
-
-    #[ORM\Column]
-    private int $userId;
+    use UserOwnableTrait;
 
     #[ORM\Column]
     private DataProvider $dataProvider;
@@ -27,10 +29,17 @@ class ConnectedAccount implements Ownable, BelongsToAccount
     private array $credentials = [];
 
     #[ORM\Column]
-    private bool $isEnabled = true;
+    private bool $isEnabled;
 
-    public function __construct(int $accountId, int $userId, DataProvider $dataProvider, array $credentials = [], bool $isEnabled = true)
-    {
+    public function __construct(
+        Ulid $id,
+        Ulid $accountId,
+        Ulid $userId,
+        DataProvider $dataProvider,
+        array $credentials = [],
+        bool $isEnabled = true
+    ) {
+        $this->id = $id;
         $this->accountId = $accountId;
         $this->userId = $userId;
         $this->dataProvider = $dataProvider;
@@ -38,18 +47,6 @@ class ConnectedAccount implements Ownable, BelongsToAccount
         $this->createdAt = Clock::now();
         $this->changedAt = Clock::now();
         $this->isEnabled = $isEnabled;
-    }
-
-    public function getId(): int
-    {
-        assert($this->id !== null);
-
-        return $this->id;
-    }
-
-    public function getUserId(): int
-    {
-        return $this->userId;
     }
 
     public function getDataProvider(): DataProvider

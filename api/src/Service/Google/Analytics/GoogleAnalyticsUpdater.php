@@ -8,6 +8,7 @@ use App\Service\DataImport\DataImportApi;
 use App\Service\Util\DateHelper;
 use App\Service\Util\MoneyHelper;
 use Brick\Money\Currency;
+use Symfony\Component\Uid\Ulid;
 
 class GoogleAnalyticsUpdater
 {
@@ -19,7 +20,7 @@ class GoogleAnalyticsUpdater
     ) {
     }
 
-    public function update(int $userId, int $accountId): void
+    public function update(Ulid $userId, Ulid $accountId): void
     {
         foreach ($this->googleAnalyticsApi->getDailyRevenue($userId) as $revenue) {
             $this->dataImportApi->createDailyRevenueIfNotExists(

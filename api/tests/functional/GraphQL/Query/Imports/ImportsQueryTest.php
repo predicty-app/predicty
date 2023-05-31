@@ -37,7 +37,7 @@ class ImportsQueryTest extends GraphQLTestCase
                   totalCreated
                 }
                 startedAt
-                completedAt
+                endedAt
                 ... on FileImport {
                   filename
                   downloadUrl

@@ -14,15 +14,16 @@ use App\Service\Util\DateHelper;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\Uid\Ulid;
 
 /**
  * All campaigns belong to John, to hist first account.
  */
 class CampaignFixture extends Fixture implements DependentFixtureInterface
 {
-    public const CAMPAIGN_1 = 'CAMPAIGN1';
-    public const CAMPAIGN_2 = 'CAMPAIGN2';
-    public const CAMPAIGN_3 = 'CAMPAIGN3';
+    public const CAMPAIGN_1 = '01H1S428W9NS5E3MFFE72Q30FR';
+    public const CAMPAIGN_2 = '01H1S42EZYJX02NG4EFDJ6WJA1';
+    public const CAMPAIGN_3 = '01H1S42QAX52HB00K9AK3V9NC8';
 
     public function load(ObjectManager $manager): void
     {
@@ -32,9 +33,9 @@ class CampaignFixture extends Fixture implements DependentFixtureInterface
         $account = $this->getReference(AccountFixture::ACCOUNT_1, Account::class);
 
         $data = [
-            self::CAMPAIGN_1 => new Campaign('external-id-1', $user->getId(), $account->getId(), 'Campaign 1', DataProvider::OTHER, null, DateHelper::fromString('2023-01-02 00:00:00', 'Y-m-d H:i:s'), DateHelper::fromString('2023-01-18 23:59:59', 'Y-m-d H:i:s')),
-            self::CAMPAIGN_2 => new Campaign('external-id-2', $user->getId(), $account->getId(), 'Campaign 2', DataProvider::OTHER),
-            self::CAMPAIGN_3 => new Campaign('external-id-3', $user->getId(), $account->getId(), 'Campaign 3', DataProvider::OTHER),
+            self::CAMPAIGN_1 => new Campaign(Ulid::fromString(self::CAMPAIGN_1), $user->getId(), $account->getId(), 'external-id-1', 'Campaign 1', DataProvider::OTHER, null, DateHelper::fromString('2023-01-02 00:00:00', 'Y-m-d H:i:s'), DateHelper::fromString('2023-01-18 23:59:59', 'Y-m-d H:i:s')),
+            self::CAMPAIGN_2 => new Campaign(Ulid::fromString(self::CAMPAIGN_2), $user->getId(), $account->getId(), 'external-id-2', 'Campaign 2', DataProvider::OTHER),
+            self::CAMPAIGN_3 => new Campaign(Ulid::fromString(self::CAMPAIGN_3), $user->getId(), $account->getId(), 'external-id-3', 'Campaign 3', DataProvider::OTHER),
         ];
 
         foreach ($data as $reference => $entity) {

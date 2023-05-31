@@ -8,6 +8,7 @@ use App\Entity\ConversationComment;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use RuntimeException;
+use Symfony\Component\Uid\Ulid;
 
 class ConversationCommentRepository
 {
@@ -21,7 +22,7 @@ class ConversationCommentRepository
         $this->repository = $em->getRepository(ConversationComment::class);
     }
 
-    public function getById(int $commentId): ConversationComment
+    public function getById(Ulid $commentId): ConversationComment
     {
         $comment = $this->repository->find($commentId);
         if ($comment === null) {
@@ -31,7 +32,7 @@ class ConversationCommentRepository
         return $comment;
     }
 
-    public function findById(int $id): ?ConversationComment
+    public function findById(Ulid $id): ?ConversationComment
     {
         return $this->repository->find($id);
     }
@@ -39,7 +40,7 @@ class ConversationCommentRepository
     /**
      * @return array<ConversationComment>
      */
-    public function findByConversationId(int $conversationId): array
+    public function findByConversationId(Ulid $conversationId): array
     {
         return $this->repository->findBy(['conversationId' => $conversationId], ['id' => 'ASC']);
     }
@@ -50,7 +51,7 @@ class ConversationCommentRepository
         $this->em->flush();
     }
 
-    public function removeById(int $commentId): void
+    public function removeById(Ulid $commentId): void
     {
         $comment = $this->repository->find($commentId);
         if ($comment === null) {
@@ -60,7 +61,7 @@ class ConversationCommentRepository
         $this->remove($comment);
     }
 
-    public function removeByConversationId(int $conversationId): void
+    public function removeByConversationId(Ulid $conversationId): void
     {
         $comments = $this->repository->findBy(['conversationId' => $conversationId]);
         foreach ($comments as $comment) {

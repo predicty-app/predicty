@@ -8,6 +8,7 @@ use App\Entity\ConnectedAccount;
 use App\Entity\DataProvider;
 use App\Repository\ConnectedAccountRepository;
 use RuntimeException;
+use Symfony\Component\Uid\Ulid;
 
 class ConnectedAccountCredentialsProvider
 {
@@ -15,9 +16,9 @@ class ConnectedAccountCredentialsProvider
     {
     }
 
-    public function getCredentials(int $userId, DataProvider $dataProvider): ConnectedAccount
+    public function getCredentials(Ulid $accountId, DataProvider $dataProvider): ConnectedAccount
     {
-        $credentials = $this->connectedAccountRepository->find($userId, $dataProvider);
+        $credentials = $this->connectedAccountRepository->find($accountId, $dataProvider);
 
         if ($credentials === null) {
             throw new RuntimeException('Credentials for given user and data provider were not found.');

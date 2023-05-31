@@ -33,7 +33,7 @@ class SwitchAccountHandler
         $account = $this->accountRepository->getById($message->accountId);
 
         $this->denyAccessUnlessGranted($user, Permission::SWITCH_ACCOUNT, $account);
-        $this->accountSwitcher->switchAccount($user, $account->getId());
+        $this->accountSwitcher->switchAccount($user, $account);
         $this->emit(new UserSwitchedAccount($user->getId(), $account->getId()));
     }
 }

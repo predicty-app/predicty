@@ -31,7 +31,7 @@ class AddConversationCommentMutation extends FieldDefinition
     private function resolve(array $args): string
     {
         $this->handle(new AddConversationComment(
-            (int) $args['conversationId'],
+            $args['conversationId'],
             $this->currentUser->getId(),
             $this->currentUser->getAccountId(),
             $args['comment'],

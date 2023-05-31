@@ -11,6 +11,7 @@ use App\Entity\Campaign;
 use App\Entity\DailyRevenue;
 use Brick\Money\Money;
 use DateTimeImmutable;
+use Symfony\Component\Uid\Ulid;
 
 /**
  * API for importing data from external sources.
@@ -18,7 +19,7 @@ use DateTimeImmutable;
  */
 interface DataImportApi
 {
-    public function getOrCreateCampaign(int $userId, int $accountId, string $name, string $externalId): Campaign;
+    public function getOrCreateCampaign(Ulid $userId, Ulid $accountId, string $name, string $externalId): Campaign;
 
     public function getOrCreateAd(AdSet $adSet, string $name, string $externalId): Ad;
 
@@ -26,7 +27,7 @@ interface DataImportApi
 
     public function getOrCreateAdStats(Ad $ad, DateTimeImmutable $date, int $results, Money $costPerResult, Money $amountSpent): AdStats;
 
-    public function getOrCreateDailyRevenue(int $userId, int $accountId, DateTimeImmutable $date, Money $revenue, Money $averageOrderValue): DailyRevenue;
+    public function getOrCreateDailyRevenue(Ulid $userId, Ulid $accountId, DateTimeImmutable $date, Money $revenue, Money $averageOrderValue): DailyRevenue;
 
-    public function createDailyRevenueIfNotExists(int $userId, int $accountId, DateTimeImmutable $date, Money $revenue, Money $averageOrderValue): ?DailyRevenue;
+    public function createDailyRevenueIfNotExists(Ulid $userId, Ulid $accountId, DateTimeImmutable $date, Money $revenue, Money $averageOrderValue): ?DailyRevenue;
 }

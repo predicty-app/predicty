@@ -10,6 +10,7 @@ use Brick\Money\Money;
 use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Uid\Ulid;
 
 class DailyRevenueRepository
 {
@@ -23,7 +24,7 @@ class DailyRevenueRepository
         $this->repository = $em->getRepository(DailyRevenue::class);
     }
 
-    public function findByDay(int $userId, DateTimeInterface $date): ?DailyRevenue
+    public function findByDay(Ulid $userId, DateTimeInterface $date): ?DailyRevenue
     {
         return $this->repository->findOneBy(['userId' => $userId, 'date' => $date]);
     }
@@ -50,7 +51,7 @@ class DailyRevenueRepository
     /**
      * @return array<DailyRevenue>
      */
-    public function findAllByAccountId(int $accountId): array
+    public function findAllByAccountId(Ulid $accountId): array
     {
         return $this->repository->findBy(['accountId' => $accountId], ['date' => 'DESC']);
     }

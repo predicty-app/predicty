@@ -15,6 +15,7 @@ use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\Uid\Ulid;
 
 class DailyRevenueFixture extends Fixture implements DependentFixtureInterface
 {
@@ -49,6 +50,7 @@ class DailyRevenueFixture extends Fixture implements DependentFixtureInterface
             $date = DateTimeImmutable::createFromFormat('Y-m-d', $row[0]);
             assert($date instanceof DateTimeImmutable);
             $entity = new DailyRevenue(
+                id: new Ulid(),
                 userId: $user->getId(),
                 accountId: $account->getId(),
                 date: $date,

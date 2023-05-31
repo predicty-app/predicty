@@ -15,6 +15,7 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Uid\Ulid;
 
 /**
  * @covers \App\MessageHandler\Command\WithdrawImportHandler
@@ -23,6 +24,9 @@ class WithdrawImportHandlerTest extends TestCase
 {
     public function test_invoke(): void
     {
+        $userId = Ulid::fromString('01H1VECDYVB5BRQVPTSVJP3BZA');
+        $importId = Ulid::fromString('01H1VEC8SYM3K6TSDAPFN25XZV');
+
         $userRepository = $this->createMock(UserRepository::class);
         $importRepository = $this->createMock(ImportRepository::class);
         $authorizationChecker = $this->createMock(AuthorizationChecker::class);
@@ -31,16 +35,20 @@ class WithdrawImportHandlerTest extends TestCase
         $eventBus->method('dispatch')->willReturn(new Envelope(new stdClass()));
 
         $service = $this->createMock(ImportWithdrawalService::class);
-        $service->expects($this->once())->method('withdraw')->with(2);
+        $service->expects($this->once())->method('withdraw')->with($importId);
+
         $handler = new WithdrawImportHandler($service, $importRepository, $userRepository);
         $handler->setAuthorizationChecker($authorizationChecker);
         $handler->setEventBus($eventBus);
 
-        $handler->__invoke(new WithdrawImport(1, 2));
+        $handler->__invoke(new WithdrawImport($userId, $importId));
     }
 
     public function test_invoke_emits_event(): void
     {
+        $userId = Ulid::fromString('01H1VECDYVB5BRQVPTSVJP3BZA');
+        $importId = Ulid::fromString('01H1VEC8SYM3K6TSDAPFN25XZV');
+
         $userRepository = $this->createMock(UserRepository::class);
         $importRepository = $this->createMock(ImportRepository::class);
         $authorizationChecker = $this->createMock(AuthorizationChecker::class);
@@ -51,12 +59,12 @@ class WithdrawImportHandlerTest extends TestCase
             ->willReturn(new Envelope(new stdClass()));
 
         $service = $this->createMock(ImportWithdrawalService::class);
-        $service->expects($this->once())->method('withdraw')->with(2);
+        $service->expects($this->once())->method('withdraw')->with($importId);
 
         $handler = new WithdrawImportHandler($service, $importRepository, $userRepository);
         $handler->setAuthorizationChecker($authorizationChecker);
         $handler->setEventBus($eventBus);
 
-        $handler->__invoke(new WithdrawImport(1, 2));
+        $handler->__invoke(new WithdrawImport($userId, $importId));
     }
 }

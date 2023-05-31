@@ -2,7 +2,7 @@
   "data": {
     "imports": [
       {
-        "id": "@integer@",
+        "id": "@ulid@",
         "__typename": "FileImport",
         "status": "COMPLETE",
         "message": "",
@@ -18,12 +18,12 @@
           "totalCreated": 116
         },
         "startedAt": "@datetime@",
-        "completedAt": "@datetime@",
+        "endedAt": "@datetime@",
         "filename": "dummy-import-1.csv",
         "downloadUrl": "@string@.isUrl()"
       },
       {
-        "id": "@integer@",
+        "id": "@ulid@",
         "__typename": "ApiImport",
         "status": "IN_PROGRESS",
         "message": "",
@@ -39,10 +39,10 @@
           "totalCreated": 0
         },
         "startedAt": "@datetime@",
-        "completedAt": null
+        "endedAt": null
       },
       {
-        "id": "@integer@",
+        "id": "@ulid@",
         "__typename": "FileImport",
         "status": "FAILED",
         "message": "Import failed",
@@ -58,12 +58,12 @@
           "totalCreated": 0
         },
         "startedAt": "@datetime@",
-        "completedAt": "@datetime@",
+        "endedAt": "@datetime@",
         "filename": "dummy-import-3.csv",
         "downloadUrl": "@string@.isUrl()"
       },
       {
-        "id": "@integer@",
+        "id": "@ulid@",
         "__typename": "FileImport",
         "status": "IN_PROGRESS",
         "message": "",
@@ -79,12 +79,12 @@
           "totalCreated": 0
         },
         "startedAt": "@datetime@",
-        "completedAt": null,
+        "endedAt": null,
         "filename": "dummy-import-2.csv",
         "downloadUrl": "@string@.isUrl()"
       },
       {
-        "id": "@integer@",
+        "id": "@ulid@",
         "__typename": "FileImport",
         "status": "WAITING",
         "message": "",
@@ -100,7 +100,7 @@
           "totalCreated": 0
         },
         "startedAt": null,
-        "completedAt": null,
+        "endedAt": null,
         "filename": "dummy-import-1.csv",
         "downloadUrl": "@string@.isUrl()"
       }

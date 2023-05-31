@@ -9,6 +9,7 @@ use App\DataFixtures\Account1\AdFixture;
 use App\Entity\Ad;
 use App\Entity\AdCollection;
 use App\Test\GraphQLTestCase;
+use Symfony\Component\Uid\Ulid;
 
 /**
  * @covers \App\GraphQL\Mutation\AddAdToCollectionMutation
@@ -16,7 +17,11 @@ use App\Test\GraphQLTestCase;
  */
 class AddAdToAdCollectionMutationTest extends GraphQLTestCase
 {
-    private int $adCollectionId;
+    private Ulid $adCollectionId;
+
+    /**
+     * @var Ulid[]
+     */
     private array $adsIds;
     private string $mutation;
 
@@ -62,7 +67,7 @@ class AddAdToAdCollectionMutationTest extends GraphQLTestCase
     {
         $this->authenticate();
         $this->executeMutation($this->mutation, [
-            'var1' => 999999,
+            'var1' => '00000000000000000000000000',
             'var2' => $this->adsIds,
         ]);
 
@@ -75,7 +80,7 @@ class AddAdToAdCollectionMutationTest extends GraphQLTestCase
         $this->authenticate();
         $this->executeMutation($this->mutation, [
             'var1' => $this->adCollectionId,
-            'var2' => $this->adsIds + [5 => 99999],
+            'var2' => $this->adsIds + [5 => '00000000000000000000000000'],
         ]);
 
         $this->assertResponseIsSuccessful();

@@ -4,26 +4,29 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Entity\Trait\AccountOwnableTrait;
+use App\Entity\Trait\IdTrait;
+use App\Entity\Trait\ImportableTrait;
+use App\Entity\Trait\TimestampableTrait;
+use App\Entity\Trait\UserOwnableTrait;
 use App\Service\Clock\Clock;
 use Brick\Money\Money;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity]
 #[ORM\Index(fields: ['userId'])]
 #[ORM\Index(fields: ['accountId'])]
 #[ORM\Index(fields: ['date'])]
-class DailyRevenue implements Importable, BelongsToAccount, Ownable
+class DailyRevenue implements Importable, AccountOwnable, UserOwnable
 {
-    use BelongsToAccountTrait;
+    use AccountOwnableTrait;
     use IdTrait;
     use ImportableTrait;
-    use OwnableTrait;
     use TimestampableTrait;
-
-    #[ORM\Column]
-    private int $userId;
+    use UserOwnableTrait;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private DateTimeImmutable $date;
@@ -37,13 +40,20 @@ class DailyRevenue implements Importable, BelongsToAccount, Ownable
     #[ORM\Column(length: 3)]
     private string $currency;
 
-    public function __construct(int $userId, int $accountId, DateTimeImmutable $date, Money $revenue, Money $averageOrderValue)
-    {
+    public function __construct(
+        Ulid $id,
+        Ulid $userId,
+        Ulid $accountId,
+        DateTimeImmutable $date,
+        Money $revenue,
+        Money $averageOrderValue
+    ) {
         assert(
             $revenue->getCurrency() === $averageOrderValue->getCurrency(),
             'Revenue and average order value must be the same currency'
         );
 
+        $this->id = $id;
         $this->userId = $userId;
         $this->date = $date;
         $this->revenue = $revenue->getMinorAmount()->toInt();
@@ -52,11 +62,6 @@ class DailyRevenue implements Importable, BelongsToAccount, Ownable
         $this->createdAt = Clock::now();
         $this->changedAt = Clock::now();
         $this->accountId = $accountId;
-    }
-
-    public function getUserId(): int
-    {
-        return $this->userId;
     }
 
     public function getDate(): DateTimeImmutable

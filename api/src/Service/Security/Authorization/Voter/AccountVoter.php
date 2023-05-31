@@ -45,7 +45,6 @@ class AccountVoter extends Voter
 
         return match ($permission) {
             Permission::START_CONVERSATION => $this->hasRole(Role::ROLE_ACCOUNT_MEMBER, $subject),
-            Permission::CREATE_AD_COLLECTION => $this->hasRole(Role::ROLE_ACCOUNT_OWNER, $subject),
             Permission::SWITCH_ACCOUNT => $user->isMemberOf($subject),
             default => $this->hasRole(Role::ROLE_ACCOUNT_OWNER, $subject),
         };

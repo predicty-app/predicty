@@ -9,6 +9,7 @@ use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use RuntimeException;
+use Symfony\Component\Uid\Ulid;
 
 class ConversationRepository
 {
@@ -22,7 +23,7 @@ class ConversationRepository
         $this->repository = $em->getRepository(Conversation::class);
     }
 
-    public function getById(int $conversationId): Conversation
+    public function getById(Ulid $conversationId): Conversation
     {
         $conversation = $this->repository->find($conversationId);
         if ($conversation === null) {
@@ -32,7 +33,7 @@ class ConversationRepository
         return $conversation;
     }
 
-    public function findByUserIdAndDate(int $userId, DateTimeImmutable $date): ?Conversation
+    public function findByUserIdAndDate(Ulid $userId, DateTimeImmutable $date): ?Conversation
     {
         return $this->repository->findOneBy(['userId' => $userId, 'date' => $date]);
     }
@@ -40,7 +41,7 @@ class ConversationRepository
     /**
      * @return array<Conversation>
      */
-    public function findAllByAccountId(int $accountId): array
+    public function findAllByAccountId(Ulid $accountId): array
     {
         return $this->repository->findBy(['accountId' => $accountId], ['id' => 'DESC']);
     }

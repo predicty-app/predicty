@@ -16,6 +16,7 @@ use App\Repository\ImportRepository;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\DispatchAfterCurrentBusStamp;
+use Symfony\Component\Uid\Ulid;
 use Throwable;
 
 /**
@@ -31,29 +32,29 @@ class ImportTrackingService
     ) {
     }
 
-    public function createNewFileImport(int $userId, int $accountId, string $filename, FileImportType $fileImportType): FileImport
+    public function createNewFileImport(Ulid $userId, Ulid $accountId, string $filename, FileImportType $fileImportType): FileImport
     {
-        $import = new FileImport($userId, $accountId, $filename, $fileImportType);
+        $import = new FileImport(new Ulid(), $userId, $accountId, $filename, $fileImportType);
         $this->importRepository->save($import);
 
         return $import;
     }
 
-    public function createNewApiImport(int $userId, int $accountId, DataProvider $dataProvider): Import
+    public function createNewApiImport(Ulid $userId, Ulid $accountId, DataProvider $dataProvider): Import
     {
-        $import = new ApiImport($userId, $accountId, $dataProvider);
+        $import = new ApiImport(new Ulid(), $userId, $accountId, $dataProvider);
         $this->importRepository->save($import);
 
         return $import;
     }
 
-    public function createAndRunNewApiImport(int $userId, int $accountId, DataProvider $dataProvider, callable $callback): void
+    public function createAndRunNewApiImport(Ulid $userId, Ulid $accountId, DataProvider $dataProvider, callable $callback): void
     {
         $import = $this->createNewApiImport($userId, $accountId, $dataProvider);
         $this->run($import->getId(), $callback);
     }
 
-    public function run(int $importId, callable $callback): void
+    public function run(Ulid $importId, callable $callback): void
     {
         $this->markImportAsStarted($importId);
         $importResult = ImportResult::empty();
@@ -70,14 +71,14 @@ class ImportTrackingService
         }
     }
 
-    private function markImportAsStarted(int $id): void
+    private function markImportAsStarted(Ulid $id): void
     {
         $import = $this->getImport($id);
         $import->start();
         $this->importRepository->save($import);
     }
 
-    private function markImportAsFailed(int $id, string $message = ''): void
+    private function markImportAsFailed(Ulid $id, string $message = ''): void
     {
         $import = $this->getImport($id);
         $import->fail($message);
@@ -85,7 +86,7 @@ class ImportTrackingService
         $this->eventBus->dispatch(new ImportFailed($id), [new DispatchAfterCurrentBusStamp()]);
     }
 
-    private function markImportAsComplete(int $id, ImportResult $importResult): void
+    private function markImportAsComplete(Ulid $id, ImportResult $importResult): void
     {
         $import = $this->getImport($id);
         $import->complete($importResult);
@@ -93,7 +94,7 @@ class ImportTrackingService
         $this->eventBus->dispatch(new ImportCompleted($id), [new DispatchAfterCurrentBusStamp()]);
     }
 
-    private function getImport(int $id): Import
+    private function getImport(Ulid $id): Import
     {
         $import = $this->importRepository->findById($id);
         assert($import instanceof Import);

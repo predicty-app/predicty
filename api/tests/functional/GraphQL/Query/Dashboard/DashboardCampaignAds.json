@@ -7,10 +7,10 @@
             {
               "ads": [
                 {
-                  "id": "@integer@",
+                  "id": "@ulid@",
                   "externalId": "ad-external-id-1",
                   "name": "Dummy Ad 1",
-                  "campaignId": "@integer@",
+                  "campaignId": "@ulid@",
                   "adStats": "@...@"
                 },
                 "@...@"

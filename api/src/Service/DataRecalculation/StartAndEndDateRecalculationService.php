@@ -9,6 +9,7 @@ use App\Repository\AdRepository;
 use App\Repository\AdSetRepository;
 use App\Repository\AdStatsRepository;
 use App\Repository\CampaignRepository;
+use Symfony\Component\Uid\Ulid;
 
 /**
  * Recalculates start and end dates for entities like Ad, AdSet, Campaign and AdCollection.
@@ -24,16 +25,16 @@ class StartAndEndDateRecalculationService
     ) {
     }
 
-    public function recalculate(int $userId): void
+    public function recalculate(Ulid $accountId): void
     {
-        $this->recalculateAds($userId);
-        $this->recalculateAdSets($userId);
-        $this->recalculateCampaigns($userId);
-        $this->recalculateCampaigns($userId);
-        $this->recalculateAdCollections($userId);
+        $this->recalculateAds($accountId);
+        $this->recalculateAdSets($accountId);
+        $this->recalculateCampaigns($accountId);
+        $this->recalculateCampaigns($accountId);
+        $this->recalculateAdCollections($accountId);
     }
 
-    private function recalculateAds(int $accountId): void
+    private function recalculateAds(Ulid $accountId): void
     {
         $ads = $this->adRepository->findAllByAccountId($accountId);
 
@@ -52,7 +53,7 @@ class StartAndEndDateRecalculationService
         }
     }
 
-    private function recalculateAdSets(int $accountId): void
+    private function recalculateAdSets(Ulid $accountId): void
     {
         $adSets = $this->adSetRepository->findAllByAccountId($accountId);
 
@@ -71,9 +72,9 @@ class StartAndEndDateRecalculationService
         }
     }
 
-    private function recalculateCampaigns(int $userId): void
+    private function recalculateCampaigns(Ulid $accountId): void
     {
-        $campaigns = $this->campaignRepository->findAllByAccountId($userId);
+        $campaigns = $this->campaignRepository->findAllByAccountId($accountId);
 
         foreach ($campaigns as $campaign) {
             $dates = $this->adStatsRepository->findStartAndEndDateForACampaign($campaign->getId());
@@ -90,9 +91,9 @@ class StartAndEndDateRecalculationService
         }
     }
 
-    private function recalculateAdCollections(int $userId): void
+    private function recalculateAdCollections(Ulid $accountId): void
     {
-        $adCollections = $this->adCollectionRepository->findAllByAccountId($userId);
+        $adCollections = $this->adCollectionRepository->findAllByAccountId($accountId);
 
         foreach ($adCollections as $adCollection) {
             $dates = $this->adStatsRepository->findStartAndEndDateForAnAdCollection($adCollection->getAdsIds());

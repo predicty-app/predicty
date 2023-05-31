@@ -4,10 +4,17 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Entity\Trait\AccountOwnableTrait;
+use App\Entity\Trait\IdTrait;
+use App\Entity\Trait\ImportableTrait;
+use App\Entity\Trait\TimeDurationTrait;
+use App\Entity\Trait\TimestampableTrait;
+use App\Entity\Trait\UserOwnableTrait;
 use App\Service\Clock\Clock;
 use DateTimeImmutable;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Types\UlidType;
+use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity]
 #[ORM\Index(fields: ['userId'])]
@@ -15,43 +22,37 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Index(fields: ['campaignId'])]
 #[ORM\Index(fields: ['externalId'])]
 #[ORM\Index(fields: ['startedAt'])]
-#[ORM\UniqueConstraint(fields: ['userId', 'externalId'])]
-class AdSet implements Importable, Ownable, BelongsToAccount
+#[ORM\UniqueConstraint(fields: ['accountId', 'externalId'])]
+class AdSet implements Importable, UserOwnable, AccountOwnable
 {
-    use BelongsToAccountTrait;
+    use AccountOwnableTrait;
     use IdTrait;
     use ImportableTrait;
-    use OwnableTrait;
+    use TimeDurationTrait;
     use TimestampableTrait;
+    use UserOwnableTrait;
 
     #[ORM\Column]
     private string $externalId;
 
-    #[ORM\Column]
-    private int $userId;
-
-    #[ORM\Column]
-    private int $campaignId;
+    #[ORM\Column(type: UlidType::NAME, unique: false)]
+    private Ulid $campaignId;
 
     #[ORM\Column(length: 255)]
     private string $name;
 
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private ?DateTimeImmutable $startedAt;
-
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private ?DateTimeImmutable $endedAt;
-
     public function __construct(
+        Ulid $id,
+        Ulid $userId,
+        Ulid $accountId,
+        Ulid $campaignId,
         string $externalId,
-        int $userId,
-        int $accountId,
-        int $campaignId,
         string $name,
-        ?int $importId = null,
+        ?Ulid $importId = null,
         ?DateTimeImmutable $startedAt = null,
         ?DateTimeImmutable $endedAt = null,
     ) {
+        $this->id = $id;
         $this->externalId = $externalId;
         $this->userId = $userId;
         $this->campaignId = $campaignId;
@@ -69,12 +70,7 @@ class AdSet implements Importable, Ownable, BelongsToAccount
         return $this->externalId;
     }
 
-    public function getUserId(): int
-    {
-        return $this->userId;
-    }
-
-    public function getCampaignId(): int
+    public function getCampaignId(): Ulid
     {
         return $this->campaignId;
     }
@@ -82,25 +78,5 @@ class AdSet implements Importable, Ownable, BelongsToAccount
     public function getName(): string
     {
         return $this->name;
-    }
-
-    public function getStartedAt(): ?DateTimeImmutable
-    {
-        return $this->startedAt;
-    }
-
-    public function getEndedAt(): ?DateTimeImmutable
-    {
-        return $this->endedAt;
-    }
-
-    public function setStartedAt(DateTimeImmutable $startedAt): void
-    {
-        $this->startedAt = $startedAt;
-    }
-
-    public function setEndedAt(DateTimeImmutable $endedAt): void
-    {
-        $this->endedAt = $endedAt;
     }
 }

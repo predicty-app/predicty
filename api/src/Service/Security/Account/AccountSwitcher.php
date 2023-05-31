@@ -9,6 +9,7 @@ use App\Entity\AccountMember;
 use App\Entity\UserWithId;
 use App\Repository\AccountRepository;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
+use Symfony\Component\Uid\Ulid;
 
 class AccountSwitcher implements AccountContextProvider
 {
@@ -16,7 +17,7 @@ class AccountSwitcher implements AccountContextProvider
     {
     }
 
-    public function switchAccount(UserWithId&AccountMember $user, int|Account $account): void
+    public function switchAccount(UserWithId&AccountMember $user, Ulid|Account $account): void
     {
         if ($account instanceof Account) {
             $account = $account->getId();

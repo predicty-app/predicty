@@ -31,7 +31,7 @@ class WithdrawImportMutation extends FieldDefinition
     {
         $this->handle(new WithdrawImport(
             $this->currentUser->getId(),
-            (int) $args['importId'],
+            $args['importId'],
         ));
 
         return 'OK';

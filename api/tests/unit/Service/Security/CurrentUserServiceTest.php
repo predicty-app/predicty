@@ -10,6 +10,7 @@ use App\Service\Security\Account\AccountContextProvider;
 use App\Service\Security\CurrentUserService;
 use PHPUnit\Framework\TestCase;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Uid\Ulid;
 
 /**
  * @covers \App\Service\Security\CurrentUserService
@@ -31,13 +32,15 @@ class CurrentUserServiceTest extends TestCase
 
     public function test_get_account_roles(): void
     {
+        $accountId = Ulid::fromString('01H1VEC8SYM3K6TSDAPFN25XZV');
+
         $account = $this->createMock(Account::class);
         $account->expects($this->once())->method('getId')
-            ->willReturn(42);
+            ->willReturn($accountId);
 
         $user = $this->createMock(User::class);
         $user->expects($this->once())->method('getRolesForAccount')
-            ->with(42)
+            ->with($accountId)
             ->willReturn(['ROLE_USER']);
 
         $security = $this->createMock(Security::class);
@@ -55,8 +58,10 @@ class CurrentUserServiceTest extends TestCase
 
     public function test_is_the_same_user_as(): void
     {
+        $userId = Ulid::fromString('01H1VECDYVB5BRQVPTSVJP3BZA');
+
         $user = $this->createMock(User::class);
-        $user->method('getId')->willReturn(42);
+        $user->method('getId')->willReturn($userId);
 
         $security = $this->createMock(Security::class);
         $security->expects($this->exactly(1))->method('getUser')->willReturn($user);

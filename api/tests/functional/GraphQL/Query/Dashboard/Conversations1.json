@@ -3,9 +3,9 @@
     "dashboard": {
       "conversations": [
         {
-          "id": "1",
+          "id": "@ulid@",
           "user": {
-            "id": "@integer@"
+            "id": "@ulid@"
           },
           "date": "@date@",
           "color": {
@@ -15,9 +15,9 @@
           "isRemovable": true,
           "comments": [
             {
-              "id": "1",
+              "id": "@ulid@",
               "user": {
-                "id": "@integer@"
+                "id": "@ulid@"
               },
               "comment": "This is a first comment in that conversation",
               "createdAt": "@datetime@.isInDateFormat('Y-m-d H:i:s')",
@@ -25,9 +25,9 @@
               "isEditable": true
             },
             {
-              "id": "@integer@",
+              "id": "@ulid@",
               "user": {
-                "id": "@integer@"
+                "id": "@ulid@"
               },
               "comment": "This is a second comment in that conversation",
               "createdAt": "@datetime@.isInDateFormat('Y-m-d H:i:s')",

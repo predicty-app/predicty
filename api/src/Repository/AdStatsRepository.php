@@ -11,6 +11,7 @@ use Doctrine\DBAL\ParameterType;
 use Doctrine\DBAL\Statement;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Uid\Ulid;
 
 /**
  * @phpstan-type DatePeriod array{start: null|DateTimeImmutable, end: null|DateTimeImmutable}
@@ -27,7 +28,7 @@ class AdStatsRepository
         $this->repository = $em->getRepository(AdStats::class);
     }
 
-    public function findByAdIdAndDay(int $adId, DateTimeInterface $day): ?AdStats
+    public function findByAdIdAndDay(Ulid $adId, DateTimeInterface $day): ?AdStats
     {
         return $this->repository->findOneBy(['adId' => $adId, 'date' => $day]);
     }
@@ -35,7 +36,7 @@ class AdStatsRepository
     /**
      * @return array<AdStats>
      */
-    public function findAllByAdId(int $adId): array
+    public function findAllByAdId(Ulid $adId): array
     {
         return $this->repository->findBy(['adId' => $adId]);
     }
@@ -43,11 +44,11 @@ class AdStatsRepository
     /**
      * @return DatePeriod
      */
-    public function findStartAndEndDateForAnAd(int $adId): array
+    public function findStartAndEndDateForAnAd(Ulid $adId): array
     {
         $query = 'select MIN(ads."date") as start, MAX(ads."date") as end from ad_stats ads where ads.ad_id = :adId';
         $stmt = $this->em->getConnection()->prepare($query);
-        $stmt->bindValue('adId', $adId, ParameterType::INTEGER);
+        $stmt->bindValue('adId', $adId->toRfc4122(), ParameterType::STRING);
 
         return $this->fetchStartAndEndDate($stmt);
     }
@@ -55,7 +56,7 @@ class AdStatsRepository
     /**
      * @return DatePeriod
      */
-    public function findStartAndEndDateForAnAdSet(int $adSetId): array
+    public function findStartAndEndDateForAnAdSet(Ulid $adSetId): array
     {
         $query = <<<'QUERY'
             select MIN(stats."date") as start, MAX(stats."date") as end from ad_stats stats
@@ -64,7 +65,7 @@ class AdStatsRepository
             QUERY;
 
         $stmt = $this->em->getConnection()->prepare($query);
-        $stmt->bindValue('adSetId', $adSetId, ParameterType::INTEGER);
+        $stmt->bindValue('adSetId', $adSetId->toRfc4122(), ParameterType::STRING);
 
         return $this->fetchStartAndEndDate($stmt);
     }
@@ -72,7 +73,7 @@ class AdStatsRepository
     /**
      * @return DatePeriod
      */
-    public function findStartAndEndDateForACampaign(int $campaignId): array
+    public function findStartAndEndDateForACampaign(Ulid $campaignId): array
     {
         $query = <<<'QUERY'
             select MIN(stats."date") as start, MAX(stats."date") as end from ad_stats stats
@@ -82,12 +83,14 @@ class AdStatsRepository
             QUERY;
 
         $stmt = $this->em->getConnection()->prepare($query);
-        $stmt->bindValue('campaignId', $campaignId, ParameterType::INTEGER);
+        $stmt->bindValue('campaignId', $campaignId->toRfc4122(), ParameterType::STRING);
 
         return $this->fetchStartAndEndDate($stmt);
     }
 
     /**
+     * @param array<Ulid> $adsIds
+     *
      * @return DatePeriod
      */
     public function findStartAndEndDateForAnAdCollection(array $adsIds): array
@@ -104,7 +107,7 @@ class AdStatsRepository
 
         $stmt = $this->em->getConnection()->prepare($query);
         foreach ($adsIds as $key => $adsId) {
-            $stmt->bindValue($key + 1, $adsId, ParameterType::INTEGER);
+            $stmt->bindValue($key + 1, $adsId->toRfc4122(), ParameterType::STRING);
         }
 
         return $this->fetchStartAndEndDate($stmt);

@@ -8,6 +8,7 @@ use App\Entity\Account;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use RuntimeException;
+use Symfony\Component\Uid\Ulid;
 
 class AccountRepository
 {
@@ -21,26 +22,12 @@ class AccountRepository
         $this->repository = $em->getRepository(Account::class);
     }
 
-    public function findById(int $accountId): ?Account
+    public function findById(Ulid $accountId): ?Account
     {
         return $this->repository->find($accountId);
     }
 
-    /**
-     * @return array<Account>
-     */
-    public function findAllByIds(array $accountIds): array
-    {
-        return $this->repository->findBy(['id' => $accountIds]);
-    }
-
-    public function save(Account $account): void
-    {
-        $this->em->persist($account);
-        $this->em->flush();
-    }
-
-    public function getById(int $accountId): Account
+    public function getById(Ulid $accountId): Account
     {
         $account = $this->findById($accountId);
 
@@ -49,5 +36,21 @@ class AccountRepository
         }
 
         return $account;
+    }
+
+    /**
+     * @return array<Account>
+     */
+    public function findAllByIds(array $accountIds): array
+    {
+        $accountIds = array_map(fn (Ulid $accountId) => $accountId->toRfc4122(), $accountIds);
+
+        return $this->repository->findBy(['id' => $accountIds]);
+    }
+
+    public function save(Account $account): void
+    {
+        $this->em->persist($account);
+        $this->em->flush();
     }
 }

@@ -14,6 +14,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Uid\Ulid;
 
 #[AsCommand(
     name: 'app:sync:google-analytics',
@@ -42,15 +43,24 @@ class SyncGoogleAnalyticsDataCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $userId = (int) $input->getArgument('userId');
-        if ($userId === 0) {
-            $userId = (int) $io->ask('User id');
+        $userId = $input->getArgument('userId');
+        if ($userId === '') {
+            $userId = $io->ask('User id', validator: fn (string $value) => Ulid::isValid($value));
         }
 
-        $account = $this->accountRepository->getById((int) $input->getArgument('accountId'));
-        $user = $this->userRepository->getById($userId);
+        $accountId = $input->getArgument('accountId');
+        if ($accountId === '') {
+            $accountId = $io->ask('Account id', validator: fn (string $value) => Ulid::isValid($value));
+        }
 
-        //        dd($this->commandBus);
+        $userId = Ulid::fromString($userId);
+        $accountId = Ulid::fromString($accountId);
+
+        $user = $this->userRepository->getById($userId);
+        $io->writeln(sprintf('Selected user account: <info>%s</info>', $user->getEmail()));
+
+        $account = $this->accountRepository->getById($accountId);
+        $io->writeln(sprintf('Selected user account: <info>%s</info>', $user->getEmail()));
 
         $this->dispatch(new SyncGoogleAnalytics($user->getId(), $account->getId()));
 

@@ -17,6 +17,7 @@ use RuntimeException;
 use stdClass;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Uid\Ulid;
 
 /**
  * @covers \App\Service\DataImport\ImportTrackingService
@@ -25,6 +26,9 @@ class ImportTrackingServiceTest extends TestCase
 {
     public function test_create_new_file_import(): void
     {
+        $userId = Ulid::fromString('01H1VECDYVB5BRQVPTSVJP3BZA');
+        $accountId = Ulid::fromString('01H1VEC8SYM3K6TSDAPFN25XZV');
+
         $importRepository = $this->createMock(ImportRepository::class);
         $importRepository->method('findById')->willReturn($this->createMock(Import::class));
 
@@ -36,17 +40,19 @@ class ImportTrackingServiceTest extends TestCase
         $logger = new NullLogger();
         $service = new ImportTrackingService($importRepository, $dataImportApi, $eventBus, $logger);
 
-        $fileImport = $service->createNewFileImport(1, 123, 'test.csv', FileImportType::FACEBOOK_CSV);
+        $fileImport = $service->createNewFileImport($userId, $accountId, 'test.csv', FileImportType::FACEBOOK_CSV);
 
         $this->assertInstanceOf(Import::class, $fileImport);
-        $this->assertSame(1, $fileImport->getUserId());
-        $this->assertSame(123, $fileImport->getAccountId());
+        $this->assertSame($userId, $fileImport->getUserId());
+        $this->assertSame($accountId, $fileImport->getAccountId());
         $this->assertSame('test.csv', $fileImport->getFilename());
         $this->assertSame(FileImportType::FACEBOOK_CSV, $fileImport->getFileImportType());
     }
 
     public function test_run(): void
     {
+        $userId = Ulid::fromString('01H1VECDYVB5BRQVPTSVJP3BZA');
+
         $importRepository = $this->createMock(ImportRepository::class);
         $importRepository->method('findById')->willReturn($this->createMock(Import::class));
 
@@ -59,7 +65,7 @@ class ImportTrackingServiceTest extends TestCase
         $service = new ImportTrackingService($importRepository, $dataImportApi, $eventBus, $logger);
 
         $importDone = false;
-        $service->run(1, function () use (&$importDone): void {
+        $service->run($userId, function () use (&$importDone): void {
             $importDone = true;
         });
 
@@ -68,6 +74,8 @@ class ImportTrackingServiceTest extends TestCase
 
     public function test_run_marks_import_as_completed(): void
     {
+        $userId = Ulid::fromString('01H1VECDYVB5BRQVPTSVJP3BZA');
+
         $import = $this->createMock(Import::class);
         $import->expects($this->once())->method('complete')->with($this->isInstanceOf(ImportResult::class));
 
@@ -83,11 +91,13 @@ class ImportTrackingServiceTest extends TestCase
         $logger = new NullLogger();
         $service = new ImportTrackingService($importRepository, $dataImportApi, $eventBus, $logger);
 
-        $service->run(1, function (): void {});
+        $service->run($userId, function (): void {});
     }
 
     public function test_successful_import_emits_event(): void
     {
+        $userId = Ulid::fromString('01H1VECDYVB5BRQVPTSVJP3BZA');
+
         $import = $this->createMock(Import::class);
 
         $importRepository = $this->createMock(ImportRepository::class);
@@ -103,11 +113,13 @@ class ImportTrackingServiceTest extends TestCase
         $logger = new NullLogger();
         $service = new ImportTrackingService($importRepository, $dataImportApi, $eventBus, $logger);
 
-        $service->run(1, function (): void {});
+        $service->run($userId, function (): void {});
     }
 
     public function test_run_marks_import_as_started(): void
     {
+        $userId = Ulid::fromString('01H1VECDYVB5BRQVPTSVJP3BZA');
+
         $import = $this->createMock(Import::class);
         $import->expects($this->once())->method('start')->with();
 
@@ -123,11 +135,13 @@ class ImportTrackingServiceTest extends TestCase
         $logger = new NullLogger();
         $service = new ImportTrackingService($importRepository, $dataImportApi, $eventBus, $logger);
 
-        $service->run(1, function (): void {});
+        $service->run($userId, function (): void {});
     }
 
     public function test_run_marks_import_as_failed_when_it_fails(): void
     {
+        $userId = Ulid::fromString('01H1VECDYVB5BRQVPTSVJP3BZA');
+
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Something went wrong');
 
@@ -146,7 +160,7 @@ class ImportTrackingServiceTest extends TestCase
         $logger = new NullLogger();
         $service = new ImportTrackingService($importRepository, $dataImportApi, $eventBus, $logger);
 
-        $service->run(1, function (): void {
+        $service->run($userId, function (): void {
             throw new RuntimeException('Something went wrong');
         });
     }

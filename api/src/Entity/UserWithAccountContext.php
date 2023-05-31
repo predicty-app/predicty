@@ -6,7 +6,7 @@ namespace App\Entity;
 
 use Closure;
 use DateTimeInterface;
-use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Uid\Ulid;
 
 /**
  * This class is used to wrap the user entity with the account context.
@@ -48,7 +48,7 @@ class UserWithAccountContext implements User, AccountAwareUser, WrappedUser
         return $this->account;
     }
 
-    public function getId(): int
+    public function getId(): Ulid
     {
         return $this->getUser()->getId();
     }
@@ -61,11 +61,6 @@ class UserWithAccountContext implements User, AccountAwareUser, WrappedUser
     public function getCreatedAt(): DateTimeInterface
     {
         return $this->getUser()->getCreatedAt();
-    }
-
-    public function getUuid(): Uuid
-    {
-        return $this->getUser()->getUuid();
     }
 
     public function getEmail(): string
@@ -83,7 +78,7 @@ class UserWithAccountContext implements User, AccountAwareUser, WrappedUser
         return $this->getUser()->hasCompletedOnboarding();
     }
 
-    public function isMemberOf(Account|int $account): bool
+    public function isMemberOf(Account|Ulid $account): bool
     {
         return $this->getUser()->isMemberOf($account);
     }
@@ -93,12 +88,12 @@ class UserWithAccountContext implements User, AccountAwareUser, WrappedUser
         return $this->getUser()->getAccountsIds();
     }
 
-    public function getRolesForAccount(Account|int $account): array
+    public function getRolesForAccount(Account|Ulid $account): array
     {
         return $this->getUser()->getRolesForAccount($account);
     }
 
-    public function getAccountId(): int
+    public function getAccountId(): Ulid
     {
         return $this->getAccount()->getId();
     }
@@ -135,12 +130,12 @@ class UserWithAccountContext implements User, AccountAwareUser, WrappedUser
         return $this->getUser()->getUserIdentifier();
     }
 
-    public function setAsAccountOwner(int $accountId): void
+    public function setAsAccountOwner(Ulid $accountId): void
     {
         $this->getUser()->setAsAccountOwner($accountId);
     }
 
-    public function setAsAccountMember(int $accountId): void
+    public function setAsAccountMember(Ulid $accountId): void
     {
         $this->getUser()->setAsAccountMember($accountId);
     }
@@ -190,7 +185,7 @@ class UserWithAccountContext implements User, AccountAwareUser, WrappedUser
         return $this->getUser()->getAcceptedTermsOfServiceVersion();
     }
 
-    public function setAccountRole(int $accountId, string $role): void
+    public function setAccountRole(Ulid $accountId, string $role): void
     {
         $this->getUser()->setAccountRole($accountId, $role);
     }

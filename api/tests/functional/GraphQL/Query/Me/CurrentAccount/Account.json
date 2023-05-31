@@ -2,7 +2,7 @@
   "data": {
     "me": {
       "account": {
-        "id": "@integer@",
+        "id": "@ulid@",
         "name": "Account 1",
         "connectedAccounts": "@array@",
         "users": "@array@"

@@ -4,12 +4,19 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Entity\Trait\AccountOwnableTrait;
+use App\Entity\Trait\IdTrait;
+use App\Entity\Trait\ImportableTrait;
+use App\Entity\Trait\TimestampableTrait;
+use App\Entity\Trait\UserOwnableTrait;
 use App\Service\Clock\Clock;
 use Brick\Money\Currency;
 use Brick\Money\Money;
 use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Types\UlidType;
+use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity]
 #[ORM\Index(fields: ['userId'])]
@@ -17,19 +24,16 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Index(fields: ['date'])]
 #[ORM\Index(fields: ['adId'])]
 #[ORM\UniqueConstraint(fields: ['adId', 'date'])]
-class AdStats implements Importable, Ownable, BelongsToAccount
+class AdStats implements Importable, UserOwnable, AccountOwnable
 {
-    use BelongsToAccountTrait;
+    use AccountOwnableTrait;
     use IdTrait;
     use ImportableTrait;
-    use OwnableTrait;
     use TimestampableTrait;
+    use UserOwnableTrait;
 
-    #[ORM\Column]
-    private int $userId;
-
-    #[ORM\Column]
-    private int $adId;
+    #[ORM\Column(type: UlidType::NAME, unique: false)]
+    private Ulid $adId;
 
     #[ORM\Column]
     private int $results;
@@ -47,9 +51,10 @@ class AdStats implements Importable, Ownable, BelongsToAccount
     private DateTimeInterface $date;
 
     public function __construct(
-        int $userId,
-        int $accountId,
-        int $adId,
+        Ulid $id,
+        Ulid $userId,
+        Ulid $accountId,
+        Ulid $adId,
         int $results,
         Money $costPerResult,
         Money $amountSpent,
@@ -65,14 +70,10 @@ class AdStats implements Importable, Ownable, BelongsToAccount
         $this->createdAt = Clock::now();
         $this->changedAt = Clock::now();
         $this->accountId = $accountId;
+        $this->id = $id;
     }
 
-    public function getUserId(): int
-    {
-        return $this->userId;
-    }
-
-    public function getAdId(): int
+    public function getAdId(): Ulid
     {
         return $this->adId;
     }

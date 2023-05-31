@@ -6,19 +6,20 @@ namespace App\Message\Command;
 
 use App\Entity\ConversationComment;
 use App\Validator as AssertCustom;
+use Symfony\Component\Uid\Ulid;
 
 class RemoveConversationComment
 {
     #[AssertCustom\EntityExists(entity: ConversationComment::class, message: 'Comment does not exist')]
-    public int $commentId;
+    public Ulid $commentId;
 
     #[AssertCustom\UserExists]
-    public int $userId;
+    public Ulid $userId;
 
     #[AssertCustom\AccountExists]
-    public int $accountId;
+    public Ulid $accountId;
 
-    public function __construct(int $commentId, int $userId, int $accountId)
+    public function __construct(Ulid $commentId, Ulid $userId, Ulid $accountId)
     {
         $this->commentId = $commentId;
         $this->userId = $userId;

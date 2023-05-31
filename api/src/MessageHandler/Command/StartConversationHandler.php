@@ -36,7 +36,7 @@ class StartConversationHandler
 
         if ($conversation === null) {
             $this->denyAccessUnlessGranted($user, Permission::START_CONVERSATION, $user->getAccount());
-            $conversation = new Conversation($command->userId, $command->accountId, $command->date, Color::fromString($command->color));
+            $conversation = new Conversation($command->userId, $command->userId, $command->accountId, $command->date, Color::fromString($command->color));
             $this->conversationRepository->save($conversation);
         }
 

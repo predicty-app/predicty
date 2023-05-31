@@ -37,7 +37,7 @@ class ImportType extends InterfaceType
                 'startedAt' => [
                     'type' => $type->dateTime(),
                 ],
-                'completedAt' => [
+                'endedAt' => [
                     'type' => $type->dateTime(),
                 ],
             ],

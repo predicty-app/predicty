@@ -8,7 +8,7 @@
             "dataProvider": {
               "id": "GOOGLE_ANALYTICS"
             },
-            "id": "@integer@",
+            "id": "@ulid@",
             "isEnabled": false
           }
         ]

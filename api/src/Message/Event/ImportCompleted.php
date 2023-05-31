@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Message\Event;
 
+use Symfony\Component\Uid\Ulid;
+
 class ImportCompleted
 {
-    public function __construct(public int $importId)
+    public function __construct(public Ulid $importId)
     {
     }
 }

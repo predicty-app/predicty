@@ -26,11 +26,7 @@ class GenericUserType extends InterfaceType
             },
             'fields' => [
                 'id' => [
-                    'type' => $type->int(),
-                ],
-                'uid' => [
                     'type' => $type->id(),
-                    'resolve' => fn (User $user) => $user->getUuid()->toBase58(),
                 ],
                 'email' => [
                     'type' => $type->string(),

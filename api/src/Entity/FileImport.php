@@ -6,6 +6,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use RuntimeException;
+use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity]
 class FileImport extends Import
@@ -17,12 +18,13 @@ class FileImport extends Import
     private ?FileImportType $fileImportType;
 
     public function __construct(
-        int $userId,
-        int $accountId,
+        Ulid $id,
+        Ulid $userId,
+        Ulid $accountId,
         string $filename,
         FileImportType $fileImportType = FileImportType::OTHER,
     ) {
-        parent::__construct($userId, $accountId, $fileImportType->getDataProvider());
+        parent::__construct($id, $userId, $accountId, $fileImportType->getDataProvider());
         $this->filename = $filename;
         $this->fileImportType = $fileImportType;
     }

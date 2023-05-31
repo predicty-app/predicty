@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\GraphQL\Mutation;
 
+use App\DataFixtures\Account1\AdCollectionFixture;
 use App\Entity\Ad;
 use App\Entity\AdCollection;
 use App\Test\GraphQLTestCase;
-use AssertionError;
+use Symfony\Component\Uid\Ulid;
 
 /**
  * @covers \App\GraphQL\Mutation\RemoveAdFromCollectionMutation
@@ -15,7 +16,11 @@ use AssertionError;
  */
 class RemoveAdFromCollectionMutationTest extends GraphQLTestCase
 {
-    private int $adCollectionId;
+    private Ulid $adCollectionId;
+
+    /**
+     * @var Ulid[]
+     */
     private array $adsIds;
     private string $mutation;
 
@@ -23,8 +28,11 @@ class RemoveAdFromCollectionMutationTest extends GraphQLTestCase
     {
         parent::setUp();
 
-        $adCollection = $this->getRepository(AdCollection::class)->findOneBy(['name' => 'Red Collection']) ?? throw new AssertionError('AdCollection not found');
-        $ad = $this->getRepository(Ad::class)->find($adCollection->getAdsIds()[0]) ?? throw new AssertionError('Ad not found');
+        $adCollection = $this->getRepository(AdCollection::class)->find(AdCollectionFixture::AD_COLLECTION_1);
+        $this->assertInstanceOf(AdCollection::class, $adCollection, 'AdCollection not found');
+
+        $ad = $this->getRepository(Ad::class)->find($adCollection->getAdsIds()[0]);
+        $this->assertInstanceOf(Ad::class, $ad, 'Ad not found');
 
         $this->adCollectionId = $adCollection->getId();
         $this->adsIds[] = $ad->getId();
@@ -58,7 +66,7 @@ class RemoveAdFromCollectionMutationTest extends GraphQLTestCase
     {
         $this->authenticate();
         $this->executeMutation($this->mutation, [
-            'var1' => 999999,
+            'var1' => '00000000000000000000000000',
             'var2' => $this->adsIds,
         ]);
 
@@ -71,7 +79,7 @@ class RemoveAdFromCollectionMutationTest extends GraphQLTestCase
         $this->authenticate();
         $this->executeMutation($this->mutation, [
             'var1' => $this->adCollectionId,
-            'var2' => $this->adsIds + [5 => 99999],
+            'var2' => $this->adsIds + [5 => '00000000000000000000000000'],
         ]);
 
         $this->assertResponseIsSuccessful();

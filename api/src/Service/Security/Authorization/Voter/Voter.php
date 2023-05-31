@@ -6,8 +6,8 @@ namespace App\Service\Security\Authorization\Voter;
 
 use App\Entity\Account;
 use App\Entity\AccountAwareUser;
-use App\Entity\Ownable;
 use App\Entity\User;
+use App\Entity\UserOwnable;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use RuntimeException;
@@ -15,6 +15,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\CacheableVoterInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Role\RoleHierarchyInterface;
+use Symfony\Component\Uid\Ulid;
 
 /**
  * @template T of object
@@ -64,7 +65,7 @@ abstract class Voter implements VoterInterface, CacheableVoterInterface
 
         $subjectName = get_debug_type($subject);
         if (is_object($subject) && method_exists($subject, 'getId')) {
-            $subjectName = sprintf('%s #%d', $subjectName, $subject->getId());
+            $subjectName = sprintf('%s #%s', $subjectName, $subject->getId());
         }
 
         $this->logger->debug(sprintf(
@@ -101,7 +102,7 @@ abstract class Voter implements VoterInterface, CacheableVoterInterface
      * This method implies that the user is present, therefore it will return false otherwise.
      * If no account is provided, voter will attempt to get it from the user.
      */
-    protected function hasRole(string $role, Account|int|null $account = null): bool
+    protected function hasRole(string $role, Account|Ulid|null $account = null): bool
     {
         if ($this->user === null) {
             return false;
@@ -125,11 +126,11 @@ abstract class Voter implements VoterInterface, CacheableVoterInterface
 
     /**
      * Helper method to check if the current user is an owner of the given subject.
-     * For this method to work, subject must be an instance of {@see Ownable}.
+     * For this method to work, subject must be an instance of {@see UserOwnable}.
      *
      * This method implies that the user is present, therefore it will return false otherwise.
      *
-     * @see Ownable
+     * @see UserOwnable
      */
     protected function isAnOwnerOf(mixed $subject): bool
     {
@@ -137,11 +138,11 @@ abstract class Voter implements VoterInterface, CacheableVoterInterface
             return false;
         }
 
-        if ($subject instanceof Ownable) {
+        if ($subject instanceof UserOwnable) {
             return $subject->isOwnedBy($this->user);
         }
 
-        throw new RuntimeException('Subject must be an instance of '.Ownable::class);
+        throw new RuntimeException('Subject must be an instance of '.UserOwnable::class);
     }
 
     /**

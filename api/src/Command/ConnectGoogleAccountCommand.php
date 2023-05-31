@@ -6,9 +6,9 @@ namespace App\Command;
 
 use App\Entity\DataProvider;
 use App\Message\Command\RegisterGoogleOAuthCredentials;
+use App\Repository\AccountRepository;
 use App\Repository\UserRepository;
 use App\Service\Google\GoogleOAuth;
-use InvalidArgumentException;
 use Psr\SimpleCache\CacheInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -19,6 +19,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Uid\Ulid;
 
 #[AsCommand(
     name: 'app:connect:google',
@@ -30,6 +31,7 @@ class ConnectGoogleAccountCommand extends Command
         private RouterInterface $router,
         private GoogleOAuth $auth,
         private UserRepository $userRepository,
+        private AccountRepository $accountRepository,
         private CacheInterface $cache,
         private MessageBusInterface $bus
     ) {
@@ -49,14 +51,16 @@ class ConnectGoogleAccountCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $userId = (int) $input->getArgument('userId');
-        if ($userId === 0) {
-            $userId = (int) $io->ask('User id');
+        $userId = $input->getArgument('userId');
+        if ($userId === '') {
+            $userId = $io->ask('User id', validator: fn (string $value) => Ulid::isValid($value));
+            $userId = Ulid::fromString($userId);
         }
 
-        $accountId = (int) $input->getArgument('accountId');
-        if ($accountId === 0) {
-            $accountId = (int) $io->ask('Account id');
+        $accountId = $input->getArgument('accountId');
+        if ($accountId === '') {
+            $accountId = $io->ask('Account id', validator: fn (string $value) => Ulid::isValid($value));
+            $accountId = Ulid::fromString($accountId);
         }
 
         $service = $input->getArgument('service');
@@ -64,7 +68,10 @@ class ConnectGoogleAccountCommand extends Command
             $service = $io->choice('Service', ['GOOGLE_ADS', 'GOOGLE_ANALYTICS']);
         }
 
-        $user = $this->userRepository->findById($userId) ?? throw new InvalidArgumentException('User with given id was not found.');
+        $user = $this->userRepository->getById($userId);
+        $io->writeln(sprintf('Selected user account: <info>%s</info>', $user->getEmail()));
+
+        $account = $this->accountRepository->getById($accountId);
         $io->writeln(sprintf('Selected user account: <info>%s</info>', $user->getEmail()));
 
         $dataProvider = DataProvider::from($service);
@@ -89,7 +96,7 @@ class ConnectGoogleAccountCommand extends Command
             sleep(1);
         }
 
-        $this->bus->dispatch(new RegisterGoogleOAuthCredentials($user->getId(), $accountId, $dataProvider, $refreshToken));
+        $this->bus->dispatch(new RegisterGoogleOAuthCredentials($user->getId(), $account->getId(), $dataProvider, $refreshToken));
         $io->success('Refresh token was saved in the database. You can now connect using credentials stored with this user\'s account.');
 
         return Command::SUCCESS;

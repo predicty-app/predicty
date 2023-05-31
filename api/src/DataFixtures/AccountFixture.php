@@ -9,11 +9,12 @@ use App\Entity\DoctrineUser;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\Uid\Ulid;
 
 class AccountFixture extends Fixture implements DependentFixtureInterface
 {
-    public const ACCOUNT_1 = 'ACCOUNT_1';
-    public const ACCOUNT_2 = 'ACCOUNT_2';
+    public const ACCOUNT_1 = '01H1PQRVGZ665993NY6MCZ2J6X';
+    public const ACCOUNT_2 = '01H1PQS62MQGN0GG41T16KP77Y';
 
     public function __construct()
     {
@@ -30,8 +31,8 @@ class AccountFixture extends Fixture implements DependentFixtureInterface
         /** @var DoctrineUser $user3 */
         $user3 = $this->getReference(UserFixture::JACK, DoctrineUser::class);
 
-        $account1 = new Account($user1->getId(), 'Account 1');
-        $account2 = new Account($user1->getId(), 'Account 2');
+        $account1 = new Account(Ulid::fromString(self::ACCOUNT_1), $user1->getId(), 'Account 1');
+        $account2 = new Account(Ulid::fromString(self::ACCOUNT_2), $user1->getId(), 'Account 2');
 
         $this->addReference(self::ACCOUNT_1, $account1);
         $this->addReference(self::ACCOUNT_2, $account2);

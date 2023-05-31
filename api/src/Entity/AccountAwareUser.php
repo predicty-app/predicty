@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use Symfony\Component\Uid\Ulid;
+
 /**
  * Implemented by user entities that are aware of the account context they are being accessed in.
  */
 interface AccountAwareUser extends AccountMember
 {
-    public function getAccountId(): int;
+    public function getAccountId(): Ulid;
 
     public function getAccount(): Account;
 

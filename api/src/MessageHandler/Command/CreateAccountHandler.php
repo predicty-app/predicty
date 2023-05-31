@@ -13,6 +13,7 @@ use App\Repository\AccountRepository;
 use App\Repository\UserRepository;
 use App\Service\Security\Authorization\AuthorizationCheckerTrait;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use Symfony\Component\Uid\Ulid;
 
 #[AsMessageHandler]
 class CreateAccountHandler
@@ -31,7 +32,7 @@ class CreateAccountHandler
         $user = $this->userRepository->getById($message->userId);
         $this->denyAccessUnlessGranted($user, Permission::CREATE_ACCOUNT);
 
-        $account = new Account($user->getId(), $message->name);
+        $account = new Account(new Ulid(), $user->getId(), $message->name);
         $this->accountRepository->save($account);
 
         $user->setAsAccountOwner($account->getId());

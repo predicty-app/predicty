@@ -11,6 +11,8 @@ use App\Entity\Campaign;
 use App\Entity\Import;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Bridge\Doctrine\Types\UlidType;
+use Symfony\Component\Uid\Ulid;
 
 class ImportRepository
 {
@@ -24,7 +26,7 @@ class ImportRepository
         $this->repository = $em->getRepository(Import::class);
     }
 
-    public function getById(int $importId): Import
+    public function getById(Ulid $importId): Import
     {
         $user = $this->repository->find($importId);
         assert($user instanceof Import, 'Import not found');
@@ -32,7 +34,7 @@ class ImportRepository
         return $user;
     }
 
-    public function findById(int $id): ?Import
+    public function findById(Ulid $id): ?Import
     {
         return $this->repository->find($id);
     }
@@ -40,12 +42,12 @@ class ImportRepository
     /**
      * @return array<Import>
      */
-    public function findAllByUserId(int $userId): array
+    public function findAllByUserId(Ulid $userId): array
     {
         return $this->repository->findBy(['userId' => $userId], ['id' => 'DESC']);
     }
 
-    public function removeAllAssociatedEntities(int $importId): void
+    public function removeAllAssociatedEntities(Ulid $importId): void
     {
         $qb = $this->em->createQueryBuilder();
 
@@ -59,7 +61,7 @@ class ImportRepository
         foreach ($entityClasses as $entityClass) {
             $qb->delete($entityClass, 'e')
                 ->where('e.importId = :importId')
-                ->setParameter('importId', $importId)
+                ->setParameter('importId', $importId, UlidType::NAME)
                 ->getQuery()
                 ->execute();
         }

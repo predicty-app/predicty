@@ -3,19 +3,19 @@
     "addToAdCollection": {
       "ads": [
         {
-          "id": "@integer@",
+          "id": "@ulid@",
           "name": "Dummy Ad 1"
         },
         {
-          "id": "@integer@",
+          "id": "@ulid@",
           "name": "Dummy Ad 2"
         },
         {
-          "id": "@integer@",
+          "id": "@ulid@",
           "name": "Dummy Ad 3"
         }
       ],
-      "id": "@integer@"
+      "id": "@ulid@"
     }
   }
 }

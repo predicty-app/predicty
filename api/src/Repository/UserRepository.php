@@ -14,6 +14,7 @@ use Doctrine\ORM\EntityRepository;
 use RuntimeException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Uid\Ulid;
 
 class UserRepository implements PasswordUpgrader
 {
@@ -27,7 +28,7 @@ class UserRepository implements PasswordUpgrader
         $this->repository = $em->getRepository(DoctrineUser::class);
     }
 
-    public function getById(int|UserWithId $id): User
+    public function getById(Ulid|UserWithId $id): User
     {
         if ($id instanceof DoctrineUser) {
             return $id;
@@ -45,7 +46,7 @@ class UserRepository implements PasswordUpgrader
         return $this->findByUsername($username) ?? throw new RuntimeException('User was not found');
     }
 
-    public function findById(int $id): ?User
+    public function findById(Ulid $id): ?User
     {
         return $this->repository->find($id);
     }
@@ -73,10 +74,10 @@ class UserRepository implements PasswordUpgrader
     /**
      * @return User[]
      */
-    public function findByAccountId(int $accountId): array
+    public function findByAccountId(Ulid $accountId): array
     {
         // For some reason, doctrine would not let me bind the $accountId parameter
-        $query = "SELECT u.id FROM \"user\" u WHERE jsonb_path_exists(u.account_ids, '$[*].id ? (@[*] == $accountId)')";
+        $query = "SELECT u.id FROM \"user\" u WHERE jsonb_path_exists(u.account_ids, '$[*].id ? (@[*] == \"$accountId\")')";
         $stmt = $this->em->getConnection()->prepare($query);
 
         $result = $stmt->executeQuery();
