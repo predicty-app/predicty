@@ -3,15 +3,15 @@
     "dashboard": {
       "campaigns": [
         {
-          "id": "@integer@",
+          "id": "@ulid@",
           "name": "Campaign 1"
         },
         {
-          "id": "@integer@",
+          "id": "@ulid@",
           "name": "Campaign 2"
         },
         {
-          "id": "@integer@",
+          "id": "@ulid@",
           "name": "Campaign 3"
         }
       ]

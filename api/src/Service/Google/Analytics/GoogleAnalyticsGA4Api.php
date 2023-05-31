@@ -15,6 +15,7 @@ use Google\Analytics\Data\V1beta\DateRange;
 use Google\Analytics\Data\V1beta\Dimension;
 use Google\Analytics\Data\V1beta\Metric;
 use Google\Analytics\Data\V1beta\Row;
+use Symfony\Component\Uid\Ulid;
 
 class GoogleAnalyticsGA4Api
 {
@@ -27,9 +28,9 @@ class GoogleAnalyticsGA4Api
     /**
      * @return iterable<array{date: string, revenue: string, averageOrderValue: string}>
      */
-    public function getDailyRevenue(int $userId): iterable
+    public function getDailyRevenue(Ulid $accountId): iterable
     {
-        $this->authenticate($userId);
+        $this->authenticate($accountId);
 
         $data = $this->getDefaults();
         $client = new BetaAnalyticsDataClient(['credentials' => $this->googleOAuth->getOAuth()]);
@@ -79,9 +80,9 @@ class GoogleAnalyticsGA4Api
         return $defaults;
     }
 
-    private function authenticate(int $userId): void
+    private function authenticate(Ulid $accountId): void
     {
-        $credentials = $this->dataProviderCredentialsProvider->getCredentials($userId, DataProvider::GOOGLE_ANALYTICS);
+        $credentials = $this->dataProviderCredentialsProvider->getCredentials($accountId, DataProvider::GOOGLE_ANALYTICS);
         $this->googleOAuth->fetchAccessToken($credentials->getCredentials()['token']);
     }
 }

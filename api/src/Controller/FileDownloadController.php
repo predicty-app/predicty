@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Uid\Ulid;
 
 class FileDownloadController extends AbstractController
 {
@@ -23,9 +24,12 @@ class FileDownloadController extends AbstractController
     }
 
     #[Route('/uploads/file/{importId}', name: 'app_file_download', methods: ['GET'])]
-    public function __invoke(int $importId): Response
+    public function __invoke(string $importId): Response
     {
-        $import = $this->importRepository->findById($importId);
+        $import = null;
+        if (Ulid::isValid($importId)) {
+            $import = $this->importRepository->findById(Ulid::fromString($importId));
+        }
 
         if (!$import instanceof FileImport) {
             throw new NotFoundHttpException('File not found');

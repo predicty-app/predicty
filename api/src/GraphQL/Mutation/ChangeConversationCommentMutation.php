@@ -20,7 +20,7 @@ class ChangeConversationCommentMutation extends FieldDefinition
             'name' => 'changeConversationComment',
             'type' => $type->string(),
             'args' => [
-                'commentId' => $type->nonNull($type->id()),
+                'commentId' => $type->nonNullId(),
                 'comment' => $type->nonNull($type->string()),
             ],
             'resolve' => fn (mixed $root, array $args) => $this->resolve($args),
@@ -31,7 +31,7 @@ class ChangeConversationCommentMutation extends FieldDefinition
     private function resolve(array $args): string
     {
         $this->handle(new ChangeConversationComment(
-            (int) $args['commentId'],
+            $args['commentId'],
             $this->currentUser->getId(),
             $this->currentUser->getAccountId(),
             $args['comment'],

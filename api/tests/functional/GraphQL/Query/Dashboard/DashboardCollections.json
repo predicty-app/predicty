@@ -3,15 +3,15 @@
     "dashboard": {
       "collections": [
         {
-          "id": "@integer@",
+          "id": "@ulid@",
           "name": "Red Collection"
         },
         {
-          "id": "@integer@",
+          "id": "@ulid@",
           "name": "Green Collection"
         },
         {
-          "id": "@integer@",
+          "id": "@ulid@",
           "name": "Blue Collection"
         }
       ]

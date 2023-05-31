@@ -6,7 +6,7 @@ namespace App\Entity;
 
 use DateTimeInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Uid\Ulid;
 
 /**
  * Represents a user.
@@ -19,8 +19,6 @@ use Symfony\Component\Uid\Uuid;
  */
 interface User extends UserWithId, AccountMember, EmailRecipient, UserInterface, PasswordAuthenticatedUser
 {
-    public function getUuid(): Uuid;
-
     public function hasVerifiedEmail(): bool;
 
     public function hasCompletedOnboarding(): bool;
@@ -29,11 +27,11 @@ interface User extends UserWithId, AccountMember, EmailRecipient, UserInterface,
 
     public function getCreatedAt(): DateTimeInterface;
 
-    public function setAsAccountOwner(int $accountId): void;
+    public function setAsAccountOwner(Ulid $accountId): void;
 
-    public function setAsAccountMember(int $accountId): void;
+    public function setAsAccountMember(Ulid $accountId): void;
 
-    public function setAccountRole(int $accountId, string $role): void;
+    public function setAccountRole(Ulid $accountId, string $role): void;
 
     public function setEmailVerified(): void;
 

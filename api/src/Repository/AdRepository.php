@@ -7,6 +7,7 @@ namespace App\Repository;
 use App\Entity\Ad;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Uid\Ulid;
 
 class AdRepository
 {
@@ -23,12 +24,12 @@ class AdRepository
     /**
      * @return array<Ad>
      */
-    public function findAllByAccountId(int $userId): array
+    public function findAllByAccountId(Ulid $userId): array
     {
         return $this->repository->findBy(['userId' => $userId]);
     }
 
-    public function findByUserIdAndExternalId(int $userId, string $externalId): ?Ad
+    public function findByUserIdAndExternalId(Ulid $userId, string $externalId): ?Ad
     {
         return $this->repository->findOneBy(['userId' => $userId, 'externalId' => $externalId]);
     }
@@ -36,7 +37,7 @@ class AdRepository
     /**
      * @return array<Ad>
      */
-    public function findAllByAdSetId(int $adSetId): array
+    public function findAllByAdSetId(Ulid $adSetId): array
     {
         return $this->repository->findBy(['adSetId' => $adSetId], ['startedAt' => 'ASC', 'id' => 'ASC']);
     }
@@ -46,6 +47,9 @@ class AdRepository
      */
     public function findAllByIds(array $ids): array
     {
+        // it seems that arrays of Ulid's are not supported by doctrine
+        $ids = array_map(fn (Ulid $id) => $id->toRfc4122(), $ids);
+
         return $this->repository->findBy(['id' => $ids], ['startedAt' => 'ASC', 'id' => 'ASC']);
     }
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\DataFixtures\Account2;
+namespace App\DataFixtures\Account1;
 
 use App\DataFixtures\AccountFixture;
 use App\DataFixtures\UserFixture;
@@ -14,10 +14,11 @@ use App\Service\Util\DateHelper;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\Uid\Ulid;
 
-class ConversationFixture extends Fixture implements DependentFixtureInterface
+class ConversationFixture1 extends Fixture implements DependentFixtureInterface
 {
-    public const CONVERSATION_2 = 'CONVERSATION_2';
+    public const CONVERSATION_1 = '01H1PR6QCVET3PEDGV8SAAF2KM';
 
     public function __construct()
     {
@@ -26,16 +27,17 @@ class ConversationFixture extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $user = $this->getReference(UserFixture::JOHN, DoctrineUser::class);
-        $account = $this->getReference(AccountFixture::ACCOUNT_2, Account::class);
+        $account = $this->getReference(AccountFixture::ACCOUNT_1, Account::class);
 
         $conversation = new Conversation(
+            id: Ulid::fromString(self::CONVERSATION_1),
             userId: $user->getId(),
             accountId: $account->getId(),
             date: DateHelper::fromString('2021-01-05'),
             color: Color::fromString('#0099ff')
         );
 
-        $this->addReference(self::CONVERSATION_2, $conversation);
+        $this->addReference(self::CONVERSATION_1, $conversation);
         $manager->persist($conversation);
         $manager->flush();
     }

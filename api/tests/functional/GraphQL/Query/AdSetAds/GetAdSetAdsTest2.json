@@ -9,10 +9,10 @@
               "name": "@string@",
               "ads": [
                 {
-                  "id": "@integer@",
+                  "id": "@ulid@",
                   "externalId": "@string@",
                   "name": "@string@",
-                  "campaignId": "@integer@",
+                  "campaignId": "@ulid@",
                   "startedAt": "@date@",
                   "endedAt": "@date@"
                 },

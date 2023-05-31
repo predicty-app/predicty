@@ -10,6 +10,7 @@ use App\Entity\UserActions;
 use App\Entity\UserWithId;
 use App\Entity\WrappedUser;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
+use Symfony\Component\Uid\Ulid;
 
 /**
  * A service representing the currently logged-in user and is also aware of currently selected account.
@@ -20,7 +21,7 @@ interface CurrentUser extends User, AccountAwareUser, WrappedUser
     /**
      * @throws CustomUserMessageAuthenticationException If user is not logged in
      */
-    public function getId(): int;
+    public function getId(): Ulid;
 
     /**
      * Get inner {@see User} object.

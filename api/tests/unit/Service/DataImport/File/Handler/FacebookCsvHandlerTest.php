@@ -11,6 +11,7 @@ use App\Service\DataImport\File\FileImportContext;
 use App\Service\DataImport\File\FileImportMetadata;
 use App\Service\DataImport\File\Handler\FacebookCsvHandler;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Uid\Ulid;
 
 /**
  * @covers \App\Service\DataImport\File\Handler\FacebookCsvHandler
@@ -31,12 +32,15 @@ class FacebookCsvHandlerTest extends TestCase
             'Campaign ID' => 'campaign-id-100',
         ];
 
-        $context = new FileImportContext(123, 456, new FileImportMetadata());
+        $userId = Ulid::fromString('01H1VECDYVB5BRQVPTSVJP3BZA');
+        $accountId = Ulid::fromString('01H1VEC8SYM3K6TSDAPFN25XZV');
+
+        $context = new FileImportContext($userId, $accountId, new FileImportMetadata());
 
         $dataImportApi = $this->createMock(DataImportApi::class);
         $dataImportApi->expects($this->once())->method('getOrCreateCampaign')->with(
-            $this->equalTo(123),
-            $this->equalTo(456),
+            $this->equalTo($userId),
+            $this->equalTo($accountId),
             $this->equalTo('Test Campaign'),
             $this->equalTo('campaign-id-100')
         );
@@ -59,7 +63,10 @@ class FacebookCsvHandlerTest extends TestCase
             'Campaign ID' => 'campaign-id-100',
         ];
 
-        $context = new FileImportContext(123, 456, new FileImportMetadata());
+        $userId = Ulid::fromString('01H1VECDYVB5BRQVPTSVJP3BZA');
+        $accountId = Ulid::fromString('01H1VEC8SYM3K6TSDAPFN25XZV');
+
+        $context = new FileImportContext($userId, $accountId, new FileImportMetadata());
         $dataImportApi = $this->createMock(DataImportApi::class);
         $dataImportApi->expects($this->once())->method('getOrCreateAdSet')->with(
             $this->isInstanceOf(Campaign::class),
@@ -85,7 +92,10 @@ class FacebookCsvHandlerTest extends TestCase
             'Campaign ID' => 'campaign-id-100',
         ];
 
-        $context = new FileImportContext(123, 456, new FileImportMetadata());
+        $userId = Ulid::fromString('01H1VECDYVB5BRQVPTSVJP3BZA');
+        $accountId = Ulid::fromString('01H1VEC8SYM3K6TSDAPFN25XZV');
+
+        $context = new FileImportContext($userId, $accountId, new FileImportMetadata());
         $dataImportApi = $this->createMock(DataImportApi::class);
         $dataImportApi->expects($this->once())->method('getOrCreateAd')->with(
             $this->isInstanceOf(AdSet::class),

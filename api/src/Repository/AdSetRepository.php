@@ -8,6 +8,7 @@ use App\Entity\AdSet;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Uid\Ulid;
 
 class AdSetRepository
 {
@@ -24,7 +25,7 @@ class AdSetRepository
     /**
      * @return array<AdSet>
      */
-    public function findAllByAccountId(int $userId): array
+    public function findAllByAccountId(Ulid $userId): array
     {
         return $this->repository->findBy(['userId' => $userId]);
     }
@@ -32,12 +33,12 @@ class AdSetRepository
     /**
      * @return array<AdSet>
      */
-    public function findAllByCampaignId(int $campaignId): array
+    public function findAllByCampaignId(Ulid $campaignId): array
     {
         return $this->repository->findBy(['campaignId' => $campaignId], ['startedAt' => 'ASC']);
     }
 
-    public function findByCampaignIdAndExternalId(int $userId, int $campaignId, mixed $externalId): ?AdSet
+    public function findByCampaignIdAndExternalId(Ulid $userId, Ulid $campaignId, mixed $externalId): ?AdSet
     {
         return $this->repository->findOneBy([
             'userId' => $userId,

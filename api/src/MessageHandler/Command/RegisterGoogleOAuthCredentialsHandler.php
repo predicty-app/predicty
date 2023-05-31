@@ -11,6 +11,7 @@ use App\Message\Event\AccountConnected;
 use App\Repository\ConnectedAccountRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use Symfony\Component\Uid\Ulid;
 
 #[AsMessageHandler]
 class RegisterGoogleOAuthCredentialsHandler
@@ -29,7 +30,7 @@ class RegisterGoogleOAuthCredentialsHandler
         $connectedAccount = $this->repository->find($command->userId, $command->dataProvider);
 
         if ($connectedAccount === null) {
-            $connectedAccount = new ConnectedAccount($command->accountId, $user->getId(), $command->dataProvider);
+            $connectedAccount = new ConnectedAccount(new Ulid(), $command->accountId, $user->getId(), $command->dataProvider);
         }
 
         $connectedAccount->setCredentials(['token' => $command->oauthRefreshToken]);

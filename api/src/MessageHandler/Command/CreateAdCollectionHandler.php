@@ -12,6 +12,7 @@ use App\Repository\AdCollectionRepository;
 use App\Repository\UserRepository;
 use App\Service\Security\Authorization\AuthorizationCheckerTrait;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use Symfony\Component\Uid\Ulid;
 
 #[AsMessageHandler]
 class CreateAdCollectionHandler
@@ -32,7 +33,7 @@ class CreateAdCollectionHandler
 
         $this->denyAccessUnlessGranted($user, Permission::CREATE_AD_COLLECTION, $account);
 
-        $adCollection = new AdCollection($user->getId(), $account->getId(), $message->name);
+        $adCollection = new AdCollection(new Ulid(), $user->getId(), $account->getId(), $message->name);
         $this->adCollectionRepository->save($adCollection);
 
         return $adCollection;

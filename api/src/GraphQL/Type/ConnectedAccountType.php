@@ -16,7 +16,7 @@ class ConnectedAccountType extends ObjectType
             'name' => 'ConnectedAccount',
             'fields' => [
                 'id' => [
-                    'type' => $type->int(),
+                    'type' => $type->id(),
                 ],
                 'dataProvider' => [
                     'type' => $type->dataProvider(),

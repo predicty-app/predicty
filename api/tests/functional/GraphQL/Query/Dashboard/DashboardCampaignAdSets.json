@@ -5,7 +5,7 @@
         {
           "adSets": [
             {
-              "id": "@integer@",
+              "id": "@ulid@",
               "externalId": "adset-external-id-1",
               "name": "Dummy AdSet 1",
               "startedAt": "@date@",
@@ -18,7 +18,7 @@
         {
           "adSets": [
             {
-              "id": "@integer@",
+              "id": "@ulid@",
               "externalId": "adset-external-id-4",
               "name": "Dummy AdSet 4",
               "startedAt": null,

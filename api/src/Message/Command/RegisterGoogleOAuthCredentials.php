@@ -6,12 +6,13 @@ namespace App\Message\Command;
 
 use App\Entity\DataProvider;
 use App\Validator as AssertCustom;
+use Symfony\Component\Uid\Ulid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class RegisterGoogleOAuthCredentials
 {
     #[AssertCustom\UserExists]
-    public int $userId;
+    public Ulid $userId;
 
     public DataProvider $dataProvider;
 
@@ -19,9 +20,9 @@ class RegisterGoogleOAuthCredentials
     public string $oauthRefreshToken;
 
     #[AssertCustom\AccountExists]
-    public int $accountId;
+    public Ulid $accountId;
 
-    public function __construct(int $userId, int $accountId, DataProvider $dataProvider, string $oauthRefreshToken)
+    public function __construct(Ulid $userId, Ulid $accountId, DataProvider $dataProvider, string $oauthRefreshToken)
     {
         $this->dataProvider = $dataProvider;
         $this->oauthRefreshToken = $oauthRefreshToken;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Repository\UserRepository;
+use App\Repository\AccountRepository;
 use App\Service\DataRecalculation\StartAndEndDateRecalculationService;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -12,6 +12,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Uid\Ulid;
 
 #[AsCommand(
     name: 'app:recalculate-start-and-end-dates',
@@ -20,7 +21,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class RecalculateStartAndEndDatesCommand extends Command
 {
     public function __construct(
-        private UserRepository $userRepository,
+        private AccountRepository $accountRepository,
         private StartAndEndDateRecalculationService $startAndEndDateRecalculationService
     ) {
         parent::__construct();
@@ -29,7 +30,7 @@ class RecalculateStartAndEndDatesCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('userId', InputArgument::REQUIRED, 'The user for who the dates should be recalculated.')
+            ->addArgument('accountId', InputArgument::REQUIRED, 'The account that should be recalculated.')
         ;
     }
 
@@ -37,19 +38,18 @@ class RecalculateStartAndEndDatesCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $userId = (int) $input->getArgument('userId');
-        $user = $this->userRepository->findById($userId);
+        $accountId = $input->getArgument('accountId');
+        $accountId = Ulid::fromString($accountId);
+        $account = $this->accountRepository->findById($accountId);
 
-        if ($user === null) {
-            $io->writeln('User with given id was not found.');
+        if ($account === null) {
+            $io->writeln('Account with given id was not found.');
 
             return Command::FAILURE;
         }
 
-        $io->writeln('Selected user account: '.$user->getEmail());
-
-        $this->startAndEndDateRecalculationService->recalculate($userId);
-
+        $io->writeln('Recalculation started ...');
+        $this->startAndEndDateRecalculationService->recalculate($account->getId());
         $io->writeln('Recalculation complete');
 
         return Command::SUCCESS;

@@ -4,25 +4,29 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Entity\Trait\AccountOwnableTrait;
+use App\Entity\Trait\IdTrait;
+use App\Entity\Trait\TimeDurationTrait;
+use App\Entity\Trait\TimestampableTrait;
+use App\Entity\Trait\UserOwnableTrait;
 use App\Service\Clock\Clock;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity]
 #[ORM\Index(fields: ['userId'])]
 #[ORM\Index(fields: ['accountId'])]
 #[ORM\Index(fields: ['name'])]
 #[ORM\Index(fields: ['startedAt'])]
-class AdCollection implements Ownable, BelongsToAccount
+class AdCollection implements UserOwnable, AccountOwnable
 {
-    use BelongsToAccountTrait;
+    use AccountOwnableTrait;
     use IdTrait;
-    use OwnableTrait;
+    use TimeDurationTrait;
     use TimestampableTrait;
-
-    #[ORM\Column]
-    private int $userId;
+    use UserOwnableTrait;
 
     #[ORM\Column(length: 255)]
     private string $name;
@@ -30,33 +34,28 @@ class AdCollection implements Ownable, BelongsToAccount
     #[ORM\Column(type: Types::JSON, nullable: true, options: ['jsonb' => true])]
     private array $adsIds = [];
 
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private ?DateTimeImmutable $startedAt;
-
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private ?DateTimeImmutable $endedAt;
-
+    /**
+     * @param array<Ulid> $adsIds
+     */
     public function __construct(
-        int $userId,
-        int $accountId,
+        Ulid $id,
+        Ulid $userId,
+        Ulid $accountId,
         string $name,
         array $adsIds = [],
         ?DateTimeImmutable $startedAt = null,
         ?DateTimeImmutable $endedAt = null,
     ) {
+        $this->id = $id;
         $this->userId = $userId;
         $this->name = $name;
-        $this->adsIds = $adsIds;
         $this->createdAt = Clock::now();
         $this->changedAt = Clock::now();
         $this->startedAt = $startedAt;
         $this->endedAt = $endedAt;
         $this->accountId = $accountId;
-    }
 
-    public function getUserId(): int
-    {
-        return $this->userId;
+        $this->addAdsIds($adsIds);
     }
 
     public function getName(): string
@@ -65,45 +64,24 @@ class AdCollection implements Ownable, BelongsToAccount
     }
 
     /**
-     * @return array<int>
+     * @return array<Ulid>
      */
     public function getAdsIds(): array
     {
-        return $this->adsIds;
+        return array_map(fn (string $id) => Ulid::fromString($id), $this->adsIds);
     }
 
     public function addAdsIds(array $adsIds): void
     {
+        $adsIds = array_map(fn (Ulid $id) => (string) $id, $adsIds);
         $this->adsIds = array_unique(array_merge($this->adsIds, $adsIds));
+        $this->changedAt = Clock::now();
     }
 
     public function removeAdsIds(array $adsIds): void
     {
-        $this->adsIds = array_diff($this->adsIds, $adsIds);
-    }
-
-    public function getStartedAt(): ?DateTimeImmutable
-    {
-        return $this->startedAt;
-    }
-
-    public function getEndedAt(): ?DateTimeImmutable
-    {
-        return $this->endedAt;
-    }
-
-    public function setStartedAt(DateTimeImmutable $startedAt): void
-    {
-        $this->startedAt = $startedAt;
-    }
-
-    public function setEndedAt(DateTimeImmutable $endedAt): void
-    {
-        $this->endedAt = $endedAt;
-    }
-
-    public function isOwnedBy(UserWithId $user): bool
-    {
-        return $this->userId === $user->getId();
+        $adsIds = array_map(fn (Ulid $id) => (string) $id, $adsIds);
+        $this->adsIds = array_values(array_diff($this->adsIds, $adsIds));
+        $this->changedAt = Clock::now();
     }
 }

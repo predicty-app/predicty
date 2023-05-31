@@ -12,6 +12,7 @@ use Brick\Money\Money;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\Uid\Ulid;
 
 class AdStatsFixture extends Fixture implements DependentFixtureInterface
 {
@@ -80,6 +81,7 @@ class AdStatsFixture extends Fixture implements DependentFixtureInterface
             $date = DateHelper::fromString($row[1], 'Y-m-d');
 
             $entity = new AdStats(
+                id: new Ulid(),
                 userId: $row[0]->getUserId(),
                 accountId: $row[0]->getAccountId(),
                 adId: $row[0]->getId(),

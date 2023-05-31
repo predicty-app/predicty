@@ -9,7 +9,7 @@
       "hasCompletedOnboarding": true,
       "acceptedTermsOfServiceVersion": 1,
       "account": {
-        "id": "@integer@",
+        "id": "@ulid@",
         "name": "Account 1"
       },
       "actions": {

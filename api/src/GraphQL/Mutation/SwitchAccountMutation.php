@@ -20,7 +20,7 @@ class SwitchAccountMutation extends FieldDefinition
             'name' => 'switchAccount',
             'type' => $type->string(),
             'args' => [
-                'accountId' => $type->int(),
+                'accountId' => $type->id(),
             ],
             'resolve' => fn (mixed $root, array $args) => $this->resolve($args),
             'description' => 'Switch to another account',

@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace App\Message\Command;
 
 use App\Validator as AssertCustom;
+use Symfony\Component\Uid\Ulid;
 
 class SyncGoogleAnalytics
 {
     #[AssertCustom\AccountExists]
-    public int $accountId;
+    public Ulid $accountId;
 
-    public function __construct(public int $userId, int $accountId)
+    public function __construct(public Ulid $userId, Ulid $accountId)
     {
         $this->accountId = $accountId;
     }

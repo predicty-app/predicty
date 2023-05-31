@@ -19,11 +19,12 @@ use App\Repository\DailyRevenueRepository;
 use Brick\Money\Money;
 use DateTimeImmutable;
 use Exception;
+use Symfony\Component\Uid\Ulid;
 
 class DefaultDataImportApi implements DataImportApi, TrackableDataImportApi
 {
     private ImportResult $importResult;
-    private ?int $importId = null;
+    private ?Ulid $importId = null;
 
     public function __construct(
         private CampaignRepository $campaignRepository,
@@ -35,12 +36,12 @@ class DefaultDataImportApi implements DataImportApi, TrackableDataImportApi
         $this->importResult = new ImportResult();
     }
 
-    public function getOrCreateCampaign(int $userId, int $accountId, string $name, string $externalId): Campaign
+    public function getOrCreateCampaign(Ulid $userId, Ulid $accountId, string $name, string $externalId): Campaign
     {
         $entity = $this->campaignRepository->findByUserIdAndExternalId($userId, $externalId);
 
         if ($entity === null) {
-            $entity = new Campaign($externalId, $userId, $accountId, $name);
+            $entity = new Campaign(new Ulid(), $userId, $accountId, $externalId, $name);
 
             $this->doTrack($entity);
             $this->campaignRepository->save($entity);
@@ -49,12 +50,12 @@ class DefaultDataImportApi implements DataImportApi, TrackableDataImportApi
         return $entity;
     }
 
-    public function getOrCreateDailyRevenue(int $userId, int $accountId, DateTimeImmutable $date, Money $revenue, Money $averageOrderValue): DailyRevenue
+    public function getOrCreateDailyRevenue(Ulid $userId, Ulid $accountId, DateTimeImmutable $date, Money $revenue, Money $averageOrderValue): DailyRevenue
     {
         $entity = $this->dailyRevenueRepository->findByDay($userId, $date);
 
         if ($entity === null) {
-            $entity = new DailyRevenue($userId, $accountId, $date, $revenue, $averageOrderValue);
+            $entity = new DailyRevenue(new Ulid(), $userId, $accountId, $date, $revenue, $averageOrderValue);
 
             $this->doTrack($entity);
             $this->dailyRevenueRepository->save($entity);
@@ -63,12 +64,12 @@ class DefaultDataImportApi implements DataImportApi, TrackableDataImportApi
         return $entity;
     }
 
-    public function createDailyRevenueIfNotExists(int $userId, int $accountId, DateTimeImmutable $date, Money $revenue, Money $averageOrderValue): ?DailyRevenue
+    public function createDailyRevenueIfNotExists(Ulid $userId, Ulid $accountId, DateTimeImmutable $date, Money $revenue, Money $averageOrderValue): ?DailyRevenue
     {
         $entity = $this->dailyRevenueRepository->findByDay($userId, $date);
 
         if ($entity === null) {
-            $entity = new DailyRevenue($userId, $accountId, $date, $revenue, $averageOrderValue);
+            $entity = new DailyRevenue(new Ulid(), $userId, $accountId, $date, $revenue, $averageOrderValue);
 
             $this->doTrack($entity);
             $this->dailyRevenueRepository->save($entity);
@@ -83,10 +84,11 @@ class DefaultDataImportApi implements DataImportApi, TrackableDataImportApi
 
         if ($entity === null) {
             $entity = new Ad(
+                id: new Ulid(),
                 userId: $adSet->getUserId(),
                 accountId: $adSet->getAccountId(),
-                externalId: $externalId,
                 campaignId: $adSet->getCampaignId(),
+                externalId: $externalId,
                 name: $name,
                 adSetId: $adSet->getId(),
             );
@@ -104,10 +106,11 @@ class DefaultDataImportApi implements DataImportApi, TrackableDataImportApi
 
         if ($entity === null) {
             $entity = new AdSet(
-                externalId: $externalId,
+                id: new Ulid(),
                 userId: $campaign->getUserId(),
                 accountId: $campaign->getAccountId(),
                 campaignId: $campaign->getId(),
+                externalId: $externalId,
                 name: $name,
             );
 
@@ -124,6 +127,7 @@ class DefaultDataImportApi implements DataImportApi, TrackableDataImportApi
 
         if ($entity === null) {
             $entity = new AdStats(
+                id: new Ulid(),
                 userId: $ad->getUserId(),
                 accountId: $ad->getAccountId(),
                 adId: $ad->getId(),
@@ -140,7 +144,7 @@ class DefaultDataImportApi implements DataImportApi, TrackableDataImportApi
         return $entity;
     }
 
-    public function track(int $importId, ImportResult $importResult = null): void
+    public function track(Ulid $importId, ImportResult $importResult = null): void
     {
         $this->importId = $importId;
         $this->importResult = $importResult ?? new ImportResult();

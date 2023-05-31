@@ -20,7 +20,7 @@ class RemoveConversationCommentMutation extends FieldDefinition
             'name' => 'removeConversationComment',
             'type' => $type->string(),
             'args' => [
-                'commentId' => $type->nonNull($type->id()),
+                'commentId' => $type->nonNullId(),
             ],
             'resolve' => fn (mixed $root, array $args) => $this->resolve($args),
             'description' => 'Remove a previously added comment',
@@ -30,7 +30,7 @@ class RemoveConversationCommentMutation extends FieldDefinition
     private function resolve(array $args): string
     {
         $this->handle(new RemoveConversationComment(
-            (int) $args['commentId'],
+            $args['commentId'],
             $this->currentUser->getId(),
             $this->currentUser->getAccountId(),
         ));

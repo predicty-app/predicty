@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Tests\Functional\GraphQL\Mutation\AddConversationComment;
 
+use App\DataFixtures\Account1\ConversationFixture1;
+use App\DataFixtures\Account2\ConversationFixture2;
 use App\DataFixtures\UserFixture;
 use App\Entity\Conversation;
 use App\Entity\ConversationComment;
@@ -19,7 +21,7 @@ class AddConversationCommentMutationTest extends GraphQLTestCase
     {
         $this->authenticate();
 
-        $conversationId = $this->getRepository(Conversation::class)->findOneBy([], ['id' => 'DESC'])?->getId();
+        $conversationId = $this->getRepository(Conversation::class)->find(ConversationFixture1::CONVERSATION_1)?->getId();
 
         $mutation = <<<'EOF'
             mutation($var1: ID!) {
@@ -41,7 +43,7 @@ class AddConversationCommentMutationTest extends GraphQLTestCase
     {
         $this->authenticate(UserFixture::JANE);
 
-        $conversationId = $this->getRepository(Conversation::class)->findOneBy([], ['id' => 'DESC'])?->getId();
+        $conversationId = $this->getRepository(Conversation::class)->find(ConversationFixture2::CONVERSATION_2)?->getId();
 
         $mutation = <<<'EOF'
             mutation($var1: ID!) {

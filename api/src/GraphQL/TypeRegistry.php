@@ -25,6 +25,7 @@ use App\GraphQL\Type\DataProviderType;
 use App\GraphQL\Type\FileImportType;
 use App\GraphQL\Type\FileImportTypeType;
 use App\GraphQL\Type\GenericUserType;
+use App\GraphQL\Type\IdType;
 use App\GraphQL\Type\ImportResultType;
 use App\GraphQL\Type\ImportStatusType;
 use App\GraphQL\Type\ImportType;
@@ -69,6 +70,7 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
  * @method AccountType             account()
  * @method AppType                 app()
  * @method UserActions             userActions()
+ * @method IdType                  id()
  */
 class TypeRegistry
 {
@@ -105,11 +107,6 @@ class TypeRegistry
     public function float(): ScalarType
     {
         return Type::float();
-    }
-
-    public function id(): ScalarType
-    {
-        return Type::id();
     }
 
     public function nonNullId(): NonNull

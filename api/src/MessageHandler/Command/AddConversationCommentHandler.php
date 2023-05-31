@@ -12,6 +12,7 @@ use App\Repository\ConversationRepository;
 use App\Repository\UserWithAccountRepository;
 use App\Service\Security\Authorization\AuthorizationCheckerTrait;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use Symfony\Component\Uid\Ulid;
 
 #[AsMessageHandler]
 class AddConversationCommentHandler
@@ -32,7 +33,7 @@ class AddConversationCommentHandler
 
         $this->denyAccessUnlessGranted($user, Permission::ADD_CONVERSATION_COMMENT, $conversation);
 
-        $comment = new ConversationComment($command->conversationId, $command->userId, $command->accountId, $command->comment);
+        $comment = new ConversationComment(new Ulid(), $command->conversationId, $command->userId, $command->accountId, $command->comment);
         $this->conversationCommentRepository->save($comment);
     }
 }

@@ -6,6 +6,7 @@ namespace App\Service\Security\PasswordReset;
 
 use App\Entity\User;
 use Psr\SimpleCache\CacheInterface;
+use Symfony\Component\Uid\Ulid;
 
 /**
  * @internal
@@ -22,20 +23,22 @@ class PasswordResetService implements PasswordResetTokenValidator, PasswordReset
     public function createToken(User $user): string
     {
         $token = $this->hashToken($this->generateRandomToken());
-        $this->cache->set($this->getCacheKey($token), $user->getId(), self::CACHE_TTL);
+        $this->cache->set($this->getCacheKey($token), (string) $user->getId(), self::CACHE_TTL);
 
         return $token;
     }
 
-    public function validateAndGetUserId(string $token): ?int
+    public function validateAndGetUserId(string $token): ?Ulid
     {
         $userId = $this->cache->get($this->getCacheKey($token));
 
         if ($userId !== null) {
             $this->cache->delete($this->getCacheKey($token));
+
+            return Ulid::fromString($userId);
         }
 
-        return $userId;
+        return null;
     }
 
     private function getCacheKey(string $token): string
