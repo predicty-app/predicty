@@ -29,6 +29,7 @@ const props = defineProps<PropsType>();
 const isHoverElement = ref<boolean>(false);
 const isSpinnerVisible = ref<boolean>(false);
 const isEditModeVisible = ref<boolean>(false);
+const isModalClicked = ref<boolean>(false);
 const notificationMessageModel = ref<NotificationMessageType>({
   visible: false,
   type: "success",
@@ -125,6 +126,7 @@ function handleToggleHoverElementState(state: boolean) {
 function handleExitEditMode() {
   isHoverElement.value = false;
   isEditModeVisible.value = false;
+  isModalClicked.value = false;
   checkIsLineVisible();
 }
 
@@ -157,10 +159,10 @@ async function handleSubmitRemoveConversation() {
   />
   <div ref="elementInstance">
     <div
-      @click="isEditModeVisible = true"
+      @click="isEditModeVisible = true; isModalClicked = !isEditModeVisible ? true : false"
       v-if="conversationElement && conversationStore.isConversationsVisible"
-      @mouseenter="handleToggleHoverElementState(true)"
-      @mouseleave="handleToggleHoverElementState(false)"
+      @mouseenter="!isEditModeVisible ? handleToggleHoverElementState(true) : null"
+      @mouseleave="!isEditModeVisible ? handleToggleHoverElementState(false) : null"
       @mousemove="handleMoveButtonCreateConversation"
       :class="[
         'bg-dynamic h-[100%] relative w-[16px] top-0 animate-fade-in',
@@ -191,10 +193,10 @@ async function handleSubmitRemoveConversation() {
       />
 
       <ConversationCommentsWindow
-        v-if="isHoverElement"
+        v-if="isHoverElement || isModalClicked"
         :position-y="yLinePosition"
         :conversation-element="conversationElement"
-        @handleExitEditMode="handleExitEditMode()"
+        @handleExitEditMode.stop="handleExitEditMode($event)"
         @handleShowPromptRemoveConversation="handleSubmitRemoveConversation"
         :type-window="
           TypesWindowConversation[isEditModeVisible ? 'DETAILS' : 'PREVIEW']

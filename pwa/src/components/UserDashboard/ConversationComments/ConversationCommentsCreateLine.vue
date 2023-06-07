@@ -61,6 +61,7 @@ function handleStartCreatingConversation() {
     </div>
     <ConversationCommentsWindow
       :type-window="TypesWindowConversation.CREATE"
+      :position-y="yLinePosition"
       v-if="
         conversationStore.isProcessCreateConversationActive &&
         conversationStore.isCreateConversationActive

@@ -437,7 +437,7 @@ export function hCommentDate(date: string, t: any): string {
     result = t(
       "components.user-dashboard.conversation-comments.conversation-comments-window.today"
     );
-  } else if (difference >= 1 && difference < 2) {
+  } else if (difference < 2) {
     result = `1 ${t(
       "components.user-dashboard.conversation-comments.conversation-comments-window.day-ago"
     )}`;
