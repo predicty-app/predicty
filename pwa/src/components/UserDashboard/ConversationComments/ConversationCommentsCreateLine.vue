@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { useConversationsStore } from "@/stores/conversations";
 import { TypesWindowConversation } from "@/stores/conversations";
+import { handleGetConversations } from "@/services/api/conversation";
 
 const yLinePosition = ref<number>(0);
 const conversationStore = useConversationsStore();
@@ -28,11 +29,7 @@ function handleStartCreatingConversation() {
 }
 
 async function handleUpdateConversation() {
-  // await handleGetConversations()
-  // conversationElement.value = userDashboardStore.conversations.find(
-  //   (conversation: ConversationsType) =>
-  //     conversation.date === props.conversationDate
-  // );
+  await handleGetConversations();
 }
 </script>
 <template>
