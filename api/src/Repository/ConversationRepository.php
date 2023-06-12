@@ -33,9 +33,9 @@ class ConversationRepository
         return $conversation;
     }
 
-    public function findByUserIdAndDate(Ulid $userId, DateTimeImmutable $date): ?Conversation
+    public function findByAccountIdAndDate(Ulid $accountId, DateTimeImmutable $date): ?Conversation
     {
-        return $this->repository->findOneBy(['userId' => $userId, 'date' => $date]);
+        return $this->repository->findOneBy(['accountId' => $accountId, 'date' => $date]);
     }
 
     /**
