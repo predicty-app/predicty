@@ -9,11 +9,12 @@ use App\Entity\ConversationComment;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\Uid\Ulid;
 
 class ConversationCommentFixture extends Fixture implements DependentFixtureInterface
 {
-    public const COMMENT_1 = 'COMMENT_1';
-    public const COMMENT_2 = 'COMMENT_2';
+    public const COMMENT_1 = '01H1S4560AWC457FYBGG22R47P';
+    public const COMMENT_2 = '01H1S45BHAAC368KV8C4PMAN62';
 
     public function __construct()
     {
@@ -21,8 +22,9 @@ class ConversationCommentFixture extends Fixture implements DependentFixtureInte
 
     public function load(ObjectManager $manager): void
     {
-        $conversation = $this->getReference(ConversationFixture::CONVERSATION_1, Conversation::class);
+        $conversation = $this->getReference(ConversationFixture1::CONVERSATION_1, Conversation::class);
         $comment1 = new ConversationComment(
+            id: Ulid::fromString(self::COMMENT_1),
             conversationId: $conversation->getId(),
             userId: $conversation->getUserId(),
             accountId: $conversation->getAccountId(),
@@ -30,6 +32,7 @@ class ConversationCommentFixture extends Fixture implements DependentFixtureInte
         );
 
         $comment2 = new ConversationComment(
+            id: Ulid::fromString(self::COMMENT_2),
             conversationId: $conversation->getId(),
             userId: $conversation->getUserId(),
             accountId: $conversation->getAccountId(),
@@ -47,7 +50,7 @@ class ConversationCommentFixture extends Fixture implements DependentFixtureInte
     public function getDependencies(): array
     {
         return [
-            ConversationFixture::class,
+            ConversationFixture1::class,
         ];
     }
 }

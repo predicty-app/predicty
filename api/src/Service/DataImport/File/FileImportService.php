@@ -10,6 +10,7 @@ use League\Csv\Reader;
 use League\Csv\Statement;
 use League\Flysystem\FilesystemReader;
 use RuntimeException;
+use Symfony\Component\Uid\Ulid;
 
 class FileImportService
 {
@@ -27,8 +28,8 @@ class FileImportService
     }
 
     public function import(
-        int $userId,
-        int $accountId,
+        Ulid $userId,
+        Ulid $accountId,
         string $filename,
         FileImportType $fileImportType,
         ?FileImportMetadata $metadata = null

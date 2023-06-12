@@ -7,6 +7,7 @@ namespace App\Repository;
 use App\Entity\Campaign;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Uid\Ulid;
 
 class CampaignRepository
 {
@@ -20,7 +21,7 @@ class CampaignRepository
         $this->repository = $em->getRepository(Campaign::class);
     }
 
-    public function findById(int $id): ?Campaign
+    public function findById(Ulid $id): ?Campaign
     {
         return $this->repository->find($id);
     }
@@ -28,12 +29,12 @@ class CampaignRepository
     /**
      * @return array<Campaign>
      */
-    public function findAllByAccountId(int $accountId): array
+    public function findAllByAccountId(Ulid $accountId): array
     {
         return $this->repository->findBy(['accountId' => $accountId], ['startedAt' => 'ASC']);
     }
 
-    public function findByUserIdAndExternalId(int $userId, string $externalId): ?Campaign
+    public function findByUserIdAndExternalId(Ulid $userId, string $externalId): ?Campaign
     {
         return $this->repository->findOneBy(['userId' => $userId, 'externalId' => $externalId]);
     }

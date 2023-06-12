@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace App\Command;
 
 use App\Entity\DataProvider;
-use App\Message\Command\RegisterGoogleOAuthCredentials;
+use App\Message\Command\ConnectGoogleAds;
+use App\Message\Command\ConnectGoogleAnalytics;
+use App\Repository\AccountRepository;
 use App\Repository\UserRepository;
 use App\Service\Google\GoogleOAuth;
-use InvalidArgumentException;
 use Psr\SimpleCache\CacheInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -19,6 +20,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Uid\Ulid;
 
 #[AsCommand(
     name: 'app:connect:google',
@@ -30,6 +32,7 @@ class ConnectGoogleAccountCommand extends Command
         private RouterInterface $router,
         private GoogleOAuth $auth,
         private UserRepository $userRepository,
+        private AccountRepository $accountRepository,
         private CacheInterface $cache,
         private MessageBusInterface $bus
     ) {
@@ -39,9 +42,9 @@ class ConnectGoogleAccountCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('userId', InputArgument::REQUIRED, 'User id that you would like to be the owner of the connection.')
-            ->addArgument('accountId', InputArgument::REQUIRED, 'Account id that you would like assign the connection to.')
-            ->addArgument('service', InputArgument::REQUIRED, 'Service name: GOOGLE_ADS, GOOGLE_ANALYTICS')
+            ->addArgument('userId', InputArgument::OPTIONAL, 'User id that you would like to be the owner of the connection.')
+            ->addArgument('accountId', InputArgument::OPTIONAL, 'Account id that you would like assign the connection to.')
+            ->addArgument('service', InputArgument::OPTIONAL, 'Service name: GOOGLE_ADS, GOOGLE_ANALYTICS')
         ;
     }
 
@@ -49,22 +52,25 @@ class ConnectGoogleAccountCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $userId = (int) $input->getArgument('userId');
-        if ($userId === 0) {
-            $userId = (int) $io->ask('User id');
+        $userId = $input->getArgument('userId');
+        while ($userId === null) {
+            $userId = $io->ask('User id', validator: fn (string $value) => Ulid::fromString($value));
         }
 
-        $accountId = (int) $input->getArgument('accountId');
-        if ($accountId === 0) {
-            $accountId = (int) $io->ask('Account id');
+        $user = $this->userRepository->getById($userId);
+
+        $accountId = $input->getArgument('accountId');
+        while ($accountId === null) {
+            $accountId = $io->ask('Account id', validator: fn (string $value) => Ulid::fromString($value));
         }
+
+        $account = $this->accountRepository->getById($accountId);
 
         $service = $input->getArgument('service');
-        if ($service === null) {
+        while ($service === null) {
             $service = $io->choice('Service', ['GOOGLE_ADS', 'GOOGLE_ANALYTICS']);
         }
 
-        $user = $this->userRepository->findById($userId) ?? throw new InvalidArgumentException('User with given id was not found.');
         $io->writeln(sprintf('Selected user account: <info>%s</info>', $user->getEmail()));
 
         $dataProvider = DataProvider::from($service);
@@ -89,8 +95,25 @@ class ConnectGoogleAccountCommand extends Command
             sleep(1);
         }
 
-        $this->bus->dispatch(new RegisterGoogleOAuthCredentials($user->getId(), $accountId, $dataProvider, $refreshToken));
-        $io->success('Refresh token was saved in the database. You can now connect using credentials stored with this user\'s account.');
+        if ($dataProvider === DataProvider::GOOGLE_ADS) {
+            do {
+                $clientAccountId = (string) $io->ask('Please provide the client account id:');
+                $clientAccountId = trim(str_ireplace('-', '', $clientAccountId));
+            } while ($clientAccountId === '');
+
+            $this->bus->dispatch(new ConnectGoogleAds($user->getId(), $account->getId(), $refreshToken, $clientAccountId));
+        }
+
+        if ($dataProvider === DataProvider::GOOGLE_ANALYTICS) {
+            do {
+                $ga4id = (string) $io->ask('Please provide GA4 id:');
+                $ga4id = trim(str_ireplace('-', '', $ga4id));
+            } while ($ga4id === '');
+
+            $this->bus->dispatch(new ConnectGoogleAnalytics($user->getId(), $account->getId(), $refreshToken, $ga4id));
+        }
+
+        $io->success('Account connected successfully.');
 
         return Command::SUCCESS;
     }

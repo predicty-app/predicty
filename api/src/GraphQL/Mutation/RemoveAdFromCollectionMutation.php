@@ -34,8 +34,8 @@ class RemoveAdFromCollectionMutation extends FieldDefinition
         return $this->handle(new RemoveAdFromCollection(
             $this->currentUser->getId(),
             $this->currentUser->getAccountId(),
-            (int) $args['adCollectionId'],
-            array_map(fn (string $id) => (int) $id, $args['adsIds'])
+            $args['adCollectionId'],
+            $args['adsIds']
         ));
     }
 }

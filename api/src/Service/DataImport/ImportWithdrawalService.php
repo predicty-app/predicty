@@ -6,6 +6,7 @@ namespace App\Service\DataImport;
 
 use App\Repository\ImportRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Uid\Ulid;
 
 class ImportWithdrawalService
 {
@@ -15,7 +16,7 @@ class ImportWithdrawalService
     ) {
     }
 
-    public function withdraw(int $importId): void
+    public function withdraw(Ulid $importId): void
     {
         $import = $this->importRepository->getById($importId);
         $this->entityManager->transactional(function () use ($import): void {

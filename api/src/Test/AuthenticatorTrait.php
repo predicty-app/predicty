@@ -12,6 +12,7 @@ use App\Service\Security\Account\AccountSwitcher;
 use InvalidArgumentException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Component\Uid\Ulid;
 
 trait AuthenticatorTrait
 {
@@ -45,7 +46,7 @@ trait AuthenticatorTrait
     /**
      * Switches currently used account to the given one.
      */
-    public static function switchAccount(int|Account $account): void
+    public static function switchAccount(Ulid|Account $account): void
     {
         $user = static::getUser();
 

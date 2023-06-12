@@ -132,7 +132,7 @@ async function handleLoginUser(payload: LoginUserPayloadType) {
     passcode: string;
   };
 
-  const variables = ["uid"];
+  const variables = ["id"];
 
   const query = `mutation login($username: String!, $passcode: String!) {
     login(username: $username, passcode: $passcode) {
@@ -163,7 +163,7 @@ async function handleAuthLoginUser(payload: AuthLoginUserPayloadType) {
 
   const query = `mutation loginWithPassword($username: String!, $password: String!) {
     loginWithPassword(username: $username, password: $password) {
-      uid
+      id
       email
       isEmailVerified
       isOnboardingComplete

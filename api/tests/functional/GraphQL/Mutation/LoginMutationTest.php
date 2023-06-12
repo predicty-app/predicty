@@ -24,7 +24,6 @@ class LoginMutationTest extends GraphQLTestCase
         $mutation = <<<"EOF"
                 mutation {
                   login(username: "john.doe@example.com", passcode:"$code"){
-                    uid,
                     email
                   },
                 }
@@ -40,7 +39,6 @@ class LoginMutationTest extends GraphQLTestCase
         $mutation = <<<'EOF'
                 mutation {
                   login(username: "john.doe", passcode:"123456"){
-                    uid,
                     email
                   },
                 }
@@ -56,7 +54,6 @@ class LoginMutationTest extends GraphQLTestCase
         $mutation = <<<'EOF'
                 mutation {
                   login(username: "john.doe@example.com", passcode:""){
-                    uid,
                     email
                   },
                 }

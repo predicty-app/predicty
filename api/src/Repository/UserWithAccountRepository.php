@@ -8,6 +8,7 @@ use App\Entity\AccountAwareUser;
 use App\Entity\User;
 use App\Entity\UserWithAccountContext;
 use RuntimeException;
+use Symfony\Component\Uid\Ulid;
 
 /**
  * This repository is used to get the user entity with the account context.
@@ -18,7 +19,7 @@ class UserWithAccountRepository
     {
     }
 
-    public function get(int $userId, int $accountId): AccountAwareUser&User
+    public function get(Ulid $userId, Ulid $accountId): AccountAwareUser&User
     {
         $user = $this->userRepository->getById($userId);
         $account = $this->accountRepository->getById($accountId);

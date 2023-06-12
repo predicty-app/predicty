@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Entity\Trait\IdTrait;
+use App\Entity\Trait\TimestampableTrait;
 use App\Service\Clock\Clock;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Types\UuidType;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Uid\Uuid;
-use Webmozart\Assert\Assert;
+use Symfony\Component\Uid\Ulid;
 
 /**
  * @internal you probably want to use the {@see User} instead
@@ -18,16 +17,13 @@ use Webmozart\Assert\Assert;
 #[ORM\Entity]
 #[ORM\Index(fields: ['email'])]
 #[ORM\Table(name: '`user`')]
-class DoctrineUser implements UserInterface, EmailRecipient, PasswordAuthenticatedUser, UserWithId, User
+class DoctrineUser implements User
 {
     use IdTrait;
     use TimestampableTrait;
 
     #[ORM\Column(type: Types::JSON, nullable: true, options: ['jsonb' => true])]
     private array $accountIds = [];
-
-    #[ORM\Column(type: UuidType::NAME, unique: true)]
-    private ?Uuid $uuid = null;
 
     #[ORM\Column(length: 180, unique: true)]
     private string $email;
@@ -50,24 +46,12 @@ class DoctrineUser implements UserInterface, EmailRecipient, PasswordAuthenticat
     #[ORM\Column(options: ['default' => 0])]
     private int $acceptedTermsOfServiceVersion = 0;
 
-    public function __construct(string $email)
+    public function __construct(Ulid $id, string $email)
     {
+        $this->id = $id;
         $this->email = $email;
         $this->createdAt = Clock::now();
         $this->changedAt = Clock::now();
-    }
-
-    public function setUuid(Uuid $uuid): void
-    {
-        $this->uuid = $uuid;
-        $this->changedAt = Clock::now();
-    }
-
-    public function getUuid(): Uuid
-    {
-        Assert::notNull($this->uuid);
-
-        return $this->uuid;
     }
 
     public function getEmail(): string
@@ -83,19 +67,19 @@ class DoctrineUser implements UserInterface, EmailRecipient, PasswordAuthenticat
         return $this;
     }
 
-    public function setAsAccountOwner(int $accountId): void
+    public function setAsAccountOwner(Ulid $accountId): void
     {
         $this->setAccountRole($accountId, Role::ROLE_ACCOUNT_OWNER);
     }
 
-    public function setAsAccountMember(int $accountId): void
+    public function setAsAccountMember(Ulid $accountId): void
     {
         $this->setAccountRole($accountId, Role::ROLE_ACCOUNT_MEMBER);
     }
 
     public function getUserIdentifier(): string
     {
-        return $this->email;
+        return (string) $this->getEmail();
     }
 
     public function getRoles(): array
@@ -107,12 +91,12 @@ class DoctrineUser implements UserInterface, EmailRecipient, PasswordAuthenticat
         return array_unique($this->roles);
     }
 
-    public function getRolesForAccount(Account|int $account): array
+    public function getRolesForAccount(Account|Ulid $account): array
     {
         $roles = [];
         $accountId = $account instanceof Account ? $account->getId() : $account;
         foreach ($this->accountIds as $account) {
-            if ($account['id'] === $accountId) {
+            if ($account['id'] === (string) $accountId) {
                 $roles = array_merge($roles, $account['roles']);
             }
         }
@@ -186,39 +170,35 @@ class DoctrineUser implements UserInterface, EmailRecipient, PasswordAuthenticat
         // $this->plainPassword = null;
     }
 
-    public function isMemberOf(Account|int $account): bool
+    public function isMemberOf(Account|Ulid $account): bool
     {
         $accountId = $account instanceof Account ? $account->getId() : $account;
 
-        return in_array($accountId, $this->getAccountsIds(), true);
-    }
-
-    /**
-     * Get all account ids the user is a member of.
-     *
-     * @return array<int>
-     */
-    public function getAccountsIds(): array
-    {
-        $ids = [];
-        foreach ($this->accountIds as $account) {
-            $ids[] = (int) $account['id'];
+        foreach ($this->getAccountsIds() as $id) {
+            if ($id->equals($accountId)) {
+                return true;
+            }
         }
 
-        return $ids;
+        return false;
     }
 
-    public function setAccountRole(int $accountId, string $role): void
+    public function getAccountsIds(): array
+    {
+        return array_map(fn (array $account) => Ulid::fromString($account['id']), $this->accountIds);
+    }
+
+    public function setAccountRole(Ulid $accountId, string $role): void
     {
         foreach ($this->accountIds as $index => $account) {
-            if ($account['id'] === $accountId) {
+            if ($account['id'] === (string) $accountId) {
                 $this->accountIds[$index]['roles'] = [$role];
 
                 return;
             }
         }
 
-        $this->accountIds[] = ['id' => $accountId, 'roles' => [$role]];
+        $this->accountIds[] = ['id' => (string) $accountId, 'roles' => [$role]];
         $this->changedAt = Clock::now();
     }
 }

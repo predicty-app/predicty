@@ -8,6 +8,7 @@ use App\Entity\AdCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use RuntimeException;
+use Symfony\Component\Uid\Ulid;
 
 class AdCollectionRepository
 {
@@ -21,7 +22,7 @@ class AdCollectionRepository
         $this->repository = $em->getRepository(AdCollection::class);
     }
 
-    public function getById(int $adCollectionId): AdCollection
+    public function getById(Ulid $adCollectionId): AdCollection
     {
         $adCollection = $this->repository->find($adCollectionId);
         if ($adCollection === null) {
@@ -42,12 +43,12 @@ class AdCollectionRepository
     /**
      * @return array<AdCollection>
      */
-    public function findAllByAccountId(int $accountId): array
+    public function findAllByAccountId(Ulid $accountId): array
     {
         return $this->repository->findBy(['accountId' => $accountId]);
     }
 
-    public function findById(int $adCollectionId): ?AdCollection
+    public function findById(Ulid $adCollectionId): ?AdCollection
     {
         return $this->repository->find($adCollectionId);
     }

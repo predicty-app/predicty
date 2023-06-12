@@ -7,16 +7,16 @@ namespace App\DataFixtures\Account1;
 use App\DataFixtures\AccountFixture;
 use App\DataFixtures\UserFixture;
 use App\Entity\Account;
-use App\Entity\ConnectedAccount;
-use App\Entity\DataProvider;
 use App\Entity\DoctrineUser;
+use App\Entity\GoogleAnalyticsConnectedAccount;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\Uid\Ulid;
 
 class ConnectedAccountFixture extends Fixture implements DependentFixtureInterface
 {
-    public const CONNECTED_ACCOUNT_1 = 'CONNECTED_ACCOUNT_1';
+    public const CONNECTED_ACCOUNT_1 = '01H1S4490FZZSVPZ5ZKEE6Q3R4';
 
     public function __construct()
     {
@@ -27,7 +27,7 @@ class ConnectedAccountFixture extends Fixture implements DependentFixtureInterfa
         $user = $this->getReference(UserFixture::JOHN, DoctrineUser::class);
         $account = $this->getReference(AccountFixture::ACCOUNT_1, Account::class);
 
-        $entity = new ConnectedAccount($account->getId(), $user->getId(), DataProvider::GOOGLE_ANALYTICS, [], false);
+        $entity = new GoogleAnalyticsConnectedAccount(Ulid::fromString(self::CONNECTED_ACCOUNT_1), $account->getId(), $user->getId());
         $manager->persist($entity);
         $this->addReference(self::CONNECTED_ACCOUNT_1, $entity);
 

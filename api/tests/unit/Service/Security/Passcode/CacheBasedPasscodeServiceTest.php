@@ -8,7 +8,7 @@ use App\Entity\DoctrineUser;
 use App\Service\Security\Passcode\CacheBasedPasscodeService;
 use PHPUnit\Framework\TestCase;
 use Psr\SimpleCache\CacheInterface;
-use Symfony\Component\Uid\Uuid;
+use Symfony\Component\Uid\Ulid;
 
 /**
  * @covers \App\Service\Security\Passcode\CacheBasedPasscodeService
@@ -18,7 +18,7 @@ class CacheBasedPasscodeServiceTest extends TestCase
     public function test_generate(): void
     {
         $user = $this->createMock(DoctrineUser::class);
-        $user->method('getUuid')->willReturn(Uuid::fromString('0a2681a2-850b-44ab-a5f1-9afc15ab35d0'));
+        $user->method('getId')->willReturn(Ulid::fromString('01H1VA0J0ZVV764BC237KBW8J2'));
 
         $cache = $this->createMock(CacheInterface::class);
         $cache->expects($this->once())->method('set');
@@ -30,7 +30,7 @@ class CacheBasedPasscodeServiceTest extends TestCase
     public function test_verify(): void
     {
         $user = $this->createMock(DoctrineUser::class);
-        $user->method('getUuid')->willReturn(Uuid::fromString('0a2681a2-850b-44ab-a5f1-9afc15ab35d0'));
+        $user->method('getId')->willReturn(Ulid::fromString('01H1VA0J0ZVV764BC237KBW8J2'));
 
         $storedKey = null;
         $storedValue = null;

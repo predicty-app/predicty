@@ -4,10 +4,15 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Entity\Trait\AccountOwnableTrait;
+use App\Entity\Trait\IdTrait;
+use App\Entity\Trait\TimeDurationTrait;
+use App\Entity\Trait\TimestampableTrait;
+use App\Entity\Trait\UserOwnableTrait;
 use App\Service\Clock\Clock;
-use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity]
 #[ORM\Index(fields: ['userId'])]
@@ -18,14 +23,13 @@ use Doctrine\ORM\Mapping as ORM;
     'api' => ApiImport::class,
     'file' => FileImport::class,
 ])]
-abstract class Import implements Ownable, BelongsToAccount
+abstract class Import implements UserOwnable, AccountOwnable
 {
-    use BelongsToAccountTrait;
+    use AccountOwnableTrait;
     use IdTrait;
+    use TimeDurationTrait;
     use TimestampableTrait;
-
-    #[ORM\Column]
-    private int $userId;
+    use UserOwnableTrait;
 
     #[ORM\Column]
     private ImportStatus $status;
@@ -39,28 +43,19 @@ abstract class Import implements Ownable, BelongsToAccount
     #[ORM\Column(type: Types::JSON, nullable: true)]
     private ?array $result = [];
 
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private ?DateTimeImmutable $startedAt;
-
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE, nullable: true)]
-    private ?DateTimeImmutable $completedAt;
-
     public function __construct(
-        int $userId,
-        int $accountId,
+        Ulid $id,
+        Ulid $userId,
+        Ulid $accountId,
         DataProvider $dataProvider,
     ) {
+        $this->id = $id;
         $this->userId = $userId;
         $this->status = ImportStatus::WAITING;
         $this->dataProvider = $dataProvider;
         $this->createdAt = Clock::now();
         $this->changedAt = Clock::now();
         $this->accountId = $accountId;
-    }
-
-    public function getUserId(): int
-    {
-        return $this->userId;
     }
 
     public function getStatus(): ImportStatus
@@ -88,7 +83,7 @@ abstract class Import implements Ownable, BelongsToAccount
         assert($this->status === ImportStatus::IN_PROGRESS, 'Import can only be completed when it was previously in progress');
         $this->status = ImportStatus::COMPLETE;
         $this->result = $importResult->toArray();
-        $this->completedAt = Clock::now();
+        $this->endedAt = Clock::now();
         $this->changedAt = Clock::now();
     }
 
@@ -103,7 +98,7 @@ abstract class Import implements Ownable, BelongsToAccount
     public function fail(string $message): void
     {
         $this->message = $message;
-        $this->completedAt = Clock::now();
+        $this->endedAt = Clock::now();
         $this->changedAt = Clock::now();
         $this->status = ImportStatus::FAILED;
     }
@@ -112,20 +107,5 @@ abstract class Import implements Ownable, BelongsToAccount
     {
         $this->status = ImportStatus::WITHDRAWN;
         $this->changedAt = Clock::now();
-    }
-
-    public function getStartedAt(): ?DateTimeImmutable
-    {
-        return $this->startedAt;
-    }
-
-    public function getCompletedAt(): ?DateTimeImmutable
-    {
-        return $this->completedAt;
-    }
-
-    public function isOwnedBy(UserWithId $user): bool
-    {
-        return $this->userId === $user->getId();
     }
 }

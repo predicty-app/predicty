@@ -9,6 +9,7 @@ use App\Repository\AccountRepository;
 use App\Validator\AccountExists;
 use App\Validator\AccountExistsValidator;
 use PHPUnit\Framework\MockObject\MockObject;
+use Symfony\Component\Uid\Ulid;
 use Symfony\Component\Validator\ConstraintValidatorInterface;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
@@ -31,28 +32,31 @@ class AccountExistsValidatorTest extends ConstraintValidatorTestCase
 
     public function test_account_exists(): void
     {
-        $this->repository->expects($this->once())->method('findById')->with(1)->willReturn($this->createMock(Account::class));
+        $accountId = Ulid::fromString('01H1VEC8SYM3K6TSDAPFN25XZV');
+        $this->repository->expects($this->once())->method('findById')->with($accountId)->willReturn($this->createMock(Account::class));
 
         $constraint = new AccountExists();
-        $this->validator->validate(1, $constraint);
+        $this->validator->validate($accountId, $constraint);
         $this->assertNoViolation();
     }
 
     public function test_account_does_not_exist(): void
     {
-        $this->repository->expects($this->once())->method('findById')->with(1)->willReturn(null);
+        $accountId = Ulid::fromString('01H1VEC8SYM3K6TSDAPFN25XZV');
+        $this->repository->expects($this->once())->method('findById')->with($accountId)->willReturn(null);
 
         $constraint = new AccountExists();
-        $this->validator->validate(1, $constraint);
+        $this->validator->validate($accountId, $constraint);
         $this->buildViolation('Account not found.')->assertRaised();
     }
 
     public function test_account_does_not_exist_with_custom_message(): void
     {
-        $this->repository->expects($this->once())->method('findById')->with(1)->willReturn(null);
+        $accountId = Ulid::fromString('01H1VEC8SYM3K6TSDAPFN25XZV');
+        $this->repository->expects($this->once())->method('findById')->with($accountId)->willReturn(null);
 
         $constraint = new AccountExists('Custom message');
-        $this->validator->validate(1, $constraint);
+        $this->validator->validate($accountId, $constraint);
         $this->buildViolation('Custom message')->assertRaised();
     }
 

@@ -14,6 +14,7 @@ use App\Service\DataImport\File\Handler\SimplifiedCsvHandler;
 use Brick\Money\Money;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Uid\Ulid;
 
 /**
  * @covers \App\Service\DataImport\File\Handler\SimplifiedCsvHandler
@@ -29,11 +30,14 @@ class SimplifiedCsvHandlerTest extends TestCase
             'Date' => '2021-01-01',
         ];
 
-        $context = new FileImportContext(1, 123, new FileImportMetadata(['campaignName' => 'test']));
+        $userId = Ulid::fromString('01H1VECDYVB5BRQVPTSVJP3BZA');
+        $accountId = Ulid::fromString('01H1VEC8SYM3K6TSDAPFN25XZV');
+
+        $context = new FileImportContext($userId, $accountId, new FileImportMetadata(['campaignName' => 'test']));
         $dataImportApi = $this->createMock(DataImportApi::class);
         $dataImportApi->expects($this->once())->method('getOrCreateCampaign')->with(
-            $this->equalTo(1),
-            $this->equalTo(123),
+            $this->equalTo($userId),
+            $this->equalTo($accountId),
             $this->equalTo('test'),
             $this->equalTo('098f6bcd4621d373cade4e832627b4f6')
         );
@@ -51,7 +55,11 @@ class SimplifiedCsvHandlerTest extends TestCase
             'Date' => '2021-01-01',
         ];
 
-        $context = new FileImportContext(1, 123, new FileImportMetadata(['campaignName' => 'test']));
+        $userId = Ulid::fromString('01H1VECDYVB5BRQVPTSVJP3BZA');
+        $accountId = Ulid::fromString('01H1VEC8SYM3K6TSDAPFN25XZV');
+
+        $context = new FileImportContext($userId, $accountId, new FileImportMetadata(['campaignName' => 'test']));
+
         $dataImportApi = $this->createMock(DataImportApi::class);
         $dataImportApi->expects($this->once())->method('getOrCreateAdSet')->with(
             $this->isInstanceOf(Campaign::class),
@@ -71,7 +79,11 @@ class SimplifiedCsvHandlerTest extends TestCase
             'Date' => '2021-01-01',
         ];
 
-        $context = new FileImportContext(1, 123, new FileImportMetadata(['campaignName' => 'test']));
+        $userId = Ulid::fromString('01H1VECDYVB5BRQVPTSVJP3BZA');
+        $accountId = Ulid::fromString('01H1VEC8SYM3K6TSDAPFN25XZV');
+
+        $context = new FileImportContext($userId, $accountId, new FileImportMetadata(['campaignName' => 'test']));
+
         $dataImportApi = $this->createMock(DataImportApi::class);
         $dataImportApi->expects($this->once())->method('getOrCreateAd')->with(
             $this->isInstanceOf(AdSet::class),
@@ -92,7 +104,11 @@ class SimplifiedCsvHandlerTest extends TestCase
             'Date' => '2021-01-01',
         ];
 
-        $context = new FileImportContext(1, 123, new FileImportMetadata(['campaignName' => 'test']));
+        $userId = Ulid::fromString('01H1VECDYVB5BRQVPTSVJP3BZA');
+        $accountId = Ulid::fromString('01H1VEC8SYM3K6TSDAPFN25XZV');
+
+        $context = new FileImportContext($userId, $accountId, new FileImportMetadata(['campaignName' => 'test']));
+
         $dataImportApi = $this->createMock(DataImportApi::class);
         $dataImportApi->expects($this->once())->method('getOrCreateAdStats')->with(
             $this->isInstanceOf(Ad::class),

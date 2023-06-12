@@ -167,7 +167,7 @@
           },
           "notifications": {
             "remove-conversation": {
-              "success": "Conversation remove correctly."
+              "success": "Conversation removed correctly."
             }
           }
         },

@@ -24,8 +24,9 @@ class SyncGoogleAnalyticsHandler
         $this->importTrackingService->createAndRunNewApiImport(
             userId: $command->userId,
             accountId: $command->accountId,
+            connectedAccountId: $command->connectedAccountId,
             dataProvider: DataProvider::GOOGLE_ANALYTICS,
-            callback: fn () => $this->googleAnalyticsUpdater->update($command->userId, $command->accountId)
+            callback: fn () => $this->googleAnalyticsUpdater->update($command->userId, $command->accountId, $command->connectedAccountId)
         );
     }
 }

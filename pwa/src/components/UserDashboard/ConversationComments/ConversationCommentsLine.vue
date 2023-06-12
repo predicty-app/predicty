@@ -149,6 +149,14 @@ async function handleSubmitRemoveConversation() {
   isSpinnerVisible.value = false;
   isEditModeVisible.value = false;
 }
+
+async function handleUpdateConversation() {
+  await handleGetConversations();
+  conversationElement.value = userDashboardStore.conversations.find(
+    (conversation: ConversationsType) =>
+      conversation.date === props.conversationDate
+  );
+}
 </script>
 <template>
   <SpinnerBar :is-visible="isSpinnerVisible" :is-global="true" />
@@ -201,6 +209,7 @@ async function handleSubmitRemoveConversation() {
         :type-window="
           TypesWindowConversation[isEditModeVisible ? 'DETAILS' : 'PREVIEW']
         "
+        @handleUpdated="handleUpdateConversation"
       />
     </div>
   </div>

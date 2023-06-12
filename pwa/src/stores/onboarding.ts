@@ -25,7 +25,7 @@ export type FileType = {
 export type TermsType = {
   fileVersionId: number;
   newsletter: boolean;
-}
+};
 
 type StateType = {
   email: null | string;
@@ -43,7 +43,7 @@ export const useOnBoardingStore = defineStore({
       email: null,
       terms: {
         fileVersionId: 0,
-        newsletter: false,
+        newsletter: false
       },
       moreServices: [],
       password: null,

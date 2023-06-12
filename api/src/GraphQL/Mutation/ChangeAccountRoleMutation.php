@@ -32,7 +32,7 @@ class ChangeAccountRoleMutation extends FieldDefinition
     {
         $this->handle(new ChangeAccountRole(
             $this->currentUser->getId(),
-            (int) $args['userId'],
+            $args['userId'],
             $this->currentUser->getAccountId(),
             $args['role'],
         ));

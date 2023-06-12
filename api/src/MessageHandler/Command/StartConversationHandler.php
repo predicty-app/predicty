@@ -14,6 +14,7 @@ use App\Repository\ConversationRepository;
 use App\Repository\UserWithAccountRepository;
 use App\Service\Security\Authorization\AuthorizationCheckerTrait;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use Symfony\Component\Uid\Ulid;
 
 #[AsMessageHandler]
 class StartConversationHandler
@@ -32,11 +33,11 @@ class StartConversationHandler
     public function __invoke(StartConversation $command): void
     {
         $user = $this->userWithAccountRepository->get($command->userId, $command->accountId);
-        $conversation = $this->conversationRepository->findByUserIdAndDate($command->userId, $command->date);
+        $conversation = $this->conversationRepository->findByAccountIdAndDate($command->accountId, $command->date);
 
         if ($conversation === null) {
             $this->denyAccessUnlessGranted($user, Permission::START_CONVERSATION, $user->getAccount());
-            $conversation = new Conversation($command->userId, $command->accountId, $command->date, Color::fromString($command->color));
+            $conversation = new Conversation(new Ulid(), $command->userId, $command->accountId, $command->date, Color::fromString($command->color));
             $this->conversationRepository->save($conversation);
         }
 

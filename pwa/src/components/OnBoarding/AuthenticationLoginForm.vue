@@ -8,8 +8,7 @@ import { handleAuthLoginUser } from "@/services/api/onboarding";
 import { handleAuthenticatedUser } from "@/services/api/authentication";
 import {
   isRequiredValidation,
-  isEmailValidation,
-  isPasswordValidation
+  isEmailValidation
 } from "@/helpers/rulesValidation";
 
 type ModelValueType = {

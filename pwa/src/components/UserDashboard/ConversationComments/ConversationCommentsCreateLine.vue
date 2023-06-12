@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { useConversationsStore } from "@/stores/conversations";
 import { TypesWindowConversation } from "@/stores/conversations";
+import { handleGetConversations } from "@/services/api/conversation";
 
 const yLinePosition = ref<number>(0);
 const conversationStore = useConversationsStore();
@@ -25,6 +26,10 @@ function handleStartCreatingConversation() {
   conversationStore.isProcessCreateConversationActive = true;
   conversationStore.createdConversationSetting.linePosition.y =
     yLinePosition.value;
+}
+
+async function handleUpdateConversation() {
+  await handleGetConversations();
 }
 </script>
 <template>
@@ -66,6 +71,7 @@ function handleStartCreatingConversation() {
         conversationStore.isProcessCreateConversationActive &&
         conversationStore.isCreateConversationActive
       "
+      @handleUpdated="handleUpdateConversation"
     />
   </div>
 </template>

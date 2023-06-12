@@ -4,73 +4,71 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use App\Entity\Trait\AccountOwnableTrait;
+use App\Entity\Trait\IdTrait;
+use App\Entity\Trait\TimestampableTrait;
+use App\Entity\Trait\UserOwnableTrait;
 use App\Service\Clock\Clock;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Uid\Ulid;
 
 #[ORM\Entity]
+#[ORM\InheritanceType('SINGLE_TABLE')]
+#[ORM\DiscriminatorColumn('data_provider')]
+#[ORM\DiscriminatorMap([
+    'GOOGLE_ANALYTICS' => GoogleAnalyticsConnectedAccount::class,
+    'GOOGLE_ADS' => GoogleAdsConnectedAccount::class,
+])]
 #[ORM\Index(fields: ['userId'])]
 #[ORM\Index(fields: ['accountId'])]
-class ConnectedAccount implements Ownable, BelongsToAccount
+abstract class ConnectedAccount implements UserOwnable, AccountOwnable
 {
-    use BelongsToAccountTrait;
+    use AccountOwnableTrait;
     use IdTrait;
-    use OwnableTrait;
     use TimestampableTrait;
-
-    #[ORM\Column]
-    private int $userId;
-
-    #[ORM\Column]
-    private DataProvider $dataProvider;
+    use UserOwnableTrait;
 
     #[ORM\Column(nullable: true)]
-    private array $credentials = [];
+    private array $credentials;
 
     #[ORM\Column]
-    private bool $isEnabled = true;
+    private bool $isEnabled;
 
-    public function __construct(int $accountId, int $userId, DataProvider $dataProvider, array $credentials = [], bool $isEnabled = true)
-    {
+    public function __construct(
+        Ulid $id,
+        Ulid $accountId,
+        Ulid $userId,
+        bool $isEnabled = true
+    ) {
+        $this->id = $id;
         $this->accountId = $accountId;
         $this->userId = $userId;
-        $this->dataProvider = $dataProvider;
-        $this->credentials = $credentials;
         $this->createdAt = Clock::now();
         $this->changedAt = Clock::now();
         $this->isEnabled = $isEnabled;
+        $this->credentials = [];
     }
 
-    public function getId(): int
-    {
-        assert($this->id !== null);
-
-        return $this->id;
-    }
-
-    public function getUserId(): int
+    public function getUserId(): Ulid
     {
         return $this->userId;
     }
 
-    public function getDataProvider(): DataProvider
-    {
-        return $this->dataProvider;
-    }
-
-    public function setCredentials(array $credentials): self
-    {
-        $this->credentials = $credentials;
-
-        return $this;
-    }
-
-    public function getCredentials(): array
-    {
-        return $this->credentials;
-    }
+    abstract public function getDataProvider(): DataProvider;
 
     public function isEnabled(): bool
     {
         return $this->isEnabled;
+    }
+
+    protected function getCredentialsKey(string $key): string
+    {
+        return $this->credentials[$key] ?? '';
+    }
+
+    protected function updateCredentials(array $credentials): void
+    {
+        $this->credentials = $credentials;
+        $this->changedAt = Clock::now();
     }
 }

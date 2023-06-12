@@ -6,15 +6,16 @@ namespace App\Message\Command;
 
 use App\Validator as AssertCustom;
 use DateTimeImmutable;
+use Symfony\Component\Uid\Ulid;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class StartConversation
 {
     #[AssertCustom\UserExists]
-    public int $userId;
+    public Ulid $userId;
 
     #[AssertCustom\AccountExists]
-    public int $accountId;
+    public Ulid $accountId;
 
     public DateTimeImmutable $date;
 
@@ -23,7 +24,7 @@ class StartConversation
 
     public string $comment;
 
-    public function __construct(int $userId, int $accountId, DateTimeImmutable $date, string $comment = '', string $color = '#ffffff')
+    public function __construct(Ulid $userId, Ulid $accountId, DateTimeImmutable $date, string $comment = '', string $color = '#ffffff')
     {
         $this->userId = $userId;
         $this->color = $color;
