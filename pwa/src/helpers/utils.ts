@@ -66,11 +66,13 @@ export function hCheckIsCollectionExist(list: CampaignType[]): CampaignType[] {
 export function hGetStartEndAtDate(ads: AdsType[], type: number): string {
   const dates = [];
 
-  ads.filter((ad: AdsType) => ad.adStats.length > 0).forEach((ad: AdsType) => {
-    dates.push(
-      parseInt(ad.adStats.at(type).date.replace("-", "").replace("-", ""), 10)
-    );
-  });
+  ads
+    .filter((ad: AdsType) => ad.adStats.length > 0)
+    .forEach((ad: AdsType) => {
+      dates.push(
+        parseInt(ad.adStats.at(type).date.replace("-", "").replace("-", ""), 10)
+      );
+    });
 
   const min = Math[type === -1 ? "min" : "max"](...dates).toString();
   return `${min.slice(0, 4)}-${min.slice(4, 6)}-${min.slice(6, 8)}`;

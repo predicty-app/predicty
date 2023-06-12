@@ -7,7 +7,7 @@ import { useUserDashboardStore } from "@/stores/userDashboard";
 async function handleAuthenticatedUser() {
   const query = `query Me {
     me {
-      uid
+      id
       email
       isEmailVerified
       isOnboardingComplete
@@ -17,7 +17,7 @@ async function handleAuthenticatedUser() {
   const userDashboardStore = useUserDashboardStore();
 
   type AuthenticatedUserType = {
-    uid: string;
+    id: string;
     email: string;
     isEmailVerified: boolean;
   };

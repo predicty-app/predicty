@@ -19,7 +19,7 @@ async function handleGetAppSettings() {
     globalStore.version = response.data.app.version;
     globalStore.currentTermsOfServiceVersion = response.data.app.currentTermsOfServiceVersion;
 
-    return 'OK';
+    return "OK";
   } catch (error) {
     return (error as Error).message;
   }

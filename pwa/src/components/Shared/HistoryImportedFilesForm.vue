@@ -243,11 +243,8 @@ async function handleFiredActionFile(
                 }}.
               </p>
             </div>
-            <div
-              class="col-start-2 text-gray-900"
-              v-if="importFile.completedAt"
-            >
-              <p>{{ importFile.completedAt }}</p>
+            <div class="col-start-2 text-gray-900" v-if="importFile.endedAt">
+              <p>{{ importFile.endedAt }}</p>
               <p v-if="importFile.__typename === 'FileImport'">
                 {{ importFile.filename }}
               </p>
