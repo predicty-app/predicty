@@ -38,6 +38,31 @@ class StartConversationMutationTest extends GraphQLTestCase
         $this->assertSame('Some comment', $comment->getComment());
     }
 
+    public function test_start_multiple_conversation_on_different_days(): void
+    {
+        $this->authenticate();
+
+        $mutation = <<<'EOF'
+            mutation {
+              startConversation(date: "2023-01-08", comment: "Some comment", color: "#FFFFFF")
+            }
+            EOF;
+
+        $this->executeMutation($mutation);
+        $this->assertResponseIsSuccessful();
+        $this->assertResponseMatchesPattern('{"data":{"startConversation":"OK"}}');
+
+        $mutation = <<<'EOF'
+            mutation {
+              startConversation(date: "2023-01-09", comment: "Some comment", color: "#FFFFFF")
+            }
+            EOF;
+
+        $this->executeMutation($mutation);
+        $this->assertResponseIsSuccessful();
+        $this->assertResponseMatchesPattern('{"data":{"startConversation":"OK"}}');
+    }
+
     public function test_mistakenly_starting_conversation_for_the_same_day_twice_adds_only_a_comment(): void
     {
         $this->authenticate();
