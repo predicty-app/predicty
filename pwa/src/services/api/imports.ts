@@ -27,7 +27,7 @@ export type ImportType = {
   dataProvider: ImportDataProviderType;
   result: ImportResultType;
   startedAt: string;
-  completedAt: string;
+  endedAt: string;
   __typename: string;
   filename?: string;
   downloadUrl?: string;
@@ -59,7 +59,7 @@ async function handleGetImports() {
         totalCreated
       }
       startedAt
-      completedAt
+      endedAt
       ... on FileImport {
         filename
         downloadUrl

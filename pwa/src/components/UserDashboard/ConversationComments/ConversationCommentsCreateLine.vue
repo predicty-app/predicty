@@ -26,6 +26,14 @@ function handleStartCreatingConversation() {
   conversationStore.createdConversationSetting.linePosition.y =
     yLinePosition.value;
 }
+
+async function handleUpdateConversation() {
+  // await handleGetConversations()
+  // conversationElement.value = userDashboardStore.conversations.find(
+  //   (conversation: ConversationsType) =>
+  //     conversation.date === props.conversationDate
+  // );
+}
 </script>
 <template>
   <div
@@ -65,6 +73,7 @@ function handleStartCreatingConversation() {
         conversationStore.isProcessCreateConversationActive &&
         conversationStore.isCreateConversationActive
       "
+      @handleUpdated="handleUpdateConversation"
     />
   </div>
 </template>

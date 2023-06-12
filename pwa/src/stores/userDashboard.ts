@@ -84,7 +84,7 @@ type CheckedAdsToCollectionType = {
 };
 
 type AuthenticatedUserParamsType = {
-  uid: string;
+  id: string;
   email: string;
   isEmailVerified: boolean;
   isOnboardingComplete: boolean;
@@ -300,14 +300,18 @@ export const useUserDashboardStore = defineStore({
         }
       );
 
-      this.parsedCampaignsList = this.parsedCampaignsList.map((campaign: CampaignType) => {
-        campaign.adSets = campaign.adSets.map((adSet: AdSetsType) => {
-          adSet.ads = adSet.ads.filter((ad: AdsType) => ad.adStats.length > 0);
-          return adSet;
-        })
+      this.parsedCampaignsList = this.parsedCampaignsList.map(
+        (campaign: CampaignType) => {
+          campaign.adSets = campaign.adSets.map((adSet: AdSetsType) => {
+            adSet.ads = adSet.ads.filter(
+              (ad: AdsType) => ad.adStats.length > 0
+            );
+            return adSet;
+          });
 
-        return campaign;
-      });
+          return campaign;
+        }
+      );
     }
   }
 });

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import { computed, ref, onMounted } from "vue";
+import { computed, ref } from "vue";
 import { until } from "@vueuse/core";
 import { hCommentDate } from "@/helpers/utils";
 import { useConversationsStore } from "@/stores/conversations";
@@ -8,7 +8,6 @@ import type { CommentType, ConversationsType } from "@/stores/userDashboard";
 import { TypesWindowConversation } from "@/stores/conversations";
 import {
   handleStartConversation,
-  handleGetConversations,
   handleAddComment
 } from "@/services/api/conversation";
 
@@ -27,7 +26,6 @@ type NotificationMessageType = {
 const { t } = useI18n();
 const props = defineProps<PropsType>();
 const commentMessage = ref<string>("");
-const isSpinnerVisible = ref<boolean>(false);
 const conversationStore = useConversationsStore();
 const notificationMessageModel = ref<NotificationMessageType>({
   visible: false,
@@ -50,23 +48,23 @@ const backgroundButtonColor = computed<string>(() =>
     ? props.conversationElement.color.hex
     : conversationStore.createdConversationSetting.color
 );
-let commentList = [];
-
-onMounted(() => {
-  commentList = props.conversationElement
+const commentsList = computed<CommentType[]>(() => {
+  let comments = props.conversationElement
     ? props.conversationElement.comments
     : [];
-  if (commentList.length > 0) {
-    commentList.sort(
-      (commentA: CommentType, commentB: CommentType) =>
-        Date.parse(commentB.createdAt) - Date.parse(commentA.createdAt)
-    );
-  }
+
+  comments.sort(
+    (commentA: CommentType, commentB: CommentType) =>
+      Date.parse(commentB.createdAt) - Date.parse(commentA.createdAt)
+  );
+
+  return comments;
 });
 
 const emit = defineEmits<{
   (e: "handleExitEditMode"): void;
   (e: "handleShowPromptRemoveConversation"): void;
+  (e: "handleUpdated"): void;
 }>();
 
 /**
@@ -100,7 +98,6 @@ async function handleCreateConversationOrAssignComment() {
   if (!commentMessage.value) {
     return;
   }
-  isSpinnerVisible.value = true;
 
   if (props.typeWindow === TypesWindowConversation.CREATE) {
     await handleStartConversation({
@@ -133,14 +130,12 @@ async function handleCreateConversationOrAssignComment() {
     await until(ref).toBe(true, { timeout: 1000 });
   }
 
-  await handleGetConversations();
   commentMessage.value = "";
-  isSpinnerVisible.value = false;
+  emit("handleUpdated");
   conversationStore.resetSettingsCreateConversationAction();
 }
 </script>
 <template>
-  <SpinnerBar :is-visible="isSpinnerVisible" :is-global="true" />
   <NotificationMessage
     v-model="notificationMessageModel.visible"
     :message="notificationMessageModel.message"
@@ -177,9 +172,7 @@ async function handleCreateConversationOrAssignComment() {
         <span
           class="font-normal"
           v-if="[TypesWindowConversation.PREVIEW].includes(typeWindow)"
-          >{{
-            hCommentDate(props.conversationElement.comments.at(0).createdAt, t)
-          }}</span
+          >{{ hCommentDate(commentsList.at(0).createdAt, t) }}</span
         >
       </div>
       <div class="flex gap-x-1">
@@ -212,11 +205,9 @@ async function handleCreateConversationOrAssignComment() {
       v-if="[TypesWindowConversation.PREVIEW].includes(typeWindow)"
     >
       {{
-        props.conversationElement.comments.at(0).comment.length > 30
-          ? `${props.conversationElement.comments
-              .at(0)
-              .comment.slice(0, 30)}...`
-          : props.conversationElement.comments.at(0).comment
+        commentsList.at(0).comment.length > 30
+          ? `${commentsList.at(0).comment.slice(0, 30)}...`
+          : commentsList.at(0).comment
       }}
     </div>
     <div
@@ -230,7 +221,7 @@ async function handleCreateConversationOrAssignComment() {
       >
         <div
           :key="comment.comment"
-          v-for="(comment, index) in commentList"
+          v-for="(comment, index) in commentsList"
           class="flex flex-col gap-y-2 pr-4"
         >
           <div class="text-[10px] font-bold">
@@ -242,9 +233,7 @@ async function handleCreateConversationOrAssignComment() {
           >
             {{ comment.comment }}
           </p>
-          <DividerLine
-            v-if="index < props.conversationElement.comments.length - 1"
-          />
+          <DividerLine v-if="index < commentsList.length - 1" />
         </div>
       </ScrollbarPanel>
     </div>
