@@ -38,6 +38,7 @@ const borderColor = computed<string>(() =>
     ? props.conversationElement.color.hex
     : conversationStore.createdConversationSetting.color
 );
+const isBottomHalf = computed<boolean>(() => props.positionY > (window.innerHeight / 2) ? true : false);
 const windowPositionY = computed<string>(() =>
   props.typeWindow !== TypesWindowConversation.CREATE
     ? `${props.positionY}px`
@@ -62,7 +63,7 @@ const commentsList = computed<CommentType[]>(() => {
 });
 
 const emit = defineEmits<{
-  (e: "handleExitEditMode"): void;
+  (e: "handleExitEditMode", event: Event): void;
   (e: "handleShowPromptRemoveConversation"): void;
   (e: "handleUpdated"): void;
 }>();
@@ -85,10 +86,10 @@ function getDayNameByDate(): string {
 /**
  * Function to handle reload creating conversation.
  */
-function handleReloadCreatingConversation() {
+function handleReloadCreatingConversation(event) {
   commentMessage.value = "";
   conversationStore.isProcessCreateConversationActive = false;
-  emit("handleExitEditMode");
+  emit("handleExitEditMode", event);
 }
 
 /**
@@ -144,7 +145,7 @@ async function handleCreateConversationOrAssignComment() {
   <div
     ref="windowInstance"
     :class="[
-      'animate-fade-in w-[230px] rounded-xl border-dynamic p-3 border-2 absolute bg-basic-white drop-shadow-md flex flex-col gap-y-1',
+      'animate-fade-in w-[230px] rounded-xl border-dynamic p-3 border-2 absolute bg-basic-white drop-shadow-md flex flex-col gap-y-1 z-20 overflow-hidden',
       {
         'left-[50%] translate-x-[-50%]': TypesWindowConversation.CREATE,
         'translate-x-[2%]': [
@@ -153,7 +154,19 @@ async function handleCreateConversationOrAssignComment() {
         ].includes(typeWindow)
       }
     ]"
-    :style="{ '--border': borderColor, top: windowPositionY }"
+    :style="[
+      {
+        'max-height': `${isBottomHalf ? `calc(${windowPositionY} + 21px)` : `calc(100vh - ${windowPositionY} - 74px)`}`,
+        '--border': borderColor,
+      },
+      isBottomHalf
+      ? {
+          bottom: `calc(100vh - ${windowPositionY} - 95px)`,
+        }
+      : {
+          top: windowPositionY,
+        }
+      ]"
   >
     <div class="flex justify-between items-center w-full">
       <div
@@ -191,7 +204,7 @@ async function handleCreateConversationOrAssignComment() {
           "
           name="close"
           class-name="w-3 h-3 fill-gray-1300 cursor-pointer"
-          @click="handleReloadCreatingConversation"
+          @click="handleReloadCreatingConversation($event)"
         />
       </div>
     </div>
@@ -210,14 +223,13 @@ async function handleCreateConversationOrAssignComment() {
           : commentsList.at(0).comment
       }}
     </div>
-    <div
-      v-if="[TypesWindowConversation.DETAILS].includes(typeWindow)"
-      class="mb-3"
+    <ScrollbarPanel
+      :is-vertical-scroll-visible="false"
+      :is-horizontal-scroll-visible="true"
     >
-      <ScrollbarPanel
-        class="max-h-[120px]"
-        :is-vertical-scroll-visible="false"
-        :is-horizontal-scroll-visible="true"
+      <div
+        v-if="[TypesWindowConversation.DETAILS].includes(typeWindow)"
+        class="mb-3"
       >
         <div
           :key="comment.comment"
@@ -235,10 +247,10 @@ async function handleCreateConversationOrAssignComment() {
           </p>
           <DividerLine v-if="index < commentsList.length - 1" />
         </div>
-      </ScrollbarPanel>
-    </div>
+      </div>
+    </ScrollbarPanel>
     <div
-      class="relative"
+      class="relative flex pt-3 bg-basic-white"
       v-if="
         [
           TypesWindowConversation.CREATE,
