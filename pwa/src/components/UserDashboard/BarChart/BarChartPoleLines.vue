@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, computed } from "vue";
 import { useGlobalStore } from "@/stores/global";
 import {
   getScale,
@@ -18,6 +18,8 @@ import type {
   AdsType,
   AdStatusType
 } from "@/stores/userDashboard";
+import * as d3Shape from 'd3-shape'
+import * as d3Selection from 'd3-selection'
 
 const globalStore = useGlobalStore();
 const investmentWeekNumber = ref<number[]>([]);
@@ -25,8 +27,13 @@ const userDashboardStore = useUserDashboardStore();
 const investmentNumber = ref<number[]>([]);
 const instanceLines = ref<SVGElement | null>(null);
 
+const investment = computed<number[]>(() => userDashboardStore.typeChart === TypeOptionsChart.WEEKS ? investmentWeekNumber.value : investmentNumber.value);
+const scale = computed<number[]>(() => userDashboardStore.typeChart === TypeOptionsChart.DAYS ? scaleCharDaystLines.value : scaleCharWeekstLines.value);
+
 onMounted(async () => {
   await calculateAll();
+  drawLine();
+  drawPointer();
 });
 
 watch(
@@ -212,6 +219,51 @@ function calculateLinePosition(
     }
   }
 }
+
+function points():number[][] {
+  let points = []
+  points.push([scale.value * 0 - scale.value / 2, scale.value * 0]);
+
+  for (let i = 0; i < investment.value.length; i++) {
+    points.push([calculateLinePosition('x1', i), calculateLinePosition('y1', i, (investment.value[i] === 0 ? 0.1 : investment.value[i])* 100)]);
+  };
+
+  return points
+}
+
+function drawLine() {
+  const lineGenerator = d3Shape.line().curve(d3Shape.curveCatmullRom.alpha(0.5));
+  const pathData = lineGenerator(points());
+  d3Selection.select('#line').attr('d', pathData);
+}
+
+function drawPointer() {
+  const svg = d3Selection.select('svg');
+  const allPoints = points();
+  const pointer = d3Selection.select('#pointer');
+  const minPoint = allPoints[0][0];
+  const maxPoint = allPoints[allPoints.length - 1][0];
+
+  pointer.append('rect').attr('width', 2).attr('x',-1).attr('height', '100%').attr('fill', '#D2D0D7');
+  pointer.append('circle').attr('r', 8).attr("stroke", "#fff").attr('fill', '#6E7DD9').attr('stroke-width', 4);
+
+  svg.on("mouseover", function(mouse) {
+    pointer.style('display', 'block');
+  });
+
+  svg.on("mousemove", function(mouse) {
+    const [x, y] = d3Selection.pointer(mouse);
+    const ratio = x / svg.node().getBBox().width;
+    const currentPoint = minPoint + Math.round(ratio * (maxPoint - minPoint));
+    let closest = allPoints.reduce((prev, curr) => (Math.abs(curr[0] - currentPoint) < Math.abs(prev[0] - currentPoint) ? curr : prev));
+    pointer.select('circle').attr('cx', closest[0]).attr('cy', closest[1]);
+    pointer.select('rect').attr('x', closest[0] - 1);
+  });
+
+  svg.on("mouseout", function(mouse) {
+    pointer.style('display', 'none');
+  });
+}
 </script>
 
 <template>
@@ -221,14 +273,14 @@ function calculateLinePosition(
       (investmentNumber.length > 0 || investmentWeekNumber.length > 0)
     "
   >
-    <svg
+    <!-- <svg
       ref="instanceLines"
       class="absolute top-0 left-0 z-[100] w-full h-full scale-x-[1] scale-y-[-1]"
     >
       <line
         class="animate-fade-in"
         :x1="calculateLinePosition('x1', index)"
-        :y1="calculateLinePosition('y1', index, investment)"
+        :y1="calculateLinePosition('y1', index, investment * 100)"
         :x2="calculateLinePosition('x2', index)"
         :y2="calculateLinePosition('y2', index)"
         :key="`${investment[index]}_${index}`"
@@ -238,6 +290,10 @@ function calculateLinePosition(
           ? investmentWeekNumber
           : investmentNumber"
       />
+    </svg> -->
+    <svg class="absolute top-0 left-0 z-[100] w-full h-full scale-x-[1] scale-y-[-1]">
+      <path id="line" fill="none" stroke="#ffae4f" stroke-width="2"></path>
+      <g id="pointer" style="display: none;"></g>
     </svg>
   </template>
 </template>
