@@ -230,16 +230,12 @@ function calculateLinePosition(
 
 function points(): number[][] {
   let points = [];
-  points.push([scale.value * 0 - scale.value / 2, scale.value * 0]);
+  points.push([0 - scale.value / 2, 0]);
 
   for (let i = 0; i < investment.value.length; i++) {
     points.push([
       calculateLinePosition("x1", i),
-      calculateLinePosition(
-        "y1",
-        i,
-        (investment.value[i] === 0 ? 0.1 : investment.value[i]) * 100
-      )
+      calculateLinePosition("y1", i, investment.value[i])
     ]);
   }
 
@@ -311,7 +307,7 @@ function drawPointer() {
       <line
         class="animate-fade-in"
         :x1="calculateLinePosition('x1', index)"
-        :y1="calculateLinePosition('y1', index, investment * 100)"
+        :y1="calculateLinePosition('y1', index, investment)"
         :x2="calculateLinePosition('x2', index)"
         :y2="calculateLinePosition('y2', index)"
         :key="`${investment[index]}_${index}`"
