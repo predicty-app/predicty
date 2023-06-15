@@ -18,8 +18,8 @@ import type {
   AdsType,
   AdStatusType
 } from "@/stores/userDashboard";
-import * as d3Shape from 'd3-shape'
-import * as d3Selection from 'd3-selection'
+import * as d3Shape from "d3-shape";
+import * as d3Selection from "d3-selection";
 
 const globalStore = useGlobalStore();
 const investmentWeekNumber = ref<number[]>([]);
@@ -27,8 +27,16 @@ const userDashboardStore = useUserDashboardStore();
 const investmentNumber = ref<number[]>([]);
 const instanceLines = ref<SVGElement | null>(null);
 
-const investment = computed<number[]>(() => userDashboardStore.typeChart === TypeOptionsChart.WEEKS ? investmentWeekNumber.value : investmentNumber.value);
-const scale = computed<number[]>(() => userDashboardStore.typeChart === TypeOptionsChart.DAYS ? scaleCharDaystLines.value : scaleCharWeekstLines.value);
+const investment = computed<number[]>(() =>
+  userDashboardStore.typeChart === TypeOptionsChart.WEEKS
+    ? investmentWeekNumber.value
+    : investmentNumber.value
+);
+const scale = computed<number>(() =>
+  userDashboardStore.typeChart === TypeOptionsChart.DAYS
+    ? scaleCharDaystLines.value
+    : scaleCharWeekstLines.value
+);
 
 onMounted(async () => {
   await calculateAll();
@@ -220,48 +228,71 @@ function calculateLinePosition(
   }
 }
 
-function points():number[][] {
-  let points = []
+function points(): number[][] {
+  let points = [];
   points.push([scale.value * 0 - scale.value / 2, scale.value * 0]);
 
   for (let i = 0; i < investment.value.length; i++) {
-    points.push([calculateLinePosition('x1', i), calculateLinePosition('y1', i, (investment.value[i] === 0 ? 0.1 : investment.value[i])* 100)]);
-  };
+    points.push([
+      calculateLinePosition("x1", i),
+      calculateLinePosition(
+        "y1",
+        i,
+        (investment.value[i] === 0 ? 0.1 : investment.value[i]) * 100
+      )
+    ]);
+  }
 
-  return points
+  return points;
 }
 
 function drawLine() {
-  const lineGenerator = d3Shape.line().curve(d3Shape.curveCatmullRom.alpha(0.5));
+  const lineGenerator = d3Shape
+    .line()
+    .curve(d3Shape.curveCatmullRom.alpha(0.5));
   const pathData = lineGenerator(points());
-  d3Selection.select('#line').attr('d', pathData);
+  d3Selection.select("#line").attr("d", pathData);
 }
 
 function drawPointer() {
-  const svg = d3Selection.select('svg');
+  const svg = d3Selection.select("svg");
   const allPoints = points();
-  const pointer = d3Selection.select('#pointer');
+  const pointer = d3Selection.select("#pointer");
   const minPoint = allPoints[0][0];
   const maxPoint = allPoints[allPoints.length - 1][0];
 
-  pointer.append('rect').attr('width', 2).attr('x',-1).attr('height', '100%').attr('fill', '#D2D0D7');
-  pointer.append('circle').attr('r', 8).attr("stroke", "#fff").attr('fill', '#6E7DD9').attr('stroke-width', 4);
+  pointer
+    .append("rect")
+    .attr("width", 2)
+    .attr("x", -1)
+    .attr("height", "100%")
+    .attr("fill", "#D2D0D7");
+  pointer
+    .append("circle")
+    .attr("r", 8)
+    .attr("stroke", "#fff")
+    .attr("fill", "#6E7DD9")
+    .attr("stroke-width", 4);
 
-  svg.on("mouseover", function(mouse) {
-    pointer.style('display', 'block');
+  svg.on("mouseover", function () {
+    pointer.style("display", "block");
   });
 
-  svg.on("mousemove", function(mouse) {
-    const [x, y] = d3Selection.pointer(mouse);
+  svg.on("mousemove", function (mouse) {
+    const x = d3Selection.pointer(mouse)[0];
     const ratio = x / svg.node().getBBox().width;
     const currentPoint = minPoint + Math.round(ratio * (maxPoint - minPoint));
-    let closest = allPoints.reduce((prev, curr) => (Math.abs(curr[0] - currentPoint) < Math.abs(prev[0] - currentPoint) ? curr : prev));
-    pointer.select('circle').attr('cx', closest[0]).attr('cy', closest[1]);
-    pointer.select('rect').attr('x', closest[0] - 1);
+    let closest = allPoints.reduce((prev, curr) =>
+      Math.abs(curr[0] - currentPoint) < Math.abs(prev[0] - currentPoint)
+        ? curr
+        : prev
+    );
+    pointer.select("circle").attr("cx", closest[0]).attr("cy", closest[1]);
+    pointer.select("rect").attr("x", closest[0] - 1);
   });
 
-  svg.on("mouseout", function(mouse) {
-    pointer.style('display', 'none');
+  svg.on("mouseout", function () {
+    pointer.style("display", "none");
   });
 }
 </script>
@@ -291,9 +322,11 @@ function drawPointer() {
           : investmentNumber"
       />
     </svg> -->
-    <svg class="absolute top-0 left-0 z-[100] w-full h-full scale-x-[1] scale-y-[-1]">
+    <svg
+      class="absolute top-0 left-0 z-[100] w-full h-full scale-x-[1] scale-y-[-1]"
+    >
       <path id="line" fill="none" stroke="#ffae4f" stroke-width="2"></path>
-      <g id="pointer" style="display: none;"></g>
+      <g id="pointer" style="display: none"></g>
     </svg>
   </template>
 </template>

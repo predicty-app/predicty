@@ -167,10 +167,17 @@ async function handleUpdateConversation() {
   />
   <div ref="elementInstance">
     <div
-      @click="isEditModeVisible = true; isModalClicked = !isEditModeVisible ? true : false"
+      @click="
+        isEditModeVisible = true;
+        isModalClicked = !isEditModeVisible ? true : false;
+      "
       v-if="conversationElement && conversationStore.isConversationsVisible"
-      @mouseenter="!isEditModeVisible ? handleToggleHoverElementState(true) : null"
-      @mouseleave="!isEditModeVisible ? handleToggleHoverElementState(false) : null"
+      @mouseenter="
+        !isEditModeVisible ? handleToggleHoverElementState(true) : null
+      "
+      @mouseleave="
+        !isEditModeVisible ? handleToggleHoverElementState(false) : null
+      "
       @mousemove="handleMoveButtonCreateConversation"
       :class="[
         'bg-dynamic h-[100%] relative w-[16px] top-0 animate-fade-in',
@@ -204,7 +211,7 @@ async function handleUpdateConversation() {
         v-if="isHoverElement || isModalClicked"
         :position-y="yLinePosition"
         :conversation-element="conversationElement"
-        @handleExitEditMode.stop="handleExitEditMode($event)"
+        @handleExitEditMode.stop="handleExitEditMode()"
         @handleShowPromptRemoveConversation="handleSubmitRemoveConversation"
         :type-window="
           TypesWindowConversation[isEditModeVisible ? 'DETAILS' : 'PREVIEW']

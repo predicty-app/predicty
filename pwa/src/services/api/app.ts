@@ -17,7 +17,8 @@ async function handleGetAppSettings() {
     const response = await apiService.request<any, any>(query, {});
 
     globalStore.version = response.data.app.version;
-    globalStore.currentTermsOfServiceVersion = response.data.app.currentTermsOfServiceVersion;
+    globalStore.currentTermsOfServiceVersion =
+      response.data.app.currentTermsOfServiceVersion;
 
     return "OK";
   } catch (error) {
