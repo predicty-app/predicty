@@ -114,7 +114,7 @@ class FacebookAdsClient
     }
 
     /**
-     * @return array<array{ad_id: string, account_currency: string, clicks: int, spend: float, impressions: int, cost_per_conversion: float, conversions: int, date: DateTimeImmutable}>
+     * @return array<array{ad_id: string, account_currency: string, cpc: float, cpm: float, clicks: int, spend: float, impressions: int, cost_per_conversion: float, conversions: int, date: DateTimeImmutable}>
      */
     public function getAdInsights(string $adId): array
     {
@@ -127,6 +127,8 @@ class FacebookAdsClient
             $data[$date->format('Y-m-d')] = [
                 'ad_id' => $adId,
                 'clicks' => 0,
+                'cpc' => 0,
+                'cpm' => 0,
                 'impressions' => 0,
                 'cost_per_conversion' => 0.0,
                 'conversions' => 0,
@@ -138,12 +140,14 @@ class FacebookAdsClient
 
         $fields = [
             'ad_id',
-            'account_currency',
             'clicks',
-            'spend',
+            'cpc',
+            'cpm',
             'impressions',
             'cost_per_conversion',
             'conversions',
+            'spend',
+            'account_currency',
         ];
 
         $params = [
@@ -176,6 +180,8 @@ class FacebookAdsClient
                 'ad_id' => $insight->ad_id,
                 'clicks' => (int) $insight->clicks,
                 'impressions' => (int) $insight->impressions,
+                'cpc' => (float) $insight->cpm,
+                'cpm' => (float) $insight->cpm,
                 'cost_per_conversion' => $costPerConversion,
                 'conversions' => $numberOfConversions,
                 'spend' => $spend,

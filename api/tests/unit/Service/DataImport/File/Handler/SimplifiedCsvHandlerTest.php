@@ -116,10 +116,15 @@ class SimplifiedCsvHandlerTest extends TestCase
             $this->equalTo($userId),
             $this->equalTo($accountId),
             $this->isInstanceOf(Ulid::class),
+            $this->equalTo(Money::of(100, 'PLN')),
+            $this->equalTo(new DateTimeImmutable('2021-01-01')),
+            $this->equalTo(0),
+            $this->equalTo(0),
+            $this->equalTo(0),
             $this->equalTo(0),
             $this->equalTo(Money::zero('PLN')),
-            $this->equalTo(Money::ofMinor(10000, 'PLN')),
-            $this->equalTo(new DateTimeImmutable('2021-01-01')),
+            $this->equalTo(Money::zero('PLN')),
+            $this->equalTo(Money::zero('PLN')),
         );
 
         $handler = new SimplifiedCsvHandler($dataImportApi);

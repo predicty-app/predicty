@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Service\DataImport;
 
 use App\Entity\Ad;
+use App\Entity\AdInsights;
 use App\Entity\AdSet;
-use App\Entity\AdStats;
 use App\Entity\Campaign;
 use App\Entity\DailyRevenue;
 use App\Entity\DataProvider;
@@ -79,9 +79,34 @@ class TraceableDataImportApi implements DataImportApi
         return $this->dataImportApi->upsertAd($userId, $accountId, $campaignId, $adSetId, $externalId, $name, $startedAt, $endedAt);
     }
 
-    public function upsertAdStats(Ulid $userId, Ulid $accountId, Ulid $adId, int $results, Money $costPerResult, Money $amountSpent, DateTimeImmutable $date): AdStats
-    {
-        return $this->dataImportApi->upsertAdStats($userId, $accountId, $adId, $results, $costPerResult, $amountSpent, $date);
+    public function upsertAdStats(
+        Ulid $userId,
+        Ulid $accountId,
+        Ulid $adId,
+        Money $amountSpent,
+        DateTimeImmutable $date,
+        int $conversions = 0,
+        int $clicks = 0,
+        int $impressions = 0,
+        int $leads = 0,
+        ?Money $costPerClick = null,
+        ?Money $costPerResult = null,
+        ?Money $costPerMil = null,
+    ): AdInsights {
+        return $this->dataImportApi->upsertAdStats(
+            userId: $userId,
+            accountId: $accountId,
+            adId: $adId,
+            amountSpent: $amountSpent,
+            date: $date,
+            conversions: $conversions,
+            clicks: $clicks,
+            impressions: $impressions,
+            leads: $leads,
+            costPerClick: $costPerClick,
+            costPerResult: $costPerResult,
+            costPerMil: $costPerMil,
+        );
     }
 
     public function upsertDailyRevenue(Ulid $userId, Ulid $accountId, DateTimeImmutable $date, Money $revenue, Money $averageOrderValue): DailyRevenue
@@ -105,7 +130,7 @@ class TraceableDataImportApi implements DataImportApi
             $importable instanceof Campaign => $this->importResult->incrementCreatedCampaigns(),
             $importable instanceof AdSet => $this->importResult->incrementCreatedAdSets(),
             $importable instanceof Ad => $this->importResult->incrementCreatedAds(),
-            $importable instanceof AdStats => $this->importResult->incrementCreatedAdStats(),
+            $importable instanceof AdInsights => $this->importResult->incrementCreatedAdStats(),
             $importable instanceof DailyRevenue => $this->importResult->incrementCreatedDailyRevenues(),
             default => null,
         };

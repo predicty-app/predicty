@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\Ad;
+use App\Entity\AdInsights;
 use App\Entity\AdSet;
-use App\Entity\AdStats;
 use App\Entity\Campaign;
 use App\Entity\Import;
 use Doctrine\ORM\EntityManagerInterface;
@@ -52,7 +52,7 @@ class ImportRepository
         $qb = $this->em->createQueryBuilder();
 
         $entityClasses = [
-            AdStats::class,
+            AdInsights::class,
             Ad::class,
             AdSet::class,
             Campaign::class,

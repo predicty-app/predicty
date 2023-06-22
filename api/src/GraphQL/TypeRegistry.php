@@ -7,8 +7,8 @@ namespace App\GraphQL;
 use App\Entity\UserActions;
 use App\GraphQL\Type\AccountType;
 use App\GraphQL\Type\AdCollectionType;
+use App\GraphQL\Type\AdInsightsType;
 use App\GraphQL\Type\AdSetType;
-use App\GraphQL\Type\AdStatsType;
 use App\GraphQL\Type\AdType;
 use App\GraphQL\Type\ApiImportType;
 use App\GraphQL\Type\AppType;
@@ -50,7 +50,7 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
  * @method CampaignType            campaign()
  * @method AdSetType               adSet()
  * @method AdType                  ad()
- * @method AdStatsType             adStats()
+ * @method AdInsightsType          adInsights()
  * @method MoneyType               money()
  * @method AdCollectionType        adCollection()
  * @method FileImportTypeType      fileImportType()

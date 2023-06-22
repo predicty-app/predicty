@@ -59,10 +59,15 @@ class SimplifiedCsvHandler extends AbstractCsvFileImportHandler
             userId: $context->getUserId(),
             accountId: $context->getAccountId(),
             adId: $ad->getId(),
-            results: 0,
-            costPerResult: Money::zero($currency),
             amountSpent: MoneyHelper::amount((float) $record[self::HEADER_SPENT], $currency),
-            date: DateHelper::fromString($record[self::HEADER_DATE])
+            date: DateHelper::fromString($record[self::HEADER_DATE]),
+            conversions: 0,
+            clicks: 0,
+            impressions: 0,
+            leads: 0,
+            costPerClick: Money::zero($currency),
+            costPerResult: Money::zero($currency),
+            costPerMil: Money::zero($currency)
         );
 
         $this->dataImportApi->flush();

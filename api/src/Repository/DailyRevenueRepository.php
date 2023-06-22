@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use App\Entity\AdStats;
+use App\Entity\AdInsights;
 use App\Entity\DailyRevenue;
 use Brick\Money\Money;
 use DateTimeInterface;
@@ -29,15 +29,15 @@ class DailyRevenueRepository
         return $this->repository->findOneBy(['accountId' => $accountId, 'date' => $date]);
     }
 
-    public function getDailyRevenueFor(AdStats $adStats): Money
+    public function getDailyRevenueFor(AdInsights $adInsights): Money
     {
-        $revenue = $this->findByDay($adStats->getAccountId(), $adStats->getDate());
+        $revenue = $this->findByDay($adInsights->getAccountId(), $adInsights->getDate());
 
         if ($revenue === null) {
-            return Money::of(0, $adStats->getCurrency());
+            return Money::of(0, $adInsights->getCurrency());
         }
 
-        return $revenue->getAverageOrderValue()->multipliedBy($adStats->getResults());
+        return $revenue->getAverageOrderValue()->multipliedBy($adInsights->getConversions());
     }
 
     /**

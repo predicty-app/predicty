@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace App\Service\DataImport;
 
 use App\Entity\Ad;
+use App\Entity\AdInsights;
 use App\Entity\AdSet;
-use App\Entity\AdStats;
 use App\Entity\Campaign;
 use App\Entity\DailyRevenue;
 use App\Entity\DataProvider;
 use App\Entity\Importable;
+use App\Repository\AdInsightsRepository;
 use App\Repository\AdRepository;
 use App\Repository\AdSetRepository;
-use App\Repository\AdStatsRepository;
 use App\Repository\CampaignRepository;
 use App\Repository\DailyRevenueRepository;
 use Brick\Money\Money;
@@ -35,7 +35,7 @@ class DefaultDataImportApi implements DataImportApi
         private CampaignRepository $campaignRepository,
         private AdSetRepository $adSetRepository,
         private AdRepository $adRepository,
-        private AdStatsRepository $adStatsRepository,
+        private AdInsightsRepository $adInsightsRepository,
         private DailyRevenueRepository $dailyRevenueRepository,
     ) {
     }
@@ -122,16 +122,47 @@ class DefaultDataImportApi implements DataImportApi
         return $entity;
     }
 
-    public function upsertAdStats(Ulid $userId, Ulid $accountId, Ulid $adId, int $results, Money $costPerResult, Money $amountSpent, DateTimeImmutable $date): AdStats
-    {
-        $entity = $this->adStatsRepository->findByAdIdAndDay($adId, $date);
+    public function upsertAdStats(
+        Ulid $userId,
+        Ulid $accountId,
+        Ulid $adId,
+        Money $amountSpent,
+        DateTimeImmutable $date,
+        int $conversions = 0,
+        int $clicks = 0,
+        int $impressions = 0,
+        int $leads = 0,
+        ?Money $costPerClick = null,
+        ?Money $costPerResult = null,
+        ?Money $costPerMil = null,
+    ): AdInsights {
+        $entity = $this->adInsightsRepository->findByAdIdAndDate($adId, $date);
 
         if ($entity === null) {
-            $entity = new AdStats(new Ulid(), $userId, $accountId, $adId, $results, $costPerResult, $amountSpent, $date);
+            $entity = new AdInsights(
+                id: new Ulid(),
+                userId: $userId,
+                accountId: $accountId,
+                adId: $adId,
+                amountSpent: $amountSpent,
+                date: $date,
+                conversions: 0,
+                clicks: 0,
+                impressions: 0,
+                leads: 0,
+            );
         }
 
-        $entity->setResults($results);
+        $costPerClick ??= Money::zero($amountSpent->getCurrency());
+        $costPerResult ??= Money::zero($amountSpent->getCurrency());
+        $costPerMil ??= Money::zero($amountSpent->getCurrency());
+
+        $entity->setConversions($conversions);
+        $entity->setClicks($clicks);
+        $entity->setImpressions($impressions);
+        $entity->setCostPerClick($costPerClick);
         $entity->setCostPerResult($costPerResult);
+        $entity->setCostPerMil($costPerMil);
         $entity->setAmountSpent($amountSpent);
 
         $this->persist($entity);

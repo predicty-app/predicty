@@ -64,10 +64,15 @@ class GoogleAdsCsvHandler extends AbstractCsvFileImportHandler
             userId: $context->getUserId(),
             accountId: $context->getAccountId(),
             adId: $ad->getId(),
-            results: $results,
-            costPerResult: $cpr,
             amountSpent: $spent,
-            date: DateHelper::fromString($record[self::HEADER_DAY])
+            date: DateHelper::fromString($record[self::HEADER_DAY]),
+            conversions: $results,
+            clicks: 0,
+            impressions: 0,
+            leads: 0,
+            costPerClick: Money::zero($currency),
+            costPerResult: $cpr,
+            costPerMil: Money::zero($currency)
         );
 
         $this->dataImportApi->flush();

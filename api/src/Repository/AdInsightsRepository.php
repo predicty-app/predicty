@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository;
 
-use App\Entity\AdStats;
+use App\Entity\AdInsights;
 use App\Entity\DailyInsights;
 use DateTimeImmutable;
 use DateTimeInterface;
@@ -17,25 +17,25 @@ use Symfony\Component\Uid\Ulid;
 /**
  * @phpstan-type DatePeriod array{start: null|DateTimeImmutable, end: null|DateTimeImmutable}
  */
-class AdStatsRepository
+class AdInsightsRepository
 {
     /**
-     * @var EntityRepository<AdStats>
+     * @var EntityRepository<AdInsights>
      */
     private EntityRepository $repository;
 
     public function __construct(private EntityManagerInterface $em)
     {
-        $this->repository = $em->getRepository(AdStats::class);
+        $this->repository = $em->getRepository(AdInsights::class);
     }
 
-    public function findByAdIdAndDay(Ulid $adId, DateTimeInterface $day): ?AdStats
+    public function findByAdIdAndDate(Ulid $adId, DateTimeInterface $date): ?AdInsights
     {
-        return $this->repository->findOneBy(['adId' => $adId, 'date' => $day]);
+        return $this->repository->findOneBy(['adId' => $adId, 'date' => $date]);
     }
 
     /**
-     * @return array<AdStats>
+     * @return array<AdInsights>
      */
     public function findAllByAdId(Ulid $adId): array
     {
@@ -47,7 +47,7 @@ class AdStatsRepository
      */
     public function findStartAndEndDateForAnAd(Ulid $adId): array
     {
-        $query = 'select MIN(ads."date") as start, MAX(ads."date") as end from ad_stats ads where ads.ad_id = :adId';
+        $query = 'select MIN(ads."date") as start, MAX(ads."date") as end from ad_insights ads where ads.ad_id = :adId';
         $stmt = $this->em->getConnection()->prepare($query);
         $stmt->bindValue('adId', $adId->toRfc4122(), ParameterType::STRING);
 
@@ -60,7 +60,7 @@ class AdStatsRepository
     public function findStartAndEndDateForAnAdSet(Ulid $adSetId): array
     {
         $query = <<<'QUERY'
-            select MIN(stats."date") as start, MAX(stats."date") as end from ad_stats stats
+            select MIN(stats."date") as start, MAX(stats."date") as end from ad_insights stats
             left join ad a on a.id = stats.ad_id
             where a.ad_set_id = :adSetId group by a.ad_set_id;
             QUERY;
@@ -77,7 +77,7 @@ class AdStatsRepository
     public function findStartAndEndDateForACampaign(Ulid $campaignId): array
     {
         $query = <<<'QUERY'
-            select MIN(stats."date") as start, MAX(stats."date") as end from ad_stats stats
+            select MIN(stats."date") as start, MAX(stats."date") as end from ad_insights stats
             left join ad a on a.id = stats.ad_id
             left join ad_set aset on aset.id = a.ad_set_id
             where aset.campaign_id = :campaignId group by aset.campaign_id;
@@ -102,7 +102,7 @@ class AdStatsRepository
 
         $placeholder = str_repeat('?,', count($adsIds) - 1).'?';
         $query = <<<"QUERY"
-            select MIN(stats."date") as start, MAX(stats."date") as end from ad_stats stats
+            select MIN(stats."date") as start, MAX(stats."date") as end from ad_insights stats
             where stats.ad_id in ($placeholder);
             QUERY;
 
@@ -125,11 +125,14 @@ class AdStatsRepository
         $query = <<<'QUERY'
             select
             ai.date as date,
-            sum(ai.results) as results,
+            sum(ai.conversions) as results,
             sum(ai.amount_spent) as "amountSpent",
             sum(dr.revenue) as revenue,
-            avg(dr.average_order_value)::numeric(10,0) as "averageOrderValue"
-            from ad_stats ai
+            avg(dr.average_order_value)::numeric(10,0) as "averageOrderValue",
+            sum(ai.leads) as leads,
+            sum(ai.clicks) as clicks,
+            sum(ai.impressions) as impressions
+            from ad_insights ai
             left join daily_revenue dr on ai."date" = dr."date"
             where ai."date" >= :since and ai."date" <= :to
             group by ai.ad_id, ai."date"
@@ -146,6 +149,9 @@ class AdStatsRepository
             yield DailyInsights::fromScalar(
                 $row['date'],
                 $row['results'],
+                $row['clicks'],
+                $row['impressions'],
+                $row['leads'],
                 (int) $row['averageOrderValue'],
                 $row['amountSpent'],
                 $row['revenue'],
@@ -154,7 +160,7 @@ class AdStatsRepository
         }
     }
 
-    public function save(AdStats $entity): void
+    public function save(AdInsights $entity): void
     {
         $this->em->persist($entity);
         $this->em->flush();
