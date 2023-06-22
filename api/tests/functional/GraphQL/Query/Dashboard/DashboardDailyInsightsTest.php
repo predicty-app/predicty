@@ -25,6 +25,7 @@ class DashboardDailyInsightsTest extends GraphQLTestCase
                       amountSpent
                       clicks
                       impressions
+                      leads
                       costPerClick
                       costPerMil
                       costPerResult

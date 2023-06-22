@@ -10,6 +10,7 @@ use App\Service\DataImport\File\FileImportContext;
 use App\Service\Util\DateHelper;
 use App\Service\Util\MoneyHelper;
 use Brick\Money\Currency;
+use Brick\Money\Money;
 
 /**
  * CSV structure:
@@ -61,10 +62,15 @@ class FacebookCsvHandler extends AbstractCsvFileImportHandler
             userId: $context->getUserId(),
             accountId: $context->getAccountId(),
             adId: $ad->getId(),
-            results: (int) $record[self::HEADER_RESULTS],
-            costPerResult: MoneyHelper::amount((float) $record[self::HEADER_COST_PER_RESULT], $currency),
             amountSpent: MoneyHelper::amount((float) $record[self::HEADER_AMOUNT_SPENT_PLN], $currency),
-            date: DateHelper::fromString($record[self::HEADER_DAY])
+            date: DateHelper::fromString($record[self::HEADER_DAY]),
+            conversions: (int) $record[self::HEADER_RESULTS],
+            clicks: 0,
+            impressions: 0,
+            leads: 0,
+            costPerClick: Money::zero($currency),
+            costPerResult: MoneyHelper::amount((float) $record[self::HEADER_COST_PER_RESULT], $currency),
+            costPerMil: Money::zero($currency)
         );
 
         $this->dataImportApi->flush();

@@ -134,10 +134,15 @@ class GoogleAdsCsvHandlerTest extends TestCase
             $this->equalTo($userId),
             $this->equalTo($accountId),
             $this->isInstanceOf(Ulid::class),
-            $this->equalTo(100),
-            $this->equalTo(Money::of(1, 'PLN')),
             $this->equalTo(Money::of(100, 'PLN')),
             $this->equalTo(new DateTimeImmutable('2021-01-01')),
+            $this->equalTo(100),
+            $this->equalTo(0),
+            $this->equalTo(0),
+            $this->equalTo(0),
+            $this->equalTo(Money::zero('PLN')),
+            $this->equalTo(Money::of(1, 'PLN')),
+            $this->equalTo(Money::zero('PLN')),
         );
 
         $handler = new GoogleAdsCsvHandler($dataImportApi);

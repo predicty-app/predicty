@@ -63,7 +63,7 @@ class AdSetRepository
     public function findStartAndEndDate(int $adSetId): array
     {
         $query = <<<'QUERY'
-            select MIN(aas."date") as start, MAX(aas."date") as end from ad_stats aas
+            select MIN(aas."date") as start, MAX(aas."date") as end from ad_insights aas
             left join ad a on a.id = aas.ad_id
             where a.ad_set_id = :adSetId group by a.ad_set_id;
             QUERY;

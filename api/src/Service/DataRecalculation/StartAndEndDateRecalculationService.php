@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Service\DataRecalculation;
 
 use App\Repository\AdCollectionRepository;
+use App\Repository\AdInsightsRepository;
 use App\Repository\AdRepository;
 use App\Repository\AdSetRepository;
-use App\Repository\AdStatsRepository;
 use App\Repository\CampaignRepository;
 use Symfony\Component\Uid\Ulid;
 
@@ -18,7 +18,7 @@ class StartAndEndDateRecalculationService
 {
     public function __construct(
         private AdRepository $adRepository,
-        private AdStatsRepository $adStatsRepository,
+        private AdInsightsRepository $adInsightsRepository,
         private AdSetRepository $adSetRepository,
         private AdCollectionRepository $adCollectionRepository,
         private CampaignRepository $campaignRepository,
@@ -39,7 +39,7 @@ class StartAndEndDateRecalculationService
         $ads = $this->adRepository->findAllByAccountId($accountId);
 
         foreach ($ads as $ad) {
-            $dates = $this->adStatsRepository->findStartAndEndDateForAnAd($ad->getId());
+            $dates = $this->adInsightsRepository->findStartAndEndDateForAnAd($ad->getId());
 
             if ($dates['start'] !== null) {
                 $ad->setStartedAt($dates['start']);
@@ -58,7 +58,7 @@ class StartAndEndDateRecalculationService
         $adSets = $this->adSetRepository->findAllByAccountId($accountId);
 
         foreach ($adSets as $adSet) {
-            $dates = $this->adStatsRepository->findStartAndEndDateForAnAdSet($adSet->getId());
+            $dates = $this->adInsightsRepository->findStartAndEndDateForAnAdSet($adSet->getId());
 
             if ($dates['start'] !== null) {
                 $adSet->setStartedAt($dates['start']);
@@ -77,7 +77,7 @@ class StartAndEndDateRecalculationService
         $campaigns = $this->campaignRepository->findAllByAccountId($accountId);
 
         foreach ($campaigns as $campaign) {
-            $dates = $this->adStatsRepository->findStartAndEndDateForACampaign($campaign->getId());
+            $dates = $this->adInsightsRepository->findStartAndEndDateForACampaign($campaign->getId());
 
             if ($dates['start'] !== null) {
                 $campaign->setStartedAt($dates['start']);
@@ -96,7 +96,7 @@ class StartAndEndDateRecalculationService
         $adCollections = $this->adCollectionRepository->findAllByAccountId($accountId);
 
         foreach ($adCollections as $adCollection) {
-            $dates = $this->adStatsRepository->findStartAndEndDateForAnAdCollection($adCollection->getAdsIds());
+            $dates = $this->adInsightsRepository->findStartAndEndDateForAnAdCollection($adCollection->getAdsIds());
 
             if ($dates['start'] !== null) {
                 $adCollection->setStartedAt($dates['start']);

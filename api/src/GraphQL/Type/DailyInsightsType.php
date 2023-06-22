@@ -39,19 +39,20 @@ class DailyInsightsType extends ObjectType
                 ],
                 'clicks' => [
                     'type' => $type->int(),
-                    'resolve' => fn () => 0,
                 ],
                 'impressions' => [
                     'type' => $type->int(),
-                    'resolve' => fn () => 0,
+                ],
+                'leads' => [
+                    'type' => $type->int(),
                 ],
                 'costPerClick' => [
                     'type' => $type->float(),
-                    'resolve' => fn () => 0,
+                    'resolve' => fn (DailyInsights $insights) => $insights->getCostPerClick()->getAmount()->toFloat(),
                 ],
                 'costPerMil' => [
                     'type' => $type->float(),
-                    'resolve' => fn () => 0,
+                    'resolve' => fn (DailyInsights $insights) => $insights->getCostPerMil()->getAmount()->toFloat(),
                 ],
             ],
         ]);

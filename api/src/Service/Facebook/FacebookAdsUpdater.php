@@ -50,13 +50,17 @@ class FacebookAdsUpdater
                     userId: $userId,
                     accountId: $accountId,
                     adId: $entity->getId(),
-                    results: $stats['conversions'],
-                    costPerResult: MoneyHelper::amount($stats['cost_per_conversion'], $stats['account_currency']),
                     amountSpent: MoneyHelper::amount($stats['spend'], $stats['account_currency']),
                     date: $stats['date'],
+                    conversions: $stats['conversions'],
+                    clicks: $stats['clicks'],
+                    impressions: $stats['impressions'],
+                    leads: 0,
+                    costPerClick: MoneyHelper::amount($stats['cpc'], $stats['account_currency']),
+                    costPerResult: MoneyHelper::amount($stats['cost_per_conversion'], $stats['account_currency']),
+                    costPerMil: MoneyHelper::amount($stats['cpm'], $stats['account_currency']),
                 );
             }
-
             $this->dataImportApi->flush();
         }
 

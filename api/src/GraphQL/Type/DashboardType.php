@@ -6,7 +6,7 @@ namespace App\GraphQL\Type;
 
 use App\GraphQL\TypeRegistry;
 use App\Repository\AdCollectionRepository;
-use App\Repository\AdStatsRepository;
+use App\Repository\AdInsightsRepository;
 use App\Repository\CampaignRepository;
 use App\Repository\ConversationRepository;
 use App\Repository\DailyRevenueRepository;
@@ -23,7 +23,7 @@ class DashboardType extends ObjectType
         AdCollectionRepository $adCollectionRepository,
         DailyRevenueRepository $dailyRevenueRepository,
         ConversationRepository $conversationRepository,
-        AdStatsRepository $adStatsRepository,
+        AdInsightsRepository $adInsightsRepository,
         CurrentUser $currentUser
     ) {
         parent::__construct([
@@ -47,7 +47,7 @@ class DashboardType extends ObjectType
                         ],
                     ],
                     'type' => $type->listOf($type->dailyInsights()),
-                    'resolve' => fn (mixed $data, array $args) => $adStatsRepository->getDailyAggregatedStats($currentUser->getAccountId(), $args['from'], $args['to']),
+                    'resolve' => fn (mixed $data, array $args) => $adInsightsRepository->getDailyAggregatedStats($currentUser->getAccountId(), $args['from'], $args['to']),
                 ],
                 'dailyRevenue' => [
                     'type' => $type->listOf($type->dailyRevenue()),
