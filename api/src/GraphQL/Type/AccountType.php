@@ -30,6 +30,10 @@ class AccountType extends ObjectType
                 'name' => [
                     'type' => $type->string(),
                 ],
+                'currency' => [
+                    'type' => $type->string(),
+                    'resolve' => fn (Account $account) => 'PLN',
+                ],
                 'connectedAccounts' => fn () => [
                     'type' => $type->listOf($type->connectedAccount()),
                     'resolve' => function (Account $account) {

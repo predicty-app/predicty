@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Repository;
 
 use App\Entity\AdStats;
+use App\Entity\DailyInsights;
 use DateTimeImmutable;
 use DateTimeInterface;
 use Doctrine\DBAL\ParameterType;
@@ -111,6 +112,46 @@ class AdStatsRepository
         }
 
         return $this->fetchStartAndEndDate($stmt);
+    }
+
+    /**
+     * @return iterable<DailyInsights>
+     */
+    public function getDailyAggregatedStats(Ulid $accountId, DateTimeImmutable $since, DateTimeImmutable $to): iterable
+    {
+        // note that the " is required for postgres, for camel case column aliases - otherwise it will all be lowercase
+        // @see https://github.com/MagicStack/asyncpg/issues/402
+        // @see https://www.postgresql.org/docs/current/sql-syntax-lexical.html#SQL-SYNTAX-IDENTIFIERS
+        $query = <<<'QUERY'
+            select
+            ai.date as date,
+            sum(ai.results) as results,
+            sum(ai.amount_spent) as "amountSpent",
+            sum(dr.revenue) as revenue,
+            avg(dr.average_order_value)::numeric(10,0) as "averageOrderValue"
+            from ad_stats ai
+            left join daily_revenue dr on ai."date" = dr."date"
+            where ai."date" >= :since and ai."date" <= :to
+            group by ai.ad_id, ai."date"
+            order by ai.ad_id, ai."date";
+            QUERY;
+
+        $stmt = $this->em->getConnection()->prepare($query);
+        $stmt->bindValue('since', $since->format('Y-m-d'), ParameterType::STRING);
+        $stmt->bindValue('to', $to->format('Y-m-d'), ParameterType::STRING);
+        $result = $stmt->executeQuery();
+
+        $currency = 'PLN';
+        while (($row = $result->fetchAssociative()) !== false) {
+            yield DailyInsights::fromScalar(
+                $row['date'],
+                $row['results'],
+                (int) $row['averageOrderValue'],
+                $row['amountSpent'],
+                $row['revenue'],
+                $currency
+            );
+        }
     }
 
     public function save(AdStats $entity): void

@@ -1,0 +1,32 @@
+{
+  "data": {
+    "dashboard": {
+      "insights": [
+        {
+          "date": "2023-01-02",
+          "results": 24,
+          "amountSpent": 3.6,
+          "clicks": 0,
+          "impressions": 0,
+          "costPerClick": 0,
+          "costPerMil": 0,
+          "costPerResult": 0.15,
+          "revenue": 1391.9,
+          "averageOrderValue": 24.54
+        },
+        {
+          "date": "2023-01-02",
+          "results": 24,
+          "amountSpent": 3.6,
+          "clicks": 0,
+          "impressions": 0,
+          "costPerClick": 0,
+          "costPerMil": 0,
+          "costPerResult": 0.15,
+          "revenue": 1391.9,
+          "averageOrderValue": 24.54
+        }
+      ]
+    }
+  }
+}

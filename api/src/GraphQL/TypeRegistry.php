@@ -18,6 +18,7 @@ use App\GraphQL\Type\ConnectedAccountType;
 use App\GraphQL\Type\ConversationCommentType;
 use App\GraphQL\Type\ConversationType;
 use App\GraphQL\Type\CurrentUserType;
+use App\GraphQL\Type\DailyInsightsType;
 use App\GraphQL\Type\DailyRevenueType;
 use App\GraphQL\Type\DashboardType;
 use App\GraphQL\Type\DataProviderIdType;
@@ -71,6 +72,7 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
  * @method AppType                 app()
  * @method UserActions             userActions()
  * @method IdType                  id()
+ * @method DailyInsightsType       dailyInsights()
  */
 class TypeRegistry
 {
