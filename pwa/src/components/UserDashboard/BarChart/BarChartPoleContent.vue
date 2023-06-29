@@ -221,6 +221,7 @@ function setDailyRevenue() {
       }
     }
   });
+  // console.log(dailyReveneuNumber.value)
 }
 
 function concatAllAdSetsToOne(): AdsType[] {
@@ -278,6 +279,8 @@ function setSpentInvestment() {
         :date="parseCurrentDate(item - 1)"
         :day="getNameOfDay(parseCurrentDate(item - 1))"
         :result="resultNumber[item - 1] * getScale()"
+        :id="`${Math.floor(Math.random() * 1000)}_${item}`"
+        :class="dailyReveneuNumber[item - 1] * getScale()"
         v-for="item in 7"
       />
     </template>
@@ -289,6 +292,7 @@ function setSpentInvestment() {
         :sales="dailyReveneuWeekNumber"
         :key="`${Math.random()}_${props.fisrtDayWeek}`"
         :result="resultWeekNumber * getScale()"
+        :id="`${Math.floor(Math.random() * 1000)}_${item}`"
       />
     </template>
   </div>

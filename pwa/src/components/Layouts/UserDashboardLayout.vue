@@ -51,7 +51,7 @@ function handleChangeScrollParams(params: ScrollType) {
       <ScrollbarPanel :scroll-x="globalStore.scrollParams.x">
         <slot name="chart-weeks" />
       </ScrollbarPanel>
-      <ScrollbarPanel :scroll-x="globalStore.scrollParams.x">
+      <ScrollbarPanel :scroll-x="globalStore.scrollParams.x" :isOverflowHidden="false">
         <slot name="chart" />
       </ScrollbarPanel>
       <ScrollbarPanel :scroll-x="globalStore.scrollParams.x">

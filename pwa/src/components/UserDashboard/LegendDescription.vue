@@ -2,8 +2,10 @@
 import { ref, watch } from "vue";
 import {
   TypeOptionsChart,
+  VisualTypeOptionsChart,
   useUserDashboardStore
 } from "@/stores/userDashboard";
+import { useI18n } from "vue-i18n";
 
 type OptionsType = {
   label: string;
@@ -21,15 +23,33 @@ type PropsType = {
   typeChartOptions: ChartOptionsType[];
 };
 
+const { t } = useI18n();
 const userDashboardStore = useUserDashboardStore();
 const currentTypeChart = ref<TypeOptionsChart>(userDashboardStore.typeChart);
+const currentVisualTypeChart = ref<VisualTypeOptionsChart>(userDashboardStore.visualTypeChart);
 
 withDefaults(defineProps<PropsType>(), {
   amountScale: () => ["$ 1,000", "$ 500", "$ 250"]
 });
 
+const chartVisualTypeOptions: TypesOptionsChart[] = [
+  {
+    key: VisualTypeOptionsChart.BAR,
+    label: t("views.user-dashboard-view.legend-description.visual-chart-types.bar")
+  },
+  {
+    key: VisualTypeOptionsChart.LINE,
+    label: t("views.user-dashboard-view.legend-description.visual-chart-types.line")
+  }
+];
+
 watch(currentTypeChart, () => {
   userDashboardStore.typeChart = currentTypeChart.value;
+  userDashboardStore.visualTypeChart = currentVisualTypeChart.value;
+});
+
+watch(currentVisualTypeChart, () => {
+  userDashboardStore.visualTypeChart = currentVisualTypeChart.value;
 });
 
 watch(
@@ -38,13 +58,25 @@ watch(
     currentTypeChart.value = userDashboardStore.typeChart;
   }
 );
+
+watch(
+  () => userDashboardStore.visualTypeChart,
+  () => {
+    currentVisualTypeChart.value = userDashboardStore.visualTypeChart;
+  }
+);
 </script>
 
 <template>
   <div
     class="h-full relative flex flex-col min-h-full items-end pr-7 pt-[15px] pb-[10px] bg-basic-white border-b border-gray-100"
   >
-    <div class="text-[10px] font-medium text-gray-700 pb-[10px]">
+    <div class="text-[10px] font-medium text-gray-700 pb-[10px] inline-flex">
+      <SelectForm
+        class="w-20"
+        :options="chartVisualTypeOptions"
+        v-model="currentVisualTypeChart"
+      />
       <SelectForm
         class="w-20"
         :options="typeChartOptions"

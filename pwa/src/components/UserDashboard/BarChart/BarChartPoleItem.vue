@@ -4,6 +4,8 @@ import {
   useUserDashboardStore,
   TypeOptionsChart
 } from "@/stores/userDashboard";
+import * as d3Selection from "d3-selection";
+import * as d3Shape from "d3-shape";
 
 type PropsType = {
   day?: string;
@@ -13,6 +15,7 @@ type PropsType = {
   sales?: string | number;
   result?: number;
   investment?: string | number;
+  id?: string;
 };
 
 const props = withDefaults(defineProps<PropsType>(), {
@@ -33,6 +36,7 @@ onMounted(() => {
   setTimeout(() => {
     currentHeightActive.value = props.result;
   }, 100);
+  drawBar();
 });
 
 function handleShowTooltipPosition(event: MouseEvent) {
@@ -43,10 +47,45 @@ function handleShowTooltipPosition(event: MouseEvent) {
     event.clientY - tooltTipReference.value.getBoundingClientRect().height - 20
   }px`;
 }
+
+function drawBar() {
+  const colors = ["#5474FF", "#5CD070", "#65D9E8", "#10B9B1"];
+  const data = [
+    {
+      day: props.day,
+      all: isNaN(props.height) || !isFinite(props.height) ? 0 : props.height
+    }
+  ];
+  const stack = d3Shape.stack().keys(["all"]);
+  const stackedSeries = stack(data);
+
+  // Series
+  let g = d3Selection
+    .select(`#series-${props.id}`)
+    .selectAll("g.series")
+    .data(stackedSeries)
+    .enter()
+    .append("g")
+    .classed("series", true)
+    .style("fill", (d, i) => colors[i]);
+
+  // Days
+  g.selectAll("rect")
+    .data((d) => d)
+    .join("rect")
+    .attr(
+      "height",
+      isNaN(props.height) || !isFinite(props.height) ? 0 : props.height
+    )
+    .attr("width", "100%");
+}
 </script>
 
 <template>
-  <div class="relative flex items-end">
+  <div class="relative flex items-end"
+    @mouseenter="isTooltipVisible = true"
+    @mouseleave="isTooltipVisible = false"
+    @mousemove="handleShowTooltipPosition">
     <div class="h-dynamic w-full" :style="{ '--height': `${height}px` }">
       <div class="px-[2px]">
         <div
@@ -67,7 +106,7 @@ function handleShowTooltipPosition(event: MouseEvent) {
             currency="$"
           />
         </div>
-        <div
+        <!-- <div
           v-if="
             userDashboardStore.selectedAdsList.ads.length === 0 &&
             !userDashboardStore.selectedCollection
@@ -97,7 +136,25 @@ function handleShowTooltipPosition(event: MouseEvent) {
             }
           ]"
           :style="{ '--height': `${height}px` }"
-        ></div>
+        ></div> -->
+        <svg
+          v-if="
+            userDashboardStore.selectedAdsList.ads.length === 0 &&
+            !userDashboardStore.selectedCollection
+          "
+          :id="`bar-${props.id}`"
+          class="bar absolute bottom-0"
+          width="100%"
+          :height="
+            isNaN(props.height) || !isFinite(props.height) ? 0 : props.height
+          "
+          style="border-radius: 15px 15px 0 0"
+          :class="[
+            'h-dynamic absolute animate-fade-in transition-colors hover:bg-blue-300 hover:drop-shadow-[0_0px_3px_rgba(65,132,255,1)]'
+          ]"
+        >
+          <g :id="`series-${props.id}`"></g>
+        </svg>
         <div
           v-if="
             userDashboardStore.selectedAdsList.ads.length > 0 ||
