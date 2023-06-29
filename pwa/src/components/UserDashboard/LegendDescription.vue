@@ -26,20 +26,26 @@ type PropsType = {
 const { t } = useI18n();
 const userDashboardStore = useUserDashboardStore();
 const currentTypeChart = ref<TypeOptionsChart>(userDashboardStore.typeChart);
-const currentVisualTypeChart = ref<VisualTypeOptionsChart>(userDashboardStore.visualTypeChart);
+const currentVisualTypeChart = ref<VisualTypeOptionsChart>(
+  userDashboardStore.visualTypeChart
+);
 
 withDefaults(defineProps<PropsType>(), {
   amountScale: () => ["$ 1,000", "$ 500", "$ 250"]
 });
 
-const chartVisualTypeOptions: TypesOptionsChart[] = [
+const chartVisualTypeOptions: ChartOptionsType[] = [
   {
     key: VisualTypeOptionsChart.BAR,
-    label: t("views.user-dashboard-view.legend-description.visual-chart-types.bar")
+    label: t(
+      "views.user-dashboard-view.legend-description.visual-chart-types.bar"
+    )
   },
   {
     key: VisualTypeOptionsChart.LINE,
-    label: t("views.user-dashboard-view.legend-description.visual-chart-types.line")
+    label: t(
+      "views.user-dashboard-view.legend-description.visual-chart-types.line"
+    )
   }
 ];
 

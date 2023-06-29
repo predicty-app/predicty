@@ -88,7 +88,7 @@ function handleScroll(state: UseScrollReturn) {
           (isHorizontalScrollVisible || isVerticalScrollVisible),
         'overflow-y-scroll': isHorizontalScrollVisible,
         'overflow-x-scroll': isVerticalScrollVisible,
-        'overflow-hidden': isOverflowHidden,
+        'overflow-hidden': isOverflowHidden
       }
     ]"
     @mouseenter="isScrollbarsVisible = true"

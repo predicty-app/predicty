@@ -2,11 +2,6 @@
 import { ref, onMounted, watch, computed } from "vue";
 import { useGlobalStore } from "@/stores/global";
 import {
-  getScale,
-  scaleCharDaystLines,
-  scaleCharWeekstLines
-} from "@/helpers/timeline";
-import {
   useUserDashboardStore,
   TypeOptionsChart,
   type DailyRevenueType,
@@ -19,9 +14,12 @@ import type {
   AdsType,
   AdStatusType
 } from "@/stores/userDashboard";
-import * as d3Shape from "d3-shape";
-import * as d3Selection from "d3-selection";
-import { drawLine, drawPointer, clearLine, toggleBars } from "@/services/charts/draw";
+import {
+  drawLine,
+  drawPointer,
+  clearLine,
+  toggleBars
+} from "@/services/charts/draw";
 
 const globalStore = useGlobalStore();
 const investmentWeekNumber = ref<number[]>([]);
@@ -36,16 +34,6 @@ const investment = computed<number[]>(() =>
     ? investmentWeekNumber.value
     : investmentNumber.value
 );
-
-const scale = computed<number>(() =>
-  userDashboardStore.typeChart === TypeOptionsChart.DAYS
-    ? scaleCharDaystLines.value
-    : scaleCharWeekstLines.value
-);
-
-const emit = defineEmits<{
-  (e: "togglePointer", value: boolean): void;
-}>();
 
 onMounted(async () => {
   await prepareVisuals();
@@ -78,15 +66,21 @@ watch(
 
 async function prepareVisuals() {
   await calculateAll();
-  drawLine('line', investment.value);
-  if(userDashboardStore.visualTypeChart === 'bar') {
+  drawLine("line", investment.value);
+  if (userDashboardStore.visualTypeChart === "bar") {
     toggleBars(true);
-    clearLine('lineBar')
+    clearLine("lineBar");
   } else {
     toggleBars(false);
-    drawLine('lineBar', revenue.value);
+    drawLine("lineBar", revenue.value);
   }
-  drawPointer('lineSvg', 'pointer', 'tooltip', revenue.value, tooltipData.value);
+  drawPointer(
+    "lineSvg",
+    "pointer",
+    "tooltip",
+    revenue.value,
+    tooltipData.value
+  );
 }
 
 /**
@@ -108,45 +102,49 @@ async function insertInvestmentArray() {
 }
 
 function calculateRevenue() {
-  let rev = []
-  let data = []
-  let sum = 0
-  let counter = 0
-  let copyRev = [...userDashboardStore.dailyRevenue]
-  let dailyRev = copyRev.reverse()
-  revenue.value = []
+  let rev = [];
+  let data = [];
+  let sum = 0;
+  let counter = 0;
+  let copyRev = [...userDashboardStore.dailyRevenue];
+  let dailyRev = copyRev.reverse();
+  revenue.value = [];
 
-  globalStore.dictionaryFirstDaysWeek.map((date: string, i:number) => {
-    dailyRev.map(item => {
-      let fDate = date.split('.').reverse().join('-')
-      let nDate = globalStore.dictionaryFirstDaysWeek[i + 1] || 0
+  globalStore.dictionaryFirstDaysWeek.map((date: string, i: number) => {
+    dailyRev.map((item) => {
+      let fDate = date.split(".").reverse().join("-");
+      let nDate = globalStore.dictionaryFirstDaysWeek[i + 1] || 0;
 
-      if(new Date(item.date).getTime() >= new Date(fDate).getTime() && new Date(item.date).getTime() < new Date(nDate.split('.').reverse().join('-')).getTime()) {
+      if (
+        new Date(item.date).getTime() >= new Date(fDate).getTime() &&
+        new Date(item.date).getTime() <
+          new Date(nDate.toString().split(".").reverse().join("-")).getTime()
+      ) {
         if (userDashboardStore.typeChart === TypeOptionsChart.WEEKS) {
           sum += item.revenue.amount;
         } else {
-          rev.push(item.revenue.amount)
+          rev.push(item.revenue.amount);
           data.push({
             date: item.date,
             sales: item.revenue.amount,
             investment: investmentNumber.value[counter]
-          })
+          });
         }
-        counter++
+        counter++;
       }
-    })
+    });
     if (userDashboardStore.typeChart === TypeOptionsChart.WEEKS) {
-      rev.push(sum)
+      rev.push(sum);
       data.push({
         date: date,
         sales: sum,
         investment: investmentWeekNumber.value[i]
-      })
-      sum = 0
+      });
+      sum = 0;
     }
-  })
-  revenue.value = rev.filter(Number)
-  tooltipData.value = data
+  });
+  revenue.value = rev.filter(Number);
+  tooltipData.value = data;
 }
 
 /**
@@ -182,7 +180,7 @@ async function calculateAll() {
 
   userDashboardStore.scaleChart = Math.max(...dailyRevenue);
   setHeightLinesSvgElement();
-  calculateRevenue()
+  calculateRevenue();
 }
 
 /**
@@ -280,14 +278,22 @@ async function setSpentInvestment() {
       class="absolute top-0 left-0 z-[100] w-full h-full scale-x-[1] scale-y-[-1]"
       id="lineSvg"
     >
-    <g>
-      <path id="line" fill="none" stroke="#ffae4f" stroke-width="2"></path>
-      <path id="lineBar" fill="none" stroke="#6E7DD9" stroke-width="2"></path>
-    </g>
+      <g>
+        <path id="line" fill="none" stroke="#ffae4f" stroke-width="2"></path>
+        <path id="lineBar" fill="none" stroke="#6E7DD9" stroke-width="2"></path>
+      </g>
       <g id="pointer" style="display: none"></g>
     </svg>
-    <div id="tooltip" class="absolute bg-basic-white drop-shadow-md rounded-xl z-[9999] fixed animate-fade-in text-center py-[10px] px-3 top-dynamic">
-      <SalesNumber :sales="userDashboardStore.currentTooltip.sales" :investment="userDashboardStore.currentTooltip.investment" :date="userDashboardStore.currentTooltip.date" currency="$" />
+    <div
+      id="tooltip"
+      class="absolute bg-basic-white drop-shadow-md rounded-xl z-[9999] fixed animate-fade-in text-center py-[10px] px-3 top-dynamic"
+    >
+      <SalesNumber
+        :sales="userDashboardStore.currentTooltip.sales"
+        :investment="userDashboardStore.currentTooltip.investment"
+        :date="userDashboardStore.currentTooltip.date"
+        currency="$"
+      />
     </div>
   </template>
 </template>

@@ -179,7 +179,7 @@ export const useUserDashboardStore = defineStore({
         ads: []
       },
       currentTooltip: {
-        date: '01.01.2023',
+        date: "",
         sales: 0,
         investment: 0
       }

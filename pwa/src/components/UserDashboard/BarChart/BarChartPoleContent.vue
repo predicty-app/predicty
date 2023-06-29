@@ -221,7 +221,6 @@ function setDailyRevenue() {
       }
     }
   });
-  // console.log(dailyReveneuNumber.value)
 }
 
 function concatAllAdSetsToOne(): AdsType[] {
@@ -274,9 +273,6 @@ function setSpentInvestment() {
       <BarChartPoleItem
         :height="dailyReveneuNumber[item - 1] * getScale()"
         :key="`${Math.random()}_${item}`"
-        :investment="investmentNumber[item - 1]"
-        :sales="dailyReveneuNumber[item - 1]"
-        :date="parseCurrentDate(item - 1)"
         :day="getNameOfDay(parseCurrentDate(item - 1))"
         :result="resultNumber[item - 1] * getScale()"
         :id="`${Math.floor(Math.random() * 1000)}_${item}`"
@@ -287,12 +283,10 @@ function setSpentInvestment() {
     <template v-else>
       <BarChartPoleItem
         :type="TypeOptionsChart.WEEKS"
-        :investment="investmentWeekNumber"
         :height="dailyReveneuWeekNumber * getScale()"
-        :sales="dailyReveneuWeekNumber"
         :key="`${Math.random()}_${props.fisrtDayWeek}`"
         :result="resultWeekNumber * getScale()"
-        :id="`${Math.floor(Math.random() * 1000)}_${item}`"
+        :id="`${Math.floor(Math.random() * 1000)}`"
       />
     </template>
   </div>

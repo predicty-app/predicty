@@ -8,8 +8,6 @@ import {
 import {
   useUserDashboardStore,
   TypeOptionsChart,
-  type DailyRevenueType,
-  type DataProviderType,
   type TooltipType
 } from "@/stores/userDashboard";
 
@@ -84,7 +82,13 @@ function drawLine(pathId: string, values: number[]) {
  * @param {string} pointerId
  * @param {number[]} values
  */
-function drawPointer(svgId: string, pointerId: string, tooltipId: string, values: number[], tooltipData: TooltipType[]) {
+function drawPointer(
+  svgId: string,
+  pointerId: string,
+  tooltipId: string,
+  values: number[],
+  tooltipData: TooltipType[]
+) {
   const svg = d3Selection.select(`#${svgId}`);
   const pointer = d3Selection.select(`#${pointerId}`);
   const tooltip = d3Selection.select(`#${tooltipId}`);
@@ -114,25 +118,24 @@ function drawPointer(svgId: string, pointerId: string, tooltipId: string, values
   });
 
   svg.on("mousemove", function (mouse) {
-    const minPoint = calculatePoints(values)[0][0];
-    const maxPoint = calculatePoints(values)[calculatePoints(values).length - 1][0];
     const x = d3Selection.pointer(mouse)[0];
-    const svgHeight = svg.node().getBoundingClientRect().height;
     const closest = calculatePoints(values).reduce((prev, curr) =>
-      Math.abs(curr[0] - x) < Math.abs(prev[0] - x)
-        ? curr
-        : prev
+      Math.abs(curr[0] - x) < Math.abs(prev[0] - x) ? curr : prev
     );
-    const closestDataIndex = calculatePoints(values).findIndex(v => v[0] === closest[0]) - 1;
+    const closestDataIndex =
+      calculatePoints(values).findIndex((v) => v[0] === closest[0]) - 1;
 
     pointer.select("circle").attr("cx", closest[0]).attr("cy", closest[1]);
     pointer.select("rect").attr("x", closest[0] - 1);
     tooltip.style("left", `${closest[0] + 8}px`);
-    tooltip.style("top", '0px');
-    if(closestDataIndex >= 0) {
-      userDashboardStore.currentTooltip.date = tooltipData[closestDataIndex].date
-      userDashboardStore.currentTooltip.sales = tooltipData[closestDataIndex].sales
-      userDashboardStore.currentTooltip.investment = tooltipData[closestDataIndex].investment
+    tooltip.style("top", "0px");
+    if (closestDataIndex >= 0) {
+      userDashboardStore.currentTooltip.date =
+        tooltipData[closestDataIndex].date;
+      userDashboardStore.currentTooltip.sales =
+        tooltipData[closestDataIndex].sales;
+      userDashboardStore.currentTooltip.investment =
+        tooltipData[closestDataIndex].investment;
     }
   });
 
@@ -147,7 +150,7 @@ function clearLine(pathId) {
 }
 
 function toggleBars(show: boolean) {
-  d3Selection.selectAll(".bar").style("display", `${show ? 'block' : 'none'}`);
+  d3Selection.selectAll(".bar").style("display", `${show ? "block" : "none"}`);
 }
 
 export { drawLine, drawPointer, clearLine, toggleBars };
