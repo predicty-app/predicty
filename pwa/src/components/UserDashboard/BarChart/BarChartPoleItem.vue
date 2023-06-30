@@ -68,78 +68,76 @@ function drawBar() {
 <template>
   <div class="relative flex items-end">
     <div class="h-dynamic w-full" :style="{ '--height': `${height}px` }">
-      <div class="px-[2px]">
-        <svg
-          v-if="
-            userDashboardStore.selectedAdsList.ads.length === 0 &&
-            !userDashboardStore.selectedCollection
-          "
-          :id="`bar-${props.id}`"
-          class="bar absolute bottom-0"
-          width="100%"
-          :height="
-            isNaN(props.height) || !isFinite(props.height) ? 0 : props.height
-          "
-          style="border-radius: 15px"
-          :class="[
-            'h-dynamic absolute animate-fade-in transition-colors hover:bg-blue-300 hover:drop-shadow-[0_0px_3px_rgba(65,132,255,1)]'
-          ]"
-        >
-          <g :id="`series-${props.id}`"></g>
-        </svg>
+      <svg
+        v-if="
+          userDashboardStore.selectedAdsList.ads.length === 0 &&
+          !userDashboardStore.selectedCollection
+        "
+        :id="`bar-${props.id}`"
+        class="bar absolute bottom-0"
+        width="100%"
+        :height="
+          isNaN(props.height) || !isFinite(props.height) ? 0 : props.height
+        "
+        style="border-radius: 15px"
+        :class="[
+          'h-dynamic absolute animate-fade-in transition-colors hover:bg-blue-300 hover:drop-shadow-[0_0px_3px_rgba(65,132,255,1)]'
+        ]"
+      >
+        <g :id="`series-${props.id}`"></g>
+      </svg>
+      <div
+        v-if="
+          userDashboardStore.selectedAdsList.ads.length > 0 ||
+          userDashboardStore.selectedCollection
+        "
+        :class="[
+          'h-dynamic z-[1000] overflow-hidden bg-gray-400/50 absolute hover:bg-gray-400 group',
+          {
+            'w-[80%] rounded-3xl': type === TypeOptionsChart.DAYS,
+            'w-[95%] left-1 rounded-xl': type === TypeOptionsChart.WEEKS
+          }
+        ]"
+        :style="{ '--height': `${height}px` }"
+      >
         <div
           v-if="
             userDashboardStore.selectedAdsList.ads.length > 0 ||
             userDashboardStore.selectedCollection
           "
           :class="[
-            'h-dynamic z-[1000] overflow-hidden bg-gray-400/50 absolute hover:bg-gray-400 group',
-            {
-              'w-[80%] rounded-3xl': type === TypeOptionsChart.DAYS,
-              'w-[95%] left-1 rounded-xl': type === TypeOptionsChart.WEEKS
-            }
+            'bottom-0 h-dynamic absolute transition-all bg-green-400 w-[100%] rounded-b group-hover:bg-green-200 group-hover:drop-shadow-[0_0px_3px_rgba(65,203,89,1)]'
           ]"
-          :style="{ '--height': `${height}px` }"
-        >
-          <div
-            v-if="
-              userDashboardStore.selectedAdsList.ads.length > 0 ||
-              userDashboardStore.selectedCollection
-            "
-            :class="[
-              'bottom-0 h-dynamic absolute transition-all bg-green-400 w-[100%] rounded-b group-hover:bg-green-200 group-hover:drop-shadow-[0_0px_3px_rgba(65,203,89,1)]'
-            ]"
-            :style="{ '--height': `${currentHeightActive}px` }"
-          ></div>
-        </div>
+          :style="{ '--height': `${currentHeightActive}px` }"
+        ></div>
+      </div>
+      <div
+        v-if="
+          userDashboardStore.selectedAdsList.ads.length > 0 ||
+          userDashboardStore.selectedCollection
+        "
+        :class="[
+          'h-dynamic overflow-hidden absolute',
+          {
+            'w-[80%] rounded-3xl': type === TypeOptionsChart.DAYS,
+            'w-[95%] left-1 rounded-xl': type === TypeOptionsChart.WEEKS
+          }
+        ]"
+        :style="{ '--height': `${height}px` }"
+      >
         <div
           v-if="
             userDashboardStore.selectedAdsList.ads.length > 0 ||
             userDashboardStore.selectedCollection
           "
           :class="[
-            'h-dynamic overflow-hidden absolute',
+            'bottom-0 h-dynamic absolute transition-all w-[100%] rounded-b',
             {
-              'w-[80%] rounded-3xl': type === TypeOptionsChart.DAYS,
-              'w-[95%] left-1 rounded-xl': type === TypeOptionsChart.WEEKS
+              ' drop-shadow-lg': isHoverElement
             }
           ]"
-          :style="{ '--height': `${height}px` }"
-        >
-          <div
-            v-if="
-              userDashboardStore.selectedAdsList.ads.length > 0 ||
-              userDashboardStore.selectedCollection
-            "
-            :class="[
-              'bottom-0 h-dynamic absolute transition-all w-[100%] rounded-b',
-              {
-                ' drop-shadow-lg': isHoverElement
-              }
-            ]"
-            :style="{ '--height': `${currentHeightActive}px` }"
-          ></div>
-        </div>
+          :style="{ '--height': `${currentHeightActive}px` }"
+        ></div>
       </div>
     </div>
   </div>

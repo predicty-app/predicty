@@ -14,7 +14,7 @@ import {
   gapGrid,
   getScale,
   scaleGrid,
-  scaleFirstGrid,
+  scaleMargin,
   handleVirtualizationElement
 } from "@/helpers/timeline";
 import type { AdStatusType } from "@/stores/userDashboard";
@@ -295,11 +295,9 @@ function setSpentInvestment() {
 <style scoped lang="scss">
 .bar-chart-pole-content {
   display: grid;
-  grid-template-columns: v-bind(scaleFirstGrid) repeat(
-      auto-fill,
-      v-bind(scaleGrid)
-    );
+  grid-template-columns: repeat(auto-fill, v-bind(scaleGrid));
   grid-column-gap: v-bind(gapGrid);
+  margin: 0 v-bind(scaleMargin);
 
   &--weeks {
     grid-template-columns: 1fr;

@@ -12,8 +12,9 @@ const userDashboardStore = useUserDashboardStore();
 
 enum timelineParams {
   GAP_GRID = 5,
-  LINE_WIDTH = 150,
-  COLUMN_WIDTH = 16.4,
+  MARGIN_GRID = 2.5,
+  LINE_WIDTH = 147,
+  COLUMN_WIDTH = 16,
   LINES_POSITION_DAYS_WIDTH = 21,
   LINES_POSITION_WEEKS_WIDTH = 150,
   GRADIENT_WIDTH = 300,
@@ -23,6 +24,10 @@ enum timelineParams {
 
 export const scaleLines = computed<string>(
   () => `${timelineParams.LINE_WIDTH * (globalStore.currentScale * 0.01)}px`
+);
+
+export const scaleMargin = computed<string>(
+  () => `${timelineParams.MARGIN_GRID * (globalStore.currentScale * 0.01)}px`
 );
 
 export const scaleCharDaystLines = computed<number>(
