@@ -21,6 +21,7 @@ class AdInsightsType extends ObjectType
                 ],
                 'results' => [
                     'type' => $type->int(),
+                    'resolve' => fn (AdInsights $adInsights) => $adInsights->getConversions(),
                 ],
                 'costPerResult' => [
                     'type' => $type->money(),

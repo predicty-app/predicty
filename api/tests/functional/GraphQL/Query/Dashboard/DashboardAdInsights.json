@@ -1,0 +1,634 @@
+{
+  "data": {
+    "dashboard": {
+      "campaigns": [
+        {
+          "adSets": [
+            {
+              "ads": [
+                {
+                  "adInsights": [
+                    {
+                      "id": "@ulid@",
+                      "results": 24,
+                      "costPerResult": {
+                        "amount": 0.15,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 3.6,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 588.96,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-02"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 5,
+                      "costPerResult": {
+                        "amount": 0.2,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 1,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 131.35,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-03"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 0,
+                      "costPerResult": {
+                        "amount": 0,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 0,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 0,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-04"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 0,
+                      "costPerResult": {
+                        "amount": 0,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 0,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 0,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-05"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 1,
+                      "costPerResult": {
+                        "amount": 0.46,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 0.46,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 22.79,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-06"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 1,
+                      "costPerResult": {
+                        "amount": 0.5,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 0.5,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 6.67,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-07"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 5,
+                      "costPerResult": {
+                        "amount": 0.65,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 3.25,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 27.9,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-08"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 3,
+                      "costPerResult": {
+                        "amount": 0.15,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 0.45,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 79.89,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-09"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 20,
+                      "costPerResult": {
+                        "amount": 0.1,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 2,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 264.8,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-10"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 30,
+                      "costPerResult": {
+                        "amount": 0.02,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 0.6,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 137.4,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-11"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 15,
+                      "costPerResult": {
+                        "amount": 0.01,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 0.15,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 223.05,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-12"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 1,
+                      "costPerResult": {
+                        "amount": 0.5,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 0.5,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 17.66,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-13"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 5,
+                      "costPerResult": {
+                        "amount": 0.65,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 3.25,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 43.8,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-14"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 3,
+                      "costPerResult": {
+                        "amount": 0.15,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 0.45,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 27.21,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-15"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 20,
+                      "costPerResult": {
+                        "amount": 0.1,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 2,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 402.4,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-16"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 30,
+                      "costPerResult": {
+                        "amount": 0.02,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 0.6,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 246.3,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-17"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 15,
+                      "costPerResult": {
+                        "amount": 0.01,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 0.15,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 271.8,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-18"
+                    }
+                  ]
+                },
+                {
+                  "adInsights": [
+                    {
+                      "id": "@ulid@",
+                      "results": 24,
+                      "costPerResult": {
+                        "amount": 0.15,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 3.6,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 588.96,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-02"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 5,
+                      "costPerResult": {
+                        "amount": 0.2,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 1,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 131.35,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-03"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 0,
+                      "costPerResult": {
+                        "amount": 0,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 0,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 0,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-04"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 0,
+                      "costPerResult": {
+                        "amount": 0,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 0,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 0,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-05"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 1,
+                      "costPerResult": {
+                        "amount": 0.46,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 0.46,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 22.79,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-06"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 1,
+                      "costPerResult": {
+                        "amount": 0.5,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 0.5,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 6.67,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-07"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 5,
+                      "costPerResult": {
+                        "amount": 0.65,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 3.25,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 27.9,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-08"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 3,
+                      "costPerResult": {
+                        "amount": 0.15,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 0.45,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 79.89,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-09"
+                    }
+                  ]
+                },
+                {
+                  "adInsights": []
+                }
+              ]
+            },
+            {
+              "ads": [
+                {
+                  "adInsights": [
+                    {
+                      "id": "@ulid@",
+                      "results": 20,
+                      "costPerResult": {
+                        "amount": 0.1,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 2,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 264.8,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-10"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 30,
+                      "costPerResult": {
+                        "amount": 0.02,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 0.6,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 137.4,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-11"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 15,
+                      "costPerResult": {
+                        "amount": 0.01,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 0.15,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 223.05,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-12"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 1,
+                      "costPerResult": {
+                        "amount": 0.5,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 0.5,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 17.66,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-13"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 5,
+                      "costPerResult": {
+                        "amount": 0.65,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 3.25,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 43.8,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-14"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 3,
+                      "costPerResult": {
+                        "amount": 0.15,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 0.45,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 27.21,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-15"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 20,
+                      "costPerResult": {
+                        "amount": 0.1,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 2,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 402.4,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-16"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 30,
+                      "costPerResult": {
+                        "amount": 0.02,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 0.6,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 246.3,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-17"
+                    },
+                    {
+                      "id": "@ulid@",
+                      "results": 15,
+                      "costPerResult": {
+                        "amount": 0.01,
+                        "currency": "PLN"
+                      },
+                      "amountSpent": {
+                        "amount": 0.15,
+                        "currency": "PLN"
+                      },
+                      "revenueShare": {
+                        "amount": 271.8,
+                        "currency": "PLN"
+                      },
+                      "date": "2023-01-18"
+                    }
+                  ]
+                },
+                {
+                  "adInsights": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "adSets": [
+            {
+              "ads": [
+                {
+                  "adInsights": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "adSets": [
+            {
+              "ads": []
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
