@@ -79,7 +79,7 @@ class TraceableDataImportApi implements DataImportApi
         return $this->dataImportApi->upsertAd($userId, $accountId, $campaignId, $adSetId, $externalId, $name, $startedAt, $endedAt);
     }
 
-    public function upsertAdStats(
+    public function upsertAdInsights(
         Ulid $userId,
         Ulid $accountId,
         Ulid $adId,
@@ -93,7 +93,7 @@ class TraceableDataImportApi implements DataImportApi
         ?Money $costPerResult = null,
         ?Money $costPerMil = null,
     ): AdInsights {
-        return $this->dataImportApi->upsertAdStats(
+        return $this->dataImportApi->upsertAdInsights(
             userId: $userId,
             accountId: $accountId,
             adId: $adId,

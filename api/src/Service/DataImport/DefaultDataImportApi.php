@@ -58,17 +58,17 @@ class DefaultDataImportApi implements DataImportApi
 
     public function getCampaignByExternalId(Ulid $accountId, string $externalId): Campaign
     {
-        return $this->campaignRepository->findByAccountIdAndExternalId($accountId, $externalId) ?? throw new RuntimeException('Campaign not found');
+        return $this->campaignRepository->findByAccountIdAndExternalId($accountId, $externalId) ?? throw new RuntimeException(sprintf('Campaign not found: %s', $externalId));
     }
 
     public function getAdSetByExternalId(Ulid $accountId, string $externalId): AdSet
     {
-        return $this->adSetRepository->findByAccountIdAndExternalId($accountId, $externalId) ?? throw new RuntimeException('AdSet not found');
+        return $this->adSetRepository->findByAccountIdAndExternalId($accountId, $externalId) ?? throw new RuntimeException(sprintf('AdSet not found: %s', $externalId));
     }
 
     public function getAdByExternalId(Ulid $accountId, string $externalId): Ad
     {
-        return $this->adRepository->findByAccountIdAndExternalId($accountId, $externalId) ?? throw new RuntimeException('Ad not found');
+        return $this->adRepository->findByAccountIdAndExternalId($accountId, $externalId) ?? throw new RuntimeException(sprintf('Ad not found: %s', $externalId));
     }
 
     public function upsertCampaign(Ulid $userId, Ulid $accountId, string $name, string $externalId, ?DateTimeImmutable $startedAt = null, ?DateTimeImmutable $endedAt = null): Campaign
@@ -122,7 +122,7 @@ class DefaultDataImportApi implements DataImportApi
         return $entity;
     }
 
-    public function upsertAdStats(
+    public function upsertAdInsights(
         Ulid $userId,
         Ulid $accountId,
         Ulid $adId,

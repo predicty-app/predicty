@@ -58,7 +58,7 @@ class FacebookCsvHandler extends AbstractCsvFileImportHandler
             $record[self::HEADER_AD_NAME],
         );
 
-        $this->dataImportApi->upsertAdStats(
+        $this->dataImportApi->upsertAdInsights(
             userId: $context->getUserId(),
             accountId: $context->getAccountId(),
             adId: $ad->getId(),

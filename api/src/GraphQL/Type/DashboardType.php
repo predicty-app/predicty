@@ -37,7 +37,7 @@ class DashboardType extends ObjectType
                     'args' => [
                         'from' => [
                             'type' => $type->date(),
-                            'defaultValue' => Clock::now()->sub(new DateInterval('P30D'))->format('Y-m-d'),
+                            'defaultValue' => Clock::now()->sub(new DateInterval('P30D')),
                             'description' => 'Date from which to start loading data for the dashboard. Defaults to 30 days before today.',
                         ],
                         'to' => [

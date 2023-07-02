@@ -46,7 +46,7 @@ class FacebookAdsUpdater
         foreach ($ads as $ad) {
             foreach ($client->getAdInsights($ad['id']) as $stats) {
                 $entity = $this->dataImportApi->getAdByExternalId($accountId, $ad['id']);
-                $this->dataImportApi->upsertAdStats(
+                $this->dataImportApi->upsertAdInsights(
                     userId: $userId,
                     accountId: $accountId,
                     adId: $entity->getId(),
