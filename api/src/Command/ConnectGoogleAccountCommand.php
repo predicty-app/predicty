@@ -57,13 +57,15 @@ class ConnectGoogleAccountCommand extends Command
             $userId = $io->ask('User id', validator: fn (string $value) => Ulid::fromString($value));
         }
 
-        $user = $this->userRepository->getById($userId);
-
         $accountId = $input->getArgument('accountId');
         while ($accountId === null) {
             $accountId = $io->ask('Account id', validator: fn (string $value) => Ulid::fromString($value));
         }
 
+        $userId = $userId instanceof Ulid ? $userId : Ulid::fromString($userId);
+        $accountId = $accountId instanceof Ulid ? $accountId : Ulid::fromString($accountId);
+
+        $user = $this->userRepository->getById($userId);
         $account = $this->accountRepository->getById($accountId);
 
         $service = $input->getArgument('service');

@@ -46,6 +46,6 @@ class GoogleAdsClientBuilder
             ->withLogLevel(LogLevel::DEBUG)
             ->build();
 
-        return new GoogleAdsClient($credentials->getCustomerId(), $client);
+        return new GoogleAdsClient($credentials->getCustomerId(), $client->getGoogleAdsServiceClient());
     }
 }

@@ -60,7 +60,7 @@ class GoogleAdsCsvHandler extends AbstractCsvFileImportHandler
         $spent = MoneyHelper::amount((float) $record[self::HEADER_AMOUNT_SPENT], $currency);
         $cpr = $spent->isGreaterThan(0) ? $spent->dividedBy($results, RoundingMode::DOWN) : Money::zero($currency);
 
-        $this->dataImportApi->upsertAdStats(
+        $this->dataImportApi->upsertAdInsights(
             userId: $context->getUserId(),
             accountId: $context->getAccountId(),
             adId: $ad->getId(),

@@ -34,7 +34,7 @@ interface DataImportApi
 
     public function upsertAd(Ulid $userId, Ulid $accountId, Ulid $campaignId, Ulid $adSetId, string $externalId, string $name, ?DateTimeImmutable $startedAt = null, ?DateTimeImmutable $endedAt = null): Ad;
 
-    public function upsertAdStats(
+    public function upsertAdInsights(
         Ulid $userId,
         Ulid $accountId,
         Ulid $adId,

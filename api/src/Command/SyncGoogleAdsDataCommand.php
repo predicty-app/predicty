@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Command;
 
-use App\Entity\GoogleAnalyticsConnectedAccount;
+use App\Entity\GoogleAdsConnectedAccount;
 use App\Extension\Messenger\DispatchCommandTrait;
 use App\Message\Command\SyncGoogleAds;
 use App\Repository\AccountRepository;
@@ -63,7 +63,7 @@ class SyncGoogleAdsDataCommand extends Command
         $account = $this->accountRepository->getById($accountId);
 
         $io->writeln(sprintf('Selected user account: <info>%s</info>', $user->getEmail()));
-        $connectedAccount = $this->connectedAccountRepository->findByAccountId($account->getId(), GoogleAnalyticsConnectedAccount::class);
+        $connectedAccount = $this->connectedAccountRepository->findByAccountId($account->getId(), GoogleAdsConnectedAccount::class);
 
         if ($connectedAccount === null) {
             $io->error('No connected Google Ads account found for this user and account id');

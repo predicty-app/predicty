@@ -112,7 +112,7 @@ class SimplifiedCsvHandlerTest extends TestCase
         $context = new FileImportContext($userId, $accountId, new FileImportMetadata(['campaignName' => 'test']));
 
         $dataImportApi = $this->createMock(DataImportApi::class);
-        $dataImportApi->expects($this->once())->method('upsertAdStats')->with(
+        $dataImportApi->expects($this->once())->method('upsertAdInsights')->with(
             $this->equalTo($userId),
             $this->equalTo($accountId),
             $this->isInstanceOf(Ulid::class),

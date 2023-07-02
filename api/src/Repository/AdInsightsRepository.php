@@ -154,7 +154,7 @@ class AdInsightsRepository
                 $row['leads'],
                 (int) $row['averageOrderValue'],
                 $row['amountSpent'],
-                $row['revenue'],
+                (int) $row['revenue'],
                 $currency
             );
         }

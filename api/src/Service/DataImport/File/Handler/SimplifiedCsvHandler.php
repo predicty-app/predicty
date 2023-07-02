@@ -55,7 +55,7 @@ class SimplifiedCsvHandler extends AbstractCsvFileImportHandler
         );
 
         $currency = Currency::of($record[self::HEADER_CURRENCY]);
-        $this->dataImportApi->upsertAdStats(
+        $this->dataImportApi->upsertAdInsights(
             userId: $context->getUserId(),
             accountId: $context->getAccountId(),
             adId: $ad->getId(),
