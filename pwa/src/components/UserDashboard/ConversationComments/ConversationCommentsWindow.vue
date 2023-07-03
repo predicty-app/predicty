@@ -38,7 +38,9 @@ const borderColor = computed<string>(() =>
     ? props.conversationElement.color.hex
     : conversationStore.createdConversationSetting.color
 );
-const isBottomHalf = computed<boolean>(() => props.positionY > (window.innerHeight / 2) ? true : false);
+const isBottomHalf = computed<boolean>(() =>
+  props.positionY > window.innerHeight / 2 ? true : false
+);
 const windowPositionY = computed<string>(() =>
   props.typeWindow !== TypesWindowConversation.CREATE
     ? `${props.positionY}px`
@@ -156,17 +158,21 @@ async function handleCreateConversationOrAssignComment() {
     ]"
     :style="[
       {
-        'max-height': `${isBottomHalf ? `calc(${windowPositionY} + 21px)` : `calc(100vh - ${windowPositionY} - 74px)`}`,
-        '--border': borderColor,
+        'max-height': `${
+          isBottomHalf
+            ? `calc(${windowPositionY} + 21px)`
+            : `calc(100vh - ${windowPositionY} - 74px)`
+        }`,
+        '--border': borderColor
       },
       isBottomHalf
-      ? {
-          bottom: `calc(100vh - ${windowPositionY} - 95px)`,
-        }
-      : {
-          top: windowPositionY,
-        }
-      ]"
+        ? {
+            bottom: `calc(100vh - ${windowPositionY} - 95px)`
+          }
+        : {
+            top: windowPositionY
+          }
+    ]"
   >
     <div class="flex justify-between items-center w-full">
       <div

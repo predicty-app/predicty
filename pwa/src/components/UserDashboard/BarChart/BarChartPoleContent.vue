@@ -14,7 +14,7 @@ import {
   gapGrid,
   getScale,
   scaleGrid,
-  scaleFirstGrid,
+  scaleMargin,
   handleVirtualizationElement
 } from "@/helpers/timeline";
 import type { AdStatusType } from "@/stores/userDashboard";
@@ -273,22 +273,20 @@ function setSpentInvestment() {
       <BarChartPoleItem
         :height="dailyReveneuNumber[item - 1] * getScale()"
         :key="`${Math.random()}_${item}`"
-        :investment="investmentNumber[item - 1]"
-        :sales="dailyReveneuNumber[item - 1]"
-        :date="parseCurrentDate(item - 1)"
         :day="getNameOfDay(parseCurrentDate(item - 1))"
         :result="resultNumber[item - 1] * getScale()"
+        :id="`${Math.floor(Math.random() * 1000)}_${item}`"
+        :class="dailyReveneuNumber[item - 1] * getScale()"
         v-for="item in 7"
       />
     </template>
     <template v-else>
       <BarChartPoleItem
         :type="TypeOptionsChart.WEEKS"
-        :investment="investmentWeekNumber"
         :height="dailyReveneuWeekNumber * getScale()"
-        :sales="dailyReveneuWeekNumber"
         :key="`${Math.random()}_${props.fisrtDayWeek}`"
         :result="resultWeekNumber * getScale()"
+        :id="`${Math.floor(Math.random() * 1000)}`"
       />
     </template>
   </div>
@@ -297,11 +295,9 @@ function setSpentInvestment() {
 <style scoped lang="scss">
 .bar-chart-pole-content {
   display: grid;
-  grid-template-columns: v-bind(scaleFirstGrid) repeat(
-      auto-fill,
-      v-bind(scaleGrid)
-    );
+  grid-template-columns: repeat(auto-fill, v-bind(scaleGrid));
   grid-column-gap: v-bind(gapGrid);
+  margin: 0 v-bind(scaleMargin);
 
   &--weeks {
     grid-template-columns: 1fr;

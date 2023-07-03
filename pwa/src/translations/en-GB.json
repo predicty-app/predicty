@@ -343,6 +343,10 @@
           "weeks": "Weeks",
           "days": "Days"
         },
+        "visual-chart-types": {
+          "bar": "Bar",
+          "line": "Line"
+        },
         "options": {
           "sales": "Overall sales",
           "investment": "Overall investment"

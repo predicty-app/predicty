@@ -14,6 +14,11 @@ export enum TypeOptionsChart {
   "DAYS" = "days"
 }
 
+export enum VisualTypeOptionsChart {
+  "BAR" = "bar",
+  "LINE" = "line"
+}
+
 export enum MenuNames {
   "SETTINGS" = "settings",
   "FILES" = "files",
@@ -118,6 +123,12 @@ export type SelectedCollectionType = {
   collection: AdSetsType;
 };
 
+export type TooltipType = {
+  date: string;
+  sales: number;
+  investment: number;
+};
+
 type StateType = {
   scaleChart: number;
   hiddenAds: string[];
@@ -126,6 +137,8 @@ type StateType = {
   campaigns: CampaignType[];
   activeProviders: string[];
   typeChart: TypeOptionsChart;
+  visualTypeChart: VisualTypeOptionsChart;
+  currentTooltip: TooltipType;
   dailyRevenue: DailyRevenueType[];
   conversations: ConversationsType[];
   parsedCampaignsList: CampaignType[];
@@ -141,6 +154,7 @@ export const useUserDashboardStore = defineStore({
     ({
       scaleChart: 0,
       typeChart: TypeOptionsChart.DAYS,
+      visualTypeChart: VisualTypeOptionsChart.BAR,
       dailyRevenue: [],
       conversations: [],
       authenticatedUserParams: null,
@@ -163,6 +177,11 @@ export const useUserDashboardStore = defineStore({
       selectedAdsList: {
         campaignUid: null,
         ads: []
+      },
+      currentTooltip: {
+        date: "",
+        sales: 0,
+        investment: 0
       }
     } as StateType),
 

@@ -1,16 +1,12 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watch, computed } from "vue";
 import { useGlobalStore } from "@/stores/global";
-import {
-  getScale,
-  scaleCharDaystLines,
-  scaleCharWeekstLines
-} from "@/helpers/timeline";
 import {
   useUserDashboardStore,
   TypeOptionsChart,
   type DailyRevenueType,
-  type DataProviderType
+  type DataProviderType,
+  type TooltipType
 } from "@/stores/userDashboard";
 import type {
   CampaignType,
@@ -18,15 +14,29 @@ import type {
   AdsType,
   AdStatusType
 } from "@/stores/userDashboard";
+import {
+  drawLine,
+  drawPointer,
+  clearLine,
+  toggleBars
+} from "@/services/charts/draw";
 
 const globalStore = useGlobalStore();
 const investmentWeekNumber = ref<number[]>([]);
 const userDashboardStore = useUserDashboardStore();
 const investmentNumber = ref<number[]>([]);
 const instanceLines = ref<SVGElement | null>(null);
+const revenue = ref<number[]>([]);
+const tooltipData = ref<TooltipType[]>([]);
+
+const investment = computed<number[]>(() =>
+  userDashboardStore.typeChart === TypeOptionsChart.WEEKS
+    ? investmentWeekNumber.value
+    : investmentNumber.value
+);
 
 onMounted(async () => {
-  await calculateAll();
+  await prepareVisuals();
 });
 
 watch(
@@ -36,9 +46,42 @@ watch(
     userDashboardStore.typeChart
   ],
   async () => {
-    await calculateAll();
+    await prepareVisuals();
   }
 );
+
+watch(
+  () => globalStore.currentScale,
+  async () => {
+    await prepareVisuals();
+  }
+);
+
+watch(
+  () => userDashboardStore.visualTypeChart,
+  async () => {
+    await prepareVisuals();
+  }
+);
+
+async function prepareVisuals() {
+  await calculateAll();
+  drawLine("line", investment.value);
+  if (userDashboardStore.visualTypeChart === "bar") {
+    toggleBars(true);
+    clearLine("lineBar");
+  } else {
+    toggleBars(false);
+    drawLine("lineBar", revenue.value);
+  }
+  drawPointer(
+    "lineSvg",
+    "pointer",
+    "tooltip",
+    revenue.value,
+    tooltipData.value
+  );
+}
 
 /**
  * Function to fill array of investments.
@@ -56,6 +99,52 @@ async function insertInvestmentArray() {
     }
     resolve(true);
   });
+}
+
+function calculateRevenue() {
+  let rev = [];
+  let data = [];
+  let sum = 0;
+  let counter = 0;
+  let copyRev = [...userDashboardStore.dailyRevenue];
+  let dailyRev = copyRev.reverse();
+  revenue.value = [];
+
+  globalStore.dictionaryFirstDaysWeek.map((date: string, i: number) => {
+    dailyRev.map((item) => {
+      let fDate = date.split(".").reverse().join("-");
+      let nDate = globalStore.dictionaryFirstDaysWeek[i + 1] || 0;
+
+      if (
+        new Date(item.date).getTime() >= new Date(fDate).getTime() &&
+        new Date(item.date).getTime() <
+          new Date(nDate.toString().split(".").reverse().join("-")).getTime()
+      ) {
+        if (userDashboardStore.typeChart === TypeOptionsChart.WEEKS) {
+          sum += item.revenue.amount;
+        } else {
+          rev.push(item.revenue.amount);
+          data.push({
+            date: item.date,
+            sales: item.revenue.amount,
+            investment: investmentNumber.value[counter]
+          });
+        }
+        counter++;
+      }
+    });
+    if (userDashboardStore.typeChart === TypeOptionsChart.WEEKS) {
+      rev.push(sum);
+      data.push({
+        date: date,
+        sales: sum,
+        investment: investmentWeekNumber.value[i]
+      });
+      sum = 0;
+    }
+  });
+  revenue.value = rev.filter(Number);
+  tooltipData.value = data;
 }
 
 /**
@@ -91,6 +180,7 @@ async function calculateAll() {
 
   userDashboardStore.scaleChart = Math.max(...dailyRevenue);
   setHeightLinesSvgElement();
+  calculateRevenue();
 }
 
 /**
@@ -174,44 +264,6 @@ async function setSpentInvestment() {
     }
   );
 }
-
-/**
- * Function to calculate line position.
- * @param {'x1' | 'y1' | 'x2' | 'y2'} type
- * @param {number} index
- * @param {number} value
- * @return {number}
- */
-function calculateLinePosition(
-  type: "x1" | "y1" | "x2" | "y2",
-  index: number,
-  value?: number
-): number {
-  const scale =
-    userDashboardStore.typeChart === TypeOptionsChart.DAYS
-      ? scaleCharDaystLines.value
-      : scaleCharWeekstLines.value;
-
-  switch (type) {
-    case "x1": {
-      return scale * index + scale / 2;
-    }
-    case "y1": {
-      return value * getScale();
-    }
-    case "x2": {
-      return scale * (index + 1) + scale / 2;
-    }
-    case "y2": {
-      const nextValue =
-        userDashboardStore.typeChart === TypeOptionsChart.DAYS
-          ? investmentNumber.value[index + 1]
-          : investmentWeekNumber.value[index + 1];
-
-      return nextValue ? nextValue * getScale() : 0;
-    }
-  }
-}
 </script>
 
 <template>
@@ -224,20 +276,24 @@ function calculateLinePosition(
     <svg
       ref="instanceLines"
       class="absolute top-0 left-0 z-[100] w-full h-full scale-x-[1] scale-y-[-1]"
+      id="lineSvg"
     >
-      <line
-        class="animate-fade-in"
-        :x1="calculateLinePosition('x1', index)"
-        :y1="calculateLinePosition('y1', index, investment)"
-        :x2="calculateLinePosition('x2', index)"
-        :y2="calculateLinePosition('y2', index)"
-        :key="`${investment[index]}_${index}`"
-        style="stroke: #ffae4f; stroke-width: 2"
-        v-for="(investment, index) in userDashboardStore.typeChart ===
-        TypeOptionsChart.WEEKS
-          ? investmentWeekNumber
-          : investmentNumber"
-      />
+      <g>
+        <path id="line" fill="none" stroke="#ffae4f" stroke-width="2"></path>
+        <path id="lineBar" fill="none" stroke="#6E7DD9" stroke-width="2"></path>
+      </g>
+      <g id="pointer" style="display: none"></g>
     </svg>
+    <div
+      id="tooltip"
+      class="absolute bg-basic-white drop-shadow-md rounded-xl z-[9999] fixed animate-fade-in text-center py-[10px] px-3 top-dynamic"
+    >
+      <SalesNumber
+        :sales="userDashboardStore.currentTooltip.sales"
+        :investment="userDashboardStore.currentTooltip.investment"
+        :date="userDashboardStore.currentTooltip.date"
+        currency="$"
+      />
+    </div>
   </template>
 </template>

@@ -16,11 +16,13 @@ type PropsType = {
   staticScrollX?: number;
   isHorizontalScrollVisible?: boolean;
   isVerticalScrollVisible?: boolean;
+  isOverflowHidden?: boolean;
 };
 
 const props = withDefaults(defineProps<PropsType>(), {
   isHorizontalScrollVisible: false,
-  isVerticalScrollVisible: false
+  isVerticalScrollVisible: false,
+  isOverflowHidden: true
 });
 
 const scrollInstance = ref<HTMLDivElement | null>(null);
@@ -79,13 +81,14 @@ function handleScroll(state: UseScrollReturn) {
     ref="scrollInstance"
     v-scroll="handleScroll"
     :class="[
-      'scroll-bar whitespace-nowrap overflow-hidden',
+      'scroll-bar whitespace-nowrap',
       {
         'overflow-x-auto overflow-y-auto':
           isScrollbarsVisible &&
           (isHorizontalScrollVisible || isVerticalScrollVisible),
         'overflow-y-scroll': isHorizontalScrollVisible,
-        'overflow-x-scroll': isVerticalScrollVisible
+        'overflow-x-scroll': isVerticalScrollVisible,
+        'overflow-hidden': isOverflowHidden
       }
     ]"
     @mouseenter="isScrollbarsVisible = true"
