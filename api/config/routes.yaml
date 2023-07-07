@@ -1,6 +1,9 @@
 app_password_reset:
     path: /authentication/confirm-password-reset/{token}
 
+app_accept_invitation:
+    path: /authentication/accept-invitation/{id}
+
 controllers:
     resource:
         path: ../src/Controller/
