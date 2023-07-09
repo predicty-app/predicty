@@ -71,7 +71,8 @@ function drawBar() {
       <svg
         v-if="
           userDashboardStore.selectedAdsList.ads.length === 0 &&
-          !userDashboardStore.selectedCollection
+          !userDashboardStore.selectedCollection &&
+          userDashboardStore.visualTypeChart === 'bar'
         "
         :id="`bar-${props.id}`"
         class="bar absolute bottom-0"
