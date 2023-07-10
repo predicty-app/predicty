@@ -61,6 +61,11 @@ class UserRepository implements PasswordUpgrader
         return $this->repository->findOneBy(['email' => $email]);
     }
 
+    public function getByEmail(string $email): User
+    {
+        return $this->getByUsername($email);
+    }
+
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
         if (!$user instanceof DoctrineUser) {

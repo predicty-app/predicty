@@ -27,11 +27,11 @@ interface User extends UserWithId, AccountMember, EmailRecipient, UserInterface,
 
     public function getCreatedAt(): DateTimeInterface;
 
-    public function setAsAccountOwner(Ulid $accountId): void;
+    public function setAsAccountOwner(Ulid|Account $accountId): void;
 
-    public function setAsAccountMember(Ulid $accountId): void;
+    public function setAsAccountMember(Ulid|Account $accountId): void;
 
-    public function setAccountRole(Ulid $accountId, string $role): void;
+    public function setAccountRole(Ulid|Account $accountId, string $role): void;
 
     public function setEmailVerified(): void;
 

@@ -7,7 +7,7 @@ namespace App\Message\Event;
 use App\Message\Event;
 use Symfony\Component\Uid\Ulid;
 
-class InvitationToAccountSent implements Event
+class InvitationToAccountAccepted implements Event
 {
     public Ulid $accountInvitationId;
     public Ulid $userId;

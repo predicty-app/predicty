@@ -23,7 +23,7 @@ class DoctrineUser implements User
     use TimestampableTrait;
 
     #[ORM\Column(type: Types::JSON, nullable: true, options: ['jsonb' => true])]
-    private array $accountIds = [];
+    private array $accounts = [];
 
     #[ORM\Column(length: 180, unique: true)]
     private string $email;
@@ -67,13 +67,15 @@ class DoctrineUser implements User
         return $this;
     }
 
-    public function setAsAccountOwner(Ulid $accountId): void
+    public function setAsAccountOwner(Ulid|Account $accountId): void
     {
+        $accountId = $accountId instanceof Account ? $accountId->getId() : $accountId;
         $this->setAccountRole($accountId, Role::ROLE_ACCOUNT_OWNER);
     }
 
-    public function setAsAccountMember(Ulid $accountId): void
+    public function setAsAccountMember(Ulid|Account $accountId): void
     {
+        $accountId = $accountId instanceof Account ? $accountId->getId() : $accountId;
         $this->setAccountRole($accountId, Role::ROLE_ACCOUNT_MEMBER);
     }
 
@@ -91,11 +93,11 @@ class DoctrineUser implements User
         return array_unique($this->roles);
     }
 
-    public function getRolesForAccount(Account|Ulid $account): array
+    public function getRolesForAccount(Account|Ulid $accountId): array
     {
         $roles = [];
-        $accountId = $account instanceof Account ? $account->getId() : $account;
-        foreach ($this->accountIds as $account) {
+        $accountId = $accountId instanceof Account ? $accountId->getId() : $accountId;
+        foreach ($this->accounts as $account) {
             if ($account['id'] === (string) $accountId) {
                 $roles = array_merge($roles, $account['roles']);
             }
@@ -185,20 +187,22 @@ class DoctrineUser implements User
 
     public function getAccountsIds(): array
     {
-        return array_map(fn (array $account) => Ulid::fromString($account['id']), $this->accountIds);
+        return array_map(fn (array $account) => Ulid::fromString($account['id']), $this->accounts);
     }
 
-    public function setAccountRole(Ulid $accountId, string $role): void
+    public function setAccountRole(Ulid|Account $accountId, string $role): void
     {
-        foreach ($this->accountIds as $index => $account) {
+        $accountId = $accountId instanceof Account ? $accountId->getId() : $accountId;
+
+        foreach ($this->accounts as $index => $account) {
             if ($account['id'] === (string) $accountId) {
-                $this->accountIds[$index]['roles'] = [$role];
+                $this->accounts[$index]['roles'] = [$role];
 
                 return;
             }
         }
 
-        $this->accountIds[] = ['id' => (string) $accountId, 'roles' => [$role]];
+        $this->accounts[] = ['id' => (string) $accountId, 'roles' => [$role]];
         $this->changedAt = Clock::now();
     }
 }

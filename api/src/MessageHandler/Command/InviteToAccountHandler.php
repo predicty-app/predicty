@@ -26,6 +26,8 @@ class InviteToAccountHandler
     use AuthorizationCheckerTrait;
     use EmitEventTrait;
 
+    private const ACCOUNT_INVITATION_VALIDITY = '+1 day';
+
     public function __construct(
         private UserRepository $userRepository,
         private AccountRepository $accountRepository,
@@ -41,7 +43,7 @@ class InviteToAccountHandler
         $account = $this->accountRepository->getById($message->accountId);
         $this->denyAccessUnlessGranted($user, Permission::MANAGE_ACCOUNT, $account);
 
-        $validTo = Clock::now()->modify('+1 day');
+        $validTo = Clock::now()->modify(self::ACCOUNT_INVITATION_VALIDITY);
         $invitation = new AccountInvitation(
             id: new Ulid(),
             userId: $message->userId,
@@ -52,6 +54,8 @@ class InviteToAccountHandler
 
         $url = $this->urlGenerator->generate('app_accept_invitation', ['id' => $invitation->getId()->toRfc4122()], UrlGeneratorInterface::ABSOLUTE_URL);
 
+        // this is the key action here, it is needed as part of this command,
+        // therefore we are not extracting it into an event handler (it is not a side effect)
         $this->accountInvitationRepository->save($invitation);
         $this->notifier->send(new AccountInvitationIssuedNotification($account->getName(), $url));
 
