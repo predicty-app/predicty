@@ -77,4 +77,19 @@ class InviteToAccountMutationTest extends GraphQLTestCase
 
         $this->bus('event.bus')->dispatched()->assertContains(InvitationToAccountSent::class);
     }
+
+    public function test_invite_user_to_account_is_not_allowed_by_regular_members(): void
+    {
+        $this->authenticate('jane.doe@example.com');
+
+        $mutation = <<<'EOF'
+            mutation($email: String!) {
+              inviteToAccount(email: $email)
+            }
+            EOF;
+
+        $this->executeMutation($mutation, ['email' => 'james.doe@example.com']);
+        $this->assertResponseIsSuccessful();
+        $this->assertResponseMatchesJsonFile(__DIR__.'/InviteToAccountFailure.json');
+    }
 }
