@@ -47,6 +47,7 @@ class AcceptInvitationToAccountHandler
         }
 
         $user->setAsAccountMember($account);
+        $user->setEmailVerified();
         $this->userRepository->save($user);
 
         $this->emit(new InvitationToAccountAccepted($invitation->getId(), $invitation->getUserId(), $user->getId(), $account->getId()));

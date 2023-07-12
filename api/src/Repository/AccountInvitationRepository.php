@@ -9,6 +9,7 @@ use App\Service\Clock\Clock;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use RuntimeException;
+use Symfony\Bridge\Doctrine\Types\UlidType;
 use Symfony\Component\Uid\Ulid;
 
 class AccountInvitationRepository
@@ -33,7 +34,7 @@ class AccountInvitationRepository
         $qb = $this->repository->createQueryBuilder('ai');
         $qb->where('ai.id = :id')
             ->andWhere('ai.validTo > :now')
-            ->setParameter('id', $invitationId)
+            ->setParameter('id', $invitationId, UlidType::NAME)
             ->setParameter('now', Clock::now());
 
         return $qb->getQuery()->getOneOrNullResult();

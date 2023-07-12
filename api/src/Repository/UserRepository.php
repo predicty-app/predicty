@@ -82,7 +82,7 @@ class UserRepository implements PasswordUpgrader
     public function findByAccountId(Ulid $accountId): array
     {
         // For some reason, doctrine would not let me bind the $accountId parameter
-        $query = "SELECT u.id FROM \"user\" u WHERE jsonb_path_exists(u.account_ids, '$[*].id ? (@[*] == \"$accountId\")')";
+        $query = "SELECT u.id FROM \"user\" u WHERE jsonb_path_exists(u.accounts, '$[*].id ? (@[*] == \"$accountId\")')";
         $stmt = $this->em->getConnection()->prepare($query);
 
         $result = $stmt->executeQuery();
