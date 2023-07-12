@@ -17,6 +17,7 @@ use App\Service\Clock\Clock;
 use App\Service\Security\Authorization\AuthorizationCheckerTrait;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Notifier\NotifierInterface;
+use Symfony\Component\Notifier\Recipient\Recipient;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Uid\Ulid;
 
@@ -39,14 +40,14 @@ class InviteToAccountHandler
 
     public function __invoke(InviteToAccount $message): void
     {
-        $user = $this->userRepository->getById($message->userId);
+        $invitingUser = $this->userRepository->getById($message->invitingUserId);
         $account = $this->accountRepository->getById($message->accountId);
-        $this->denyAccessUnlessGranted($user, Permission::MANAGE_ACCOUNT, $account);
+        $this->denyAccessUnlessGranted($invitingUser, Permission::MANAGE_ACCOUNT, $account);
 
         $validTo = Clock::now()->modify(self::ACCOUNT_INVITATION_VALIDITY);
         $invitation = new AccountInvitation(
             id: new Ulid(),
-            userId: $message->userId,
+            userId: $message->invitingUserId,
             accountId: $message->accountId,
             email: $message->email,
             validTo: $validTo
@@ -57,8 +58,8 @@ class InviteToAccountHandler
         // this is the key action here, it is needed as part of this command,
         // therefore we are not extracting it into an event handler (it is not a side effect)
         $this->accountInvitationRepository->save($invitation);
-        $this->notifier->send(new AccountInvitationIssuedNotification($account->getName(), $url));
+        $this->notifier->send(new AccountInvitationIssuedNotification($account->getName(), $url), new Recipient($message->email));
 
-        $this->emit(new InvitationToAccountSent($invitation->getId(), $message->userId, $message->accountId, $message->email));
+        $this->emit(new InvitationToAccountSent($invitation->getId(), $message->invitingUserId, $message->accountId, $message->email));
     }
 }

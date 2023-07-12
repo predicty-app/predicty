@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class InviteToAccount
 {
     #[AssertCustom\UserExists]
-    public readonly Ulid $userId;
+    public readonly Ulid $invitingUserId;
 
     #[AssertCustom\AccountExists]
     public readonly Ulid $accountId;
@@ -20,9 +20,9 @@ class InviteToAccount
     #[Assert\NotBlank(message: 'You must provide an email')]
     public readonly string $email;
 
-    public function __construct(Ulid $userId, Ulid $accountId, string $email)
+    public function __construct(Ulid $invitingUserId, Ulid $accountId, string $email)
     {
-        $this->userId = $userId;
+        $this->invitingUserId = $invitingUserId;
         $this->accountId = $accountId;
         $this->email = $email;
     }

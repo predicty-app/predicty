@@ -10,14 +10,14 @@ use Symfony\Component\Uid\Ulid;
 class InvitationToAccountSent implements Event
 {
     public Ulid $accountInvitationId;
-    public Ulid $userId;
+    public Ulid $invitingUserId;
     public Ulid $accountId;
     public string $email;
 
-    public function __construct(Ulid $accountInvitationId, Ulid $userId, Ulid $accountId, string $email)
+    public function __construct(Ulid $accountInvitationId, Ulid $invitingUserId, Ulid $accountId, string $email)
     {
         $this->accountInvitationId = $accountInvitationId;
-        $this->userId = $userId;
+        $this->invitingUserId = $invitingUserId;
         $this->accountId = $accountId;
         $this->email = $email;
     }

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20230707180247 extends AbstractMigration
+final class Version20230712120646 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -29,11 +29,13 @@ final class Version20230707180247 extends AbstractMigration
         $this->addSql('COMMENT ON COLUMN account_invitation.created_at IS \'(DC2Type:datetime_immutable)\'');
         $this->addSql('COMMENT ON COLUMN account_invitation.changed_at IS \'(DC2Type:datetime_immutable)\'');
         $this->addSql('COMMENT ON COLUMN account_invitation.user_id IS \'(DC2Type:ulid)\'');
+        $this->addSql('ALTER TABLE "user" RENAME COLUMN account_ids TO accounts');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('DROP TABLE account_invitation');
+        $this->addSql('ALTER TABLE "user" RENAME COLUMN accounts TO account_ids');
     }
 }

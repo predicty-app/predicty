@@ -14,6 +14,7 @@ use App\Repository\AccountInvitationRepository;
 use App\Repository\AccountRepository;
 use App\Repository\UserRepository;
 use App\Service\Security\Authorization\AuthorizationCheckerTrait;
+use LogicException;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
@@ -36,6 +37,10 @@ class AcceptInvitationToAccountHandler
         $account = $this->accountRepository->getById($invitation->getAccountId());
         $user = $this->getOrCreateUserAccount($invitation->getEmail(), $message->acceptedTermsOfServiceVersion, $message->hasAgreedToNewsletter);
 
+        if (strcasecmp($user->getEmail(), $invitation->getEmail()) !== 0) {
+            throw new LogicException('User email does not match invitation email');
+        }
+
         if ($user->isMemberOf($account)) {
             // do nothing if user is already a member of the account
             return;
@@ -44,7 +49,7 @@ class AcceptInvitationToAccountHandler
         $user->setAsAccountMember($account);
         $this->userRepository->save($user);
 
-        $this->emit(new InvitationToAccountAccepted($invitation->getId(), $user->getId(), $account->getId(), $invitation->getEmail()));
+        $this->emit(new InvitationToAccountAccepted($invitation->getId(), $invitation->getUserId(), $user->getId(), $account->getId()));
         $this->accountInvitationRepository->remove($invitation);
     }
 

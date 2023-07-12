@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Message\Command;
 
+use App\Message\SyncMessage;
 use App\Validator as AssertCustom;
 use Symfony\Component\Validator\Constraints as Assert;
 
-class Register
+class Register implements SyncMessage
 {
     #[Assert\Email(message: 'Invalid email')]
     #[Assert\NotBlank(message: 'You must provide an email')]
