@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Message\Event;
 
+use App\Message\Event;
 use Symfony\Component\Uid\Ulid;
 
-class ImportWithdrew
+class ImportWithdrew implements Event
 {
     public Ulid $userId;
     public Ulid $importId;

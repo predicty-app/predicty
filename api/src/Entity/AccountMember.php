@@ -25,5 +25,5 @@ interface AccountMember
      *
      * @return array<string>
      */
-    public function getRolesForAccount(Account|Ulid $account): array;
+    public function getRolesForAccount(Account|Ulid $accountId): array;
 }

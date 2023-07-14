@@ -4,24 +4,22 @@ declare(strict_types=1);
 
 namespace App\Message\Command;
 
-use App\Message\SyncMessage;
 use App\Validator as AssertCustom;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Uid\Ulid;
 
-class Register implements SyncMessage
+class AcceptInvitationToAccount
 {
-    #[Assert\Email(message: 'Invalid email')]
-    #[Assert\NotBlank(message: 'You must provide an email')]
-    public readonly string $email;
+    #[AssertCustom\AccountInvitationExists]
+    public Ulid $invitationId;
 
     #[AssertCustom\TermsOfServiceVersion]
     public readonly int $acceptedTermsOfServiceVersion;
 
     public readonly bool $hasAgreedToNewsletter;
 
-    public function __construct(string $email, int $acceptedTermsOfServiceVersion, bool $hasAgreedToNewsletter)
+    public function __construct(Ulid $invitationId, int $acceptedTermsOfServiceVersion, bool $hasAgreedToNewsletter)
     {
-        $this->email = $email;
+        $this->invitationId = $invitationId;
         $this->acceptedTermsOfServiceVersion = $acceptedTermsOfServiceVersion;
         $this->hasAgreedToNewsletter = $hasAgreedToNewsletter;
     }

@@ -88,9 +88,9 @@ class UserWithAccountContext implements User, AccountAwareUser, WrappedUser
         return $this->getUser()->getAccountsIds();
     }
 
-    public function getRolesForAccount(Account|Ulid $account): array
+    public function getRolesForAccount(Account|Ulid $accountId): array
     {
-        return $this->getUser()->getRolesForAccount($account);
+        return $this->getUser()->getRolesForAccount($accountId);
     }
 
     public function getAccountId(): Ulid
@@ -130,12 +130,12 @@ class UserWithAccountContext implements User, AccountAwareUser, WrappedUser
         return $this->getUser()->getUserIdentifier();
     }
 
-    public function setAsAccountOwner(Ulid $accountId): void
+    public function setAsAccountOwner(Ulid|Account $accountId): void
     {
         $this->getUser()->setAsAccountOwner($accountId);
     }
 
-    public function setAsAccountMember(Ulid $accountId): void
+    public function setAsAccountMember(Ulid|Account $accountId): void
     {
         $this->getUser()->setAsAccountMember($accountId);
     }
@@ -185,7 +185,7 @@ class UserWithAccountContext implements User, AccountAwareUser, WrappedUser
         return $this->getUser()->getAcceptedTermsOfServiceVersion();
     }
 
-    public function setAccountRole(Ulid $accountId, string $role): void
+    public function setAccountRole(Ulid|Account $accountId, string $role): void
     {
         $this->getUser()->setAccountRole($accountId, $role);
     }
