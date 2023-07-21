@@ -34,7 +34,7 @@ fix:
 phpstan:
 	@$(PHP_EXEC) ./vendor/bin/phpstan analyze --memory-limit=1G
 
-fixtures:
+fixtures: # Load fixtures
 	@$(PHP_EXEC) ./bin/console doctrine:fixtures:load --no-interaction
 
 test: reset-test-database # Run tests
